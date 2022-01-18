@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Madera extends Model
 {
     use HasFactory;
+
+     //Relacion muchos a muchos
+     public function proveedores(){
+        return $this->belongsToMany('App\Models\Proveedor');
+    }
+    
 }
