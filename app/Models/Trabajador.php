@@ -12,5 +12,20 @@ class Trabajador extends Model
     const ejecutivo = 1;
     const vendedor = 2;
 
+    //Relacion muchos a muchos
+    public function inventarios(){
+        return $this->belongsToMany('App\Models\Inventario');
+    }
+
+    /*
+    
+    //Relacion uno a muchos inversa
+    public function inventario(){
+        return $this->belongsTo('App\Models\Inventario');
+    }
+    
+    */ 
+    
+
 
 }
