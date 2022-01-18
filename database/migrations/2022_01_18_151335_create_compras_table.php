@@ -19,7 +19,7 @@ class CreateComprasTable extends Migration
             $table->integer('cantidad');
 
             $table->unsignedBigInteger('cliente_rut');
-            $table->foreign('cliente_rut')->references('rut')->on('clientes')->onDelete('cascade');
+            $table->foreign('cliente_rut')->references('usuario_rut')->on('clientes')->onDelete('cascade');
 
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');

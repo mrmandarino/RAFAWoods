@@ -15,11 +15,9 @@ class CreateTransportesTable extends Migration
     {
         Schema::create('transportes', function (Blueprint $table) {
             $table->id();
-
             $table->string('nombre_transportista');
             $table->string('tipo_vehiculo');
-            $table->integer('valor_viaje');
-           
+            $table->integer('valor_viaje');   
             $table->unsignedBigInteger('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
 

@@ -14,17 +14,15 @@ class CreateLocalizacionsTable extends Migration
     public function up()
     {
         Schema::create('localizacions', function (Blueprint $table) {
-            $table->id();
-
+            $table->unsignedBigInteger('sucursal_id');
+            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade');
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->primary(['sucursal_id','producto_id']);
             $table->integer('stock');
             $table->integer('precio_compra');
 
-            $table->unsignedBigInteger('inventario_id');
-            $table->foreign('inventario_id')->references('id')->on('inventarios')->onDelete('cascade');
-
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
-
+            
             $table->timestamps();
         });
     }

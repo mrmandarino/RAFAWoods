@@ -14,15 +14,14 @@ class CreateTechumbresTable extends Migration
     public function up()
     {
         Schema::create('techumbres', function (Blueprint $table) {
-            $table->id();
-
+            $table->unsignedBigInteger('producto_id')->primary();
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->string('material');
             $table->integer('alto');
             $table->integer('ancho');
             $table->integer('largo');
 
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            
 
 
             $table->timestamps();

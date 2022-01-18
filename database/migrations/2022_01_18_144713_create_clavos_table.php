@@ -14,16 +14,15 @@ class CreateClavosTable extends Migration
     public function up()
     {
         Schema::create('clavos', function (Blueprint $table) {
-            $table->id();
-
+            $table->unsignedBigInteger('producto_id')->primary();
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->string('material');
             $table->string('cabeza');
             $table->string('caña');
             $table->string('punta');
             $table->integer('longitud');
             
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            
 
             $table->timestamps();
         });

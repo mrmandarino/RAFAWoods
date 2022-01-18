@@ -14,16 +14,15 @@ class CreateTornillosTable extends Migration
     public function up()
     {
         Schema::create('tornillos', function (Blueprint $table) {
-            $table->id();
-
+            $table->unsignedBigInteger('producto_id')->primary();
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->string('cabeza');
             $table->string('rosca_parcial');
             $table->string('rosca_total');
             $table->integer('vastago');
             $table->boolean('tiene_parcial');
             
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            
 
 
             $table->timestamps();

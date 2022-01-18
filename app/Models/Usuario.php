@@ -13,5 +13,7 @@ class Usuario extends Model
     const DESACTIVADO = 0;
     const trabajador = 1;
     const cliente = 2;
+    const admin = 3;
+
     
 }

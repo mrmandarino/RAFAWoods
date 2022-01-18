@@ -16,7 +16,7 @@ class CreateInventariosTable extends Migration
         Schema::create('inventarios', function (Blueprint $table) {
             $table->id();
 
-            $table->string('sucursal');
+            $table->string('direccion_sucursal');
 
             $table->timestamps();
         });

@@ -21,8 +21,8 @@ class CreateVentaProveedorsTable extends Migration
             $table->unsignedBigInteger('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
 
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('producto_id')->on('maderas')->onDelete('cascade');
+            $table->unsignedBigInteger('madera_id');
+            $table->foreign('madera_id')->references('producto_id')->on('maderas')->onDelete('cascade');
 
             $table->timestamps();
         });

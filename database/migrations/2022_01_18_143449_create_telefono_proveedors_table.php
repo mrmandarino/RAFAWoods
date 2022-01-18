@@ -14,13 +14,15 @@ class CreateTelefonoProveedorsTable extends Migration
     public function up()
     {
         Schema::create('telefono_proveedors', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
 
             $table->unsignedBigInteger('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
             $table->string('telefono');
-
             $table->timestamps();
+
+            //OJITO
+            $table->primary(['proveedor_rut', 'telefono']);
         });
     }
 

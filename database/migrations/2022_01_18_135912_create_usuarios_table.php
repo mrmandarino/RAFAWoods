@@ -15,14 +15,12 @@ class CreateUsuariosTable extends Migration
     public function up()
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('rut');
+            $table->unsignedBigInteger('rut')->primary();
             $table->string('nombre');
             $table->string('apellido');
             $table->string('password');
             $table->string('correo');
-            $table->enum('tipo_usuario',[Usuario::trabajador, Usuario::cliente]);
+            $table->enum('tipo_usuario',[Usuario::trabajador, Usuario::cliente, Usuario::admin]);
             $table->enum('estado',[Usuario::ACTIVADO, Usuario::DESACTIVADO])->default(Usuario::ACTIVADO);
 
 

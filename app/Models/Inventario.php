@@ -11,22 +11,18 @@ class Inventario extends Model
 
 
     //Relacion muchos a muchos
-    public function trabajadores(){
-        return $this->belongsToMany('App\Models\Trabajador');
-    }
-
     public function productos(){
         return $this->belongsToMany('App\Models\Producto');
     }
 
-    /*
+    
     
     //Relacion uno a muchos 
     public function trabajadores(){
         return $this->hasMany('App\Models\Trabajador');
     }
     
-    */ 
+    
 
 
 }

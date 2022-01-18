@@ -14,11 +14,12 @@ class CreateTrabajadorsTable extends Migration
     public function up()
     {
         Schema::create('trabajadors', function (Blueprint $table) {
-            $table->id();
-
-            $table->enum('tipo_trabajador',[Trabajador::ejecutivo, Trabajador::vendedor]);
-            $table->unsignedBigInteger('usuario_rut');
+            $table->unsignedBigInteger('usuario_rut')->primary();
             $table->foreign('usuario_rut')->references('rut')->on('usuarios')->onDelete('cascade');
+            $table->enum('tipo_trabajador',[Trabajador::ejecutivo, Trabajador::vendedor]);
+            
+            $table->unsignedBigInteger('sucursal_id');
+            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade');
 
 
             $table->timestamps();
