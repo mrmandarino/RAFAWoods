@@ -14,7 +14,7 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->unsignedBigInteger('usuario_rut')->primary();
+            $table->string('usuario_rut')->primary();
             $table->foreign('usuario_rut')->references('rut')->on('usuarios')->onDelete('cascade');
             $table->string('telefono');
             

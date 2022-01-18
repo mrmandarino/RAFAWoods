@@ -19,7 +19,7 @@ class CreateEjecutivosTable extends Migration
             $table->string('apellido');
             $table->string('correo');
             $table->string('telefono');
-            $table->unsignedBigInteger('proveedor_rut');
+            $table->string('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
             $table->timestamps();
         });

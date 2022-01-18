@@ -18,7 +18,7 @@ class CreateVentaProveedorsTable extends Migration
 
             $table->integer('nivel_calidad');
            
-            $table->unsignedBigInteger('proveedor_rut');
+            $table->string('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
 
             $table->unsignedBigInteger('madera_id');

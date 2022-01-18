@@ -18,7 +18,7 @@ class CreateTransportesTable extends Migration
             $table->string('nombre_transportista');
             $table->string('tipo_vehiculo');
             $table->integer('valor_viaje');   
-            $table->unsignedBigInteger('proveedor_rut');
+            $table->string('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
 
 
