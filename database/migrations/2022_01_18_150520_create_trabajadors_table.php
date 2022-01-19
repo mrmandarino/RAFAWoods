@@ -15,7 +15,7 @@ class CreateTrabajadorsTable extends Migration
     {
         Schema::create('trabajadors', function (Blueprint $table) {
             $table->string('usuario_rut')->primary();
-            $table->foreign('usuario_rut')->references('rut')->on('usuarios')->onDelete('cascade');
+            $table->foreign('usuario_rut')->references('rut')->on('users')->onDelete('cascade');
             $table->enum('tipo_trabajador',[Trabajador::ejecutivo, Trabajador::vendedor]);
             
             $table->unsignedBigInteger('sucursal_id');

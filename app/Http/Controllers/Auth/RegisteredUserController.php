@@ -38,18 +38,18 @@ class RegisteredUserController extends Controller
             'rut' => ['required','cl_rut','unique:users'],
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => ['required','string','max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'max:16',Rules\Password::defaults()],
         ]);
 
-        $usuario = Usuario::create([
+        $usuario = User::create([
             'rut' => $request->rut,
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
-            'email' => $request->email,
+            'correo' => $request->correo,
             'password' => Hash::make($request->password),
         ]);
-
+        
         event(new Registered($usuario));
 
         Auth::login($usuario);

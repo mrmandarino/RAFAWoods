@@ -15,7 +15,7 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->string('usuario_rut')->primary();
-            $table->foreign('usuario_rut')->references('rut')->on('usuarios')->onDelete('cascade');
+            $table->foreign('usuario_rut')->references('rut')->on('users')->onDelete('cascade');
             $table->string('telefono');
             
 
