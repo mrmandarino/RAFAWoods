@@ -11,7 +11,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('admin_store_usuario') }}">
             @csrf
 
             <!-- Rut -->
@@ -77,16 +77,13 @@
 
               <div class="form-group">
                 <label for="tipo_trabajador">Tipo de Trabajador:</label>
-                <select class="form-control" id="tipo_trabajador" name ="tipo_trabajador" title="Escoja el tipo de trabajador:
+
+                <select class="form-control"  id="tipo_trabajador" name="tipo_trabajador" title="Escoja el tipo de trabajador:
                 - Vendedor solo podrá acceder a listado de precios y realizar ventas a clientes
-                - Ejecutivo podrá acceder a lo anterior dicho y a tareas de administración de inventario y catálogo" >
-                  
-                  <option> Ejecutivo </option>
-    
-                  <option> Vendedor </option>
-    
-                </select>
-    
+                - Ejecutivo podrá acceder a lo anterior dicho y a tareas de administración de inventario y catálogo">
+                    <option value="1">Ejecutivo</option>
+                    <option value="2">Vendedor</option>
+                  </select>
               </div>
 
 

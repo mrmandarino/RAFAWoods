@@ -37,7 +37,14 @@
             <div class="mt-4">
                 <x-label for="correo" :value="__('Correo')" />
 
-                <x-input id="correo" class="block mt-1 w-full" type="correo" name="correo" :value="old('correo')" required />
+                <x-input id="correo" class="block mt-1 w-full" type="email" name="correo" :value="old('correo')" required />
+            </div>
+
+            <!-- Telefono -->
+            <div>
+                <x-label for="telefono" :value="__('Telefono')" />
+
+                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')"/>
             </div>
 
             <!-- Password -->
@@ -49,6 +56,7 @@
                                 name="password"
                                 required autocomplete="new-password" />
             </div>
+            
 
             <!-- Confirm Password -->
             <div class="mt-4">

@@ -12,6 +12,11 @@ class Trabajador extends Model
     const ejecutivo = 1;
     const vendedor = 2;
     
+    protected $fillable = [
+        'usuario_rut',
+        'tipo_trabajador',
+        'sucursal_id',
+    ];
     
     //Relacion uno a muchos inversa
     public function inventario(){

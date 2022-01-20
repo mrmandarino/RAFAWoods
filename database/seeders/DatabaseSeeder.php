@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Inventario;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -44,6 +45,11 @@ class DatabaseSeeder extends Seeder
             'correo' => 'wolf@gmail.com',
             'password' => bcrypt('kattyperry'),
             'tipo_usuario'=> 2
+        ]);
+
+        Inventario::create([
+            'id' => 1,
+            'direccion_sucursal' => 'Orchard 965'
         ]);
     }
 }

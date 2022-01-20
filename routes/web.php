@@ -27,6 +27,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/crear_usuario',[AdminController::class, 'create'])->name('admin_crear_usuario');
+    Route::post('/admin/store',[AdminController::class, 'store_usuario'])->name('admin_store_usuario');
 
 });
 
