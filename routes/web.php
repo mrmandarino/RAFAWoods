@@ -23,7 +23,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-
+Route::get('/ventas', function () {
+    return view('ventas.portal_ventas');
+});
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/crear_usuario',[AdminController::class, 'create'])->name('admin_crear_usuario');
