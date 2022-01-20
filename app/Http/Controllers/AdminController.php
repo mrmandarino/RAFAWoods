@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Trabajador;
 use Illuminate\Http\Request;
-//use App\Http\Controllers\Rules\Password;
+use Freshwork\ChileanBundle\Rut;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 
@@ -48,8 +48,9 @@ class AdminController extends Controller
             'tipo_trabajador' => ['required'],
         ]);
 
+        $rut_normalizado = Rut::parse($request->rut)->normalize();
         $usuario = User::create([
-            'rut' => $request->rut,
+            'rut' => $rut_normalizado,
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'correo' => $request->correo,
@@ -59,7 +60,7 @@ class AdminController extends Controller
         
         
         Trabajador::create([
-            'usuario_rut' => $request->rut,
+            'usuario_rut' => $rut_normalizado,
             'tipo_trabajador' => $request->tipo_trabajador,
             'sucursal_id' => 1,
         ]);

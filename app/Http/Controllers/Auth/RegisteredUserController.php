@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Cliente;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Freshwork\ChileanBundle\Rut;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -43,8 +44,10 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', 'min:8', 'max:16',Rules\Password::defaults()],
         ]);
 
+        $rut_normalizado = Rut::parse($request->rut)->normalize();
+
         $usuario = User::create([
-            'rut' => $request->rut,
+            'rut' => $rut_normalizado,
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'correo' => $request->correo,
