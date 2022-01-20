@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +22,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/admin/crear_usuario',[AdminController::class, 'create'])->name('admin_crear_usuario');
+
+});
 
 require __DIR__.'/auth.php';
