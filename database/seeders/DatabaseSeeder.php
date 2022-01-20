@@ -38,12 +38,12 @@ class DatabaseSeeder extends Seeder
 
         User::create([
 
-            'rut'=> '104698980',
-            'nombre'=> 'JZR',
-            'apellido' => 'NRG',
-            'correo' => 'nrg@gmail.com',
-            'password' => bcrypt('doubleflipreset'),
-            'tipo_usuario'=> 3
+            'rut'=> '199784242',
+            'nombre'=> 'mandarino',
+            'apellido' => 'wolfgang',
+            'correo' => 'wolf@gmail.com',
+            'password' => bcrypt('kattyperry'),
+            'tipo_usuario'=> 2
         ]);
     }
 }
