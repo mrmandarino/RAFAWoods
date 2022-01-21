@@ -44,6 +44,7 @@ class LoginRequest extends FormRequest
      */
     public function authenticate()
     {
+        
         $this->ensureIsNotRateLimited();
         /*$rut_normalizado = Rut::parse('rut')->normalize();
         dd($rut_normalizado);*/

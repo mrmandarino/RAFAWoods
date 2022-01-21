@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\LoginRequest;
-
+use Freshwork\ChileanBundle\Rut;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,9 +31,15 @@ class AuthenticatedSessionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LoginRequest $request)
-    {
+    {   
+        //Normalizar Rut de Inicio de Sesion para coincidir con data en base de datos
+        $rut_normalizado = Rut::parse($request->rut)->normalize();
+        $request->merge(['rut'=>$rut_normalizado]); //merge usado como Override
+
+                
         $request->authenticate();
         $request->session()->regenerate();
+
         $tipo_usuario = DB::table('users')->where('rut',$request->rut)->value('tipo_usuario');
         if($tipo_usuario == 1){
             return view('dashboard');

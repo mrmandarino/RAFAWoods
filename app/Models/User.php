@@ -16,8 +16,8 @@ class User extends Authenticatable
     const admin = 1;
     const trabajador = 2;
     const cliente = 3;
-    protected $primaryKey = 'rut';
-    public $incrementing = false;
+    protected $primaryKey = 'rut'; //se sobreescribe la primary key para no usar id()
+    public $incrementing = false; //se desactiva la funcion de autoincrementar la "id" porque se trabaja con rut
 
 
     /**
