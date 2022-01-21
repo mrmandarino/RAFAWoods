@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Cliente;
 use App\Models\Inventario;
 use App\Models\Trabajador;
 use Illuminate\Database\Seeder;
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'direccion_sucursal' => 'Orchard 965'
         ]);
-        
+
         User::create([
 
             'rut'=> '104698980',
@@ -76,7 +77,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        
+        Cliente::create([
+            'usuario_rut' => '194445989'
+        ]);
 
 
     }

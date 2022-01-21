@@ -42,10 +42,13 @@ class RegisteredUserController extends Controller
             'apellido' => ['required','string','max:255'],
             'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8', 'max:16',Rules\Password::defaults()],
+            'telefono' => ['digits:8', 'integer'],
         ]);
 
         $rut_normalizado = Rut::parse($request->rut)->normalize();
 
+        
+        
         $usuario = User::create([
             'rut' => $rut_normalizado,
             'nombre' => $request->nombre,
@@ -54,10 +57,10 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        /*Cliente::create([
-            'rut' => $request->rut,
-            'telefono' => 
-        ]);*/
+        Cliente::create([
+            'usuario_rut' => $rut_normalizado,
+            'telefono' => '+569'.$request->telefono,
+        ]);
         
         event(new Registered($usuario));
 

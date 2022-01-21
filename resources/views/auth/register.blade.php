@@ -20,14 +20,14 @@
             </div>
 
             <!-- Nombre -->
-            <div>
+            <div class="mt-4">
                 <x-label for="nombre" :value="__('Nombre')" />
 
                 <x-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required autofocus />
             </div>
 
             <!-- Apellido -->
-            <div>
+            <div class="mt-4">
                 <x-label for="apellido" :value="__('Apellido')" />
 
                 <x-input id="apellido" class="block mt-1 w-full" type="text" name="apellido" :value="old('apellido')" required autofocus />
@@ -41,8 +41,8 @@
             </div>
 
             <!-- Telefono -->
-            <div>
-                <x-label for="telefono" :value="__('Telefono')" />
+            <div class="mt-4">
+                <x-label for="telefono" :value="__('Telefono (Opcional)')" />
 
                 <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')"/>
             </div>
