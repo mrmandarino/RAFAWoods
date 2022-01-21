@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('apellido');
             $table->string('password');
             $table->string('correo');
-            $table->enum('tipo_usuario',[User::trabajador, User::cliente,User::admin])->default(User::cliente);
+            $table->enum('tipo_usuario',[User::admin, User::trabajador,User::cliente])->default(User::cliente);
             $table->enum('estado',[User::ACTIVADO, User::DESACTIVADO])->default(User::ACTIVADO);
             $table->timestamps();
         });
