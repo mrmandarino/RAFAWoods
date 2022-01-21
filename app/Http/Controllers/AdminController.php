@@ -49,7 +49,7 @@ class AdminController extends Controller
         ]);
 
         $rut_normalizado = Rut::parse($request->rut)->normalize();
-        $usuario = User::create([
+        User::create([
             'rut' => $rut_normalizado,
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
