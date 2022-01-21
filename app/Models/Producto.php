@@ -17,4 +17,16 @@ class Producto extends Model
     public function clientes(){
         return $this->belongsToMany('App\Models\Cliente');
     }
+
+    //Relacion uno a muchos polimorfica
+    public function imagenes(){
+        return $this->morphMany('App\Models\Imagen','imagenable');
+    }
+
+    /*
+    //Relacion uno a uno polimorfica
+    public function imagen(){
+        return $this->morphOne('App\Models\Imagen','imagenable');
+    }
+    */
 }

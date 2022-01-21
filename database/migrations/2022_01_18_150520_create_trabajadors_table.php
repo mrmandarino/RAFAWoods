@@ -18,8 +18,8 @@ class CreateTrabajadorsTable extends Migration
             $table->foreign('usuario_rut')->references('rut')->on('users')->onDelete('cascade');
             $table->enum('tipo_trabajador',[Trabajador::ejecutivo, Trabajador::vendedor]);
             
-            $table->unsignedBigInteger('sucursal_id');
-            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade');
+            $table->unsignedBigInteger('sucursal_id')->nullable();
+            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('set null');
 
 
             $table->timestamps();
