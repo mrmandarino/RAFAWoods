@@ -17,10 +17,13 @@ class CreateTornillosTable extends Migration
             $table->unsignedBigInteger('producto_id')->primary();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->string('cabeza');
-            $table->string('rosca_parcial');
-            $table->string('rosca_total');
-            $table->integer('vastago');
-            $table->boolean('tiene_parcial');
+            $table->string('tipo_rosca');
+            $table->string('rosca');
+            $table->string('punta');
+            //$table->string('rosca_parcial');
+            //$table->string('rosca_total');
+            //$table->integer('vastago');
+            //$table->boolean('tiene_parcial');
             
             
 

@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Madera extends Model
+class Tornillo extends Model
 {
     use HasFactory;
+
+    const completa = 1;
+    const parcial = 2;
+    const de_fijacion = 3;
 
     protected $fillable = [
         'producto_id',
     ];
-
-     //Relacion muchos a muchos
-     public function proveedores(){
-        return $this->belongsToMany('App\Models\Proveedor');
-    }
-    
 }

@@ -17,7 +17,7 @@ class CreatePlanchaConstruccionsTable extends Migration
             $table->unsignedBigInteger('producto_id')->primary();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->string('material');
-            $table->integer('alto');
+            $table->float('alto');
             $table->integer('ancho');
             $table->integer('largo');
 

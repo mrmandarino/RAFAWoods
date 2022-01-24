@@ -18,6 +18,7 @@ class CreateProductosTable extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('nivel_demanda');
+            $table->string('familia');
 
             $table->timestamps();
         });

@@ -9,6 +9,8 @@ class Producto extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     //Relacion muchos a muchos
     public function inventarios(){
         return $this->belongsToMany('App\Models\Inventario');
