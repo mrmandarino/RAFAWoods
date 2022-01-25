@@ -11,7 +11,7 @@ class Tornillo extends Model
 
     const completa = 1;
     const parcial = 2;
-    const de_fijacion = 3;
+    
 
     protected $fillable = [
         'producto_id',

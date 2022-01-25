@@ -17,8 +17,7 @@ class CreateClavosTable extends Migration
             $table->unsignedBigInteger('producto_id')->primary();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->string('material');
-            $table->string('cabeza');
-            $table->string('caña');
+            $table->integer('cabeza');
             $table->string('punta');
             $table->integer('longitud');
             

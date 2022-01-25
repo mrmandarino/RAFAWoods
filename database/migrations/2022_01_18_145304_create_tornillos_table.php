@@ -16,14 +16,12 @@ class CreateTornillosTable extends Migration
         Schema::create('tornillos', function (Blueprint $table) {
             $table->unsignedBigInteger('producto_id')->primary();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
-            $table->string('cabeza');
-            $table->string('tipo_rosca');
-            $table->string('rosca');
+            $table->integer('cabeza');//diametro de la cabeza
+            $table->string('tipo_rosca');//total o parcial
+            $table->integer('separacion_rosca');//longitud entre vueltas del hilo
             $table->string('punta');
-            //$table->string('rosca_parcial');
-            //$table->string('rosca_total');
-            //$table->integer('vastago');
-            //$table->boolean('tiene_parcial');
+            $table->integer('rosca_parcial')->default('0');//longitud de la parte del tornillo sin rosca
+            $table->integer('vastago');//longitud del tornillo sin contar la cabeza
             
             
 
