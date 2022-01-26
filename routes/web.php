@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +19,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//COmentario PRueba helmerS
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/ventas', function () {
+    return view('ventas.portal_ventas');
+});
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/admin/crear_usuario',[AdminController::class, 'create'])->name('admin_crear_usuario');
+    Route::post('/admin/store',[AdminController::class, 'store_usuario'])->name('admin_store_usuario');
+
+});
+
+require __DIR__.'/auth.php';

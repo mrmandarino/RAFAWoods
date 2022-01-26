@@ -11,6 +11,14 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    const ACTIVADO = 1;
+    const DESACTIVADO = 0;
+    const admin = 1;
+    const trabajador = 2;
+    const cliente = 3;
+    protected $primaryKey = 'rut'; //se sobreescribe la primary key para no usar id()
+    public $incrementing = false; //se desactiva la funcion de autoincrementar la "id" porque se trabaja con rut
+
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +26,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'rut',
+        'nombre',
+        'apellido',
+        'correo',
         'password',
+        'tipo_usuario',
+        'estado',
     ];
 
     /**

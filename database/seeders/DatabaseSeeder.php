@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Storage::deleteDirectory('productos');
+        Storage::makeDirectory('productos');
         // \App\Models\User::factory(10)->create();
+
+        $this->call(InventarioSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(ProductoSeeder::class);
+
     }
 }
