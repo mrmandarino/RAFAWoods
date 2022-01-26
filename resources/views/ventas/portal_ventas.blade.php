@@ -11,7 +11,7 @@
 </head>
 <body>
     
-    <h1>Hola Mundo</h1>
+    <h1>Sistema de Ventas de Maderas RAFA</h1>
     <!-- Example single danger button -->
 <div class="btn-group gap-2">
     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
