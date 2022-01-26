@@ -7,6 +7,7 @@ use App\Models\Trabajador;
 use Illuminate\Http\Request;
 use Freshwork\ChileanBundle\Rut;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -74,9 +75,77 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        
+        $usuarios = DB::table('users')->get();
+        $clientes = DB::table('clientes')->get();
+        return view('admin.visualizar_datos',compact('usuarios','clientes'));
+    }
+
+    public function show2($tabla)
+    {
+        if ($tabla=='usuarios') {
+            $datos=DB::table('users')->get();
+
+        }elseif ($tabla=='clientes') {
+            $datos=DB::table('clientes')->get();
+
+        }elseif ($tabla=='trabajadores') {
+            $datos=DB::table('trabajadors')->get();
+
+        }elseif ($tabla=='madera_proveedores') {
+            $datos=DB::table('venta_proveedors')->get();
+
+        }elseif ($tabla=='transportes') {
+            $datos=DB::table('transportes')->get();
+
+        }elseif ($tabla=='tornillos') {
+            $datos=DB::table('tornillos')->get();
+
+        }elseif ($tabla=='telefono_proveedores') {
+            $datos=DB::table('telefono_proveedors')->get();
+
+        }elseif ($tabla=='techumbres') {
+            $datos=DB::table('techumbres')->get();
+
+        }elseif ($tabla=='proveedores') {
+            $datos=DB::table('proveedors')->get();
+
+        }elseif ($tabla=='productos') {
+            $datos=DB::table('productos')->get();
+
+        }elseif ($tabla=='planchas_construccion') {
+            $datos=DB::table('plancha_construccions')->get();
+
+        }elseif ($tabla=='muebles') {
+            $datos=DB::table('muebles')->get();
+
+        }elseif ($tabla=='maderas') {
+            $datos=DB::table('maderas')->get();
+
+        }elseif ($tabla=='sucursal_producto') {
+            $datos=DB::table('localizacions')->get();
+
+        }elseif ($tabla=='inventarios') {
+            $datos=DB::table('inventarios')->get();
+
+        }elseif ($tabla=='fotos') {
+            $datos=DB::table('imagens')->get();
+
+        }elseif ($tabla=='ejecutivos') {
+            $datos=DB::table('ejecutivos')->get();
+
+        }elseif ($tabla=='compras') {
+            $datos=DB::table('compras')->get();
+
+        }elseif ($tabla=='clavos') {
+            $datos=DB::table('clavos')->get();
+
+        }
+
+        return view('admin.visualizar_especifico',compact('datos','tabla'));
+
     }
 
     /**
