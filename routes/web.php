@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EjecutivoController;
 
 
 /*
@@ -26,6 +27,12 @@ Route::get('/dashboard', function () {
 Route::get('/ventas', function () {
     return view('ventas.portal_ventas');
 });
+
+
+Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');
+Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
+Route::get('/test',[EjecutivoController::class, 'test'])->name('test3');
+
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/crear_usuario',[AdminController::class, 'create'])->name('admin_crear_usuario');
