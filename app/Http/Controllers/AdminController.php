@@ -104,17 +104,13 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function select()
     {
-        
-        $usuarios = DB::table('users')->get();
-        $clientes = DB::table('clientes')->get();
-        return view('admin.visualizar_datos',compact('usuarios','clientes'));
+        return view('admin.visualizar_datos');
     }
 
-    public function show2($tabla)
+    public function show($tabla)
     {
-        
         if ($tabla=='usuarios') {
             $datos = DB::table('users')->get();
 
@@ -174,218 +170,10 @@ class AdminController extends Controller
 
         }
         
-        
-        //$datos='0';
-        $orientacion='desc';
-
-        return view('admin.visualizar_especifico',compact('datos','tabla','orientacion'));
+        return view('admin.visualizar_especifico',compact('datos','tabla'));
 
     }
 
-    public function ordenar($tabla,$sort_by,$orientacion)
-    {
-
-        if ($tabla=='usuarios') {
-            if($orientacion=='desc'){
-                $datos = DB::table('users')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos = DB::table('users')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-
-        }elseif ($tabla=='clientes') {
-            if ($sort_by=='rut') {
-                $sort_by='usuario_rut';
-            }
-            if($orientacion=='desc'){
-                $datos=DB::table('clientes')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('clientes')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-            
-        }elseif ($tabla=='trabajadores') {
-            if ($sort_by=='rut') {
-                $sort_by='usuario_rut';
-            }
-            if($orientacion=='desc'){
-                $datos=DB::table('trabajadors')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('trabajadors')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-             
-
-        }elseif ($tabla=='madera_proveedores') {
-            if($orientacion=='desc'){
-                $datos=DB::table('venta_proveedors')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('venta_proveedors')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='transportes') {
-            if($orientacion=='desc'){
-                $datos=DB::table('transportes')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('transportes')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='tornillos') {
-            if($orientacion=='desc'){
-                $datos=DB::table('tornillos')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('tornillos')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='telefono_proveedores') {
-            if($orientacion=='desc'){
-                $datos=DB::table('telefono_proveedors')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('telefono_proveedors')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='techumbres') {
-            if($orientacion=='desc'){
-                $datos=DB::table('techumbres')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('techumbres')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='proveedores') {
-            if($orientacion=='desc'){
-                $datos=DB::table('proveedors')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('proveedors')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='productos') {
-            if($orientacion=='desc'){
-                $datos=DB::table('productos')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('productos')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-
-
-        }elseif ($tabla=='planchas_construccion') {
-            if($orientacion=='desc'){
-                $datos=DB::table('plancha_construccions')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('plancha_construccions')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-
-
-        }elseif ($tabla=='muebles') {
-            if($orientacion=='desc'){
-                $datos=DB::table('muebles')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('muebles')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='maderas') {
-            if($orientacion=='desc'){
-                $datos=DB::table('maderas')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('maderas')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='sucursal_producto') {
-            if($orientacion=='desc'){
-                $datos=DB::table('localizacions')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('localizacions')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='inventarios') {
-            if($orientacion=='desc'){
-                $datos=DB::table('inventarios')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('inventarios')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='fotos') {
-            if($orientacion=='desc'){
-                $datos=DB::table('imagens')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('imagens')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='ejecutivos') {
-            if($orientacion=='desc'){
-                $datos=DB::table('ejecutivos')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('ejecutivos')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-           
-
-        }elseif ($tabla=='compras') {
-            if($orientacion=='desc'){
-                $datos=DB::table('compras')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('compras')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }elseif ($tabla=='clavos') {
-            if($orientacion=='desc'){
-                $datos=DB::table('clavos')->orderBy($sort_by,$orientacion)->get();
-                $orientacion='asc';
-            }else{
-                $datos=DB::table('clavos')->orderBy($sort_by)->get();
-                $orientacion='desc';
-            }
-            
-
-        }
-
-        
-        return view('admin.visualizar_especifico',compact('datos','tabla','orientacion'));
-
-    }
 
     /**
      * Show the form for editing the specified resource.
