@@ -4,11 +4,10 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Floating Labels</title>
-	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<title>Base de datos</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container">
 		
 		<a href="{{route('admin_visualizar_datos')}}" class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
 			<button>
@@ -18,32 +17,63 @@
 		
 		<table class='table'>
 		@if ($tabla == 'usuarios')
-				<thead>
-					<th> RUT </th>
-					<th> NOMBRE </th>
-					<th> APELLIDO </th>
-					<th> PASSWORD </th>
-					<th> CORREO </th>
-					<th> TIPO USUARIO </th>
-					<th> ESTADO </th>
-					<th> FECHA REGISTRO </th>
-					<th> FECHA ACTUALIZACION </th>
-				</thead>
-				<tbody>
-			@foreach ($datos as $usuario)
-				<tr>
-					<td> {{$usuario->rut}} </td>
-					<td> {{$usuario->nombre}} </td>
-					<td> {{$usuario->apellido}} </td>
-					<td> {{$usuario->password}} </td>
-					<td> {{$usuario->correo}} </td>
-					<td> {{$usuario->tipo_usuario}} </td>
-					<td> {{$usuario->estado}} </td>
-					<td> {{$usuario->created_at}} </td>
-					<td> {{$usuario->updated_at}} </td>
-				</tr>
-			@endforeach
-				</tbody>
+			
+
+			<thead>
+				<th> RUT </th>
+				<th> NOMBRE </th>
+				<th> APELLIDO </th>
+				<th> PASSWORD </th>
+				<th> CORREO </th>
+				<th> TIPO USUARIO </th>
+				<th> ESTADO </th>
+				<th> FECHA REGISTRO </th>
+				<th> FECHA ACTUALIZACION </th>
+				<th> ACCION </th>
+			</thead>
+			<tbody>
+		@foreach ($datos as $usuario)
+			<tr>
+				<td> {{$usuario->rut}} </td>
+				<td> {{$usuario->nombre}} </td>
+				<td> {{$usuario->apellido}} </td>
+				<td> {{$usuario->password}} </td>
+				<td> {{$usuario->correo}} </td>
+				<td> {{$usuario->tipo_usuario}} </td>
+				<td> {{$usuario->estado}} </td>
+				<td> {{$usuario->created_at}} </td>
+				<td> {{$usuario->updated_at}} </td>
+				<td></td>
+			</tr>
+		@endforeach
+			</tbody>
+				
+			
+			
+			<div class="dropdown">
+				<a
+					href="hola"
+					class="btn btn-primary dropdown-toggle"
+					type="button"
+					id="dropdown-2"
+					data-bs-toggle="dropdown"
+					aria-expanded="false"
+				>
+					Ordenar por
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'nombre','orientacion' => $orientacion])}}" class="dropdown-item">NOMBRE</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'apellido','orientacion' => $orientacion])}}" class="dropdown-item">APELLIDO</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'tipo_usuario','orientacion' => $orientacion])}}" class="dropdown-item">TIPO USUARIO</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'estado','orientacion' => $orientacion])}}" class="dropdown-item">ESTADO</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+						
+					</ul>
+			</div>			
+				
+				
 		@endif
 
 		@if ($tabla == 'clientes')
@@ -63,6 +93,25 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'trabajadores')
@@ -84,6 +133,27 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'tipo_trabajador','orientacion' => $orientacion])}}" class="dropdown-item">TIPO TRABAJADOR</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'sucursal_id','orientacion' => $orientacion])}}" class="dropdown-item">SUCURSAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'madera_proveedores')
@@ -107,6 +177,28 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'nivel_calidad','orientacion' => $orientacion])}}" class="dropdown-item">NIVEL CALIDAD</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'proveedor_rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT PROVEEDOR</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'madera_id','orientacion' => $orientacion])}}" class="dropdown-item">ID MADERA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'transportes')
@@ -132,6 +224,29 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'nombre_transportista','orientacion' => $orientacion])}}" class="dropdown-item">NOMBRE TRANSPORTISTA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'tipo_vehiculo','orientacion' => $orientacion])}}" class="dropdown-item">TIPO VEHICULO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'valor_viaje','orientacion' => $orientacion])}}" class="dropdown-item">VALOR VIAJE</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'proveedor_rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT PROVEEDOR</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'tornillos')
@@ -157,6 +272,29 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'cabeza','orientacion' => $orientacion])}}" class="dropdown-item">CABEZA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'tipo_rosca','orientacion' => $orientacion])}}" class="dropdown-item">TIPO ROSCA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'rosca','orientacion' => $orientacion])}}" class="dropdown-item">ROSCA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'punta','orientacion' => $orientacion])}}" class="dropdown-item">PUNTA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'telefono_proveedores')
@@ -176,6 +314,25 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'proveedor_rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'techumbres')
@@ -199,6 +356,29 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'material','orientacion' => $orientacion])}}" class="dropdown-item">MATERIAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'alto','orientacion' => $orientacion])}}" class="dropdown-item">ALTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'ancho','orientacion' => $orientacion])}}" class="dropdown-item">ANCHO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'largo','orientacion' => $orientacion])}}" class="dropdown-item">LARGO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'proveedores')
@@ -222,6 +402,27 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'razon_social','orientacion' => $orientacion])}}" class="dropdown-item">RAZON SOCIAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'ubicacion','orientacion' => $orientacion])}}" class="dropdown-item">UBICACIO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'productos')
@@ -247,6 +448,28 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'nombre','orientacion' => $orientacion])}}" class="dropdown-item">NOMBRE</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'nivel_demanda','orientacion' => $orientacion])}}" class="dropdown-item">NIVEL DEMANDA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'familia','orientacion' => $orientacion])}}" class="dropdown-item">FAMILIA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'planchas_construccion')
@@ -272,6 +495,28 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'material','orientacion' => $orientacion])}}" class="dropdown-item">MATERIAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'alto','orientacion' => $orientacion])}}" class="dropdown-item">ALTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'ancho','orientacion' => $orientacion])}}" class="dropdown-item">ANCHO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'largo','orientacion' => $orientacion])}}" class="dropdown-item">LARGO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'muebles')
@@ -299,6 +544,29 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'material','orientacion' => $orientacion])}}" class="dropdown-item">MATERIAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'acabado','orientacion' => $orientacion])}}" class="dropdown-item">ACABADO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'alto','orientacion' => $orientacion])}}" class="dropdown-item">ALTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'ancho','orientacion' => $orientacion])}}" class="dropdown-item">ANCHO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'largo','orientacion' => $orientacion])}}" class="dropdown-item">LARGO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'maderas')
@@ -326,6 +594,31 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'alto','orientacion' => $orientacion])}}" class="dropdown-item">ALTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'ancho','orientacion' => $orientacion])}}" class="dropdown-item">ANCHO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'largo','orientacion' => $orientacion])}}" class="dropdown-item">LARGO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'tipo_madera','orientacion' => $orientacion])}}" class="dropdown-item">TIPO MADERA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'tratamiento','orientacion' => $orientacion])}}" class="dropdown-item">TRATAMIENTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'sucursal_producto')
@@ -349,6 +642,28 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'sucursal_id','orientacion' => $orientacion])}}" class="dropdown-item">ID SUCURSAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'stock','orientacion' => $orientacion])}}" class="dropdown-item">STOCK</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'precio_compra','orientacion' => $orientacion])}}" class="dropdown-item">PRECIO COMPRA</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'inventarios')
@@ -368,6 +683,26 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'direccion_sucursal','orientacion' => $orientacion])}}" class="dropdown-item">DIRECCION SUCURSAL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'fotos')
@@ -389,6 +724,27 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'url','orientacion' => $orientacion])}}" class="dropdown-item">URL</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'imagenable_id','orientacion' => $orientacion])}}" class="dropdown-item">ID IMAGENABLE</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'ejecutivos')
@@ -417,6 +773,28 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'nombre','orientacion' => $orientacion])}}" class="dropdown-item">NOMBRE</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'apellido','orientacion' => $orientacion])}}" class="dropdown-item">APELLIDO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'proveedor_rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT PROVEEDOR</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'compras')
@@ -440,6 +818,28 @@
 			</tr>
 			@endforeach
 				</tbody>
+
+				<div class="dropdown">
+					<a
+						href="hola"
+						class="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdown-2"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Ordenar por
+					</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'id','orientacion' => $orientacion])}}" class="dropdown-item">ID</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'cantidad','orientacion' => $orientacion])}}" class="dropdown-item">CANTIDAD/a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'cliente_rut','orientacion' => $orientacion])}}" class="dropdown-item">RUT CLIENTE</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+							<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+							
+						</ul>
+				</div>	
 		@endif
 
 		@if ($tabla == 'clavos')
@@ -467,13 +867,41 @@
 		</tr>
 		@endforeach
 			</tbody>
+
+			<div class="dropdown">
+				<a
+					href="hola"
+					class="btn btn-primary dropdown-toggle"
+					type="button"
+					id="dropdown-2"
+					data-bs-toggle="dropdown"
+					aria-expanded="false"
+				>
+					Ordenar por
+				</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdown-2">
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'producto_id','orientacion' => $orientacion])}}" class="dropdown-item">ID PRODUCTO</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'material','orientacion' => $orientacion])}}" class="dropdown-item">MATERIAL</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'cabeza','orientacion' => $orientacion])}}" class="dropdown-item">CABEZA</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'caña','orientacion' => $orientacion])}}" class="dropdown-item">CAÑA</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'punta','orientacion' => $orientacion])}}" class="dropdown-item">PUNTA</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'longitud','orientacion' => $orientacion])}}" class="dropdown-item">LONGITUD</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'created_at','orientacion' => $orientacion])}}" class="dropdown-item">REGISTRO</a></li>
+						<li><a href="{{route('admin_visualizar_especifico_ordenado', ['tabla' => $tabla, 'sort_by' => 'updated_at','orientacion' => $orientacion])}}" class="dropdown-item">ULTIMA ACTUALIZACION</a></li>
+						
+					</ul>
+			</div>	
 	@endif
 
 		
 
 		</table>
 	</div>
+	
+	
 
-	<script src="../js/bootstrap.bundle.min.js"></script>
+
+	<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
