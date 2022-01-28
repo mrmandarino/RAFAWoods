@@ -13,6 +13,7 @@ class EjecutivoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Redirecionamiento al portal del inventario, en donde se acarrean todos los productos para utilizar.
     public function index()
     {
        // $productos = DB::table('productos')->distinct()->get('familia');
@@ -20,6 +21,7 @@ class EjecutivoController extends Controller
         return view('inventario.visualizar_inventario',compact('productos'));
     }
 
+    //Método responsivo para realizar dropdowns dinámicos en la selección de producto en el inventario.
     public function familias(Request $request){
         
         if(isset($request->texto)){
@@ -41,13 +43,22 @@ class EjecutivoController extends Controller
 
     }
 
-    public function test(Request $request)
+    public function detalle_producto(Request $request)
     {
+        
         $familia = $request->input('_producto');
         $id_producto = $request->input('_familia');
+        $tipo_submit = $request->input('action');
+        if($tipo_submit=="detalle"){
+            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto)->first();
+            $producto_en_bruto = DB::table('productos')->where('id',$id_producto)->first();
+            return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
+        }else{
+            if($tipo_submit=="edit")
+            dd($id_producto);
+        }
        
     }
-
 
     /**
      * Show the form for creating a new resource.

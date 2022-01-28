@@ -31,7 +31,7 @@ Route::get('/ventas', function () {
 
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
-Route::get('/test',[EjecutivoController::class, 'test'])->name('test3');
+Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
 
 
 Route::middleware(['auth'])->group(function(){

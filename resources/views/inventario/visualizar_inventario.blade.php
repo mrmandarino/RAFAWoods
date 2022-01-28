@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-    <form action="{{route('test3')}}" method="POST">
+    <form action="{{route('ver_detalle')}}" method="POST">
         @csrf
         @method('GET')
         <div>
@@ -42,13 +42,11 @@
         })
     </script>
 
-    <button>Submit</button>
+    <button type="submit" name="action" value="detalle">Detalle</button>
+    <button type="submit" name="action" value="editar">Editar</button>
 
     </form>
-
     
-     
-
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
