@@ -43,6 +43,7 @@
     </script>
 
     <button type="submit" name="action" value="detalle">Detalle</button>
+    <button type="submit" name="action" value="stock">Stock</button>
     <button type="submit" name="action" value="editar">Editar</button>
 
     </form>

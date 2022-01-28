@@ -45,19 +45,37 @@ class EjecutivoController extends Controller
 
     public function detalle_producto(Request $request)
     {
-        
-        $familia = $request->input('_producto');
-        $id_producto = $request->input('_familia');
-        $tipo_submit = $request->input('action');
-        if($tipo_submit=="detalle"){
+        if($request != null){
+            
+            $familia = $request->input('_producto');
+            $id_producto = $request->input('_familia');
+            $tipo_submit = $request->input('action');
             $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto)->first();
             $producto_en_bruto = DB::table('productos')->where('id',$id_producto)->first();
-            return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
-        }else{
-            if($tipo_submit=="edit")
-            dd($id_producto);
+            if($tipo_submit=="detalle"){  
+                return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
+            }else{
+                if($tipo_submit=="edit")
+                dd($id_producto);
+            }
         }
-       
+        dd($request->input('action'));
+            return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
+        
+        
+    }
+
+    public function detalle_producto_stock_actualizado(Request $request,$id)
+    {
+        $request->validate([
+            'stock' => ['required','integer'],
+        ]);
+        $update = DB::table('localizacions')->where('producto_id',$id)->update(['stock'=>$request->stock]);
+        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
+        $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
+        //return view('inventario.detalle_producto',['producto_en_stock'=>$producto_en_stock,'producto_en_bruto'=>$producto_en_bruto,'correcto'=>'Success!']);
+        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto','Success!');
+        //return back()->with('correcto','Success!');
     }
 
     /**
