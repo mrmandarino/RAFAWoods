@@ -22,8 +22,11 @@ main {
   width: 1.5rem;
   height: 100vh;
   
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
+}
+.no-shrink {
+  flex-shrink: 0;
+  height: 100vh;
+  
 }
 
 .bi {
