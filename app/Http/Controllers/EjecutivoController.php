@@ -45,22 +45,27 @@ class EjecutivoController extends Controller
 
     public function detalle_producto(Request $request)
     {
-        if($request != null){
-            
+        if($request->action != null){//para verificar desde donde se llama a este metodo, se verifica el contenido de action de la request, si action tiene un valor es porque la request viene desde la vista inicial, si action es null es porque la request viene de detalle de producto luego de cambiar el stock
+            //dd($request->_familia);
             $familia = $request->input('_producto');
-            $id_producto = $request->input('_familia');
+            $id_producto = $request->input('_familia');//es el id del producto en la tabla productos
             $tipo_submit = $request->input('action');
-            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto)->first();
+            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto)->first(); 
             $producto_en_bruto = DB::table('productos')->where('id',$id_producto)->first();
             if($tipo_submit=="detalle"){  
                 return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
-            }else{
-                if($tipo_submit=="edit")
-                dd($id_producto);
             }
         }
-        dd($request->input('action'));
+        else{
+            $var=$request->producto_en_stock_redirect;
+            $id_producto_redirect=$var['producto_id'];
+            //dd(json_encode($request->producto_en_stock_redirect));
+            
+            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
+            $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
             return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
+
+        }
         
         
     }
@@ -73,9 +78,7 @@ class EjecutivoController extends Controller
         $update = DB::table('localizacions')->where('producto_id',$id)->update(['stock'=>$request->stock]);
         $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
         $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
-        //return view('inventario.detalle_producto',['producto_en_stock'=>$producto_en_stock,'producto_en_bruto'=>$producto_en_bruto,'correcto'=>'Success!']);
-        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto','Success!');
-        //return back()->with('correcto','Success!');
+        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto','Stock actualizado correctamente');
     }
 
     /**
