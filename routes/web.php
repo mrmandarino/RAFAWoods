@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/ventas', function () {
-    return view('ventas.main_ventas');
+    return view('ventas.realizar_ventas');
 });
 
 Route::get('/ayudameme', function () {
