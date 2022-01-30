@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
-    
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -20,20 +21,29 @@
             -moz-user-select: none;
             user-select: none;
         }
+
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
         }
+
+        .tabla-scroll {
+            height: 300px !important;
+            overflow: scroll;
+        }
+
     </style>
 
 </head>
+
 <body>
-    
+
     @yield('content')
 
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/sidebars.js') }}"></script>
 </body>
+
 </html>
