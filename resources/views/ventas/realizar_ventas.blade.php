@@ -121,6 +121,7 @@
               <th class="text-center">cantidad</th>
               <th class="text-center">valor total</th>
               <th class="text-center">descartar</th>
+              
             </tr>
           </thead>
           <tbody>

@@ -42,9 +42,9 @@
         <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 280px ;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
+                <use xlink:href="#accesos" />
               </svg>
-              <span class="fs-4">Sidebar</span>
+              <span class="fs-4">Accesos Directos</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
@@ -53,7 +53,7 @@
                   <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home" />
                   </svg>
-                  Home
+                  Inicio
                 </a>
               </li>
               <li>
@@ -69,7 +69,7 @@
                   <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#table" />
                   </svg>
-                  Orders
+                  Histórico de Ventas
                 </a>
               </li>
               <li>
@@ -77,15 +77,23 @@
                   <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid" />
                   </svg>
-                  Products
+                  Productos
                 </a>
               </li>
               <li>
                 <a href="#" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle" />
+                    <use xlink:href="#inventario" />
                   </svg>
-                  Customers
+                  Inventario
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-white">
+                  <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#basedatos" />
+                  </svg>
+                  Base de Datos
                 </a>
               </li>
             </ul>
@@ -95,7 +103,7 @@
               <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
+                <strong>mandarino</strong>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -104,7 +112,7 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
               </ul>
             </div>
           </div>
