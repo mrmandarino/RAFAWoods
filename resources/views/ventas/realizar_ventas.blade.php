@@ -116,49 +116,24 @@
         <table class="table table-hover pb-3">
           <thead>
             <tr>
-              <th>Codigo</th>
-              <th>nombre</th>
-              <th>cantidad</th>
-              <th>valor total</th>
-              <th>descartar</th>
+              <th class="text-center">Codigo</th>
+              <th class="text-center">nombre</th>
+              <th class="text-center">cantidad</th>
+              <th class="text-center">valor total</th>
+              <th class="text-center">descartar</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>pino oregon 2x4</td>
-              <td>50</td>
-              <td>75.600</td>
-              <td><button type="button" class="btn btn-danger">✕</button></td>
+            @for ($i = 1; $i < 6; $i++)
+            <tr>      
+              <td class="text-center">{{$i}}</td>
+              <td class="text-center">pino oregon 2x4</td>
+              <td class="text-center">50</td>
+              <td class="text-center">75.600</td>
+              <td class="text-center" ><button type="button" class="btn btn-danger">✕</button></td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>tornillo 3"</td>
-              <td>54</td>
-              <td>34.900</td>
-              <td><button type="button" class="btn btn-danger">✕</button></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>olb 9mm multiplac</td>
-              <td>5</td>
-              <td>45.650</td>
-              <td><button type="button" class="btn btn-danger">✕</button></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>olb 9mm multiplac</td>
-              <td>5</td>
-              <td>45.650</td>
-              <td><button type="button" class="btn btn-danger">✕</button></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>olb 9mm multiplac</td>
-              <td>5</td>
-              <td>45.650</td>
-              <td><button type="button" class="btn btn-danger">✕</button></td>
-            </tr>
+            @endfor
+            
           </tbody>
         </table>
       </div>
