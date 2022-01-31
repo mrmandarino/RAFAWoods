@@ -4,7 +4,7 @@
 
 <div class="container">
 
-  <div class="row justify-content-center mt-3">
+  <div class="d-flex flex-column flex-shrink-0 row justify-content-center mt-3">
 
     <div class="row justify-content-evenly">
       {{-- formulario agregar producto a la venta (IZQUIERDA) --}}
