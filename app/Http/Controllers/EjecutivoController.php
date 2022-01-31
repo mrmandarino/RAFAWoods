@@ -46,24 +46,31 @@ class EjecutivoController extends Controller
     public function detalle_producto(Request $request)
     {
         if($request->action != null){//para verificar desde donde se llama a este metodo, se verifica el contenido de action de la request, si action tiene un valor es porque la request viene desde la vista inicial, si action es null es porque la request viene de detalle de producto luego de cambiar el stock
-            //dd($request->_familia);
             $familia = $request->input('_producto');
             $id_producto = $request->input('_familia');//es el id del producto en la tabla productos
             $tipo_submit = $request->input('action');
             $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto)->first(); 
             $producto_en_bruto = DB::table('productos')->where('id',$id_producto)->first();
+            $familia = EjecutivoController::detectar_nombre($producto_en_bruto->familia);
+            $producto_en_tabla = DB::table($familia)->where('producto_id',$id_producto)->first();
             if($tipo_submit=="detalle"){  
-                return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
+                return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
+            }else{
+                if($tipo_submit == "realizar_venta"){
+                    
+                }
             }
         }
         else{
             $var=$request->producto_en_stock_redirect;
             $id_producto_redirect=$var['producto_id'];
-            //dd(json_encode($request->producto_en_stock_redirect));
             
             $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
             $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
-            return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto'));
+            $nombre = $producto_en_bruto->familia;
+            $familia = EjecutivoController::detectar_nombre($nombre);
+            $producto_en_tabla = DB::table($familia)->where('producto_id',$id_producto_redirect)->first();
+            return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
 
         }
         
@@ -78,7 +85,87 @@ class EjecutivoController extends Controller
         $update = DB::table('localizacions')->where('producto_id',$id)->update(['stock'=>$request->stock]);
         $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
         $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
-        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto','Stock actualizado correctamente');
+        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto_stock','Stock actualizado correctamente');
+    }
+
+    public function actualizar_producto(Request $request,$id)
+    {
+        DB::table('productos')->where('id',$id)
+        ->update(['nombre'=>$request->nombre,
+        'descripcion'=>$request->descripcion,
+        'familia' => $request->familia]);
+        
+        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
+        $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
+        if($producto_en_bruto->familia == "Madera")
+        {
+            DB::table('maderas')->where('producto_id',$id)
+            ->update(['alto'=>$request->alto,
+            'ancho' => $request->ancho,
+            'largo' => $request->largo,
+            'tipo_madera' => $request->tipo_madera,
+            'tratamiento' => $request->tratamiento]);
+        }
+
+        if($producto_en_bruto->familia == "Clavo")
+        {
+            DB::table('clavos')->where('producto_id',$id)
+            ->update(['material'=>$request->material,
+            'cabeza' => $request->cabeza,
+            'punta' => $request->punta,
+            'longitud' => $request->longitud]);
+        }
+
+        if($producto_en_bruto->familia == 'Techumbre')
+        {
+            DB::table('techumbres')->where('producto_id',$id)
+            ->update(['material'=>$request->material,
+            'alto' => $request->alto,
+            'ancho' => $request->ancho,
+            'largo' => $request->largo]);
+        }
+
+        if($producto_en_bruto->familia == 'Plancha_construccion')
+        {
+            DB::table('plancha_construccions')->where('producto_id',$id)
+            ->update(['material'=>$request->material,
+            'alto' => $request->alto,
+            'ancho' => $request->ancho,
+            'largo' => $request->largo]);
+        }
+
+        if($producto_en_bruto->familia == 'Tornillo')
+        {
+            DB::table('tornillos')->where('producto_id',$id)
+            ->update(['cabeza' => $request->cabeza,
+            'tipo_rosca' => $request->tipo_rosca,
+            'separacion_rosca' => $request->separacion_rosca,
+            'punta' => $request->punta,
+            'rosca_parcial' => $request->rosca_parcial,
+            'vastago' => $request->vastago]);
+        }
+
+        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto_producto','Producto actualizado correctamente');
+
+    }
+
+    public function borrar_producto($id)
+    {
+        $producto_a_eliminar = Producto::find($id);
+        $producto_a_eliminar->delete();
+        return redirect()->route('ver_inventario')->with('correcto_eliminado','Has eliminado el producto correctamente');
+    }
+
+    public static function detectar_nombre($nombre)
+    {
+        $familia = "";
+        if($nombre == "Madera"){$familia="maderas";}
+        if($nombre == "Clavo"){$familia="clavos";}
+        if($nombre == "Techumbre"){$familia="techumbres";}
+        if($nombre == "Plancha_construccion"){$familia="plancha_construccions";}
+        if($nombre == "Tornillo"){$familia="tornillos";}
+        if($nombre == "Mueble"){$familia="muebles";}
+        return $familia;
     }
 
     /**

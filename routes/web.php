@@ -33,6 +33,8 @@ Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_invent
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
 Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
 Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');
+Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');
+Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');
 
 
 //Route::get('/detalle/{id}/stock',[EjecutivoController::class, 'detalle_producto_stock'])->name('ver_detalle_stock');

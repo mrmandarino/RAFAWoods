@@ -26,72 +26,73 @@
             </main>
 
             <aside class="col-md-4">
+                <div class="row justify-content-between">
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <!--Mensaje de stock con exito -->
+                        @if (session()->has('correcto_stock'))
+                            <div class="alert alert-success">
+                                {{ session()->get('correcto_stock') }}
+                            </div><br>
+                        @endif
+                    </div>
+        
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <!--Mensaje de editado con exito -->
+                        @if (session()->has('correcto_producto'))
+                            <div class="alert alert-success">
+                                {{ session()->get('correcto_producto') }}
+                            </div><br>
+                        @endif
+                    </div>
+        
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <!--Mensaje de eliminado con exito -->
+                        @if (session()->has('correcto'))
+                            <div class="alert alert-success">
+                                {{ session()->get('correcto') }}
+                            </div><br>
+                        @endif
+                    </div>
+        
+        
+                </div>
             </aside>
         </section>
 
-        <div class="row justify-content-between">
-			<div class="col-12 col-md-4 col-lg-3">
-				<!--Mensaje de stock con exito -->
-				@if (session()->has('correcto'))
-					<div class="alert alert-success">
-						{{ session()->get('correcto') }}
-					</div><br>
-				@endif
-			</div>
-
-			<div class="col-12 col-md-4 col-lg-3">
-				<!--Mensaje de editado con exito -->
-				@if (session()->has('correcto'))
-					<div class="alert alert-success">
-						{{ session()->get('correcto') }}
-					</div><br>
-				@endif
-			</div>
-
-			<div class="col-12 col-md-4 col-lg-3">
-				<!--Mensaje de eliminado con exito -->
-				@if (session()->has('correcto'))
-					<div class="alert alert-success">
-						{{ session()->get('correcto') }}
-					</div><br>
-				@endif
-			</div>
-
-
-        </div>
+        
 
 
         <section class="row widgets justify-content-between">
             <div class="col-12 col-md-4 col-lg-3">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"style="width:90%">Editar Stock</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar_stock"style="width:90%">Editar Stock</button>
                 <p class="d-none d-md-block d-lg-none">4 Columnas</p>
                 <p class="d-block d-md-none">12 Columnas</p>
 
-                <p>Permite modificar el stock actual del producto.</p>
+                <p>Esta opción permite modificar el stock actual del producto.</p>
             </div>
 
             <div class="col-12 col-md-4 col-lg-3">
-                <p class="d-none d-lg-block"><button style="width:90%">Editar Producto</button></p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar_producto"style="width:90%">Editar Producto</button>
                 <p class="d-none d-md-block d-lg-none">4 Columnas</p>
                 <p class="d-block d-md-none">12 Columnas</p>
 
-                <p>Permite editar la información y características del producto actual.</p>
+                <p>Esta opción permite editar la información y características del producto actual.</p>
             </div>
 
             <div class="col-12 col-md-4 col-lg-3">
-                <p class="d-none d-lg-block"><button style="width:90%">Eliminar Producto</button></p>
+                <form action="{{route('eliminar_producto',$producto_en_bruto->id)}}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" style="width:90%" onclick="return confirm('¿Estás seguro de querer eliminar este producto?')">Eliminar Producto</button>
+                </form>
                 <p class="d-none d-md-block d-lg-none">4 Columnas</p>
                 <p class="d-block d-md-none">12 Columnas</p>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.</p>
+                <p>Esta opción permite eliminar el producto del sistema.</p>
             </div>
         </section>
 
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editar_stock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -119,6 +120,95 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="editar_producto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:black">Detalle
+                        {{ $producto_en_bruto->nombre }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('ver_detalle_producto_actualizado',$producto_en_bruto->id)}}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
+                            <input type="text" value={{$producto_en_bruto->nombre}} class="form-control" name="nombre" id="nombre" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="descripcion" required>{{$producto_en_bruto->descripcion}}</textarea>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Familia</label>
+                            <input type="text" value={{$producto_en_bruto->familia}} class="form-control" name="familia" id="familia" required>
+
+                            @if ($producto_en_bruto->familia=="Madera" || $producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion" || $producto_en_bruto->familia=="Mueble")
+                            <label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+                            <input type="text" value="{{$producto_en_tabla->alto}}" class="form-control" name="alto" id="alto" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+                            <input type="text" value="{{$producto_en_tabla->ancho}}" class="form-control" name="ancho" id="ancho" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+                            <input type="text" value="{{$producto_en_tabla->largo}}" class="form-control" name="largo" id="largo" required>
+                            @endif
+
+                            @if ($producto_en_bruto->familia=="Madera")
+                            <label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label>
+                            <input type="text" value="{{$producto_en_tabla->tipo_madera}}" class="form-control" name="tipo_madera" id="tipo_madera" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label>
+                            <input type="text" value="{{$producto_en_tabla->tratamiento}}" class="form-control" name="tratamiento" id="tratamiento" required>
+                            @endif
+
+                            @if ($producto_en_bruto->familia=="Clavo")
+                            <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+                            <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+                            <input type="text" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
+                            <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Longitud</label>
+                            <input type="text" value="{{$producto_en_tabla->longitud}}" class="form-control" name="longitud" id="longitud" required>
+                            @endif
+
+                            @if ($producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion")
+                            <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+                            <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            @endif
+
+                            @if ($producto_en_bruto->familia=="Tornillo")
+                            <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+                            <input type="text" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label>
+                            <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" class="form-control" name="tipo_rosca" id="tipo_rosca" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label>
+                            <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" class="form-control" name="separacion_rosca" id="separacion_rosca" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
+                            <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label>
+                            <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" class="form-control" name="rosca_parcial" id="rosca_parcial" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Vastago</label>
+                            <input type="text" value="{{$producto_en_tabla->vastago}}" class="form-control" name="vastago" id="vastago" required>
+                            @endif
+
+                            @if ($producto_en_bruto->familia=="Mueble")
+                            <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+                            <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Acabado</label>
+                            <input type="text" value="{{$producto_en_tabla->acabado}}" class="form-control" name="acabado" id="acabado" required>
+                            @endif
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary"
+                                onclick="return confirm('¿Estás seguro del stock ingresado?')">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
