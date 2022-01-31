@@ -33,6 +33,17 @@
             overflow: scroll;
         }
 
+        .col-form-izq {
+            height: 400px;
+            align-self: center;
+            
+        }
+        
+        .form-izq {
+            display: flex;
+            justify-content: center;
+        }
+
     </style>
 
 </head>
