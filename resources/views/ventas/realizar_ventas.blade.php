@@ -53,11 +53,8 @@
             <div class="col-md-6">
               <label for="valor-u" class="form-label">Valor Unidad</label>
               <div class="input-group">
-                <label for="valor-u" class="input-group-text">$</label>
-                @php
-                    $name = 'rene';
-                @endphp
-                <input class="form-control" type="number" id="valor-u" value="5000" step="100">
+                <label for="valor_unidad" class="input-group-text">$</label>
+                <input class="form-control" type="number" id="valor_unidad" step="100" min="1">
               </div>
             </div>
             <div class="col-md-6">
