@@ -14,18 +14,29 @@
 
         <form class="row g-3 mt-3 col-form-izq form-izq">
           @csrf
-
+          
           <div class="row">
             <div class="col-md-12">
+              
               <div class="input-group">
-                <label class="input-group-text" for="inputGroupSelect01">Producto:</label>
-                <select class="form-select" id="inputGroupSelect01">
-                  <option selected>Elegir producto</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
+                <label for="producto" class="input-group-text">Producto:</label>
+                
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      Producto
+                  </button>
+                  <ul class="dropdown-menu menu-lg-start">
+                      <input class="form-control" id="producto" type="text" placeholder="Search..">
+                      <li><a href="#" class="dropdown-item">HTML</a></li>
+                      <li><a href="#" class="dropdown-item">CSS</a></li>
+                      <li><a href="#" class="dropdown-item">JavaScript</a></li>
+                      <li><a href="#"class="dropdown-item">jQuery</a></li>
+                      <li><a href="#"class="dropdown-item">Bootstrap</a></li>
+                      <li><a href="#"class="dropdown-item">Angular</a></li>
+                  </ul>
+              </div><br>
               </div>
+              
             </div>
           </div>
 

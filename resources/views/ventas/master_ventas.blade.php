@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
 
     <title>Dashboard Ventas</title>
 
@@ -43,8 +44,16 @@
             display: flex;
             justify-content: center;
         }
+        #myInput {
+          padding: 20px;
+          margin-top: -6px;
+          border: 0;
+          border-radius: 0;
+          background: #f1f1f1;
+        }
 
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
@@ -131,6 +140,16 @@
         @yield('content')
 
     </main>
+    <script>
+      $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $(".dropdown-menu li").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+    </script>
 
 
 
