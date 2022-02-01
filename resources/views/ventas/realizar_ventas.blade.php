@@ -13,6 +13,7 @@
       <div class="col-6 card p-3 bg-light mt-3 col-form-izq">
 
         <form class="row g-3 mt-3 col-form-izq form-izq">
+          @csrf
 
           <div class="row">
             <div class="col-md-12">
@@ -41,7 +42,7 @@
             <div class="col-md-6">
               <label for="stock" class="form-label">Stock</label>
               <div class="input-group">
-                <label for="codigo" class="input-group-text">#</label>
+                <label for="stock" class="input-group-text">#</label>
                 <input class="form-control" type="text" id="stock" value="69" aria-label="readonly input example"
                   readonly>
               </div>
@@ -50,28 +51,31 @@
 
           <div class="row mt-4">
             <div class="col-md-6">
-              <label for="inputAddress2" class="form-label">Valor Unidad</label>
+              <label for="valor-u" class="form-label">Valor Unidad</label>
               <div class="input-group">
-                <label for="codigo" class="input-group-text">$</label>
-                <input class="form-control" type="text" id="stock" value="4780">
+                <label for="valor-u" class="input-group-text">$</label>
+                @php
+                    $name = 'rene';
+                @endphp
+                <input class="form-control" type="number" id="valor-u" value="5000" step="100">
               </div>
             </div>
             <div class="col-md-6">
-              <label for="inputAddress2" class="form-label">Cantidad</label>
+              <label for="cantidad" class="form-label">Cantidad</label>
               <div class="input-group">
-                <label for="codigo" class="input-group-text">#</label>
-                <input class="form-control" type="text" id="stock" value="33">
+                <label for="cantidad" class="input-group-text">#</label>
+                <input class="form-control" id="cantidad" value="33" min="1">
               </div>
             </div>
 
           </div>
 
           <div class="row mt-4 justify-content-evenly">
-            <div class="col-md-5 mt-4">
+            <div class="col-md-4 mt-4">
               <button type="submit" class="btn btn-danger">Quitar Producto</button>
             </div>
-            <div class="col-md-5 mt-4">
-              <button type="submit" class="btn btn-primary">Agregar a la Compra</button>
+            <div class="col-md-4 mt-4">
+              <button type="submit" class="btn btn-success">Agregar a Compra</button>
             </div>
           </div>
         </form>
@@ -83,6 +87,7 @@
       {{-- formulario valor actual de la venta (DERECHA) --}}
       <div class="col-5 card p-3 bg-light ">
         <form class="row g-3">
+        @csrf
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
             <input type="email" class="form-control" id="inputEmail4">
