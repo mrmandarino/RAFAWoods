@@ -247,14 +247,14 @@
                                     var utilidad = document.getElementById('utilidad').value;//solo valor
                                     var precio_venta = document.getElementById('precio_venta')//objeto
 
-                                    precio_venta.value = precio_compra/(1-utilidad/100);//valor del objeto
+                                    precio_venta.value = Math.round(precio_compra/(1-utilidad/100));//valor del objeto
 
                                     
                                 }
                             </script>
 
                             <label for="recipient-name" class="col-form-label" style="color:black">Precio Venta</label>
-                            <input type="number" class="form-control" name="precio_venta" id="precio_venta" step="100" min="1" value="69">
+                            <input type="number" class="form-control" name="precio_venta" id="precio_venta" step="100" min="1" readonly>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
