@@ -33,6 +33,12 @@ class ProductoSeeder extends Seeder
         
         $productos=Producto::factory(20)->create();
         foreach ($productos as $producto){
+            Localizacion::create([
+                'sucursal_id' => 1,
+                'producto_id' => $producto->id,
+                'stock' => rand(50,100),
+                'precio_compra' => rand(5000,10000)
+            ]);
             Imagen::factory(1)->create([
                 'imagenable_id' => $producto->id,
                 'imagenable_tipo' => 'App\Models\Producto'
