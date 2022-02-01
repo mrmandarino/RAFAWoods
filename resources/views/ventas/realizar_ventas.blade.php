@@ -14,31 +14,24 @@
 
         <form class="row g-3 mt-3 col-form-izq form-izq">
           @csrf
-          
+
           <div class="row">
             <div class="col-md-12">
-              
               <div class="input-group">
+
                 <label for="producto" class="input-group-text">Producto:</label>
-                
-                <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      Producto
-                  </button>
-                  <ul class="dropdown-menu menu-lg-start">
-                      <input class="form-control" id="producto" type="text" placeholder="Search..">
-                      <li><a href="#" class="dropdown-item">HTML</a></li>
-                      <li><a href="#" class="dropdown-item">CSS</a></li>
-                      <li><a href="#" class="dropdown-item">JavaScript</a></li>
-                      <li><a href="#"class="dropdown-item">jQuery</a></li>
-                      <li><a href="#"class="dropdown-item">Bootstrap</a></li>
-                      <li><a href="#"class="dropdown-item">Angular</a></li>
-                  </ul>
-              </div><br>
+                <input class="form-control" list="datalistOptions" id="producto" placeholder="Escriba para buscar...">
+                <datalist id="datalistOptions">
+                  <option value="San Francisco">
+                  <option value="New York">
+                  <option value="Seattle">
+                  <option value="Los Angeles">
+                  <option value="Chicago">
+                </datalist>
               </div>
-              
             </div>
           </div>
+
 
           <div class="row mt-4">
             <div class="col-md-6">
@@ -95,7 +88,7 @@
       {{-- formulario valor actual de la venta (DERECHA) --}}
       <div class="col-5 card p-3 bg-light ">
         <form class="row g-3">
-        @csrf
+          @csrf
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
             <input type="email" class="form-control" id="inputEmail4">

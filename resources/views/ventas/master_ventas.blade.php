@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     
 
     <title>Dashboard Ventas</title>
@@ -13,7 +14,6 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -140,6 +140,7 @@
         @yield('content')
 
     </main>
+    
     <script>
       $(document).ready(function(){
         $("#myInput").on("keyup", function() {
