@@ -6,11 +6,12 @@ use App\Models\Clavo;
 use App\Models\Imagen;
 use App\Models\Madera;
 use App\Models\Mueble;
-use App\Models\Plancha_construccion;
 use App\Models\Producto;
-use App\Models\Techumbre;
 use App\Models\Tornillo;
+use App\Models\Techumbre;
+use App\Models\Localizacion;
 use Illuminate\Database\Seeder;
+use App\Models\Plancha_construccion;
 
 class ProductoSeeder extends Seeder
 {
