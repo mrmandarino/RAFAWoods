@@ -57,6 +57,7 @@
                 <br>
                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" name="action" value="detalle">Detalle</button>
                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" name="action" value="realizar_venta">Realizar Venta</button>
+                
                 </form>
 			</main>
 
@@ -71,6 +72,7 @@
                         @endif
                     </div>        
                 </div>
+                <a href="{{route('ver_detalle_precios')}}"><button type="button" class="btn btn-primary" data-bs-toggle="modal" name="action" value="consultar_precio">Consultar Precios</button></a>
             </aside>
 		</section>
 	</div>

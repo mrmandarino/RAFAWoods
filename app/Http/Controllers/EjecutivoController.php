@@ -21,6 +21,15 @@ class EjecutivoController extends Controller
         return view('inventario.visualizar_inventario',compact('productos'));
     }
 
+    //Redireccionamiento al portal de los precios de los productos del sistema.
+    public function index_precios()
+    {
+        $productos_en_bruto = DB::table('productos')->get();
+        $productos_en_stock = DB::table('localizacions')->get();
+        return view('inventario.portal_precios',compact('productos_en_bruto','productos_en_stock'));
+    }
+
+
     //Método responsivo para realizar dropdowns dinámicos en la selección de producto en el inventario.
     public function familias(Request $request){
         
@@ -56,8 +65,11 @@ class EjecutivoController extends Controller
             if($tipo_submit=="detalle"){  
                 return view('inventario.detalle_producto',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
             }else{
+                //Futuro redirect a formulario del René
                 if($tipo_submit == "realizar_venta"){
-                    
+                    //return view('inventario.realizar_venta_ejecutivo',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
+                }else{
+
                 }
             }
         }
