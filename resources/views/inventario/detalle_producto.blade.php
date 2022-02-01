@@ -89,9 +89,25 @@
 
                 <p>Esta opción permite eliminar el producto del sistema.</p>
             </div>
+
+            
+        </section>
+        
+
+        <section class="row widgets justify-content-between">
+            <div class="col-12 col-md-4 col-lg-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editar_precio_venta"style="width:90%">Editar Precio Venta</button>
+                <p class="d-none d-md-block d-lg-none">4 Columnas</p>
+                <p class="d-block d-md-none">12 Columnas</p>
+    
+                <p>Esta opción permite editar la información y características del producto actual.</p>
+            </div>
         </section>
 
+        <!---->
+
     </div>
+    
     <div class="modal fade" id="editar_stock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -120,7 +136,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="editar_producto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -206,6 +221,49 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editar_precio_venta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:black">Editar precio de venta de {{$producto_en_bruto->nombre}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('ver_detalle_precio_producto_actualizado', $producto_en_bruto->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label" style="color:black">Precio de Compra</label>
+                            <input type="number" value={{ $producto_en_stock->precio_compra }} class="form-control"
+                                name="precio_compra" id="precio_compra" readonly>
+                            <label for="recipient-name" class="col-form-label" style="color:black">Utilidad</label>
+                            <input type="number" value=1 class="form-control"
+                                name="utilidad" id="utilidad" min="1" max="100" onchange="calculo_ganancia()" required>
+
+                            <script>
+                                function calculo_ganancia()
+                                {
+                                    var precio_compra = document.getElementById('precio_compra');
+                                    var utilidad = document.getElementById('utilidad');
+
+                                    document.getElementById('precio_venta').value = precio_compra/(1-utilidad/100);
+                                    
+                                }
+                            </script>
+
+                            <label for="recipient-name" class="col-form-label" style="color:black">Precio Venta</label>
+                            <input type="number" class="form-control" name="precio_venta" id="precio_venta" step="100" min="1" readonly>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary"
+                                onclick="return confirm('¿Estás seguro del stock ingresado?')">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     

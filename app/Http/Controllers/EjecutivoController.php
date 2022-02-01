@@ -168,6 +168,13 @@ class EjecutivoController extends Controller
         return redirect()->route('ver_inventario')->with('correcto_eliminado','Has eliminado el producto correctamente');
     }
 
+    public function actualizar_precio_producto(Request $request,$id)
+    {
+        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
+
+        
+    }
+
     public static function detectar_nombre($nombre)
     {
         $familia = "";
