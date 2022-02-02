@@ -20,13 +20,11 @@
               <div class="input-group">
 
                 <label for="producto" class="input-group-text">Producto:</label>
-                <input class="form-control" list="datalistOptions" id="producto" placeholder="Escriba para buscar...">
-                <datalist id="datalistOptions">
-                  <option value="San Francisco">
-                  <option value="New York">
-                  <option value="Seattle">
-                  <option value="Los Angeles">
-                  <option value="Chicago">
+                <input class="form-control" list="datalist_productos" id="producto" placeholder="Escriba para buscar...">
+                <datalist id="datalist_productos">
+                  @foreach ($productos as $producto)
+                    <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
+                  @endforeach
                 </datalist>
               </div>
             </div>

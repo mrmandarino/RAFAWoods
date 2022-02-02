@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VentaController;
 
 
 /*
@@ -23,13 +24,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/ventas', function () {
+/*Route::get('/ventas', function () {
     return view('ventas.realizar_ventas');
-});
+});*/
 
 Route::get('/ayudameme', function () {
     return view('ventas.ayuda');
 });
+
+Route::resource('ventas',VentaController::class);
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/crear_usuario',[AdminController::class, 'create'])->name('admin_crear_usuario');
