@@ -11,5 +11,9 @@ class Techumbre extends Model
 
     protected $fillable = [
         'producto_id',
+        'material',
+        'alto',
+        'ancho',
+        'largo',
     ];
 }

@@ -30,6 +30,7 @@ Route::get('/ventas', function () {
 
 
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');
+Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
 Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
 Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');

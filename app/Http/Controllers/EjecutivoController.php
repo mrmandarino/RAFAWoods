@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clavo;
+use App\Models\Localizacion;
+use App\Models\Madera;
+use App\Models\Mueble;
 use App\Models\Producto;
+use App\Models\Tornillo;
+use App\Models\Techumbre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Plancha_construccion;
 
 class EjecutivoController extends Controller
 {
@@ -170,9 +177,102 @@ class EjecutivoController extends Controller
 
     public function actualizar_precio_producto(Request $request,$id)
     {
-        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
 
-        
+        DB::table('localizacions')->where('producto_id',$id)->update(['precio_venta'=>$request->precio_venta]);
+        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
+        $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
+        return redirect()->route('ver_detalle',['producto_en_stock_redirect'=>$producto_en_stock,'producto_en_bruto_redirect'=>$producto_en_bruto])->with('correcto_precio','Precio producto actualizado correctamente');
+    }
+
+    public function agregar_producto(Request $request)
+    {
+        $producto_nuevo = Producto::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'nivel_demanda' => 1,
+            'familia' => $request->familia,
+        ]);
+
+        $familia = EjecutivoController::detectar_nombre($producto_nuevo->familia);
+
+        if($familia == "maderas")
+        {
+            Madera::create([
+                'producto_id' => $producto_nuevo->id,
+                'alto' => $request->alto,
+                'ancho' => $request->ancho,
+                'largo' => $request->largo,
+                'tipo_madera' => $request->tipo_madera,
+                'tratamiento' => $request->tratamiento,
+            ]);
+        }
+
+        if($familia == "clavos")
+        {
+            Clavo::create([
+                'producto_id' => $producto_nuevo->id,
+                'material' => $request->material,
+                'cabeza' => $request->cabeza,
+                'punta' => $request->punta,
+                'longitud' => $request->longitud,
+            ]);
+        }
+
+        if($familia == "techumbres")
+        {
+            Techumbre::create([
+                'producto_id' => $producto_nuevo->id,
+                'material' => $request->material,
+                'alto' => $request->alto,
+                'ancho' => $request->ancho,
+                'largo' => $request->largo,
+            ]);
+        }
+
+        if($familia == "plancha_construccions")
+        {
+            Plancha_construccion::create([
+                'producto_id' => $producto_nuevo->id,
+                'material' => $request->material,
+                'alto' => $request->alto,
+                'ancho' => $request->ancho,
+                'largo' => $request->largo,
+            ]);
+        }
+
+        if($familia == "tornillos")
+        {
+            Tornillo::create([
+                'producto_id' => $producto_nuevo->id,
+                'cabeza' => $request->cabeza,
+                'tipo_rosca' => $request->tipo_rosca,
+                'separacion_rosca' => $request->separacion_rosca,
+                'punta' => $request->punta,
+                'rosca_parcial' => $request->rosca_parcial,
+                'vastago' => $request->vastago,
+            ]);
+        }
+
+        if($familia == "muebles")
+        {
+            Mueble::create([
+                'producto_id' => $producto_nuevo->id,
+                'material' => $request->material,
+                'acabado' => $request->acabado,
+                'alto' => $request->alto,
+                'ancho' => $request->ancho,
+                'largo' => $request->largo,
+            ]);
+        }
+
+        Localizacion::create([
+            'sucursal_id' => 1,
+            'producto_id' => $producto_nuevo->id,
+            'stock' => $request->stock,
+            'precio_compra' =>$request->precio_compra,
+        ]);
+
+        return redirect()->route('ver_inventario')->with('correcto_agregado','Has ingresado el nuevo producto correctamente');
     }
 
     public static function detectar_nombre($nombre)

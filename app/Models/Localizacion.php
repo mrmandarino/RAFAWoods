@@ -13,5 +13,6 @@ class Localizacion extends Model
         'sucursal_id',
         'producto_id',
         'stock',
+        'precio_compra',
     ];
 }

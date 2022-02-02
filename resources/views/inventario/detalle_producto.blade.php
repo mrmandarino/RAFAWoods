@@ -25,38 +25,53 @@
                 <p>{{ $producto_en_bruto->descripcion }}</p>
             </main>
 
-            <aside class="col-md-4">
-                <div class="row justify-content-between">
-                    <div class="col-12 col-md-4 col-lg-3">
-                        <!--Mensaje de stock con exito -->
-                        @if (session()->has('correcto_stock'))
-                            <div class="alert alert-success">
-                                {{ session()->get('correcto_stock') }}
-                            </div><br>
-                        @endif
-                    </div>
-        
-                    <div class="col-12 col-md-4 col-lg-3">
-                        <!--Mensaje de editado con exito -->
-                        @if (session()->has('correcto_producto'))
-                            <div class="alert alert-success">
-                                {{ session()->get('correcto_producto') }}
-                            </div><br>
-                        @endif
-                    </div>
-        
-                    <div class="col-12 col-md-4 col-lg-3">
-                        <!--Mensaje de eliminado con exito -->
-                        @if (session()->has('correcto'))
-                            <div class="alert alert-success">
-                                {{ session()->get('correcto') }}
-                            </div><br>
-                        @endif
-                    </div>
-        
-        
+            <div class="row justify-content-between">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <!--Mensaje de stock con exito -->
+                    @if (session()->has('correcto_stock'))
+                        <div class="alert alert-success">
+                            {{ session()->get('correcto_stock') }}
+                        </div><br>
+                    @endif
                 </div>
-            </aside>
+    
+                <div class="col-12 col-md-4 col-lg-3">
+                    <!--Mensaje de editado con exito -->
+                    @if (session()->has('correcto_producto'))
+                        <div class="alert alert-success">
+                            {{ session()->get('correcto_producto') }}
+                        </div><br>
+                    @endif
+                </div>
+    
+                <div class="col-12 col-md-4 col-lg-3">
+                    <!--Mensaje de eliminado con exito -->
+                    @if (session()->has('correcto'))
+                        <div class="alert alert-success">
+                            {{ session()->get('correcto') }}
+                        </div><br>
+                    @endif
+                </div>
+                
+                <div class="col-12 col-md-4 col-lg-3">
+                    <!--Mensaje de eliminado con exito -->
+                    @if (session()->has('correcto_precio'))
+                        <div class="alert alert-success">
+                            {{ session()->get('correcto_precio') }}
+                        </div><br>
+                    @endif
+                </div>
+    
+                <div class="col-12 col-md-4 col-lg-3">
+                    <!--Mensaje de eliminado con exito -->
+                    @if (session()->has('correcto_agregado'))
+                        <div class="alert alert-success">
+                            {{ session()->get('correcto_agregado') }}
+                        </div><br>
+                    @endif
+                </div>
+    
+            </div>
         </section>
 
         
@@ -246,20 +261,26 @@
                                     var precio_compra = document.getElementById('precio_compra').value;//solo valor
                                     var utilidad = document.getElementById('utilidad').value;//solo valor
                                     var precio_venta = document.getElementById('precio_venta')//objeto
+                                    
+                                    var precio_venta_bruto = Math.round(precio_compra/(1-utilidad/100));//precio de venta sin redondear
+                                    var resto = precio_venta_bruto%100;
+                                    var precio_venta_def = precio_venta_bruto - resto;
 
-                                    precio_venta.value = Math.round(precio_compra/(1-utilidad/100));//valor del objeto
-
+                                    precio_venta.value = precio_venta_def;//valor del objeto definitivo y redondeado
+                                    
                                     
                                 }
                             </script>
 
+                            <label for="recipient-name" class="col-form-label" style="color:black">Precio Venta Actual</label>
+                            <input type="number" value={{$producto_en_stock->precio_venta}} class="form-control" name="precio_venta_actual" id="precio_venta_actual" step="100" min="1" readonly>
                             <label for="recipient-name" class="col-form-label" style="color:black">Precio Venta</label>
                             <input type="number" class="form-control" name="precio_venta" id="precio_venta" step="100" min="1" readonly>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary"
-                                onclick="return confirm('¿Estás seguro del stock ingresado?')">Confirmar</button>
+                                onclick="return confirm('¿Estás seguro del precio ingresado?')">Confirmar</button>
                         </div>
                     </form>
                 </div>

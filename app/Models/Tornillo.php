@@ -15,5 +15,11 @@ class Tornillo extends Model
 
     protected $fillable = [
         'producto_id',
+        'cabeza',
+        'tipo_rosca',
+        'separacion_rosca',
+        'punta',
+        'rosca_parcial',
+        'vastago',
     ];
 }
