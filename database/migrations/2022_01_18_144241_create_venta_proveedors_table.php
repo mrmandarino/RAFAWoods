@@ -19,10 +19,10 @@ class CreateVentaProveedorsTable extends Migration
             $table->integer('nivel_calidad');
            
             $table->string('proveedor_rut');
-            $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade');
+            $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade')->onUpdate('cascade');
 
             $table->unsignedBigInteger('madera_id');
-            $table->foreign('madera_id')->references('producto_id')->on('maderas')->onDelete('cascade');
+            $table->foreign('madera_id')->references('producto_id')->on('maderas')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

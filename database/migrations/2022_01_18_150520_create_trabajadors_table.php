@@ -15,11 +15,11 @@ class CreateTrabajadorsTable extends Migration
     {
         Schema::create('trabajadors', function (Blueprint $table) {
             $table->string('usuario_rut')->primary();
-            $table->foreign('usuario_rut')->references('rut')->on('users')->onDelete('cascade');
+            $table->foreign('usuario_rut')->references('rut')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('tipo_trabajador',[Trabajador::ejecutivo, Trabajador::vendedor]);
             
             $table->unsignedBigInteger('sucursal_id')->nullable();
-            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('set null');
+            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('set null')->onUpdate('cascade');
 
 
             $table->timestamps();
