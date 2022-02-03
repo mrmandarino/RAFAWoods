@@ -2,6 +2,78 @@
 @section('content')
 @include('ventas.partials.iconos')
 
+  {{-- script de carrito de compras --}}
+
+<script type = text/javascript defer>
+$(document).ready(function() {
+	const bclick = document.getElementById('boton_agregar_a_compra');
+  const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
+	bclick.addEventListener('click',addToCartClicked);
+
+  function addToCartClicked(event) 
+  {
+    const button = event.target;
+    const productos = document.getElementById('datalist_productos');
+    const producto_seleccionado = document.querySelector('#nombre_producto');
+    const opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
+    
+    
+    const nombre_producto = producto_seleccionado.value;//Nombre del Producto
+    const id_producto = opSelected.getAttribute('data-value');//Id producto seleccionado
+    const cantidad_producto = document.getElementById('cantidad').value;//Cantidad de producto a comprar
+    const valor_producto = document.getElementById('valor_unidad').value;//Valor del producto a comprar
+
+    addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_producto);
+  }
+
+  function addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_producto)
+  {
+    
+   // console.log('addItemToShoppingCart -> shoppingCartItemsContainer',shoppingCartItemsContainer);
+    const shoppingCartRow = document.createElement('div');
+    const shoppingCarContent = `
+    <div class="row shoppingCartItem">
+      <div class="col-6">
+            <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <h6 class="shopping-cart-item-id shoppingCartItemTitle text-truncate ml-3 mb-0">${id_producto}</h6>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-3 mb-0">${nombre_producto}</h6>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <p class="item-quant mb-0 shoppingCartItemPrice">${cantidad_producto}</p>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
+                <p class="item-price mb-0 shoppingCartItemPrice">${valor_producto}</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div
+                class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
+                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number"
+                    value="1">
+                <button class="btn btn-danger buttonDelete" type="button">X</button>
+            </div>
+        </div>
+    </div>
+    `;
+
+    shoppingCartRow.innerHTML = shoppingCarContent;
+    shoppingCartItemsContainer.append(shoppingCartRow);
+
+  }
+  
+});
+
+
+</script>
+
 <div class="container">
 
   {{-- Fila global 2 formularios y Tabla --}}
@@ -20,7 +92,7 @@
               <div class="input-group">
 
                 <label for="producto" class="input-group-text">Producto:</label>
-                <input class="form-control" list="datalist_productos" id="producto" placeholder="Escriba para buscar...">
+                <input class="form-control" list="datalist_productos" id="nombre_producto" placeholder="Escriba para buscar...">
                 <datalist id="datalist_productos">
                   @foreach ($productos as $producto)
                     <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
@@ -56,7 +128,7 @@
               <label for="valor-u" class="form-label">Valor Unidad</label>
               <div class="input-group">
                 <label for="valor_unidad" class="input-group-text">$</label>
-                <input class="form-control" type="number" id="valor_unidad" step="100" min="1">
+                <input class="form-control" type="number" id="valor_unidad" step="1000">
               </div>
             </div>
             <div class="col-md-6">
@@ -74,7 +146,7 @@
               <button type="submit" class="btn btn-danger">Quitar Producto</button>
             </div>
             <div class="col-md-4 mt-4">
-              <button type="submit" class="btn btn-success">Agregar a Compra</button>
+              <button type="button" id="boton_agregar_a_compra" class="btn btn-success">Agregar a Compra</button>
             </div>
           </div>
         </form>
@@ -136,34 +208,39 @@
 
     {{-- tabla con detalle de la venta (ABAJO) --}}
 
-    <div class="row mt-3 px-5">
+    <section class="shopping-cart">
+      <div class="container">
+        <h1 class="text-center">CARRITO</h1>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <div class="shopping-cart-header">
+                    <h6>Id Producto</h6>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="shopping-cart-header">
+                    <h6 class="text-truncate">Nombre</h6>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="shopping-cart-header">
+                    <h6>Cantidad</h6>
+                </div>
+            </div>
 
-      <div class="col-md-12 card bg-light tabla-scroll">
-        <table class="table table-hover pb-3">
-          <thead>
-            <tr>
-              <th class="text-center">Codigo</th>
-              <th class="text-center">nombre</th>
-              <th class="text-center">cantidad</th>
-              <th class="text-center">valor total</th>
-              <th class="text-center">descartar</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            @for ($i = 1; $i < 6; $i++) <tr>
-              <td class="text-center">{{$i}}</td>
-              <td class="text-center">pino oregon 2x4</td>
-              <td class="text-center">50</td>
-              <td class="text-center">75.600</td>
-              <td class="text-center"><button type="button" class="btn btn-danger">✕</button></td>
-              </tr>
-              @endfor
-
-          </tbody>
-        </table>
+            <div class="col-4">
+              <div class="shopping-cart-header">
+                  <h6>Precio</h6>
+              </div>
+          </div>
+        </div>
+        <!-- ? START SHOPPING CART ITEMS -->
+        <div class="shopping-cart-items shoppingCartItemsContainer">
+            
+        </div>
       </div>
-    </div>
+    </section>
 
   </div>
 

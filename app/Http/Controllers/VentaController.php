@@ -25,7 +25,8 @@ class VentaController extends Controller
     public function create()
     {
         $productos = DB::table('productos')->get();
-        return view('ventas.realizar_ventas',compact('productos'));
+        $productos_en_stock = DB::table('localizacions')->get();
+        return view('ventas.realizar_ventas',compact('productos','productos_en_stock'));
     }
 
     /**
