@@ -28,24 +28,53 @@ $(document).ready(function() {
 
   function addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final)
   {
-    
-    console.log('addItemToShoppingCart -> shoppingCartItemsContainer',shoppingCartItemsContainer);
     const shoppingCartRow = document.createElement('tr');
-    const shoppingCarContent = `
+    shoppingCartRow.setAttribute('class','shoppingCartItem');
+    shoppingCartRow.setAttribute('id','item_carrito');
+    const shoppingCartContent = `
               <tr>
-              <td class="text-center">${id_producto}</td>
-              <td class="text-center">${nombre_producto}</td>
-              <td class="text-center">${cantidad_producto}</td>
-              <td class="text-center">${valor_final}</td>
+              <td class="text-center" id="id_item_carrito">${id_producto}</td>
+              <td class="text-center" id="nombre_item_carrito">${nombre_producto}</td>
+              <td class="text-center" id="cantidad_item_carrito">${cantidad_producto}</td>
+              <td class="shoppingCartItemPrice text-center" id="valor_item_carrito">${valor_final}</td>
               <td class="text-center"><button type="button" class="btn btn-danger">✕</button></td>
               </tr>
     `;
 
-    shoppingCartRow.innerHTML = shoppingCarContent;
+    shoppingCartRow.innerHTML = shoppingCartContent;
     shoppingCartItemsContainer.append(shoppingCartRow);
 
+    shoppingCartRow.querySelector('.btn-danger').addEventListener('click',removeShoppingCartItem);
+    update_total_compra();
+  }
+
+  function update_total_compra() 
+  {
+    let total = 0;
+    // const total_compra = document.getElementById('total_compra');
+    // const total_compra_string = total_compra.value;
+    // const total_compra_int = parseInt(total_compra_string);
+    // total_compra.value =(total_compra_int + valor_final);
+
+    const items_carrito = document.querySelectorAll('.shoppingCartItem');
+    
+    items_carrito.forEach((item_carrito)=>{
+      const valor_item_carrito = item_carrito.querySelector('.shoppingCartItemPrice');
+      const valor_item_carrito_number = Number(valor_item_carrito.textContent);
+      total = total + valor_item_carrito_number;
+    });
+    const shoppingCartTotal = document.getElementById('total_compra');
+    shoppingCartTotal.value = total;
+    
   }
   
+
+  function removeShoppingCartItem(event)
+  {
+    const button_clicked = event.target;
+    button_clicked.closest('.shoppingCartItem').remove();
+    update_total_compra();
+  }
 });
 
 
@@ -73,7 +102,7 @@ $(document).ready(function() {
                 <datalist id="datalist_productos">
                   @foreach ($productos as $producto)
                     <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
-                  @endforeach
+                    @endforeach
                 </datalist>
               </div>
             </div>
@@ -85,7 +114,7 @@ $(document).ready(function() {
               <label for="codigo" class="form-label">Código</label>
               <div class="input-group">
                 <label for="codigo" class="input-group-text">№</label>
-                <input class="form-control" type="text" id="codigo" value="12" aria-label="readonly input example"
+                <input class="form-control" type="text" id="codigo" value="" aria-label="readonly input example"
                   readonly>
               </div>
             </div>
@@ -108,6 +137,8 @@ $(document).ready(function() {
                 <input class="form-control" type="number" id="valor_unidad" step="1000">
               </div>
             </div>
+
+            
             <div class="col-md-6">
               <label for="cantidad" class="form-label">Cantidad</label>
               <div class="input-group">
@@ -138,7 +169,7 @@ $(document).ready(function() {
           @csrf
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Total</label>
-            <input type="text" class="form-control" id="total_compra" readonly>
+            <input type="number" class="form-control" id="total_compra" value="0" readonly>
           </div>
           <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Password</label>
@@ -232,7 +263,7 @@ $(document).ready(function() {
             </tr>
           </thead>
           <tbody class="shoppingCartItemsContainer">
-
+            
           </tbody>
         </table>
       </div>
