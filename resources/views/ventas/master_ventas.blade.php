@@ -61,6 +61,7 @@
             display: flex;
             justify-content: center;
         }
+        
 
         #myInput {
           padding: 20px;

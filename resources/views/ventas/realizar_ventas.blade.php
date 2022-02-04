@@ -181,23 +181,39 @@ $(document).ready(function() {
           @csrf
           <div class="col-md-12">
             <div class="input-group">
-            <label for="codigo" class="input-group-text">Total Venta:</label>
-            <input class="form-control form-control-lg " type="number" id="total_compra" value="0" placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
+            <label for="total_compra" class="input-group-text">Total Venta:</label>
+            <input class="form-control form-control-lg" type="number" id="total_compra" value="0" placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
           </div>
           
-          <div class="col-12">
-            <label for="inputAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+          <div class="col-6">
+            <label for="fecha" class="form-label">Fecha</label>
+            <div class="input-group">
+              <label for="fecha" class="input-group-text">&#x1F4C6;</label>
+              <input type="text" class="form-control" id="fecha" readonly>
+            </div>
           </div>
-          <div class="col-12">
-            <label for="inputAddress2" class="form-label">Address 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+
+          <div class="col-6">
+            <label for="fecha" class="form-label">Nro. Compra</label>
+            <div class="input-group">
+              <label for="fecha" class="input-group-text">№</label>
+              <input type="text" class="form-control" id="fecha" readonly>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity">
+          
+          <div class="col-6">
+            <label for="fecha" class="form-label">Medio de Pago</label>
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Seleccionar...</option>
+              <option value="1">Efectivo 💵</option>
+              <option value="2">T. Débito 💳</option>
+              <option value="3">T. Crédito 💳</option>
+              <option value="4">Transferencia 🏦</option>
+            </select>
           </div>
+          
+          
           <div class="col-md-4">
             <label for="inputState" class="form-label">State</label>
             <select id="inputState" class="form-select">
@@ -225,40 +241,8 @@ $(document).ready(function() {
 
     </div>
 
-    {{-- tabla con detalle de la venta (ABAJO) --}}
-
-    <!--<section class="shopping-cart">
-      <div class="container">
-        <h1 class="text-center">CARRITO</h1>
-        <hr>
-        <div class="row">
-            <div class="col-3">
-                <div class="shopping-cart-header">
-                    <h6 class="text-center">Id Producto</h6>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="shopping-cart-header">
-                    <h6 class="text-center">Nombre</h6>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="shopping-cart-header">
-                    <h6 class="text-center">Cantidad</h6>
-                </div>
-            </div>
-
-            <div class="col-3">
-              <div class="shopping-cart-header">
-                  <h6 class="text-center">Precio</h6>
-              </div>
-          </div>
-        </div>
-        <div class="shopping-cart-items shoppingCartItemsContainer">
-            
-        </div>
-      </div>
-    </section>-->
+    {{-- Tabla con detalle de producto --}}
+    
     <div class="row mt-3 px-5">
 
       <div class="col-md-12 card bg-light tabla-scroll">
@@ -281,6 +265,18 @@ $(document).ready(function() {
     </div>
 
   </div>
+
+
+  <script type="text/javascript" >
+  //poner fecha al abrir la pagina
+  const date = new Date();
+  const fecha_mysql = date.toISOString().split("T")[0];
+  var fecha_js = document.getElementById('fecha');
+  fecha_js.value = fecha_mysql;
+  </script>
+
+
+
   <script type="text/javascript">
   //var arreglo = parseInt('<?php echo $productos; ?>');
   <?php
@@ -301,6 +297,8 @@ $(document).ready(function() {
 
   function cargar_datos(){
 
+    
+    
     //obtener id segun seleccion en datalist (producto)
     const productos = document.getElementById('datalist_productos');
     const producto_seleccionado = document.querySelector('#nombre_producto');
@@ -311,6 +309,7 @@ $(document).ready(function() {
     var codigo_js = document.getElementById('codigo');
     var stock_js = document.getElementById('stock');
     var valor_unidad_js = document.getElementById('valor_unidad');
+    
 
     var stock_p = 0;
     var valor_unidad_p = 0;
@@ -328,6 +327,7 @@ $(document).ready(function() {
     codigo_js.value = id_producto;
     stock_js.value = stock_p;
     valor_unidad_js.value = valor_unidad_p;
+    
     
     
   }
