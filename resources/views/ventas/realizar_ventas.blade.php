@@ -46,6 +46,7 @@ $(document).ready(function() {
 
     shoppingCartRow.querySelector('.btn-danger').addEventListener('click',removeShoppingCartItem);
     update_total_compra();
+    quitar_producto();
   }
 
   function update_total_compra() 
@@ -64,7 +65,8 @@ $(document).ready(function() {
       total = total + valor_item_carrito_number;
     });
     const shoppingCartTotal = document.getElementById('total_compra');
-    shoppingCartTotal.value = total;
+
+    shoppingCartTotal.value = Intl.NumberFormat("de-DE").format(total);
     
   }
   
@@ -134,7 +136,7 @@ $(document).ready(function() {
               <label for="stock" class="form-label">Stock</label>
               <div class="input-group">
                 <label for="stock" class="input-group-text">#</label>
-                <input class="form-control" type="text" id="stock" value="69" aria-label="readonly input example"
+                <input class="form-control" type="text" id="stock" aria-label="readonly input example"
                   readonly>
               </div>
             </div>
@@ -162,7 +164,7 @@ $(document).ready(function() {
 
           <div class="row justify-content-evenly botones-izq ">
             <div class="col-md-4">
-              <button type="submit" class="btn btn-danger">Quitar Producto</button>
+              <button type="button" class="btn btn-danger" onclick="quitar_producto()">Quitar Producto</button>
             </div>
             <div class="col-md-4 ">
               <button type="button" id="boton_agregar_a_compra" class="btn btn-success">Agregar a Venta</button>
@@ -187,7 +189,7 @@ $(document).ready(function() {
           <div class="col-md-12">
             <div class="input-group">
             <label for="total_compra" class="input-group-text">Total Venta:</label>
-            <input class="form-control form-control-lg" type="number" id="total_compra" value="0" placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
+            <input class="form-control form-control-lg" type="text" id="total_compra" value="0" placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
           </div>
           
@@ -266,7 +268,24 @@ $(document).ready(function() {
   fecha_js.value = fecha_mysql;
   </script>
 
+  {{-- boton quitar producto --}}
+  
+  <script type="text/javascript" >
+  function quitar_producto(){
+    
+    var nombre_producto_js = document.getElementById('nombre_producto');
+    var codigo_js = document.getElementById('codigo');
+    var stock_js = document.getElementById('stock');
+    var valor_unidad_js = document.getElementById('valor_unidad');
 
+    nombre_producto_js.value = "";
+    codigo_js.value = "";
+    stock_js.value = "";
+    valor_unidad_js.value = "";
+  }
+    
+  
+  </script>
 
   <script type="text/javascript">
   //var arreglo = parseInt('<?php echo $productos; ?>');
