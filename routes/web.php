@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/admin/visualizar/{tabla}',[AdminController::class, 'guardar'])->name('admin_guardar_datos');
     Route::get('/admin/visualizar/{tabla}/editar_fila/{key}/{key2?}',[AdminController::class, 'edit'])->name('admin_editar_fila');
     Route::put('/admin/visualizar/{tabla}/editar_fila/{key}/{key2?}',[AdminController::class, 'update'])->name('admin_update_fila');
-    Route::get('/admin/visualizar/{tabla}/borrar_fila/{key}',[AdminController::class, 'borrar'])->name('admin_borrar_datos');
+    Route::get('/admin/visualizar/{tabla}/borrar_fila/{key}/{key2?}',[AdminController::class, 'borrar'])->name('admin_borrar_datos');
     
 
 

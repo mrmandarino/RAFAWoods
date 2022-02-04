@@ -757,28 +757,34 @@
             <label for="" class="form-label">Sucursal</label>
             <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="1">
                 @foreach ($sucursales as $sucursal)
-                <option value={{$sucursal->id}} {{ old('sucursal_id')==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->direccion_sucursal}}</option> 
+                <option value={{$sucursal->id}} {{ $dato->sucursal_id==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->direccion_sucursal}}</option> 
                 @endforeach  
             </select>
+            @error('sucursal_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Producto</label>
             <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
                 @foreach ($productos as $producto)
-                <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
                 @endforeach  
             </select>
+            @error('producto_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Stock</label>
-            <input id="stock" name="stock" type="number" class="form-control" tabindex="3" value="{{old('stock')}}">
+            <input id="stock" name="stock" type="number" class="form-control" tabindex="3" value="{{$dato->stock}}">
             @error('stock')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Precio compra</label>
-            <input id="precio_compra" name="precio_compra" type="number" class="form-control" tabindex="4" value="{{old('precio_compra')}}">
+            <input id="precio_compra" name="precio_compra" type="number" class="form-control" tabindex="4" value="{{$dato->precio_compra}}">
             @error('precio_compra')
                 <small style="color:red;">*{{$message}}</small>
             @enderror

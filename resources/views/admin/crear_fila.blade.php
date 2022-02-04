@@ -814,6 +814,9 @@
                 <option value={{$sucursal->id}} {{ old('sucursal_id')==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->direccion_sucursal}}</option> 
                 @endforeach  
             </select>
+            @error('sucursal_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Producto</label>
@@ -822,6 +825,9 @@
                 <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
                 @endforeach  
             </select>
+            @error('producto_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Stock</label>

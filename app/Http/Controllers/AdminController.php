@@ -526,6 +526,13 @@ class AdminController extends Controller
                 'stock' => ['required', 'integer', 'gte:1'],
                 'precio_compra' => ['required','integer', 'gte:0'],
             ]);
+            $existencia=DB::table('localizacions')->where('sucursal_id',$request->get('sucursal_id'))->where('producto_id',$request->get('producto_id'))->first();
+            if($existencia != null){ 
+                $request->validate([
+                    'sucursal_id' => ['unique:localizacions'],
+                    'producto_id' => ['unique:localizacions'],
+                ]);
+            }
             
             DB::insert('insert into localizacions (sucursal_id, producto_id, stock, precio_compra, created_at, updated_at) values (?, ?, ?, ?, ?, ?)', [$request->get('sucursal_id'),$request->get('producto_id'),$request->get('stock'),$request->get('precio_compra'),date("Y-m-d H:i:s"),date("Y-m-d H:i:s")]);
             $datos=DB::table('localizacions')->get();
@@ -650,7 +657,7 @@ class AdminController extends Controller
             $dato=Mueble::find($key);
         }elseif ($tabla=='maderas') {
             $dato=Madera::find($key);
-        }elseif ($tabla=='sucursal_producto') { //ojo
+        }elseif ($tabla=='sucursal_producto') { 
             $dato=DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->first();
         }elseif ($tabla=='inventarios') {
             $dato=Inventario::find($key);
@@ -1150,9 +1157,21 @@ class AdminController extends Controller
                 'stock' => ['required', 'integer', 'gte:1'],
                 'precio_compra' => ['required','integer', 'gte:0'],
             ]);
-            $aux=DB::tabla('localizacions')->where('sucursal_id',$request->get('sucursal_id'))->where('producto_id',$request->get('producto_id'));
 
-            DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['sucursal_id' => $request->get('sucursal_id'),'producto_id' => $request->get('producto_id')]);
+            if ($key == $request->get('sucursal_id') && $key2 == $request->get('producto_id')){ // si se refiere al mismo registro
+                DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['stock' => $request->get('stock'),'precio_compra' => $request->get('precio_compra')]);
+                
+            }else{
+                $existencia=DB::table('localizacions')->where('sucursal_id',$request->get('sucursal_id'))->where('producto_id',$request->get('producto_id'))->first();
+                if($existencia != null){ 
+                    $request->validate([
+                        'sucursal_id' => ['unique:localizacions'],
+                        'producto_id' => ['unique:localizacions'],
+                    ]);    
+                }
+                DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['sucursal_id' => $request->get('sucursal_id'),'producto_id' => $request->get('producto_id'),'stock' => $request->get('stock'),'precio_compra' => $request->get('precio_compra')]);    
+            }
+
             $datos=DB::table('localizacions')->get();
         }elseif ($tabla=='inventarios') {
             $request->validate([
@@ -1227,7 +1246,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function borrar($tabla,$key)
+    public function borrar($tabla,$key,$key2=null)
     {
         if ($tabla=='usuarios') {
             $dato=User::find($key);
@@ -1253,9 +1272,8 @@ class AdminController extends Controller
             $dato=Producto::find($key);
             $dato->delete();
             $datos=DB::table('tornillos')->get();
-        }elseif ($tabla=='telefono_proveedores') { //ojo
-            $dato=Telefono_proveedor::find($key);
-            $dato->delete();
+        }elseif ($tabla=='telefono_proveedores') { 
+            DB::table('telefono_proveedors')->where('proveedor_rut',$key)->where('telefono',$key2)->delete();
             $datos=DB::table('telefono_proveedors')->get();
         }elseif ($tabla=='techumbres') {
             $dato=Producto::find($key);
@@ -1281,9 +1299,8 @@ class AdminController extends Controller
             $dato=Producto::find($key);
             $dato->delete();
             $datos=DB::table('maderas')->get();
-        }elseif ($tabla=='sucursal_producto') { //ojo
-            $dato=Localizacion::find($key);
-            $dato->delete();
+        }elseif ($tabla=='sucursal_producto') { 
+            DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->delete();
             $datos=DB::table('localizacions')->get();
         }elseif ($tabla=='inventarios') {
             $dato=Inventario::find($key);
