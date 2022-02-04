@@ -35,7 +35,7 @@
 
 @section('contenido')
 <h2>MODIFICAR REGISTROS</h2>
-<form action={{route('admin_update_fila',['key' => $key,'tabla' => $tabla])}} method="POST">
+<form action={{route('admin_update_fila',['key' => $key,'tabla' => $tabla, 'key2' => $key2])}} method="POST">
     @csrf
     @method('PUT')
 
@@ -126,7 +126,7 @@
         @php($cliente=App\Models\Cliente::find($key))
         <div class="form-group clientes">
             <label for="" class="form-label">Telefono(Opcional)</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="9" @if ($cliente!=null) value="{{substr($cliente->telefono,4,8)}}" @endif>
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="9" @if ($cliente!=null) value="{{$cliente->telefono}}" @endif>
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -137,7 +137,7 @@
     @if ($tabla == 'clientes') 
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="11" value="{{substr($dato->telefono,4,8)}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="11" value="{{$dato->telefono}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -290,20 +290,19 @@
         
     @endif
 
-    {{-- Verificar al final --}}
     @if ($tabla == 'telefono_proveedores') 
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="1">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
                 @endforeach  
             </select>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="2" value={{old('telefono')}}>
+            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="2" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." value={{$dato->telefono}}>
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -847,7 +846,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="8" value="{{$dato->telefono}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="8" value="{{$dato->telefono}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -937,17 +936,17 @@
        var selectedBalue = $("#tipo_usuario").val();
        if (selectedBalue == 2) 
        {
-         $(".trabajadores").slideDown(500);
+         $(".trabajadores").slideDown(200);
        }
        else{
-         $(".trabajadores").slideUp(500);
+         $(".trabajadores").slideUp(200);
        }
        if (selectedBalue == 3) 
        {
-         $(".clientes").slideDown(500);
+         $(".clientes").slideDown(200);
        }
        else{
-         $(".clientes").slideUp(500);
+         $(".clientes").slideUp(200);
        }
     }); 
 
@@ -955,46 +954,46 @@
        var selectedBalue = $("#familia").val();
        if (selectedBalue == "Tornillo") 
        {
-         $(".tornillos").slideDown(500);   
+         $(".tornillos").slideDown(200);   
        }
        else{
-         $(".tornillos").slideUp(500);   
+         $(".tornillos").slideUp(200);   
        }
 
        if (selectedBalue == "Mueble") 
        {
-         $(".muebles").slideDown(500);   
+         $(".muebles").slideDown(200);   
        }
        else{
-         $(".muebles").slideUp(500);   
+         $(".muebles").slideUp(200);   
        }
        if (selectedBalue == "Madera") 
        {
-         $(".maderas").slideDown(500);   
+         $(".maderas").slideDown(200);   
        }
        else{
-         $(".maderas").slideUp(500);   
+         $(".maderas").slideUp(200);   
        }
        if (selectedBalue == "Clavo") 
        {
-         $(".clavos").slideDown(500);   
+         $(".clavos").slideDown(200);   
        }
        else{
-         $(".clavos").slideUp(500);   
+         $(".clavos").slideUp(200);   
        }
        if (selectedBalue == "Techumbre") 
        {
-         $(".techumbres").slideDown(500);   
+         $(".techumbres").slideDown(200);   
        }
        else{
-         $(".techumbres").slideUp(500);   
+         $(".techumbres").slideUp(200);   
        }
        if (selectedBalue == "Plancha_construccion") 
        {
-         $(".planchas").slideDown(500);   
+         $(".planchas").slideDown(200);   
        }
        else{
-         $(".planchas").slideUp(500);   
+         $(".planchas").slideUp(200);   
        }
 
 

@@ -117,7 +117,7 @@ class AdminController extends Controller
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'min:8', 'max:16',Rules\Password::defaults()],
                 'tipo_usuario' => ['required','integer'],
-                'telefono' => ['digits:8', 'integer', 'nullable'],
+                'telefono' => ['nullable'],
             ]);
             $rut_normalizado = Rut::parse($request->rut)->normalize();
             $nuevo_dato = new User();
@@ -140,7 +140,7 @@ class AdminController extends Controller
                 $nuevo_cliente = new Cliente();
                 $nuevo_cliente->usuario_rut =  $nuevo_dato->rut;
                 if($request->get('telefono') != null){
-                    $nuevo_cliente->telefono = '+569'.$request->get('telefono');
+                    $nuevo_cliente->telefono = $request->get('telefono');
                 }
                 $nuevo_cliente->save();        
             }
@@ -155,7 +155,7 @@ class AdminController extends Controller
                 'apellido' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'min:8', 'max:16',Rules\Password::defaults()],
-                'telefono' => ['digits:8', 'integer', 'nullable'],
+                'telefono' => ['nullable'],
             ]);
             $rut_normalizado = Rut::parse($request->rut)->normalize();
             $nuevo_dato = new User();
@@ -169,7 +169,7 @@ class AdminController extends Controller
             $nuevo_cliente = new Cliente();
             $nuevo_cliente->usuario_rut =  $nuevo_dato->rut;
             if($request->get('telefono') != null){
-                $nuevo_cliente->telefono = '+569'.$request->get('telefono');
+                $nuevo_cliente->telefono = $request->get('telefono');
             }
             $nuevo_cliente->save();
 
@@ -266,11 +266,11 @@ class AdminController extends Controller
         }elseif ($tabla=='telefono_proveedores') {
             $request->validate([
                 'proveedor_rut' => ['required'],
-                'telefono' => ['digits:8', 'integer', 'unique:telefono_proveedors'],
+                'telefono' => ['required', 'string', 'unique:telefono_proveedors'],
             ]);
             $nuevo_dato = new Telefono_proveedor();
             $nuevo_dato->proveedor_rut = $request->get('proveedor_rut');
-            $nuevo_dato->telefono = '+569'.$request->get('telefono');
+            $nuevo_dato->telefono = $request->get('telefono');
             $nuevo_dato->save();
 
             $datos=DB::table('telefono_proveedors')->get();
@@ -523,16 +523,11 @@ class AdminController extends Controller
             $request->validate([
                 'sucursal_id' => ['required'],
                 'producto_id' => ['required'],
-                'stock' => ['required', 'integer', 'gte:0'],
+                'stock' => ['required', 'integer', 'gte:1'],
                 'precio_compra' => ['required','integer', 'gte:0'],
             ]);
-            $nuevo_dato = new Localizacion();
-            $nuevo_dato->sucursal_id = $request->get('sucursal_id');
-            $nuevo_dato->producto_id = $request->get('producto_id');
-            $nuevo_dato->stock = $request->get('stock');
-            $nuevo_dato->precio_compra = $request->get('precio_compra');
-            $nuevo_dato->save();
-
+            
+            DB::insert('insert into localizacions (sucursal_id, producto_id, stock, precio_compra, created_at, updated_at) values (?, ?, ?, ?, ?, ?)', [$request->get('sucursal_id'),$request->get('producto_id'),$request->get('stock'),$request->get('precio_compra'),date("Y-m-d H:i:s"),date("Y-m-d H:i:s")]);
             $datos=DB::table('localizacions')->get();
 
         }elseif ($tabla=='inventarios') {
@@ -564,14 +559,14 @@ class AdminController extends Controller
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:ejecutivos'],
-                'telefono' => ['required','digits:8', 'integer', 'unique:ejecutivos'],
+                'telefono' => ['required','unique:ejecutivos'],
                 'proveedor_rut' => ['required'],
             ]);
             $nuevo_dato = new Ejecutivo();
             $nuevo_dato->nombre = $request->get('nombre');
             $nuevo_dato->apellido = $request->get('apellido');
             $nuevo_dato->correo = $request->get('correo');
-            $nuevo_dato->telefono = '+569'.$request->get('telefono');
+            $nuevo_dato->telefono = $request->get('telefono');
             $nuevo_dato->proveedor_rut = $request->get('proveedor_rut');
             $nuevo_dato->save();
 
@@ -627,7 +622,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($tabla,$key)
+    public function edit($tabla,$key,$key2=null)
     {
         if ($tabla=='usuarios') {
             $dato=User::find($key);
@@ -641,8 +636,8 @@ class AdminController extends Controller
             $dato=Transporte::find($key);
         }elseif ($tabla=='tornillos') {  
             $dato=Tornillo::find($key);
-        }elseif ($tabla=='telefono_proveedores') { //ojo
-            $dato=Telefono_proveedor::find($key);
+        }elseif ($tabla=='telefono_proveedores') { 
+            $dato=DB::table('telefono_proveedors')->where('proveedor_rut',$key)->where('telefono',$key2)->first();
         }elseif ($tabla=='techumbres') {
             $dato=Techumbre::find($key);
         }elseif ($tabla=='proveedores') {
@@ -656,7 +651,7 @@ class AdminController extends Controller
         }elseif ($tabla=='maderas') {
             $dato=Madera::find($key);
         }elseif ($tabla=='sucursal_producto') { //ojo
-            $dato=Localizacion::find($key);
+            $dato=DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->first();
         }elseif ($tabla=='inventarios') {
             $dato=Inventario::find($key);
         }elseif ($tabla=='fotos') {
@@ -669,7 +664,7 @@ class AdminController extends Controller
             $dato=Clavo::find($key);
         }
 
-        return view('admin.editar_fila',compact('dato','tabla','key'));
+        return view('admin.editar_fila',compact('dato','tabla','key','key2'));
     }
 
     /**
@@ -679,7 +674,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$tabla,$key)
+    public function update(Request $request,$tabla,$key,$key2=null)
     {
         
         if ($tabla=='usuarios') {
@@ -730,7 +725,7 @@ class AdminController extends Controller
             }elseif($actualizar->tipo_usuario == User::cliente && $tipo_usuario_anterior==User::cliente) { // Si fue y ahora es cliente
                 $actualizar_cliente = Cliente::find($actualizar->rut);
                 if($request->get('telefono') != null){
-                    $actualizar_cliente->telefono = '+569'.$request->get('telefono');
+                    $actualizar_cliente->telefono = $request->get('telefono');
                 }else{ 
                     $actualizar_cliente->telefono = $request->get('telefono');
                 }
@@ -746,7 +741,7 @@ class AdminController extends Controller
                 $nuevo_cliente = new Cliente();
                 $nuevo_cliente->usuario_rut =  $actualizar->rut;
                 if($request->get('telefono') != null){
-                    $nuevo_cliente->telefono = '+569'.$request->get('telefono');
+                    $nuevo_cliente->telefono = $request->get('telefono');
                 }
                 $nuevo_cliente->save();        
             }
@@ -754,12 +749,10 @@ class AdminController extends Controller
             $datos=DB::table('users')->get();
         }elseif ($tabla=='clientes') {
             $request->validate([
-                'telefono' => ['digits:8', 'integer', 'nullable'],
+                'telefono' => ['nullable'],
             ]);
             $actualizar=Cliente::find($key);
-            if($request->get('telefono') != null){
-                $actualizar->telefono = '+569'.$request->get('telefono');
-            }
+            $actualizar->telefono = $request->get('telefono');
             $actualizar->save();
             $datos=DB::table('clientes')->get();
         }elseif ($tabla=='trabajadores') {
@@ -819,15 +812,16 @@ class AdminController extends Controller
             $actualizar->save();
             $datos=DB::table('tornillos')->get();
         }elseif ($tabla=='telefono_proveedores') {
-            //Ojo con lo de las 2 llaves 
             $request->validate([
-                'proveedor_rut' => ['required'],
-                'telefono' => ['digits:8', 'integer', 'unique:telefono_proveedors'],
+                'proveedor_rut' => ['required'],   
+                'telefono' => ['required'],
             ]);
-            $actualizar=Telefono_proveedor::find($key);
-            $actualizar->proveedor_rut = $request->get('proveedor_rut');
-            $actualizar->telefono = $request->get('telefono');
-            $actualizar->save();
+            if($key2 != $request->get('telefono')){
+                 $request->validate([
+                'telefono' => ['unique:telefono_proveedors'],
+                ]);
+            }
+            DB::table('telefono_proveedors')->where('proveedor_rut',$key)->where('telefono',$key2)->update(['proveedor_rut' => $request->get('proveedor_rut'),'telefono' => $request->get('telefono')]);
             $datos=DB::table('telefono_proveedors')->get();
         }elseif ($tabla=='techumbres') {
             $request->validate([
@@ -1150,19 +1144,15 @@ class AdminController extends Controller
             $actualizar->save();
             $datos=DB::table('maderas')->get();
         }elseif ($tabla=='sucursal_producto') {
-            // ojo, doble clave primaria
             $request->validate([
                 'sucursal_id' => ['required'],
                 'producto_id' => ['required'],
-                'stock' => ['required', 'integer', 'gte:0'],
+                'stock' => ['required', 'integer', 'gte:1'],
                 'precio_compra' => ['required','integer', 'gte:0'],
             ]);
-            $actualizar=Localizacion::find($key);
-            $actualizar->sucursal_id = $request->get('sucursal_id');
-            $actualizar->producto_id = $request->get('producto_id');
-            $actualizar->stock = $request->get('stock');
-            $actualizar->precio_compra = $request->get('precio_compra');
-            $actualizar->save();
+            $aux=DB::tabla('localizacions')->where('sucursal_id',$request->get('sucursal_id'))->where('producto_id',$request->get('producto_id'));
+
+            DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['sucursal_id' => $request->get('sucursal_id'),'producto_id' => $request->get('producto_id')]);
             $datos=DB::table('localizacions')->get();
         }elseif ($tabla=='inventarios') {
             $request->validate([
@@ -1189,7 +1179,7 @@ class AdminController extends Controller
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:ejecutivos'],
-                'telefono' => ['required','digits:8', 'integer', 'unique:ejecutivos'],
+                'telefono' => ['required', 'unique:ejecutivos'],
                 'proveedor_rut' => ['required'],
             ]);
             $actualizar=Ejecutivo::find($key);

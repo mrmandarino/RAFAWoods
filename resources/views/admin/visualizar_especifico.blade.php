@@ -5,20 +5,45 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Base de datos</title>
-	{{-- <link rel="stylesheet" href="/css/bootstrap.min.css"> --}}
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
-	
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style type="text/css">
+		
+		.floatRight{
+		float:right;
+		margin-left:10px;
+		margin-right:10px;
+		}
+		
+		.dataTables_length {
+		float:left;
+		font-size: 15px;
+		}	
+
+		.buttons-excel {
+			font-size: 12.5px;
+		}
+
+		.buttons-print {
+			font-size: 12.5px;
+		}
+    </style> 
+
+
+
 
 
 </head>
 <body>
 
 	<div> 
-		<a href="{{route('admin_crear_fila',$tabla)}}" class="btn btn-primary">CREAR</a> 
+		<a href="{{route('admin_crear_fila',$tabla)}}" class="btn btn-primary" >CREAR</a> 
 		&nbsp;&nbsp;
-		<a href="{{route('admin_visualizar_datos')}}" class="btn btn-primary">VOLVER</a>
+		<a href="{{route('admin_visualizar_datos')}}" class="btn btn-primary" >VOLVER</a>
 	</div>
 		
 		@if ($tabla == 'usuarios')
@@ -27,15 +52,14 @@
 			
 			<thead>
 				<tr>
-					<th> RUT </th>
+					<th>  RUT    </th>
 					<th> NOMBRE </th>
 					<th> APELLIDO </th>
-					<th> PASSWORD </th>
 					<th> CORREO </th>
-					<th> TIPO USUARIO </th>
+					<th> TIPO USUARIO  </th>
 					<th> ESTADO </th>
-					<th> FECHA REGISTRO </th>
-					<th> FECHA ACTUALIZACION </th>
+					<th> FECHA REGISTRO  </th>
+					<th>  FECHA ACTUALIZACION</th>
 					<th> ACCION </th>
 				</tr>
 			</thead>
@@ -46,7 +70,6 @@
 							<td> {{$usuario->rut}} </td>
 							<td> {{$usuario->nombre}} </td>
 							<td> {{$usuario->apellido}} </td>
-							<td> {{$usuario->password}} </td>
 							<td> {{$usuario->correo}} </td>
 							<td> {{$usuario->tipo_usuario}} </td>
 							<td> {{$usuario->estado}} </td>
@@ -271,8 +294,8 @@
 						<td> {{$telefono->created_at}} </td>
 						<td> {{$telefono->updated_at}} </td>
 						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $telefono->proveedor_rut,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $telefono->proveedor_rut,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+							<form action="{{route('admin_borrar_datos',['key' => $telefono->proveedor_rut,'tabla' => $tabla, 'key2' => $telefono->telefono ])}}" method="GET" class="btn-group">
+								<a href="{{route('admin_editar_fila',['key' => $telefono->proveedor_rut,'tabla' => $tabla, 'key2' => $telefono->telefono])}}" class="btn btn-info">Editar</a> 
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
@@ -532,8 +555,8 @@
 						<td> {{$localizacion->created_at}} </td>
 						<td> {{$localizacion->updated_at}} </td>
 						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $localizacion->sucursal_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $localizacion->sucursal_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+							<form action="{{route('admin_borrar_datos',['key' => $localizacion->sucursal_id,'tabla' => $tabla, 'key2' => $localizacion->producto_id ])}}" method="GET" class="btn-group">
+								<a href="{{route('admin_editar_fila',['key' => $localizacion->sucursal_id,'tabla' => $tabla, 'key2' => $localizacion->producto_id ])}}" class="btn btn-info">Editar</a> 
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
@@ -724,17 +747,60 @@
 	
 
 	
-	{{-- <script src="/js/bootstrap.bundle.min.js"></script> --}}
-
+	
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> 
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>
+
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script> {{-- Necesario para ver los botones --}} 
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script> {{-- Necesario para ver los botones --}} 
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> {{-- Excel --}} 
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> {{-- Imprimir(PDF) --}}
+
+
+
 	
 
 	@if ($tabla == 'usuarios')
 		<script>
 			$(document).ready(function() {
-				$('#usuarios').DataTable();
+				$('#usuarios').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Usuarios', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Usuarios', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -742,7 +808,41 @@
 	@if ($tabla == 'clientes')
 		<script>
 			$(document).ready(function() {
-				$('#clientes').DataTable();
+				$('#clientes').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Clientes', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Clientes', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -750,7 +850,41 @@
 	@if ($tabla == 'trabajadores')
 		<script>
 			$(document).ready(function() {
-				$('#trabajadores').DataTable();
+				$('#trabajadores').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Trabajadores', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Trabajadores', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -758,7 +892,41 @@
 	@if ($tabla == 'madera_proveedores')
 		<script>
 			$(document).ready(function() {
-				$('#madera_proveedores').DataTable();
+				$('#madera_proveedores').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Compras', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Compras', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -766,7 +934,41 @@
 	@if ($tabla == 'transportes')
 		<script>
 			$(document).ready(function() {
-				$('#transportes').DataTable();
+				$('#transportes').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Transportes', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Transportes', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -774,7 +976,41 @@
 	@if ($tabla == 'tornillos')
 		<script>
 			$(document).ready(function() {
-				$('#tornillos').DataTable();
+				$('#tornillos').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Tornillos', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Tornillos', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -782,7 +1018,41 @@
 	@if ($tabla == 'telefono_proveedores')
 		<script>
 			$(document).ready(function() {
-				$('#telefono_proveedores').DataTable();
+				$('#telefono_proveedores').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Teléfono proveedores', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Teléfono proveedores', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -790,7 +1060,44 @@
 	@if ($tabla == 'techumbres')
 		<script>
 			$(document).ready(function() {
-				$('#techumbres').DataTable();
+				$('#techumbres').DataTable({
+					responsive: true,
+					autoWidth: false,
+					
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Techumbres', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Techumbres', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -798,7 +1105,41 @@
 	@if ($tabla == 'proveedores')
 		<script>
 			$(document).ready(function() {
-				$('#proveedores').DataTable();
+				$('#proveedores').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Proveedores', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Proveedores', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -806,7 +1147,41 @@
 	@if ($tabla == 'productos')
 		<script>
 			$(document).ready(function() {
-				$('#productos').DataTable();
+				$('#productos').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Productos', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Productos', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -814,7 +1189,41 @@
 	@if ($tabla == 'planchas_construccion')
 		<script>
 			$(document).ready(function() {
-				$('#planchas_construccion').DataTable();
+				$('#planchas_construccion').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Planchas de construcción', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Planchas de construcción', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -822,7 +1231,41 @@
 	@if ($tabla == 'muebles')
 		<script>
 			$(document).ready(function() {
-				$('#muebles').DataTable();
+				$('#muebles').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Muebles', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Muebles', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -830,7 +1273,41 @@
 	@if ($tabla == 'maderas')
 		<script>
 			$(document).ready(function() {
-				$('#maderas').DataTable();
+				$('#maderas').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Maderas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Maderas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -838,7 +1315,41 @@
 	@if ($tabla == 'sucursal_producto')
 		<script>
 			$(document).ready(function() {
-				$('#sucursal_producto').DataTable();
+				$('#sucursal_producto').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Productos por inventario', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Productos por inventario', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -846,7 +1357,41 @@
 	@if ($tabla == 'inventarios')
 		<script>
 			$(document).ready(function() {
-				$('#inventarios').DataTable();
+				$('#inventarios').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Sucursales', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Sucursales', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -854,7 +1399,41 @@
 	@if ($tabla == 'fotos')
 		<script>
 			$(document).ready(function() {
-				$('#fotos').DataTable();
+				$('#fotos').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Imágenes', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Imágenes', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -862,7 +1441,41 @@
 	@if ($tabla == 'ejecutivos')
 		<script>
 			$(document).ready(function() {
-				$('#ejecutivos').DataTable();
+				$('#ejecutivos').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Ejecutivos', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Ejecutivos', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -870,7 +1483,41 @@
 	@if ($tabla == 'compras')
 		<script>
 			$(document).ready(function() {
-				$('#compras').DataTable();
+				$('#compras').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Ventas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Ventas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif
@@ -878,7 +1525,41 @@
 	@if ($tabla == 'clavos')
 		<script>
 			$(document).ready(function() {
-				$('#clavos').DataTable();
+				$('#clavos').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Clavos', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Clavos', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
 			});
 		</script> 	
 	@endif

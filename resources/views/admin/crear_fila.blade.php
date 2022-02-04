@@ -117,7 +117,7 @@
         {{-- Cliente --}}
         <div class="form-group clientes">
             <label for="" class="form-label">Telefono(Opcional)</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="9" value="{{old('telefono')}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="9" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." value="{{old('telefono')}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -172,7 +172,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono(Opcional)</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="6" value="{{old('telefono')}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="6" value="{{old('telefono')}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -401,7 +401,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="2" value="{{old('telefono')}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="2" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." value="{{old('telefono')}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -907,7 +907,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="4" value="{{old('telefono')}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="4" value="{{old('telefono')}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -1015,17 +1015,17 @@
        var selectedBalue = $("#tipo_usuario").val();
        if (selectedBalue == 2) 
        {
-         $(".trabajadores").slideDown(500);
+         $(".trabajadores").slideDown(200);
        }
        else{
-         $(".trabajadores").slideUp(500);
+         $(".trabajadores").slideUp(200);
        }
        if (selectedBalue == 3) 
        {
-         $(".clientes").slideDown(500);
+         $(".clientes").slideDown(200);
        }
        else{
-         $(".clientes").slideUp(500);
+         $(".clientes").slideUp(200);
        }
     }); 
 
@@ -1033,58 +1033,58 @@
        var selectedBalue = $("#familia").val();
        if (selectedBalue == "Tornillo") 
        {
-         $(".tornillos").slideDown(500);   
+         $(".tornillos").slideDown(200);   
        }
        else{
-         $(".tornillos").slideUp(500);   
+         $(".tornillos").slideUp(200);   
        }
 
        if (selectedBalue == "Plancha_construccion" || selectedBalue == "Techumbre" || selectedBalue == "Mueble" || selectedBalue == "Clavo") 
        {
-         $(".material").slideDown(500);
+         $(".material").slideDown(200);
        }
        else{
-         $(".material").slideUp(500);
+         $(".material").slideUp(200);
        }
 
        if (selectedBalue == "Tornillo" || selectedBalue == "Clavo") 
        {
-           $(".tornillos_clavos").slideDown(500); 
+           $(".tornillos_clavos").slideDown(200); 
        }
        else{
-           $(".tornillos_clavos").slideUp(500);
+           $(".tornillos_clavos").slideUp(200);
        }
 
        if (selectedBalue == "Plancha_construccion" || selectedBalue == "Techumbre" || selectedBalue == "Mueble" || selectedBalue == "Madera") 
        {
-         $(".medidas").slideDown(500);   
+         $(".medidas").slideDown(200);   
        }
        else{
-         $(".medidas").slideUp(500);
+         $(".medidas").slideUp(200);
        }
 
        if (selectedBalue == "Mueble") 
        {
-         $(".muebles").slideDown(500); 
+         $(".muebles").slideDown(200); 
        }
        else{
-         $(".muebles").slideUp(500);
+         $(".muebles").slideUp(200);
        }
 
        if (selectedBalue == "Madera") 
        {
-         $(".maderas").slideDown(500);   
+         $(".maderas").slideDown(200);   
        }
        else{
-         $(".maderas").slideUp(500);
+         $(".maderas").slideUp(200);
        }
 
        if (selectedBalue == "Clavo") 
        {
-         $(".clavos").slideDown(500);  
+         $(".clavos").slideDown(200);  
        }
        else{
-         $(".clavos").slideUp(500);
+         $(".clavos").slideUp(200);
        }
 
 
