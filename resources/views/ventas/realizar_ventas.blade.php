@@ -90,6 +90,12 @@ $(document).ready(function() {
       {{-- Columna formulario agregar producto a la venta (IZQUIERDA) --}}
       <div class="col-6 card p-3 bg-light mt-3 col-form-izq">
 
+        <div class="row mx-3 justify-content-center">
+          <div class="col-md-7 card form-izq ml-3">
+            <h4 class="text-center" >🪵 Productos 🪵</h4>
+          </div>        
+        </div>
+
         <form class="row g-3 mt-3 col-form-izq form-izq">
           @csrf
 
@@ -98,7 +104,7 @@ $(document).ready(function() {
               <div class="input-group">
 
                 <label for="producto" class="input-group-text">Producto:</label>
-                <input class="form-control" list="datalist_productos" id="nombre_producto" placeholder="Escriba para buscar...">
+                <input class="form-control" list="datalist_productos" id="nombre_producto" onchange="cargar_datos()" placeholder="Escriba para buscar...">
                 <datalist id="datalist_productos">
                   @foreach ($productos as $producto)
                     <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
@@ -109,7 +115,7 @@ $(document).ready(function() {
           </div>
 
 
-          <div class="row mt-4">
+          <div class="row">
             <div class="col-md-6">
               <label for="codigo" class="form-label">Código</label>
               <div class="input-group">
@@ -129,12 +135,12 @@ $(document).ready(function() {
             </div>
           </div>
 
-          <div class="row mt-4">
+          <div class="row">
             <div class="col-md-6">
               <label for="valor-u" class="form-label">Valor Unidad</label>
               <div class="input-group">
                 <label for="valor_unidad" class="input-group-text">$</label>
-                <input class="form-control" type="number" id="valor_unidad" step="1000">
+                <input class="form-control" type="number" id="valor_unidad">
               </div>
             </div>
 
@@ -149,11 +155,11 @@ $(document).ready(function() {
 
           </div>
 
-          <div class="row mt-4 justify-content-evenly">
-            <div class="col-md-4 mt-4">
+          <div class="row justify-content-evenly botones-izq ">
+            <div class="col-md-4">
               <button type="submit" class="btn btn-danger">Quitar Producto</button>
             </div>
-            <div class="col-md-4 mt-4">
+            <div class="col-md-4 ">
               <button type="button" id="boton_agregar_a_compra" class="btn btn-success">Agregar a Compra</button>
             </div>
           </div>
@@ -164,17 +170,22 @@ $(document).ready(function() {
       </div>
 
       {{-- formulario valor actual de la venta (DERECHA) --}}
-      <div class="col-5 card p-3 bg-light ">
-        <form class="row g-3">
+      <div class="col-5 card p-3 bg-light col-form-der">
+
+        <div class="row mx-3 justify-content-center">
+          <div class="col-md-7 card form-der ml-3">
+            <h4 class="text-center" >💵 Venta 💵</h4>
+          </div>        
+        </div>
+        <form class="row g-3 my-auto col-form-der form-der">
           @csrf
-          <div class="col-md-6">
-            <label for="inputEmail4" class="form-label">Total</label>
-            <input type="number" class="form-control" id="total_compra" value="0" readonly>
+          <div class="col-md-12">
+            <div class="input-group">
+            <label for="codigo" class="input-group-text">Total Venta:</label>
+            <input class="form-control form-control-lg " type="number" id="total_compra" value="0" placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword4">
-          </div>
+          
           <div class="col-12">
             <label for="inputAddress" class="form-label">Address</label>
             <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
@@ -270,6 +281,57 @@ $(document).ready(function() {
     </div>
 
   </div>
+  <script type="text/javascript">
+  //var arreglo = parseInt('<?php echo $productos; ?>');
+  <?php
+  $js_array = json_encode($productos);
+  echo "var producto_js = ". $js_array . ";\n";
+  ?>
+  <?php
+  $js_array = json_encode($productos_en_stock);
+  echo "var productos_en_stock_js = ". $js_array . ";\n";
+  ?>
+  
+  
+
+  
+  //console.log(productos_en_stock_js);
+  
+  
+
+  function cargar_datos(){
+
+    //obtener id segun seleccion en datalist (producto)
+    const productos = document.getElementById('datalist_productos');
+    const producto_seleccionado = document.querySelector('#nombre_producto');
+    const opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
+    const id_producto = opSelected.getAttribute('data-value');//ID del producto seleccionado
+    
+    //obtener referencia de componentes para llenar (inputs de formulario)
+    var codigo_js = document.getElementById('codigo');
+    var stock_js = document.getElementById('stock');
+    var valor_unidad_js = document.getElementById('valor_unidad');
+
+    var stock_p = 0;
+    var valor_unidad_p = 0;
+    for (let i = 0; i < productos_en_stock_js.length; i++) {
+
+      if (productos_en_stock_js[i].producto_id == id_producto){
+
+        stock_p = productos_en_stock_js[i].stock;
+        valor_unidad_p = productos_en_stock_js[i].precio_venta;
+        
+      }
+      
+    }
+    console.log(valor_unidad_p);
+    codigo_js.value = id_producto;
+    stock_js.value = stock_p;
+    valor_unidad_js.value = valor_unidad_p;
+    
+    
+  }
+  </script>
 
 
 

@@ -44,6 +44,24 @@
             display: flex;
             justify-content: center;
         }
+
+        .botones-izq {
+          
+            align-self: center;
+            justify-content: center;
+        }
+
+        .col-form-der {
+            height: 500px;
+            align-self: center;
+            
+        }
+
+        .form-der {
+            display: flex;
+            justify-content: center;
+        }
+
         #myInput {
           padding: 20px;
           margin-top: -6px;
