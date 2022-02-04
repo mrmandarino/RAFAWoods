@@ -165,7 +165,7 @@ $(document).ready(function() {
               <button type="submit" class="btn btn-danger">Quitar Producto</button>
             </div>
             <div class="col-md-4 ">
-              <button type="button" id="boton_agregar_a_compra" class="btn btn-success">Agregar a Compra</button>
+              <button type="button" id="boton_agregar_a_compra" class="btn btn-success">Agregar a Venta</button>
             </div>
           </div>
         </form>
@@ -207,7 +207,7 @@ $(document).ready(function() {
             </div>
           </div>
           
-          <div class="col-6">
+          <div class="col-6 ">
             <label for="fecha" class="form-label">Medio de Pago</label>
             <select class="form-select" aria-label="Default select example">
               <option selected>Seleccionar...</option>
@@ -218,28 +218,8 @@ $(document).ready(function() {
             </select>
           </div>
           
-          
-          <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-          </div>
           <div class="col-12">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-success">Realizar Venta</button>
           </div>
         </form>
       </div>
@@ -251,6 +231,12 @@ $(document).ready(function() {
     <div class="row mt-3 px-5">
 
       <div class="col-md-12 card bg-light tabla-scroll">
+        <div class="row mx-3 mt-3 justify-content-center">
+          <div class="col-md-3 card form-izq ml-3">
+            <h4 class="text-center" >🛒 Carrito 🛒</h4>
+          </div>        
+        </div>
+        
         <table class="table table-hover pb-3">
           <thead>
             <tr>
