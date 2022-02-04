@@ -26,11 +26,11 @@ class VentaController extends Controller
     {
         $productos = DB::table('productos')->get();
         $productos_en_stock = DB::table('localizacions')->get();
-        $count_ventas = DB::table('compras')->count('*');//ver cuantos registros hay
+        $count_ventas = DB::table('ventas')->count('*');//ver cuantos registros hay
         $id_venta = 1;//valor por defecto, será modificado si count_ventas es distinto de 0
         
         if($count_ventas!=0){
-            $id_venta = DB::table('compras')->latest()->value('producto_id');//rescatar el id_venta mas alto (mas nuevo)
+            $id_venta = DB::table('ventas')->latest()->value('id') + 1;//rescatar el id_venta mas alto (mas nuevo)
             
         }
         

@@ -38,7 +38,8 @@ class ProductoSeeder extends Seeder
                 'sucursal_id' => 1,
                 'producto_id' => $producto->id,
                 'stock' => rand(50,100),
-                'precio_compra' => rand(5000,10000)
+                'precio_compra' => rand(5000,10000),
+                'precio_venta' => rand(8000,15000)
             ]);
             Imagen::factory(1)->create([
                 'imagenable_id' => $producto->id,

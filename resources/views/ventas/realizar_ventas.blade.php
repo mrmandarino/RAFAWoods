@@ -140,7 +140,7 @@ $(document).ready(function() {
               <label for="valor-u" class="form-label">Valor Unidad</label>
               <div class="input-group">
                 <label for="valor_unidad" class="input-group-text">$</label>
-                <input class="form-control" type="number" id="valor_unidad">
+                <input class="form-control" type="number" id="valor_unidad" readonly>
               </div>
             </div>
 
@@ -149,7 +149,7 @@ $(document).ready(function() {
               <label for="cantidad" class="form-label">Cantidad</label>
               <div class="input-group">
                 <label for="cantidad" class="input-group-text">#</label>
-                <input class="form-control" id="cantidad" value="33" min="1">
+                <input type="number" class="form-control" id="cantidad" value="1" min="1">
               </div>
             </div>
 
