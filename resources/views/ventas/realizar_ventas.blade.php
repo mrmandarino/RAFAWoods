@@ -195,10 +195,10 @@ $(document).ready(function() {
           </div>
 
           <div class="col-6">
-            <label for="fecha" class="form-label">Nro. Compra</label>
+            <label for="fecha" class="form-label">Nro. Venta</label>
             <div class="input-group">
               <label for="fecha" class="input-group-text">№</label>
-              <input type="text" class="form-control" id="fecha" readonly>
+              <input type="text" class="form-control" id="fecha" value="{{$id_venta}}" readonly>
             </div>
           </div>
           
