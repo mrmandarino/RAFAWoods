@@ -30,7 +30,7 @@
         }
 
         .tabla-scroll {
-            height: 200px !important;
+            height: 250px !important;
             overflow: scroll;
         }
 
@@ -52,14 +52,14 @@
         }
 
         .col-form-der {
-            height: 500px;
+            height: 400px;
             align-self: center;
             
         }
 
         .form-der {
             display: flex;
-            justify-content: center;
+            justify-content: left;
         }
         
 
