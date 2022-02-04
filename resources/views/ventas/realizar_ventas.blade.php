@@ -75,6 +75,11 @@ $(document).ready(function() {
     button_clicked.closest('.shoppingCartItem').remove();
     update_total_compra();
   }
+
+  function comprar()
+  {
+    
+  }
 });
 
 

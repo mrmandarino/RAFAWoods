@@ -13,4 +13,9 @@ class Venta extends Model
     const tarjeta_debito = 2;
     const tarjeta_credito = 3;
     const transferencia = 4;
+
+    //Relacion uno a muchos 
+    public function detalles(){
+        return $this->hasMany('App\Models\Detalle_venta');
+    }
 }
