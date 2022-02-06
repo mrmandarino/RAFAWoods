@@ -163,7 +163,7 @@
               <button type="button" class="btn btn-danger" onclick="quitar_producto()">Quitar Producto</button>
             </div>
             <div class="col-md-4 ">
-              <button type="button" id="boton_agregar_a_compra" class="btn btn-success">Agregar a Venta</button>
+              <button type="button" id="boton_agregar_a_compra" class="btn btn-primary">Agregar a Venta</button>
             </div>
           </div>
         </form>
@@ -177,7 +177,7 @@
 
         <div class="row mx-3 justify-content-center">
           <div class="col-md-7 card form-der ml-3">
-            <h4 class="text-center">💵 Venta 💵</h4>
+            <h4 class="text-center">💲 Venta 💲</h4>
           </div>
         </div>
         <form class="row g-3 my-auto col-form-der form-der">
@@ -235,8 +235,9 @@
             <div class="row mt-1">
               <div class="col">
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Requiere Factura.</label>
+                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onclick="con_factura()">
+                  <label class="form-check-label" for="flexSwitchCheckDefault"data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta." id="documento_fiscal">Se Requiere Factura.</label>
+                  <label data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta."><small>📄</small></label>
                 </div>
 
               </div>
@@ -248,8 +249,9 @@
               <a class="btn btn-danger" href="{{ route('ventas.create') }}" role="button">Cancelar Venta</a>
             </div>
             <div class="col-md-4">
-              <button type="submit" class="btn btn-success">Realizar Venta</button>
+              <button type="submit" class="btn btn-primary">Realizar Venta</button>
             </div>
+            
 
             {{-- input escondido que envia el JSON con el detalle_venta --}}
             <input type="text" class="visually-hidden" name ="hidden" id="hidden">
@@ -311,7 +313,7 @@
 </script>
 
 
-  {{-- Agregar fecha (solo lectura) --}}
+  {{-- Agregar fecha (solo lectura) y switch factura --}}
   
   <script type="text/javascript">
     //poner fecha al abrir la pagina
@@ -319,6 +321,19 @@
   const fecha_mysql = date.toISOString().split("T")[0];
   var fecha_js = document.getElementById('fecha');
   fecha_js.value = fecha_mysql;
+
+  var factura = false;  
+  function con_factura(){
+    if(factura==false){
+    document.getElementById('documento_fiscal').innerHTML = "Venta con Factura";
+    factura = true;
+    }
+    else{
+    document.getElementById('documento_fiscal').innerHTML = "Se Requiere Factura";
+    factura = false;
+
+    }
+  }
   </script>
 
   {{-- boton quitar producto --}}
