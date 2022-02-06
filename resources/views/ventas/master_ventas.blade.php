@@ -45,7 +45,7 @@
             justify-content: center;
         }
 
-        .botones-izq {
+        .botones {
           
             align-self: center;
             justify-content: center;

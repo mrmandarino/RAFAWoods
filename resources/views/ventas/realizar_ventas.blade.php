@@ -2,10 +2,10 @@
 @section('content')
 @include('ventas.partials.iconos')
 
-  {{-- script de carrito de compras --}}
+{{-- script de carrito de compras --}}
 
-<script type = text/javascript defer>
-$(document).ready(function() {
+<script type=text/javascript defer>
+  $(document).ready(function() {
 	const bclick = document.getElementById('boton_agregar_a_compra');
   const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
 	bclick.addEventListener('click',addToCartClicked);
@@ -46,6 +46,7 @@ $(document).ready(function() {
 
     shoppingCartRow.querySelector('.btn-danger').addEventListener('click',removeShoppingCartItem);
     update_total_compra();
+    JSON_append(id_producto,nombre_producto);
     quitar_producto();
   }
 
@@ -94,8 +95,8 @@ $(document).ready(function() {
 
         <div class="row mx-3 justify-content-center">
           <div class="col-md-7 card form-izq ml-3">
-            <h4 class="text-center" >🪵 Productos 🪵</h4>
-          </div>        
+            <h4 class="text-center">🪵 Productos 🪵</h4>
+          </div>
         </div>
 
         <form class="row g-3 mt-3 col-form-izq form-izq">
@@ -106,10 +107,11 @@ $(document).ready(function() {
               <div class="input-group">
 
                 <label for="producto" class="input-group-text">Producto:</label>
-                <input class="form-control" list="datalist_productos" id="nombre_producto" onchange="cargar_datos()" placeholder="Escriba para buscar...">
+                <input class="form-control" list="datalist_productos" id="nombre_producto" onchange="cargar_datos()"
+                  placeholder="Escriba para buscar...">
                 <datalist id="datalist_productos">
                   @foreach ($productos as $producto)
-                    <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
+                  <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
                     @endforeach
                 </datalist>
               </div>
@@ -131,8 +133,7 @@ $(document).ready(function() {
               <label for="stock" class="form-label">Stock</label>
               <div class="input-group">
                 <label for="stock" class="input-group-text">#</label>
-                <input class="form-control" type="text" id="stock" aria-label="readonly input example"
-                  readonly>
+                <input class="form-control" type="text" id="stock" aria-label="readonly input example" readonly>
               </div>
             </div>
           </div>
@@ -146,7 +147,7 @@ $(document).ready(function() {
               </div>
             </div>
 
-            
+
             <div class="col-md-6">
               <label for="cantidad" class="form-label">Cantidad</label>
               <div class="input-group">
@@ -157,7 +158,7 @@ $(document).ready(function() {
 
           </div>
 
-          <div class="row justify-content-evenly botones-izq ">
+          <div class="row justify-content-evenly botones ">
             <div class="col-md-4">
               <button type="button" class="btn btn-danger" onclick="quitar_producto()">Quitar Producto</button>
             </div>
@@ -176,18 +177,19 @@ $(document).ready(function() {
 
         <div class="row mx-3 justify-content-center">
           <div class="col-md-7 card form-der ml-3">
-            <h4 class="text-center" >💵 Venta 💵</h4>
-          </div>        
+            <h4 class="text-center">💵 Venta 💵</h4>
+          </div>
         </div>
         <form class="row g-3 my-auto col-form-der form-der">
           @csrf
           <div class="col-md-12">
             <div class="input-group">
-            <label for="total_compra" class="input-group-text">Total Venta:</label>
-            <input class="form-control form-control-lg" type="text" id="total_compra" value="0" placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
+              <label for="total_compra" class="input-group-text">Total Venta:</label>
+              <input class="form-control form-control-lg" type="text" id="total_compra" value="0"
+                placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
           </div>
-          
+
           <div class="col-6">
             <label for="fecha" class="form-label">Fecha</label>
             <div class="input-group">
@@ -203,7 +205,7 @@ $(document).ready(function() {
               <input type="text" class="form-control" id="fecha" value="{{$id_venta}}" readonly>
             </div>
           </div>
-          
+
           <div class="col-6 ">
             <label for="fecha" class="form-label">Medio de Pago</label>
             <select class="form-select" aria-label="Default select example">
@@ -214,26 +216,61 @@ $(document).ready(function() {
               <option value="4">Transferencia 🏦</option>
             </select>
           </div>
-          
-          <div class="col-12">
-            <button type="submit" class="btn btn-success">Realizar Venta</button>
+          <div class="col-6">
+            <div class="row">
+              <div class="col">
+
+
+                <label for="rut_cliente" class="form-label">Rut Cliente</label>
+                <input class="form-control" list="datalist_rut" name ="rut_cliente" id="rut_cliente" placeholder="Buscar Rut...">
+                <datalist id="datalist_rut">
+                  @foreach ($clientes as $cliente)
+                  <option value="{{$cliente->usuario_rut}}">
+                    @endforeach
+                </datalist>
+
+              </div>
+
+            </div>
+            <div class="row mt-1">
+              <div class="col">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">Requiere Factura.</label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-evenly botones ml-3">
+            
+            <div class="col-md-4">
+              <a class="btn btn-danger" href="{{ route('ventas.create') }}" role="button">Cancelar Venta</a>
+            </div>
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-success">Realizar Venta</button>
+            </div>
+
+            {{-- input escondido que envia el JSON con el detalle_venta --}}
+            <input type="text" class="visually-hidden" name ="hidden" id="hidden">
           </div>
         </form>
+        
       </div>
 
     </div>
 
     {{-- Tabla con detalle de producto --}}
-    
+
     <div class="row mt-3 px-5">
 
       <div class="col-md-12 card bg-light tabla-scroll">
         <div class="row mx-3 mt-3 justify-content-center">
           <div class="col-md-3 card form-izq ml-3">
-            <h4 class="text-center" >🛒 Carrito 🛒</h4>
-          </div>        
+            <h4 class="text-center">🛒 Carrito 🛒</h4>
+          </div>
         </div>
-        
+
         <table class="table table-hover pb-3">
           <thead>
             <tr>
@@ -246,7 +283,7 @@ $(document).ready(function() {
             </tr>
           </thead>
           <tbody class="shoppingCartItemsContainer">
-            
+
           </tbody>
         </table>
       </div>
@@ -254,9 +291,30 @@ $(document).ready(function() {
 
   </div>
 
+  <script type="text/javascript">
+        
+    var content ="";
+    var json_semi = "["+ content +"]";
+    var json_final = "";
+    
+    function JSON_append(name,age){
+        
+        content = content + '{"name": '+'"'+name+'"'+', "age": '+age+', "country": "United States"},';
+        json_semi = '['+ content +']';
+        json_final = json_semi.replace("},]","}]");
+      
+        var input_hidden = document.getElementById('hidden'); 
+        input_hidden.value = json_final;
+        console.log(json_final);
+    }
+    
+</script>
 
-  <script type="text/javascript" >
-  //poner fecha al abrir la pagina
+
+  {{-- Agregar fecha (solo lectura) --}}
+  
+  <script type="text/javascript">
+    //poner fecha al abrir la pagina
   const date = new Date();
   const fecha_mysql = date.toISOString().split("T")[0];
   var fecha_js = document.getElementById('fecha');
@@ -264,9 +322,9 @@ $(document).ready(function() {
   </script>
 
   {{-- boton quitar producto --}}
-  
-  <script type="text/javascript" >
-  function quitar_producto(){
+
+  <script type="text/javascript">
+    function quitar_producto(){
     
     var nombre_producto_js = document.getElementById('nombre_producto');
     var codigo_js = document.getElementById('codigo');
@@ -282,8 +340,10 @@ $(document).ready(function() {
   
   </script>
 
+  {{-- Query con Javascript y arreglos recibidos desde Controlador --}}
+  
   <script type="text/javascript">
-  //var arreglo = parseInt('<?php echo $productos; ?>');
+    //var arreglo = parseInt('<?php echo $productos; ?>');
   <?php
   $js_array = json_encode($productos);
   echo "var producto_js = ". $js_array . ";\n";
@@ -292,12 +352,6 @@ $(document).ready(function() {
   $js_array = json_encode($productos_en_stock);
   echo "var productos_en_stock_js = ". $js_array . ";\n";
   ?>
-  
-  
-
-  
-  //console.log(productos_en_stock_js);
-  
   
 
   function cargar_datos(){
@@ -328,7 +382,7 @@ $(document).ready(function() {
       }
       
     }
-    console.log(valor_unidad_p);
+    
     codigo_js.value = id_producto;
     stock_js.value = stock_p;
     valor_unidad_js.value = valor_unidad_p;
