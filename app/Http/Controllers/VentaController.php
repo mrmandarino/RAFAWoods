@@ -26,6 +26,7 @@ class VentaController extends Controller
     {
         $productos = DB::table('productos')->get();
         $productos_en_stock = DB::table('localizacions')->get();
+        $clientes = DB::table('clientes')->get();
         $count_ventas = DB::table('ventas')->count('*');//ver cuantos registros hay
         $id_venta = 1;//valor por defecto, será modificado si count_ventas es distinto de 0
         
@@ -34,7 +35,7 @@ class VentaController extends Controller
             
         }
         
-        return view('ventas.realizar_ventas',compact('productos','productos_en_stock','id_venta'));
+        return view('ventas.realizar_ventas',compact('productos','productos_en_stock','id_venta','clientes'));
     }
 
     /**
