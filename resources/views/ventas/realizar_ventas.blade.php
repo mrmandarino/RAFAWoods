@@ -307,8 +307,10 @@
     
     function JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final){
         
+        var id = parseInt(id_producto);
+        var cantidad = parseInt(cantidad_producto);
        // content = content + '{"id": '+'"'+id_producto+'"'+', "nombre": '+nombre_producto+', "cantidad": '+cantidad_producto+', "valor": '+valor_final+'},';
-        content = content + '{"producto_id": '+id_producto+', "nombre": '+nombre_producto+', "cantidad": '+'"'+cantidad_producto+'"'+', "total_producto": '+ valor_final +'},';
+        content = content + '{"producto_id": '+id+', "nombre": '+'"'+nombre_producto+'"'+', "cantidad": '+cantidad+', "total_producto": '+ valor_final +'},';
         json_semi = '['+ content +']';
         json_final = json_semi.replace("},]","}]");
       
