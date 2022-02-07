@@ -28,26 +28,32 @@
 
   function addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final)
   {
-    const shoppingCartRow = document.createElement('tr');
-    shoppingCartRow.setAttribute('class','shoppingCartItem');
-    shoppingCartRow.setAttribute('id','item_carrito');
-    const shoppingCartContent = `
-              <tr>
-              <td class="text-center" id="id_item_carrito">${id_producto}</td>
-              <td class="text-center" id="nombre_item_carrito">${nombre_producto}</td>
-              <td class="text-center" id="cantidad_item_carrito">${cantidad_producto}</td>
-              <td class="shoppingCartItemPrice text-center" id="valor_item_carrito">${valor_final}</td>
-              <td class="text-center"><button type="button" class="btn btn-danger">✕</button></td>
-              </tr>
-    `;
-
-    shoppingCartRow.innerHTML = shoppingCartContent;
-    shoppingCartItemsContainer.append(shoppingCartRow);
-
-    shoppingCartRow.querySelector('.btn-danger').addEventListener('click',removeShoppingCartItem);
-    update_total_compra();
-    JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
-    quitar_producto();
+    var habilitado_para_comprar = check_stock();
+    if(habilitado_para_comprar == true)
+    {
+      const shoppingCartRow = document.createElement('tr');
+      shoppingCartRow.setAttribute('class','shoppingCartItem');
+      shoppingCartRow.setAttribute('id','item_carrito');
+      const shoppingCartContent = `
+                <tr>
+                <td class="text-center" id="id_item_carrito">${id_producto}</td>
+                <td class="text-center" id="nombre_item_carrito">${nombre_producto}</td>
+                <td class="text-center" id="cantidad_item_carrito">${cantidad_producto}</td>
+                <td class="shoppingCartItemPrice text-center" id="valor_item_carrito">${valor_final}</td>
+                <td class="text-center"><button type="button" class="btn btn-danger">✕</button></td>
+                </tr>
+      `;
+  
+      shoppingCartRow.innerHTML = shoppingCartContent;
+      shoppingCartItemsContainer.append(shoppingCartRow);
+  
+      shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final);});
+      update_total_compra();
+      JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
+      quitar_producto();
+    }else{
+      alert('Estás excediendo el stock disponible');
+    }
   }
 
   function update_total_compra() 
@@ -71,19 +77,24 @@
     
     
   }
-  
-
-  function removeShoppingCartItem(event)
+  function removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final)
   {
+    JSON_remove(id_producto,nombre_producto,cantidad_producto,valor_final);
     const button_clicked = event.target;
     button_clicked.closest('.shoppingCartItem').remove();
     update_total_compra();
   }
 
-  function comprar()
-  {
-    
+  function check_stock() {
+    var stock_js = document.getElementById('stock');
+    var cantidad_js = document.getElementById('cantidad');
+    if(stock_js.value >= cantidad_js.value)
+    {
+      return true;
+    }
+    return false;
   }
+
 });
 
 
@@ -139,7 +150,7 @@
               <label for="stock" class="form-label">Stock</label>
               <div class="input-group">
                 <label for="stock" class="input-group-text">#</label>
-                <input class="form-control" type="text" id="stock" aria-label="readonly input example" readonly>
+                <input class="form-control" type="number" id="stock" aria-label="readonly input example" readonly>
               </div>
             </div>
           </div>
@@ -158,7 +169,7 @@
               <label for="cantidad" class="form-label">Cantidad</label>
               <div class="input-group">
                 <label for="cantidad" class="input-group-text">#</label>
-                <input type="number" class="form-control" id="cantidad" value="1" min="1">
+                <input type="number" class="form-control" id="cantidad" value="1" min="1" max="">
               </div>
             </div>
 
@@ -214,7 +225,7 @@
 
           <div class="col-6 ">
             <label for="fecha" class="form-label">Medio de Pago</label>
-            <select class="form-select" aria-label="Default select example" name ="medio_pago" id="medio_pago">
+            <select class="form-select" aria-label="Default select example" name ="medio_pago" id="medio_pago" required>
               <option selected>Seleccionar...</option>
               <option value="1">Efectivo 💵</option>
               <option value="2">T. Débito 💳</option>
@@ -309,7 +320,6 @@
         
         var id = parseInt(id_producto);
         var cantidad = parseInt(cantidad_producto);
-       // content = content + '{"id": '+'"'+id_producto+'"'+', "nombre": '+nombre_producto+', "cantidad": '+cantidad_producto+', "valor": '+valor_final+'},';
         content = content + '{"producto_id": '+id+', "nombre": '+'"'+nombre_producto+'"'+', "cantidad": '+cantidad+', "total_producto": '+ valor_final +'},';
         json_semi = '['+ content +']';
         json_final = json_semi.replace("},]","}]");
@@ -317,9 +327,19 @@
         var input_hidden = document.getElementById('hidden'); 
         input_hidden.value = json_final;
         console.log(json_final);
+        
+    }
+
+    var extraer ="";
+    function JSON_remove(id,nombre,cantidad,final){
+      extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'}';
+      json_final = json_final.replace(extraer,"");
+      json_final = json_final.replace("[,{","[{");
+      json_final = json_final.replace("},,{","},{");
+      console.log(json_final);
     }
     
-</script>
+  </script>
 
 
   {{-- Agregar fecha (solo lectura) y switch factura --}}
@@ -391,6 +411,7 @@
     //obtener referencia de componentes para llenar (inputs de formulario)
     var codigo_js = document.getElementById('codigo');
     var stock_js = document.getElementById('stock');
+    var cantidad_js = document.getElementById('cantidad');
     var valor_unidad_js = document.getElementById('valor_unidad');
     
 
@@ -410,14 +431,19 @@
     codigo_js.value = id_producto;
     stock_js.value = stock_p;
     valor_unidad_js.value = valor_unidad_p;
-    
-    
-    
+    cantidad_js.setAttribute('max',stock_js.value); 
   }
   </script>
 
 
-
+  <div class="col-12 col-md-4 col-lg-3">
+                    <!--Mensaje de eliminado con exito -->
+                    @if (session()->has('correcto'))
+                        <div class="alert alert-success">
+                            {{ session()->get('correcto') }}
+                        </div><br>
+                    @endif
+  </div>
 </div>
 
 

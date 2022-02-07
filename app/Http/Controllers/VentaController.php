@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detalle_venta;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,9 +47,42 @@ class VentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $detalle_venta = json_decode($request->hidden);
-        dd($detalle_venta);
+    {   
+        // $request->validate([
+        //     'rut' => ['required','cl_rut','unique:users'],
+        //     'nombre' => ['required', 'string', 'max:255'],
+        //     'apellido' => ['required','string','max:255'],
+        //     'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', 'min:8', 'max:16',Rules\Password::defaults()],
+        //     'telefono' => ['digits:8', 'integer'],
+        // ]);
+        $nuevo_total =0;
+        $total_compra = $request->total_compra;
+        $total_compra_coma = str_replace(".","",$total_compra);
+        $detalle_ventas = json_decode($request->hidden);
+        $venta = Venta::create([
+            'sucursal_id' => 1,
+            'medio_de_pago' => $request->medio_pago,
+            'total_venta' => intval($total_compra_coma),
+        ]);
+
+        foreach($detalle_ventas as $detalle_venta)
+        {
+            Detalle_venta::create([
+                'id_venta' => $venta->id,
+                'cantidad' => $detalle_venta->cantidad,
+                'cliente_rut' => $request->rut_cliente,
+                'producto_id' => $detalle_venta->producto_id,
+                'total_producto' => $detalle_venta->total_producto,
+            ]);
+
+            $stock = DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->get('stock')->first();
+            $nuevo_total = $stock->stock - $detalle_venta->cantidad;
+            DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->update(['stock'=>$nuevo_total]);
+        }
+
+
+        return redirect()->route('ventas.create')->with('correcto','Venta Exitosa');
     }
 
     /**
