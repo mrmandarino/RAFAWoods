@@ -10,9 +10,8 @@ class Detalle_venta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_venta',
+        'venta_id',
         'cantidad',
-        'cliente_rut',
         'producto_id',
         'total_producto',
     ];

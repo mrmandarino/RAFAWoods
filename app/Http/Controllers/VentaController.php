@@ -63,15 +63,15 @@ class VentaController extends Controller
         $venta = Venta::create([
             'sucursal_id' => 1,
             'medio_de_pago' => $request->medio_pago,
+            'cliente_rut' => $request->rut_cliente,
             'total_venta' => intval($total_compra_coma),
         ]);
 
         foreach($detalle_ventas as $detalle_venta)
         {
             Detalle_venta::create([
-                'id_venta' => $venta->id,
+                'venta_id' => $venta->id,
                 'cantidad' => $detalle_venta->cantidad,
-                'cliente_rut' => $request->rut_cliente,
                 'producto_id' => $detalle_venta->producto_id,
                 'total_producto' => $detalle_venta->total_producto,
             ]);
