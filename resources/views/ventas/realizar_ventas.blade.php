@@ -8,6 +8,7 @@
   $(document).ready(function() {
 	const bclick = document.getElementById('boton_agregar_a_compra');
   const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
+  const json_final = document.getElementById('hidden');
 	bclick.addEventListener('click',addToCartClicked);
 
   function addToCartClicked(event) 
@@ -23,22 +24,59 @@
     const cantidad_producto = document.getElementById('cantidad').value;//Cantidad de producto a comprar
     const valor_producto = document.getElementById('valor_unidad').value;//Valor del producto a comprar
     const valor_final = cantidad_producto*valor_producto;
-    addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final);
+    addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final,valor_producto);
   }
 
-  function addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final)
+  function addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final,valor_producto)
   {
     var habilitado_para_comprar = check_stock();
     if(habilitado_para_comprar == true)
     {
+      const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
+      for(let i = 0; i<elementsId.length;i++){
+        if(elementsId[i].innerText == id_producto){
+
+          //Actualizar Cantidad del item duplicado
+          let element_quant = elementsId[i].parentElement.querySelector('.shoppingCartItemQuantity');
+          let element_quant_int = parseInt(element_quant.innerText);
+          let new_element_quant = element_quant_int + parseInt(cantidad_producto);
+          element_quant.innerText = new_element_quant;
+          
+
+          //Actualizar precio total del item duplicado
+          let element_price = elementsId[i].parentElement.querySelector('.shoppingCartItemPrice');
+          let new_element_price = new_element_quant*parseInt(valor_producto);
+          element_price.innerText = new_element_price;
+
+
+          //Removiendo registro repetido de archivo JSON
+          var json_arr = JSON.parse(json_final.value);
+          var pos = 0;
+          for(json_obj of json_arr){
+            if(json_obj.producto_id == id_producto){
+              json_arr[pos].cantidad = new_element_quant;
+              json_arr[pos].total_producto = new_element_price;
+              pos = 0;
+              var json_arr_str = JSON.stringify(json_arr);
+              var contenido = json_arr_str.replace("[","");
+              var contenido = json_arr_str.replace("]","");
+              JSON_update(json_arr_str,contenido);
+              update_total_compra();
+              return;
+            }
+            pos++;
+          }
+          
+        }
+      }
       const shoppingCartRow = document.createElement('tr');
       shoppingCartRow.setAttribute('class','shoppingCartItem');
       shoppingCartRow.setAttribute('id','item_carrito');
       const shoppingCartContent = `
                 <tr>
-                <td class="text-center" id="id_item_carrito">${id_producto}</td>
-                <td class="text-center" id="nombre_item_carrito">${nombre_producto}</td>
-                <td class="text-center" id="cantidad_item_carrito">${cantidad_producto}</td>
+                <td class="shoppingCartItemId text-center" id="id_item_carrito">${id_producto}</td>
+                <td class="shoppingCartItemName text-center" id="nombre_item_carrito">${nombre_producto}</td>
+                <td class="shoppingCartItemQuantity text-center" id="cantidad_item_carrito">${cantidad_producto}</td>
                 <td class="shoppingCartItemPrice text-center" id="valor_item_carrito">${valor_final}</td>
                 <td class="text-center"><button type="button" class="btn btn-danger">✕</button></td>
                 </tr>
@@ -50,7 +88,6 @@
       shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final);});
       update_total_compra();
       JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
-      quitar_producto();
     }else{
       alert('Estás excediendo el stock disponible');
     }
@@ -169,7 +206,7 @@
               <label for="cantidad" class="form-label">Cantidad</label>
               <div class="input-group">
                 <label for="cantidad" class="input-group-text">#</label>
-                <input type="number" class="form-control" id="cantidad" value="1" min="1" max="">
+                <input type="number" class="form-control" id="cantidad" value="1" min="1">
               </div>
             </div>
 
@@ -313,20 +350,20 @@
   <script type="text/javascript">
         
     var content ="";
-    var json_semi = "["+ content +"]";
-    var json_final = "";
+    var json_final = "["+ content +"]";
+    const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
+
     
     function JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final){
         
         var id = parseInt(id_producto);
         var cantidad = parseInt(cantidad_producto);
         content = content + '{"producto_id": '+id+', "nombre": '+'"'+nombre_producto+'"'+', "cantidad": '+cantidad+', "total_producto": '+ valor_final +'},';
-        json_semi = '['+ content +']';
-        json_final = json_semi.replace("},]","}]");
-      
+        json_final = '['+ content +']';
+        json_final = json_final.replace("},]","}]");
         var input_hidden = document.getElementById('hidden'); 
         input_hidden.value = json_final;
-        console.log(json_final);
+        console.log(input_hidden.value);
         
     }
 
@@ -336,7 +373,18 @@
       json_final = json_final.replace(extraer,"");
       json_final = json_final.replace("[,{","[{");
       json_final = json_final.replace("},,{","},{");
-      console.log(json_final);
+      var input_hidden = document.getElementById('hidden'); 
+      input_hidden.value = json_final;
+      console.log(input_hidden.value);
+    }
+
+    function JSON_update(json_updated,contenido_updated)
+    {
+      json_final = json_updated;
+      content = contenido_updated;
+      var input_hidden = document.getElementById('hidden'); 
+      input_hidden.value = json_final;
+      console.log(input_hidden.value);
     }
     
   </script>

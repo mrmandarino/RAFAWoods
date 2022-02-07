@@ -48,6 +48,7 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {   
+        dd($request->hidden);
         // $request->validate([
         //     'rut' => ['required','cl_rut','unique:users'],
         //     'nombre' => ['required', 'string', 'max:255'],
