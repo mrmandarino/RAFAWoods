@@ -46,7 +46,7 @@
 
     shoppingCartRow.querySelector('.btn-danger').addEventListener('click',removeShoppingCartItem);
     update_total_compra();
-    JSON_append(id_producto,nombre_producto);
+    JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
     quitar_producto();
   }
 
@@ -68,6 +68,7 @@
     const shoppingCartTotal = document.getElementById('total_compra');
 
     shoppingCartTotal.value = Intl.NumberFormat("de-DE").format(total);
+    
     
   }
   
@@ -185,12 +186,12 @@
             <h4 class="text-center">💲 Venta 💲</h4>
           </div>
         </div>
-        <form class="row g-3 my-auto col-form-der form-der">
+        <form action="{{route('ventas.store')}}"class="row g-3 my-auto col-form-der form-der" method="POST">
           @csrf
           <div class="col-md-12">
             <div class="input-group">
               <label for="total_compra" class="input-group-text">Total Venta:</label>
-              <input class="form-control form-control-lg" type="text" id="total_compra" value="0"
+              <input class="form-control form-control-lg" type="text" name="total_compra" id="total_compra" value="0"
                 placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
           </div>
@@ -207,13 +208,13 @@
             <label for="fecha" class="form-label">Nro. Venta</label>
             <div class="input-group">
               <label for="fecha" class="input-group-text">№</label>
-              <input type="text" class="form-control" id="fecha" value="{{$id_venta}}" readonly>
+              <input type="text" class="form-control" name="id_venta" id="id_venta" value="{{$id_venta}}" readonly>
             </div>
           </div>
 
           <div class="col-6 ">
             <label for="fecha" class="form-label">Medio de Pago</label>
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" name ="medio_pago" id="medio_pago">
               <option selected>Seleccionar...</option>
               <option value="1">Efectivo 💵</option>
               <option value="2">T. Débito 💳</option>
@@ -304,9 +305,10 @@
     var json_semi = "["+ content +"]";
     var json_final = "";
     
-    function JSON_append(name,age){
+    function JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final){
         
-        content = content + '{"name": '+'"'+name+'"'+', "age": '+age+', "country": "United States"},';
+       // content = content + '{"id": '+'"'+id_producto+'"'+', "nombre": '+nombre_producto+', "cantidad": '+cantidad_producto+', "valor": '+valor_final+'},';
+        content = content + '{"producto_id": '+id_producto+', "nombre": '+nombre_producto+', "cantidad": '+'"'+cantidad_producto+'"'+', "total_producto": '+ valor_final +'},';
         json_semi = '['+ content +']';
         json_final = json_semi.replace("},]","}]");
       

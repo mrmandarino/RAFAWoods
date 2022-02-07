@@ -46,7 +46,8 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $detalle_venta = json_decode($request->hidden);
+        dd($detalle_venta);
     }
 
     /**
