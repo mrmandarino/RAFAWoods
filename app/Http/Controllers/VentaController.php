@@ -48,15 +48,12 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {   
-        dd($request->hidden);
-        // $request->validate([
-        //     'rut' => ['required','cl_rut','unique:users'],
-        //     'nombre' => ['required', 'string', 'max:255'],
-        //     'apellido' => ['required','string','max:255'],
-        //     'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'confirmed', 'min:8', 'max:16',Rules\Password::defaults()],
-        //     'telefono' => ['digits:8', 'integer'],
-        // ]);
+        
+        $request->validate([
+            'medio_pago' => ['required','numeric'],
+            'total_compra' => ['required', 'gt:0'],
+        ]);
+
         $nuevo_total =0;
         $total_compra = $request->total_compra;
         $total_compra_coma = str_replace(".","",$total_compra);
@@ -67,6 +64,11 @@ class VentaController extends Controller
             'cliente_rut' => $request->rut_cliente,
             'total_venta' => intval($total_compra_coma),
         ]);
+
+        if($request->con_factura != null)
+        {
+            $venta->update(['con_factura'=>1]);
+        }
 
         foreach($detalle_ventas as $detalle_venta)
         {

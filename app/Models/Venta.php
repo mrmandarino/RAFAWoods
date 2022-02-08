@@ -17,6 +17,7 @@ class Venta extends Model
         'medio_de_pago',
         'cliente_rut',
         'total_venta',
+        'con_factura',
     ];
 
 

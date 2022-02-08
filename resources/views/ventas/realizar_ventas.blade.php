@@ -252,6 +252,9 @@
               <input class="form-control form-control-lg" type="text" name="total_compra" id="total_compra" value="0"
                 placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
+            @error('total_compra')
+            <small style="color:red;">*Debes escoger al menos un producto para la venta</small>
+            @enderror
           </div>
 
           <div class="col-6">
@@ -279,6 +282,9 @@
               <option value="3">T. Crédito 💳</option>
               <option value="4">Transferencia 🏦</option>
             </select>
+            @error('medio_pago')
+            <small style="color:red;">*Debes escoger un medio de pago</small>
+            @enderror
           </div>
           <div class="col-6">
             <div class="row">
@@ -299,7 +305,7 @@
             <div class="row mt-1">
               <div class="col">
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onclick="con_factura()">
+                  <input class="form-check-input" type="checkbox" role="switch" name="con_factura" id="flexSwitchCheckDefault" onclick="con_factura()">
                   <label class="form-check-label" for="flexSwitchCheckDefault"data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta." id="documento_fiscal">Se Requiere Factura.</label>
                   <label data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta."><small>📄</small></label>
                 </div>
@@ -340,11 +346,11 @@
         <table class="table table-hover pb-3">
           <thead>
             <tr>
-              <th class="text-center">Codigo</th>
-              <th class="text-center">nombre</th>
-              <th class="text-center">cantidad</th>
-              <th class="text-center">valor total</th>
-              <th class="text-center">descartar</th>
+              <th class="text-center">Código</th>
+              <th class="text-center">Nombre</th>
+              <th class="text-center">Cantidad</th>
+              <th class="text-center">Valor total</th>
+              <th class="text-center">Eliminar</th>
 
             </tr>
           </thead>
@@ -513,12 +519,17 @@
 
 
   <div class="col-12 col-md-4 col-lg-3">
-                    <!--Mensaje de eliminado con exito -->
-                    @if (session()->has('correcto'))
-                        <div class="alert alert-success">
-                            {{ session()->get('correcto') }}
-                        </div><br>
-                    @endif
+          @if (session()->has('correcto'))
+              <div class="alert alert-success">
+                  {{ session()->get('correcto') }}
+              </div><br>
+          @endif
+          @if (session('incorrecto'))
+          <div class="font-medium text-md text-red-800 bg-red-300 px-16 py-4 rounded-md border">
+              {{session('incorrecto')}}
+
+          </div>
+          @endif
   </div>
 </div>
 
