@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 });*/
 
 Route::get('/ayudameme', function () {
-    return view('ventas.ayuda');
+    return view('inventario.administrar_prod');
 });
 
 

@@ -24,8 +24,9 @@ class EjecutivoController extends Controller
     public function index()
     {
        // $productos = DB::table('productos')->distinct()->get('familia');
-        $productos = Producto::distinct()->get('familia');
-        return view('inventario.visualizar_inventario',compact('productos'));
+       // $productos = Producto::distinct()->get('familia');
+        $productos = DB::table('productos')->get();
+        return view('inventario.control_inv',compact('productos'));
     }
 
     //Redireccionamiento al portal de los precios de los productos del sistema.
