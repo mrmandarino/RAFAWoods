@@ -14,5 +14,10 @@ class Mueble extends Model
     
     protected $fillable = [
         'producto_id',
+        'material',
+        'acabado',
+        'alto',
+        'ancho',
+        'largo',
     ];
 }

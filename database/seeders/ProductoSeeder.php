@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Clavo;
 use App\Models\Imagen;
+use App\Models\Localizacion;
 use App\Models\Madera;
 use App\Models\Mueble;
 use App\Models\Producto;

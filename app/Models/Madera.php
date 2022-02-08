@@ -14,6 +14,11 @@ class Madera extends Model
     
     protected $fillable = [
         'producto_id',
+        'alto',
+        'ancho',
+        'largo',
+        'tipo_madera',
+        'tratamiento',
     ];
 
      //Relacion muchos a muchos

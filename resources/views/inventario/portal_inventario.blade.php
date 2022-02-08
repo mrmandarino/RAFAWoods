@@ -12,14 +12,16 @@
                     Hola Ejecutivo!
                 </div>
             </div>
-            <a href="{{route('admin_crear_usuario')}}" class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
-                <button>
-                    Admin
+            <a href="{{route('ver_inventario')}}" >
+                <button class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
+                    Ver Inventario
                 </button>
-            </a>    
+            </a>   
         </div>
     </div>
 
+    
+    
     
     
 </x-app-layout>
