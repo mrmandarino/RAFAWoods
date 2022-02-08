@@ -41,27 +41,24 @@
           let element_quant_int = parseInt(element_quant.innerText);
           let new_element_quant = element_quant_int + parseInt(cantidad_producto);
           element_quant.innerText = new_element_quant;
-          
+          element_quant.value = new_element_quant;          
 
           //Actualizar precio total del item duplicado
           let element_price = elementsId[i].parentElement.querySelector('.shoppingCartItemPrice');
           let new_element_price = new_element_quant*parseInt(valor_producto);
           element_price.innerText = new_element_price;
+          element_price.value = new_element_price;
 
-
+          
           //Removiendo registro repetido de archivo JSON
           var json_arr = JSON.parse(json_final.value);
           var pos = 0;
           for(json_obj of json_arr){
             if(json_obj.producto_id == id_producto){
-              json_arr[pos].cantidad = new_element_quant;
-              json_arr[pos].total_producto = new_element_price;
-              pos = 0;
-              var json_arr_str = JSON.stringify(json_arr);
-              var contenido = json_arr_str.replace("[","");
-              var contenido = json_arr_str.replace("]","");
-              JSON_update(json_arr_str,contenido);
+              JSON_remove(id_producto,nombre_producto,json_arr[pos].cantidad,json_arr[pos].total_producto);
+              JSON_append(id_producto,nombre_producto,new_element_quant,new_element_price);
               update_total_compra();
+              quitar_producto();
               return;
             }
             pos++;
@@ -85,21 +82,18 @@
       shoppingCartRow.innerHTML = shoppingCartContent;
       shoppingCartItemsContainer.append(shoppingCartRow);
   
-      shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final);});
+      shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,valor_producto)});
       update_total_compra();
       JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
     }else{
       alert('Estás excediendo el stock disponible');
     }
+    quitar_producto();
   }
 
   function update_total_compra() 
   {
     let total = 0;
-    // const total_compra = document.getElementById('total_compra');
-    // const total_compra_string = total_compra.value;
-    // const total_compra_int = parseInt(total_compra_string);
-    // total_compra.value =(total_compra_int + valor_final);
 
     const items_carrito = document.querySelectorAll('.shoppingCartItem');
     
@@ -114,18 +108,34 @@
     
     
   }
-  function removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final)
+  function removeShoppingCartItem(event,id_producto,nombre_producto,valor_producto)
   {
-    JSON_remove(id_producto,nombre_producto,cantidad_producto,valor_final);
+    const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
+    for(let i = 0; i<elementsId.length;i++)
+    {
+      if(elementsId[i].innerText == id_producto)
+      {
+        //Obtener valor de cantidad en carrito 
+        let element_quant = elementsId[i].parentElement.querySelector('.shoppingCartItemQuantity');
+        let element_quant_int = parseInt(element_quant.innerText);
+        //Obtener valor de precio final en carrito
+        let element_price = elementsId[i].parentElement.querySelector('.shoppingCartItemPrice');
+        let element_price_int = parseInt(element_price.innerText);
+
+        JSON_remove(id_producto,nombre_producto,element_quant_int,element_price_int);
+      }
+    }
+    
     const button_clicked = event.target;
     button_clicked.closest('.shoppingCartItem').remove();
     update_total_compra();
+    quitar_producto();
   }
 
   function check_stock() {
     var stock_js = document.getElementById('stock');
     var cantidad_js = document.getElementById('cantidad');
-    if(stock_js.value >= cantidad_js.value)
+    if(stock_js.value >= cantidad_js.value && stock_js.value>0)
     {
       return true;
     }
@@ -369,8 +379,11 @@
 
     var extraer ="";
     function JSON_remove(id,nombre,cantidad,final){
-      extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'}';
-      json_final = json_final.replace(extraer,"");
+      extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'},';
+      content = content.replace(extraer,"");
+      json_final = '['+ content +']';
+      json_final = json_final.replace("},]","}]");
+      json_final = json_final.replace("},,]","}]");
       json_final = json_final.replace("[,{","[{");
       json_final = json_final.replace("},,{","},{");
       var input_hidden = document.getElementById('hidden'); 
@@ -422,11 +435,13 @@
     var codigo_js = document.getElementById('codigo');
     var stock_js = document.getElementById('stock');
     var valor_unidad_js = document.getElementById('valor_unidad');
+    var cantidad_unidad_js = document.getElementById('cantidad');
 
     nombre_producto_js.value = "";
     codigo_js.value = "";
     stock_js.value = "";
     valor_unidad_js.value = "";
+    cantidad_unidad_js.value = "1";
   }
     
   
@@ -444,11 +459,13 @@
   $js_array = json_encode($productos_en_stock);
   echo "var productos_en_stock_js = ". $js_array . ";\n";
   ?>
+
+  
   
 
   function cargar_datos(){
 
-    
+    const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
     
     //obtener id segun seleccion en datalist (producto)
     const productos = document.getElementById('datalist_productos');
@@ -461,6 +478,7 @@
     var stock_js = document.getElementById('stock');
     var cantidad_js = document.getElementById('cantidad');
     var valor_unidad_js = document.getElementById('valor_unidad');
+    var stock_js_dinamico = 0;
     
 
     var stock_p = 0;
@@ -475,9 +493,19 @@
       }
       
     }
-    
+
+    const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
+    for(let i = 0; i<elementsId.length;i++)
+    {
+      if(elementsId[i].innerText == id_producto)
+      {
+        let element_quant = elementsId[i].parentElement.querySelector('.shoppingCartItemQuantity');
+        let element_quant_int = parseInt(element_quant.innerText);
+        stock_js_dinamico = stock_js_dinamico + element_quant_int;
+      }
+    }
     codigo_js.value = id_producto;
-    stock_js.value = stock_p;
+    stock_js.value = stock_p - stock_js_dinamico;
     valor_unidad_js.value = valor_unidad_p;
     cantidad_js.setAttribute('max',stock_js.value); 
   }
