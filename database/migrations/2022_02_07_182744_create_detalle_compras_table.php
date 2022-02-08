@@ -40,4 +40,6 @@ class CreateDetalleComprasTable extends Migration
     {
         Schema::dropIfExists('detalle_compras');
     }
+
 }
+

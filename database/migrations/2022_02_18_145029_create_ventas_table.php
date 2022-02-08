@@ -22,6 +22,7 @@ class CreateVentasTable extends Migration
             $table->string('cliente_rut')->nullable();
             $table->foreign('cliente_rut')->references('usuario_rut')->on('clientes')->onDelete('set null');
             $table->integer('total_venta');
+            $table->boolean('con_factura')->default(0);
             $table->timestamps();
         });
     }

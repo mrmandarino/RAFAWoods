@@ -6,11 +6,12 @@ use App\Models\Clavo;
 use App\Models\Imagen;
 use App\Models\Madera;
 use App\Models\Mueble;
-use App\Models\Plancha_construccion;
 use App\Models\Producto;
-use App\Models\Techumbre;
 use App\Models\Tornillo;
+use App\Models\Techumbre;
+use App\Models\Localizacion;
 use Illuminate\Database\Seeder;
+use App\Models\Plancha_construccion;
 
 class ProductoSeeder extends Seeder
 {
@@ -33,6 +34,13 @@ class ProductoSeeder extends Seeder
         
         $productos=Producto::factory(20)->create();
         foreach ($productos as $producto){
+            Localizacion::create([
+                'sucursal_id' => 1,
+                'producto_id' => $producto->id,
+                'stock' => rand(50,100),
+                'precio_compra' => rand(5000,10000),
+                'precio_venta' => rand(8000,15000)
+            ]);
             Imagen::factory(1)->create([
                 'imagenable_id' => $producto->id,
                 'imagenable_tipo' => 'App\Models\Producto'

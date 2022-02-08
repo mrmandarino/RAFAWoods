@@ -23,6 +23,7 @@ class CreateLocalizacionsTable extends Migration
             $table->integer('precio_compra');
             $table->integer('precio_venta')->default(1);
 
+
             
             $table->timestamps();
         });

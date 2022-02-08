@@ -23,6 +23,7 @@ class CreateDetalleVentasTable extends Migration
             $table->timestamps();
             $table->primary(['venta_id', 'producto_id']);
 
+
         });
     }
 

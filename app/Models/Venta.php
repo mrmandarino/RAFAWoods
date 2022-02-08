@@ -12,11 +12,17 @@ class Venta extends Model
     const tarjeta_debito = 2;
     const tarjeta_credito = 3;
     const transferencia = 4;
+    protected $fillable = [
+        'sucursal_id',
+        'medio_de_pago',
+        'cliente_rut',
+        'total_venta',
+    ];
+
 
     //Relacion uno a muchos 
     public function detalles(){
         return $this->hasMany('App\Models\Detalle_venta');
     }
-
 
 }
