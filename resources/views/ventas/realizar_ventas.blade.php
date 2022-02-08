@@ -224,7 +224,7 @@
 
           <div class="row justify-content-evenly botones ">
             <div class="col-md-4">
-              <button type="button" class="btn btn-danger" onclick="quitar_producto()">Quitar Producto</button>
+              <button type="button" class="btn btn-danger" onclick="quitar_producto()" title="Esta opción reinicia el formulario">Quitar Producto</button>
             </div>
             <div class="col-md-4 ">
               <button type="button" id="boton_agregar_a_compra" class="btn btn-primary">Agregar a Venta</button>
@@ -308,6 +308,10 @@
                   <input class="form-check-input" type="checkbox" role="switch" name="con_factura" id="flexSwitchCheckDefault" onclick="con_factura()">
                   <label class="form-check-label" for="flexSwitchCheckDefault"data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta." id="documento_fiscal">Se Requiere Factura.</label>
                   <label data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta."><small>📄</small></label>
+                  @if (session('incorrecto'))
+                  <br>
+                  <small style="color:red;">*{{session('incorrecto')}}</small>    
+                  @endif
                 </div>
 
               </div>
@@ -524,12 +528,7 @@
                   {{ session()->get('correcto') }}
               </div><br>
           @endif
-          @if (session('incorrecto'))
-          <div class="font-medium text-md text-red-800 bg-red-300 px-16 py-4 rounded-md border">
-              {{session('incorrecto')}}
-
-          </div>
-          @endif
+          
   </div>
 </div>
 

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Detalle_venta;
+use Exception;
 use App\Models\Venta;
 use Illuminate\Http\Request;
+use App\Models\Detalle_venta;
 use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
@@ -48,11 +49,24 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {   
-        
         $request->validate([
             'medio_pago' => ['required','numeric'],
             'total_compra' => ['required', 'gt:0'],
         ]);
+
+        if($request->rut_cliente != null)
+        {
+            $request->validate([
+                'rut_cliente' => ['cl_rut'],
+            ]);
+        }
+
+        if($request->con_factura != null)
+        {
+            if($request->rut_cliente == null){
+                return redirect()->route('ventas.create')->with('incorrecto','No puedes dejar el rut vacío si elegiste factura');
+            }
+        }
 
         $nuevo_total =0;
         $total_compra = $request->total_compra;
@@ -68,6 +82,7 @@ class VentaController extends Controller
         if($request->con_factura != null)
         {
             $venta->update(['con_factura'=>1]);
+            
         }
 
         foreach($detalle_ventas as $detalle_venta)
