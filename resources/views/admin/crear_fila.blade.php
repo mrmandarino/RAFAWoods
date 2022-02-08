@@ -247,21 +247,19 @@
         
     @endif
 
-    @if ($tabla == 'madera_proveedores')  
+    @if ($tabla == 'orden_compras')  
         @php($proveedores=DB::table('proveedors')->get())
-        @php($maderas=DB::table('maderas')->get())
+        @php($sucursales=DB::table('inventarios')->get())
 
         <div class="mb-3">
-            <label for="" class="form-label">Nivel calidad</label>
-            <select class="form-control select" name="nivel_calidad" id="nivel_calidad" tabindex="1"> 
-                <option value=1 {{ old('nivel_calidad')==1 ? 'selected' : ''  }}>Bajo</option>  
-                <option value=2 {{ old('nivel_calidad')==2 ? 'selected' : ''  }}>Aceptable</option> 
-                <option value=3 {{ old('nivel_calidad')==3 ? 'selected' : ''  }}>Medio</option>  
-                <option value=4 {{ old('nivel_calidad')==4 ? 'selected' : ''  }}>Alto</option>  
-                <option value=5 {{ old('nivel_calidad')==5 ? 'selected' : ''  }}>Excelente</option>  
+            <label for="" class="form-label">Sucursal</label>
+            <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="1">
+                @foreach ($sucursales as $sucursal)
+                <option value={{$sucursal->id}} {{ old('sucursal_id')==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->direccion_sucursal}}</option> 
+                @endforeach 
             </select>
         </div>
-       
+
         <div class="mb-3">
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="2">
@@ -270,15 +268,17 @@
                 @endforeach  
             </select>
         </div>
+
         <div class="mb-3">
-            <label for="" class="form-label">Madera</label>
-            <select class="form-control select" name="madera_id" id="madera_id" tabindex="3">
-                @foreach ($maderas as $madera)
-                @php($producto=DB::table('productos')->get()->where('id',$madera->producto_id)->first())
-                <option value={{$madera->producto_id}} {{ old('madera_id')==$madera->producto_id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach 
-            </select>
+            <label for="" class="form-label">Total OOCC</label>
+            <input id="total_oocc" name="total_oocc" type="number" class="form-control" tabindex="3" value="{{old('total_oocc')}}">
+            @error('total_oocc')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
+       
+        
+        
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
     
@@ -931,37 +931,6 @@
     
     @endif
 
-    @if ($tabla == 'compras')
-        @php($clientes=DB::table('clientes')->get())
-        @php($productos=DB::table('productos')->get())
-        <div class="mb-3">
-            <label for="" class="form-label">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="1" value="{{old('cantidad')}}">
-            @error('cantidad')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Rut cliente</label>
-            <select class="form-control select" name="rut" id="rut" tabindex="2">
-                @foreach ($clientes as $cliente)
-                    <option value={{$cliente->usuario_rut}} {{ old('rut')==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
-                @endforeach  
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="3">
-                @foreach ($productos as $producto)
-                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
-        </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-    
-    @endif
-
     @if ($tabla == 'clavos')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -1009,6 +978,150 @@
         <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
     
     @endif
+
+    @if ($tabla == 'detalle_compras')
+        @php($ordenes=DB::table('orden_compras')->get())
+        @php($productos=DB::table('productos')->get())
+
+        <div class="mb-3">
+            <label for="" class="form-label">ID Orden de compra</label>
+            <select class="form-control select" name="oc_id" id="oc_id" tabindex="1">
+                @foreach ($ordenes as $orden)
+                    <option value={{$orden->id}} {{ old('oc_id')==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
+                @endforeach  
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Producto</label>
+            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
+                @foreach ($productos as $producto)
+                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                @endforeach  
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Nivel de calidad</label>
+            <select class="form-control select" name="nivel_calidad" id="nivel_calidad" tabindex="3">
+                <option value=1 {{ old('nivel_calidad')==1? 'selected' : ''  }}>Bajo</option>  
+                <option value=2 {{ old('nivel_calidad')==2? 'selected' : ''  }}>Aceptable</option>  
+                <option value=3 {{ old('nivel_calidad')==3? 'selected' : ''  }}>Medio</option>  
+                <option value=4 {{ old('nivel_calidad')==4? 'selected' : ''  }}>Bueno</option>  
+                <option value=5 {{ old('nivel_calidad')==5? 'selected' : ''  }}>Excelente</option>  
+            </select>
+            @error('nivel_calidad')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Cantidad</label>
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="4" value="{{old('cantidad')}}">
+            @error('cantidad')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Precio unitario</label>
+            <input id="precio_unitario" name="precio_unitario" type="number" class="form-control" tabindex="5" value="{{old('precio_unitario')}}">
+            @error('precio_unitario')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
+        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
+
+
+    @endif
+
+    @if ($tabla == 'ventas')
+        @php($clientes=DB::table('clientes')->get())
+        @php($sucursales=DB::table('inventarios')->get())
+
+        <div class="mb-3">
+            <label for="" class="form-label">ID Sucursal</label>
+            <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="1">
+                @foreach ($sucursales as $sucursal)
+                    <option value={{$sucursal->id}} {{ old('sucursal_id')==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->id}}</option> 
+                @endforeach  
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Rut cliente</label>
+            <select class="form-control select" name="cliente_rut" id="cliente_rut" tabindex="2">
+                @foreach ($clientes as $cliente)
+                    <option value={{$cliente->usuario_rut}} {{ old('cliente_rut')==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
+                @endforeach  
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Medio de pago</label>
+            <select class="form-control select" name="medio_de_pago" id="medio_de_pago" tabindex="3">
+                <option value=1 {{ old('medio_de_pago')==1? 'selected' : ''  }}>Efectivo</option>  
+                <option value=2 {{ old('medio_de_pago')==2? 'selected' : ''  }}>Tarjeta de débito</option>  
+                <option value=3 {{ old('medio_de_pago')==3? 'selected' : ''  }}>Tarjeta de crédito</option>  
+                <option value=4 {{ old('medio_de_pago')==4? 'selected' : ''  }}>Transferencia</option>  
+            </select>
+            @error('medio_de_pago')
+                <small style="color:red;">{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Total venta</label>
+            <input id="total_venta" name="total_venta" type="number" class="form-control" tabindex="4" value="{{old('total_venta')}}">
+            @error('total_venta')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+
+        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
+        <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
+
+    @endif
+
+    @if ($tabla == 'detalle_ventas')
+        @php($ventas=DB::table('ventas')->get())
+        @php($productos=DB::table('productos')->get())
+
+        <div class="mb-3">
+            <label for="" class="form-label">ID Venta</label>
+            <select class="form-control select" name="venta_id" id="venta_id" tabindex="1">
+                @foreach ($ventas as $venta)
+                    <option value={{$venta->id}} {{ old('venta_id')==$venta->id ? 'selected' : ''  }}>{{$venta->id}}</option> 
+                @endforeach  
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Producto</label>
+            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
+                @foreach ($productos as $producto)
+                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                @endforeach  
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Cantidad</label>
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="3" value="{{old('cantidad')}}">
+            @error('cantidad')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+
+        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
+        <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+    
+    @endif
+
     
 </form>
  

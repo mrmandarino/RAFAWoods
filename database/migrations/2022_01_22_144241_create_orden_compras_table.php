@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVentaProveedorsTable extends Migration
+class CreateOrdenComprasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateVentaProveedorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('venta_proveedors', function (Blueprint $table) {
+        Schema::create('orden_compras', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('nivel_calidad');
+            $table->integer('total_oocc');
            
+            $table->unsignedBigInteger('sucursal_id');
+            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade')->onUpdate('cascade');
+
             $table->string('proveedor_rut');
             $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade')->onUpdate('cascade');
-
-            $table->unsignedBigInteger('madera_id');
-            $table->foreign('madera_id')->references('producto_id')->on('maderas')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateVentaProveedorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('venta_proveedors');
+        Schema::dropIfExists('orden_compras');
     }
 }

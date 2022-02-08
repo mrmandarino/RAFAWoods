@@ -162,30 +162,30 @@
 			
 		@endif
 
-		@if ($tabla == 'madera_proveedores')
-			<table id="madera_proveedores" class="table" style="width:100%">
+		@if ($tabla == 'orden_compras')
+			<table id="orden_compras" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
-				<th> NIVEL CALIDAD </th>
+				<th> ID SUCURSAL </th>
 				<th> RUT PROVEEDOR </th>
-				<th> ID MADERA </th>
+				<th> TOTAL OOCC </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
 			</thead>
 
 			<tbody>
-				@foreach ($datos as $madera)
+				@foreach ($datos as $orden)
 					<tr>
-						<td> {{$madera->id}} </td>
-						<td> {{$madera->nivel_calidad}} </td>
-						<td> {{$madera->proveedor_rut}} </td>
-						<td> {{$madera->madera_id}} </td>
-						<td> {{$madera->created_at}} </td>
-						<td> {{$madera->updated_at}} </td>
+						<td> {{$orden->id}} </td>
+						<td> {{$orden->sucursal_id}} </td>
+						<td> {{$orden->proveedor_rut}} </td>
+						<td> {{$orden->total_oocc}} </td>
+						<td> {{$orden->created_at}} </td>
+						<td> {{$orden->updated_at}} </td>
 						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $madera->id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $madera->id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+							<form action="{{route('admin_borrar_datos',['key' => $orden->id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+								<a href="{{route('admin_editar_fila',['key' => $orden->id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
@@ -198,7 +198,7 @@
 
 				
 		@endif
-
+		
 		@if ($tabla == 'transportes')
 			<table id="transportes" class="table" style="width:100%">
 			<thead>
@@ -540,7 +540,7 @@
 				<th> ID SUCURSAL </th>
 				<th> ID PRODUCTO </th>
 				<th> STOCK </th>
-				<th> PRECIO COMPRA </th>
+				<th> PRECIO venta </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
@@ -551,7 +551,7 @@
 						<td> {{$localizacion->sucursal_id}} </td>
 						<td> {{$localizacion->producto_id}} </td>
 						<td> {{$localizacion->stock}} </td>
-						<td> {{$localizacion->precio_compra}} </td>
+						<td> {{$localizacion->precio_venta}} </td>
 						<td> {{$localizacion->created_at}} </td>
 						<td> {{$localizacion->updated_at}} </td>
 						<td>
@@ -672,29 +672,29 @@
 
 		@endif
 
-		@if ($tabla == 'compras')
-			<table id="compras" class="table" style="width:100%">
+		@if ($tabla == 'detalle_ventas')
+			<table id="detalle_ventas" class="table" style="width:100%">
 			<thead>
-				<th> ID </th>
-				<th> CANTIDAD </th>
-				<th> RUT CLIENTE </th>
+				<th> ID VENTA </th>
 				<th> ID PRODUCTO </th>
+				<th> CANTIDAD </th>
+				<th> TOTAL PRODUCTO </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
 			</thead>
 			<tbody>
-				@foreach ($datos as $compra)
+				@foreach ($datos as $detalle_venta)
 					<tr>
-						<td> {{$compra->id}} </td>
-						<td> {{$compra->cantidad}} </td>
-						<td> {{$compra->cliente_rut}} </td>
-						<td> {{$compra->producto_id}} </td>
-						<td> {{$compra->created_at}} </td>
-						<td> {{$compra->updated_at}} </td>
+						<td> {{$detalle_venta->venta_id}} </td>
+						<td> {{$detalle_venta->producto_id}} </td>
+						<td> {{$detalle_venta->cantidad}} </td>
+						<td> {{$detalle_venta->total_producto}} </td>
+						<td> {{$detalle_venta->created_at}} </td>
+						<td> {{$detalle_venta->updated_at}} </td>
 						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $compra->id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $compra->id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+							<form action="{{route('admin_borrar_datos',['key' => $detalle_venta->id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+								<a href="{{route('admin_editar_fila',['key' => $detalle_venta->id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
@@ -741,6 +741,86 @@
 					</tr>
 				@endforeach
 			</tbody>
+
+		@endif
+
+		@if ($tabla == 'detalle_compras')
+			<table id="detalle_compras" class="table" style="width:100%">
+			<thead>
+				<th> ID OC </th>
+				<th> ID PRODUCTO </th>
+				<th> NIVEL CALIDAD </th>
+				<th> CANTIDAD </th>
+				<th> PRECIO UNITARIO </th>
+				<th> TOTAL </th>
+				<th> FECHA REGISTRO </th>
+				<th> FECHA ACTUALIZACION </th>
+				<th> ACCION </th>
+			</thead>
+
+			<tbody>
+				@foreach ($datos as $detalle)
+					<tr>
+						<td> {{$detalle->oc_id}} </td>
+						<td> {{$detalle->producto_id}} </td>
+						<td> {{$detalle->nivel_calidad}} </td>
+						<td> {{$detalle->cantidad}} </td>
+						<td> {{$detalle->precio_unitario}} </td>
+						<td> {{$detalle->total}} </td>
+						<td> {{$detalle->created_at}} </td>
+						<td> {{$detalle->updated_at}} </td>
+						<td>
+							<form action="{{route('admin_borrar_datos',['key' => $detalle->oc_id,'tabla' => $tabla, 'key2' => $detalle->producto_id ])}}" method="GET" class="btn-group">
+								<a href="{{route('admin_editar_fila',['key' => $detalle->oc_id,'tabla' => $tabla, 'key2' => $detalle->producto_id])}}" class="btn btn-info">Editar</a> 
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								@csrf
+								@method('DELETE')
+								<button type="submit" class="btn btn-danger">Eliminar</button>
+							</form>
+						</td>
+					</tr>
+				@endforeach
+			</tbody>
+
+				
+		@endif
+
+
+		@if ($tabla == 'ventas')
+			<table id="ventas" class="table" style="width:100%">
+				<thead>
+					<th> ID </th>
+					<th> ID SUCURSAL </th>
+					<th> RUT CLIENTE </th>
+					<th> MEDIO DE PAGO </th>
+					<th> TOTAL VENTA </th>
+					<th> FECHA REGISTRO </th>
+					<th> FECHA ACTUALIZACION </th>
+					<th> ACCION </th>
+				</thead>
+
+				<tbody>
+					@foreach ($datos as $venta)
+						<tr>
+							<td> {{$venta->id}} </td>
+							<td> {{$venta->sucursal_id}} </td>
+							<td> {{$venta->cliente_rut}} </td>
+							<td> {{$venta->medio_de_pago}} </td>
+							<td> {{$venta->total_venta}} </td>
+							<td> {{$venta->created_at}} </td>
+							<td> {{$venta->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $venta->id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $venta->id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endforeach
+				</tbody>
 
 		@endif
 	</table>
@@ -889,10 +969,10 @@
 		</script> 	
 	@endif
 
-	@if ($tabla == 'madera_proveedores')
+	@if ($tabla == 'orden_compras')
 		<script>
 			$(document).ready(function() {
-				$('#madera_proveedores').DataTable({
+				$('#orden_compras').DataTable({
 					responsive: true,
 					autoWidth: false,
 					dom: '<"floatRight"B>lftrp',
@@ -900,8 +980,8 @@
 					 buttons: {
       				 buttons: [
 						   
-            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Compras', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
-        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Compras', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Orden_compras', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Orden_compras', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
 							  ],
        					dom: {
 		  					button: {
@@ -1480,10 +1560,10 @@
 		</script> 	
 	@endif
 	
-	@if ($tabla == 'compras')
+	@if ($tabla == 'detalle_ventas')
 		<script>
 			$(document).ready(function() {
-				$('#compras').DataTable({
+				$('#detalle_ventas').DataTable({
 					responsive: true,
 					autoWidth: false,
 					dom: '<"floatRight"B>lftrp',
@@ -1491,8 +1571,8 @@
 					 buttons: {
       				 buttons: [
 						   
-            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Ventas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
-        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Ventas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Detalle_ventas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Detalle_ventas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
 							  ],
        					dom: {
 		  					button: {
@@ -1563,6 +1643,90 @@
 			});
 		</script> 	
 	@endif
+
+	@if ($tabla == 'detalle_compras')
+		<script>
+			$(document).ready(function() {
+				$('#detalle_compras').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Detalle_compras', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Detalle_compras', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
+			});
+		</script> 	
+	@endif
+
+	@if ($tabla == 'ventas')
+	<script>
+		$(document).ready(function() {
+			$('#ventas').DataTable({
+				responsive: true,
+				autoWidth: false,
+				dom: '<"floatRight"B>lftrp',
+
+				 buttons: {
+				   buttons: [
+					   
+					{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Ventas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+					{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Ventas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+						  ],
+					   dom: {
+						  button: {
+						  className: 'btn'
+							 }
+					   }
+				 },
+				"language": {
+					"lengthMenu": "Mostrar " + 
+								   `<select class="custom-select custom-select-sm form-control form-control-sm">
+									<option value = '10'>10</option>
+									<option value = '25'>25</option>
+									<option value = '50'>50</option>
+									<option value = '100'>100</option>
+									<option value = '-1'>Total</option>
+									</select>` + 
+									" registros por página",
+					"zeroRecords": "No se encontraron registros",
+					"info": "Visualizando página _PAGE_ de _PAGES_",
+					"infoEmpty": "No hay registros disponibles",
+					"infoFiltered": "(filtrado de _MAX_ registros totales)",
+					"search": "Buscar :",
+					"paginate": {"next": "Siguiente", "previous": "Anterior"}
+				}
+			});
+		});
+	</script> 	
+@endif
 
 
 </body>
