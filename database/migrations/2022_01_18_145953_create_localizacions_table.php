@@ -15,12 +15,13 @@ class CreateLocalizacionsTable extends Migration
     {
         Schema::create('localizacions', function (Blueprint $table) {
             $table->unsignedBigInteger('sucursal_id');
-            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade')->onUpdate('cascade');
             $table->primary(['sucursal_id','producto_id']);
             $table->integer('stock');
             $table->integer('precio_compra');
+            $table->integer('precio_venta')->default(1);
 
             
             $table->timestamps();
