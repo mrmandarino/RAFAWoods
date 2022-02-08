@@ -9,6 +9,9 @@ class Mueble extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'producto_id'; //se sobreescribe la primary key para no usar id()
+    public $incrementing = false; //se desactiva la funcion de autoincrementar la "id" porque se trabaja con rut
+    
     protected $fillable = [
         'producto_id',
         'material',
