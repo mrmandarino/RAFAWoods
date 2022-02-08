@@ -15,11 +15,11 @@ class CreatePlanchaConstruccionsTable extends Migration
     {
         Schema::create('plancha_construccions', function (Blueprint $table) {
             $table->unsignedBigInteger('producto_id')->primary();
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade')->onUpdate('cascade');
             $table->string('material');
             $table->float('alto');
-            $table->integer('ancho');
-            $table->integer('largo');
+            $table->float('ancho');
+            $table->float('largo');
 
             
 
