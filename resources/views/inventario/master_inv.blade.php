@@ -8,7 +8,7 @@
 
     
 
-    <title>Dashboard Ventas</title>
+    <title>Inventario</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">

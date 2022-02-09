@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/estilos.css">
 	<title>Portal Precios</title>
+    <style>
+        .tabla-scroll {
+            height: 600px !important;
+            overflow: scroll;
+        }
+    </style>
 </head>
 <body>
 	<div class="container">
@@ -20,41 +26,7 @@
         
 	</div>
 
-    <!--<div class="justify-center">
-        <div class="grid grid-cols-4">
-            <table class="table-auto divide-y divide-gray-500 col-span-4 col-start-1 border rounded-lg border-gray-300">
-                <thead class="rounded-lg">
-                    <tr class="bg-white">
-                        <th class="text-center text-black"><p>Familia</p></th>
-                        <th class="text-center text-black"><p>Nombre</p></th>
-                        <th class="text-center text-black"><p>Stock</p></th>
-                        <th class="text-center text-black"><p>Precio (IVA inlcuido)</p></th>  
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y">
-                    <tr class="my-20">
-                        <td class="whitespace-nowrap">
-                            <p class="text-center text-black"></p>
-                        </td>
-
-                    <td class="whitespace-nowrap">
-                        <p class="text-center text-black"></p>
-                    </td>
-                    <td class="whitespace-nowrap">
-                        <p class="text-center text-black"></p>
-                    </td>
-                    
-                    <td class="whitespace-nowrap">
-                        <p class="text-center text-black"></p>
-                    </td>
-                </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-    </div>-->
-
-    <div class="container col-md-8 col-md-offset-2">
+    <div class="container col-md-8 col-md-offset-2 tabla-scroll">
         <div class="panel panel-default">
             <div class="panel-heading">
             </div>
