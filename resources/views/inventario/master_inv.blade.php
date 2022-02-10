@@ -158,6 +158,14 @@
               <li>
                 <a href="#" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#dollar" />
+                  </svg>
+                  Realizar Venta
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-white">
+                  <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#table" />
                   </svg>
                   Histórico de Ventas
@@ -182,7 +190,7 @@
               <li>
                 <a href="#" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#basedatos" />
+                    <use xlink:href="#server" />
                   </svg>
                   Base de Datos
                 </a>

@@ -104,6 +104,16 @@
                                 </div>
                                 <p class="mb-1">Ver lista de productos y sus precios.</p>
                             </a>
+                            <a href="{{route('ver_detalle_precios')}}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Ver Inventario y Stock
+                                        <svg class="bi me-2" width="16" height="16">
+                                            <use xlink:href="#ver_inventario" />
+                                        </svg>
+                                    </h5>
+                                </div>
+                                <p class="mb-1">Ver lista con los productos en inventario y su stock actual.</p>
+                            </a>
                             <a href="{{route('ventas.create')}}" class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">Realizar Venta
@@ -134,11 +144,11 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" required>
+                                <input type="text" class="form-control" name="nombre" id="nombre" value="" required>
                                 <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
                                 <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
                                 <label for="recipient-name" class="col-form-label" style="color:black">Tipo de Producto</label>
-                                <select class="form-control select" name="familia" id="familia" tabindex="3">
+                                <select class="form-control select" name="familia" id="familia">
                                     <option selected value="default">Seleccione un tipo de producto</option>
                                     <option value="Tornillo">Tornillo</option>  
                                     <option value="Plancha_construccion">Plancha de construcción</option>  
@@ -226,7 +236,7 @@
                                 <input type="number" class="form-control" name="stock" id="stock" min="1" required>
     
                                 <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
-                                <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" step="100" required>
+                                <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

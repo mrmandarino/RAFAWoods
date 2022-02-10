@@ -213,11 +213,11 @@
                         @method('PUT')
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
-                            <input type="text" value={{$producto_en_bruto->nombre}} class="form-control" name="nombre" id="nombre" required>
+                            <input type="text" value="{{$producto_en_bruto->nombre}}" class="form-control" name="nombre" id="nombre" required>
                             <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
                             <textarea class="form-control" name="descripcion" id="descripcion" required>{{$producto_en_bruto->descripcion}}</textarea>
                             <label for="recipient-name" class="col-form-label" style="color:black">Familia</label>
-                            <input type="text" value={{$producto_en_bruto->familia}} class="form-control" name="familia" id="familia" required>
+                            <input type="text" value="{{$producto_en_bruto->familia}}" class="form-control" name="familia" id="familia" required>
 
                             @if ($producto_en_bruto->familia=="Madera" || $producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion" || $producto_en_bruto->familia=="Mueble")
                             <label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
