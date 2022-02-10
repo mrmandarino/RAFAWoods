@@ -35,33 +35,36 @@
                     </div>
                 </div>
                 <div class="row justify-content-evenly mt-3 mx-auto">
-                    @if (session()->has('estado_cambiado'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session()->get('estado_cambiado') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div><br>
-                    @endif
-                    @if (session()->has('stock_actualizado'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session()->get('stock_actualizado') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div><br>
-                    @endif
-                    @if (session()->has('precio_actualizado'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session()->get('precio_actualizado') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div><br>
-                    @endif
-                    @if (session()->has('producto_actualizado'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session()->get('producto_actualizado') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div><br>
-                    @endif
-
+                    
                     <div class="col-12">
-                        <div class="list-group">
+                        <div class="row">
+
+                            @if (session()->has('estado_cambiado'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session()->get('estado_cambiado') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                            @if (session()->has('stock_actualizado'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session()->get('stock_actualizado') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                            @if (session()->has('precio_actualizado'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session()->get('precio_actualizado') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                            @if (session()->has('producto_actualizado'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session()->get('producto_actualizado') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                        </div>
+                        <div class="list-group" style="min-width: 600px">
                             <a type="button" data-bs-toggle="modal" data-bs-target="#actualizar_stock_modal"
                                 class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">

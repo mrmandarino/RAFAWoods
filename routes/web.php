@@ -27,9 +27,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-/*Route::get('/ventas', function () {
-    return view('ventas.realizar_ventas');
-});*/
+Route::get('/cover', function () {
+    return view('cover.cover_home');
+});
 
 // Route::get('/ayudameme', function () {
 //     $id_producto_int=1;
