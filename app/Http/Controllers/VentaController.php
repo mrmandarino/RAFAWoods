@@ -64,7 +64,7 @@ class VentaController extends Controller
         if($request->con_factura != null)
         {
             if($request->rut_cliente == null){
-                return redirect()->route('ventas.create')->with('incorrecto','No puedes dejar el rut vacío si elegiste factura');
+                return redirect()->route('ventas.create')->with('incorrecto','Rut requerido.');
             }
         }
 
@@ -100,7 +100,7 @@ class VentaController extends Controller
         }
 
 
-        return redirect()->route('ventas.create')->with('correcto','Venta Exitosa');
+        return redirect()->route('ventas.create')->with('correcto','Venta realizada con éxito.');
     }
 
     /**

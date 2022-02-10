@@ -151,15 +151,27 @@
 
   {{-- Fila global 2 formularios y Tabla --}}
   <div class="row justify-content-evenly mt-3">
-
+    
     {{-- Fila 2 formularios --}}
-    <div class="row justify-content-evenly">
+    <div class="row justify-content-evenly align-content-center formularios">
+
+      @if (session()->has('correcto'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <h5 class="text-center" >{{ session()->get('correcto') }} </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif
       {{-- Columna formulario agregar producto a la venta (IZQUIERDA) --}}
       <div class="col-6 card p-3 bg-light mt-3 col-form-izq">
 
         <div class="row mx-3 justify-content-center">
-          <div class="col-md-7 card form-izq ml-3">
-            <h4 class="text-center">🪵 Productos 🪵</h4>
+          <div class="col-md-4 card form-izq ml-3">
+            <h4 class="text-center">
+              <svg class="bi me-2" width="16" height="16">
+                <use xlink:href="#etiqueta_producto" />
+              </svg>
+                Productos 
+            </h4>
           </div>
         </div>
 
@@ -240,8 +252,13 @@
       <div class="col-5 card p-3 bg-light col-form-der">
 
         <div class="row mx-3 justify-content-center">
-          <div class="col-md-7 card form-der ml-3">
-            <h4 class="text-center">💲 Venta 💲</h4>
+          <div class="col-md-4 card form-der ml-3">
+            <h4 class="text-center">
+              <svg class="bi me-2" width="20" height="20" style="margin: 0px;" >
+                <use xlink:href="#billete"/>
+              </svg>
+              Venta
+            </h4>
           </div>
         </div>
         <form action="{{route('ventas.store')}}"class="row g-3 my-auto col-form-der form-der" method="POST">
@@ -341,19 +358,15 @@
     <div class="row mt-3 px-5">
 
       <div class="col-md-12 card bg-light tabla-scroll">
-        <div class="row mx-3 mt-3 justify-content-center">
-          <div class="col-md-3 card form-izq ml-3">
-            <h4 class="text-center">🛒 Carrito 🛒</h4>
-          </div>
-        </div>
+        
 
         <table class="table table-hover pb-3">
-          <thead>
-            <tr>
+          <thead >
+            <tr data-bs-toggle="tooltip" data-bs-placement="left" title="Aquí se agregan todos los productos que serán incluidos en la venta junto a su valor total por producto.">
               <th class="text-center">Código</th>
               <th class="text-center">Nombre</th>
               <th class="text-center">Cantidad</th>
-              <th class="text-center">Valor total</th>
+              <th class="text-center">Valor Total</th>
               <th class="text-center">Eliminar</th>
 
             </tr>
@@ -522,14 +535,6 @@
   </script>
 
 
-  <div class="col-12 col-md-4 col-lg-3">
-          @if (session()->has('correcto'))
-              <div class="alert alert-success">
-                  {{ session()->get('correcto') }}
-              </div><br>
-          @endif
-          
-  </div>
 </div>
 
 
