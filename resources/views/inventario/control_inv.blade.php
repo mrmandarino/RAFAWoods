@@ -28,7 +28,7 @@
                     @method('GET')
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 for="nombre_producto" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema."> Administar Producto</h5>
+                            <h5 for="nombre_producto" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema.">Productos en inventario</h5>
                             <div class="input-group">
 
                                 <label for="nombre_producto" class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema.">Producto:</label>
@@ -44,12 +44,11 @@
                     </div>
 
                     <div class="row justify-content-center mt-3">
+                        <div class="col-3" style="justify-self: center;">
 
-                        <div class="col-2">
-                            <button type="submit" id="administrar_producto" class="btn btn-primary" name="action" value="detalle" >Administrar
-                                Producto</button>
+                            <button type="submit" id="administrar_producto" class="btn btn-primary" name="action" value="detalle" style="width: 200px ; justify-self: center;" >Administrar Producto</button>
                         </div>
-
+                        
                     </div>
 
 
@@ -314,19 +313,19 @@
 </script>
 
 <script type="text/javascript">
-function cargar_datos(){
+    function cargar_datos(){
 
-    const productos = document.getElementById('datalist_productos');
-    const producto_seleccionado = document.querySelector('#nombre_producto');
-    const opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
-    const id_producto = opSelected.getAttribute('data-value');
+        const productos = document.getElementById('datalist_productos');
+        const producto_seleccionado = document.querySelector('#nombre_producto');
+        const opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
+        const id_producto = opSelected.getAttribute('data-value');
 
-    //obtener referencia de componentes para llenar (inputs de formulario)
-    var id_producto_hidden = document.getElementById('id_producto_hidden');
-    id_producto_hidden.value = parseInt(id_producto);
+        //obtener referencia de componentes para llenar (inputs de formulario)
+        var id_producto_hidden = document.getElementById('id_producto_hidden');
+        id_producto_hidden.value = parseInt(id_producto);
     
 
-}
+    }
 </script>
 
 @endsection

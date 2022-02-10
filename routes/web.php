@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
 //     $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_int)->first();
 //     $producto_en_bruto = DB::table('productos')->where('id',$id_producto_int)->first(); 
 //     $producto_en_tabla = DB::table($tabla_familia)->where('producto_id',$id_producto_int)->first();
-    
+
 //     return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
 // });
 
