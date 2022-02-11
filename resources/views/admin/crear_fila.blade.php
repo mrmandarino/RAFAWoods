@@ -267,19 +267,13 @@
                 <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option>  {{-- ojo con el old --}}
                 @endforeach  
             </select>
-        </div>
-
-        <div class="mb-3">
-            <label for="" class="form-label">Total OOCC</label>
-            <input id="total_oocc" name="total_oocc" type="number" class="form-control" tabindex="3" value="{{old('total_oocc')}}">
-            @error('total_oocc')
-                <small style="color:red;">*{{$message}}</small>
+            @error('proveedor_rut')
+            <small style="color:red;">*No se encontraron proveedores. Debe existir al menos un proveedor en la base de datos antes de registrar la orden de compra.</small>
             @enderror
         </div>
-       
         
-        
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
+
+        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="3">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
     
     @endif
@@ -526,12 +520,14 @@
                 <option value="Mueble">Mueble</option>  
                 <option value="Madera">Madera</option>  
                 <option value="Clavo">Clavo</option>  
+                <option value="Herramienta">Herramienta</option>  
+                <option value="Otro">Otro</option>  
             </select>
             @error('familia')
                 <small style="color:red;">*Debes escoger una familia para continuar</small>
             @enderror
         </div>
-
+        
         {{-- Tornillo --}}
         <div class="form-group tornillos_clavos">
             <label for="" class="form-label">Cabeza</label>
@@ -990,6 +986,9 @@
                     <option value={{$orden->id}} {{ old('oc_id')==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
                 @endforeach  
             </select>
+            @error('oc_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -999,6 +998,9 @@
                     <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
                 @endforeach  
             </select>
+            @error('producto_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -1073,13 +1075,15 @@
         </div>
 
         <div class="mb-3">
-            <label for="" class="form-label">Total venta</label>
-            <input id="total_venta" name="total_venta" type="number" class="form-control" tabindex="4" value="{{old('total_venta')}}">
-            @error('total_venta')
-                <small style="color:red;">*{{$message}}</small>
+            <label for="" class="form-label">¿Compra con factura?</label>
+            <select class="form-control select" name="con_factura" id="con_factura" tabindex="4">
+                <option value=0 {{ old('con_factura')==0? 'selected' : ''  }}>No</option>  
+                <option value=1 {{ old('con_factura')==1? 'selected' : ''  }}>Si</option>  
+            </select>
+            @error('con_factura')
+                <small style="color:red;">{{$message}}</small>
             @enderror
         </div>
-
 
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
@@ -1097,6 +1101,9 @@
                     <option value={{$venta->id}} {{ old('venta_id')==$venta->id ? 'selected' : ''  }}>{{$venta->id}}</option> 
                 @endforeach  
             </select>
+            @error('venta_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -1106,6 +1113,9 @@
                     <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
                 @endforeach  
             </select>
+            @error('producto_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
         <div class="mb-3">
@@ -1114,11 +1124,15 @@
             @error('cantidad')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
+            <input id="supera_stock" name="supera_stock" type="hidden" class="form-control" tabindex="4" value="si">
+            @error('supera_stock')
+                <small style="color:red;">*No puedes superar el stock de este producto en el inventario.</small>
+            @enderror
         </div>
 
 
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
+        <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
     
     @endif
 

@@ -390,6 +390,7 @@
 				<th> DESCRIPCION </th>
 				<th> NIVEL DEMANDA </th>
 				<th> FAMILIA </th>
+				<th> ESTADO </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
@@ -402,6 +403,7 @@
 						<td> {{$producto->descripcion}} </td>
 						<td> {{$producto->nivel_demanda}} </td>
 						<td> {{$producto->familia}} </td>
+						<td> {{$producto->estado}} </td>
 						<td> {{$producto->created_at}} </td>
 						<td> {{$producto->updated_at}} </td>
 						<td>
@@ -540,7 +542,8 @@
 				<th> ID SUCURSAL </th>
 				<th> ID PRODUCTO </th>
 				<th> STOCK </th>
-				<th> PRECIO venta </th>
+				<th> PRECIO VENTA </th>
+				<th> PRECIO COMPRA </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
@@ -552,6 +555,7 @@
 						<td> {{$localizacion->producto_id}} </td>
 						<td> {{$localizacion->stock}} </td>
 						<td> {{$localizacion->precio_venta}} </td>
+						<td> {{$localizacion->precio_compra}} </td>
 						<td> {{$localizacion->created_at}} </td>
 						<td> {{$localizacion->updated_at}} </td>
 						<td>
@@ -693,8 +697,8 @@
 						<td> {{$detalle_venta->created_at}} </td>
 						<td> {{$detalle_venta->updated_at}} </td>
 						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $detalle_venta->id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $detalle_venta->id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+							<form action="{{route('admin_borrar_datos',['key' => $detalle_venta->venta_id,'tabla' => $tabla, 'key2' => $detalle_venta->producto_id ])}}" method="GET" class="btn-group">
+								<a href="{{route('admin_editar_fila',['key' => $detalle_venta->venta_id,'tabla' => $tabla, 'key2' => $detalle_venta->producto_id ])}}" class="btn btn-info">Editar</a> 
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
@@ -793,6 +797,7 @@
 					<th> ID SUCURSAL </th>
 					<th> RUT CLIENTE </th>
 					<th> MEDIO DE PAGO </th>
+					<th> FACTURA </th>
 					<th> TOTAL VENTA </th>
 					<th> FECHA REGISTRO </th>
 					<th> FECHA ACTUALIZACION </th>
@@ -806,6 +811,7 @@
 							<td> {{$venta->sucursal_id}} </td>
 							<td> {{$venta->cliente_rut}} </td>
 							<td> {{$venta->medio_de_pago}} </td>
+							<td> {{$venta->con_factura}} </td>
 							<td> {{$venta->total_venta}} </td>
 							<td> {{$venta->created_at}} </td>
 							<td> {{$venta->updated_at}} </td>

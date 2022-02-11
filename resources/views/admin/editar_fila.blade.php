@@ -189,13 +189,6 @@
             </select>
         </div>
        
-        <div class="mb-3">
-            <label for="" class="form-label">Total OOCC</label>
-            <input id="total_oocc" name="total_oocc" type="number" class="form-control" tabindex="3" value="{{$dato->total_oocc}}">
-            @error('total_oocc')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
         
     @endif
 
@@ -404,21 +397,33 @@
             </select>
         </div>
         <div class="mb-3">
+            <label for="" class="form-label">Estado</label>
+            <select class="form-control select" name="estado" id="estado" tabindex="5">
+                <option value=1 {{ $dato->estado==1 ? 'selected' : ''  }}>Activado</option>  
+                <option value=0 {{ $dato->estado==0 ? 'selected' : ''  }}>Desactivado</option>  
+            </select>
+            @error('estado')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="" class="form-label">Familia</label>
             <select class="form-control select" name="familia" id="familia" tabindex="4">
                 <option selected value=1>Selecciona una familia</option>
-                <option value="Tornillo">Tornillo</option>  
-                <option value="Plancha_construccion">Plancha de construcción</option>  
-                <option value="Techumbre">Techumbre</option>  
-                <option value="Mueble">Mueble</option>  
-                <option value="Madera">Madera</option>  
-                <option value="Clavo">Clavo</option>  
+                <option value="Tornillo" {{ $dato->familia=="Tornillo" ? 'selected' : ''  }}>Tornillo</option>  
+                <option value="Plancha_construccion" {{ $dato->familia=="Plancha_construccion" ? 'selected' : ''  }}>Plancha de construcción</option>  
+                <option value="Techumbre" {{ $dato->familia=="Techumbre" ? 'selected' : ''  }}>Techumbre</option>  
+                <option value="Mueble" {{ $dato->familia=="Mueble" ? 'selected' : ''  }}>Mueble</option>  
+                <option value="Madera" {{ $dato->familia=="Madera" ? 'selected' : ''  }}>Madera</option>  
+                <option value="Clavo" {{ $dato->familia=="Clavo" ? 'selected' : ''  }}>Clavo</option>  
+                <option value="Herramienta" {{ $dato->familia=="Herramienta" ? 'selected' : ''  }}>Herramienta</option>  
+                <option value="Otro" {{ $dato->familia=="Otro" ? 'selected' : ''  }}>Otro</option>  
             </select>
             @error('familia')
                 <small style="color:red;">*Debes escoger una familia para continuar</small>
             @enderror
         </div>
-
+       
         @if ($dato->familia == "Tornillo")
             @php($tornillo=App\Models\Tornillo::find($key))
         @elseif ($dato->familia == "Mueble") 
@@ -866,30 +871,36 @@
     @endif
 
     @if ($tabla == 'detalle_ventas') 
-        @php($clientes=DB::table('clientes')->get())
+        @php($ventas=DB::table('ventas')->get())
         @php($productos=DB::table('productos')->get())
+    
         <div class="mb-3">
-            <label for="" class="form-label">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="5" value="{{$dato->cantidad}}">
-            @error('cantidad')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Rut cliente</label>
-            <select class="form-control select" name="rut" id="rut" tabindex="6">
-                @foreach ($clientes as $cliente)
-                    <option value={{$cliente->usuario_rut}} {{ $dato->cliente_rut==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
+            <label for="" class="form-label">ID Venta</label>
+            <select class="form-control select" name="venta_id" id="venta_id" tabindex="5">
+                @foreach ($ventas as $venta)
+                    <option value={{$venta->id}} {{ $dato->venta_id==$venta->id ? 'selected' : ''  }}>{{$venta->id}}</option> 
                 @endforeach  
             </select>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="7">
+            <select class="form-control select" name="producto_id" id="producto_id" tabindex="6">
                 @foreach ($productos as $producto)
                     <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
                 @endforeach  
             </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Cantidad</label>
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="7" value="{{$dato->cantidad}}">
+            @error('cantidad')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+            <input id="supera_stock" name="supera_stock" type="hidden" class="form-control" tabindex="8" value="si">
+            @error('supera_stock')
+                <small style="color:red;">*No puedes superar el stock de este producto en el inventario.</small>
+            @enderror
         </div>
     @endif
 
@@ -1012,17 +1023,20 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-       
+
         <div class="mb-3">
-            <label for="" class="form-label">Total venta</label>
-            <input id="total_venta" name="total_venta" type="number" class="form-control" tabindex="4" value="{{$dato->total_venta}}">
-            @error('total_venta')
-                <small style="color:red;">*{{$message}}</small>
+            <label for="" class="form-label">¿Compra con factura?</label>
+            <select class="form-control select" name="con_factura" id="con_factura" tabindex="4">
+                <option value=0 {{ $dato->con_factura==0? 'selected' : ''  }}>No</option>  
+                <option value=1 {{ $dato->con_factura==1? 'selected' : ''  }}>Si</option>  
+            </select>
+            @error('con_factura')
+                <small style="color:red;">{{$message}}</small>
             @enderror
         </div>
+       
         
     @endif
-    
 
     <br>
     <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="10">Cancelar</a>

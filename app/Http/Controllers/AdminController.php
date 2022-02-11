@@ -29,6 +29,8 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use function GuzzleHttp\Promise\each;
+
 class AdminController extends Controller
 {
     /**
@@ -213,14 +215,13 @@ class AdminController extends Controller
         }elseif ($tabla=='orden_compras') { 
             $request->validate([
                 'proveedor_rut' => ['required'],
-                'total_oocc' => ['required','integer'],
                 'sucursal_id' => ['required'],
             ]);
         
             $nuevo_dato = new Orden_Compra();
             $nuevo_dato->sucursal_id = $request->get('sucursal_id');
             $nuevo_dato->proveedor_rut = $request->get('proveedor_rut');
-            $nuevo_dato->total_oocc = $request->get('total_oocc');
+            $nuevo_dato->total_oocc = 0;
             
             $nuevo_dato->save();
 
@@ -588,22 +589,48 @@ class AdminController extends Controller
 
             $datos=DB::table('ejecutivos')->get();
 
-        }elseif ($tabla=='detalle_ventas') { //aun no se valid
+        }elseif ($tabla=='detalle_ventas') { 
             $request->validate([
                 'cantidad' => ['required', 'integer', 'gte:1'],
-                'producto_id' => ['required'],
                 'venta_id' => ['required'],
+                'producto_id' => ['required'],
             ]);
+            $existencia=DB::table('detalle_ventas')->where('venta_id',$request->get('venta_id'))->where('producto_id',$request->get('producto_id'))->first();
+            if($existencia != null){ 
+                $request->validate([
+                    'venta_id' => ['unique:detalle_ventas'],
+                    'producto_id' => ['unique:detalle_ventas'],
+                ]);
+            }
+
+            $Venta=Venta::find($request->get('venta_id'));
+            $sucursal=$Venta->sucursal_id;
+            $inventario=DB::table('localizacions')->where('producto_id',$request->get('producto_id'))->where('sucursal_id',$sucursal);
+            $stock_antiguo=$inventario->value('stock');
+            if($stock_antiguo < $request->get('cantidad')){ 
+                $request->validate([
+                    'supera_stock' => ['integer'],
+                ]);
+            }
+
             $nuevo_dato = new Detalle_venta();
             $nuevo_dato->cantidad = $request->get('cantidad');
             $nuevo_dato->producto_id = $request->get('producto_id');
             $nuevo_dato->venta_id = $request->get('venta_id');
-            $sucursal=Venta::find($nuevo_dato->venta_id)->get('sucursal_id');
-            $precio=DB::table('localizacions')->where('sucursal_id',$sucursal)->where('producto_id',$nuevo_dato->producto_id)->get('precio_venta');
-            dd($precio);
+            $precio=$inventario->value('precio_venta');
             $valor_total=$precio * $nuevo_dato->cantidad;
-            $nuevo_dato->valor_total=$valor_total;
+            $nuevo_dato->total_producto=$valor_total;
             $nuevo_dato->save();
+            
+            //Actualizando stock en tabla localizacions
+            $stock_nuevo=$stock_antiguo - $nuevo_dato->cantidad;
+            $inventario->update(['stock' => $stock_nuevo]);    
+         
+            //Actualizando tabla de ventas
+            $valor_anterior=$Venta->total_venta;
+            $valor_nuevo=$valor_total + $valor_anterior;
+            $Venta->total_venta=$valor_nuevo;
+            $Venta->save();
 
             $datos=DB::table('detalle_ventas')->get();
 
@@ -634,12 +661,20 @@ class AdminController extends Controller
 
         }elseif ($tabla=='detalle_compras') {
             $request->validate([
-                'oc_id' => ['required'],
-                'producto_id' => ['required'],
                 'nivel_calidad' => ['required'],
                 'cantidad' => ['required','numeric', 'gt:0'],
                 'precio_unitario' => ['required','numeric'],
+                'oc_id' => ['required'],
+                'producto_id' => ['required'],
             ]);
+
+            $existencia=DB::table('detalle_compras')->where('oc_id',$request->get('oc_id'))->where('producto_id',$request->get('producto_id'))->first();
+            if($existencia != null){ 
+                $request->validate([
+                    'oc_id' => ['unique:detalle_compras'],
+                    'producto_id' => ['unique:detalle_compras'],
+                ]);
+            }
 
             $nuevo_dato = new Detalle_compra();
             $nuevo_dato->oc_id = $request->get('oc_id');
@@ -650,19 +685,37 @@ class AdminController extends Controller
             $nuevo_dato->total = $nuevo_dato->precio_unitario * $nuevo_dato->cantidad;
             $nuevo_dato->save();
 
+            //Actualizando tabla de ventas
+            $Compra=Orden_compra::find($request->get('oc_id'));
+            $sucursal=$Compra->sucursal_id;
+            $valor_anterior=$Compra->total_oocc;
+            $valor_nuevo=$valor_anterior + $nuevo_dato->total;
+            $Compra->total_oocc=$valor_nuevo;
+            
+            //Actualizando tabla localizacions (stock)
+            $inventario=DB::table('localizacions')->where('sucursal_id',$sucursal)->where('producto_id',$nuevo_dato->producto_id);
+            $stock_anterior=$inventario->value('stock');
+            $stock_nuevo=$stock_anterior + $nuevo_dato->cantidad;
+            $inventario->update(['stock' => $stock_nuevo]);
+            $Compra->save();
+
             $datos=DB::table('detalle_compras')->get();
+
+
+
         }elseif ($tabla=='ventas') { 
             $request->validate([
                 'medio_de_pago' => ['required'],
                 'sucursal_id' => ['required'],
                 'cliente_rut' => ['required'],
-                'total_venta' => ['required'],
+                'con_factura' => ['required'],
             ]);
             $nuevo_dato = new Venta();
             $nuevo_dato->sucursal_id = $request->get('sucursal_id');
             $nuevo_dato->cliente_rut = $request->get('cliente_rut');
             $nuevo_dato->medio_de_pago = $request->get('medio_de_pago');
-            $nuevo_dato->total_venta = $request->get('total_venta');
+            $nuevo_dato->total_venta = 0;
+            $nuevo_dato->con_factura = $request->get('con_factura');
             
             $nuevo_dato->save();
 
@@ -716,7 +769,7 @@ class AdminController extends Controller
         }elseif ($tabla=='ejecutivos') {
             $dato=Ejecutivo::find($key);
         }elseif ($tabla=='detalle_ventas') {
-            $dato=Detalle_venta::find($key);
+            $dato=DB::table('detalle_ventas')->where('venta_id',$key)->where('producto_id',$key2)->first();
         }elseif ($tabla=='clavos') {
             $dato=Clavo::find($key);
         }elseif ($tabla=='detalle_compras') { 
@@ -830,11 +883,9 @@ class AdminController extends Controller
         }elseif ($tabla=='orden_compras') {
             $request->validate([
                 'proveedor_rut' => ['required'],
-                'total_oocc' => ['required','integer'],
                 'sucursal_id' => ['required'],
             ]);
             $actualizar=Orden_Compra::find($key);
-            $actualizar->total_oocc = $request->get('total_oocc');
             $actualizar->proveedor_rut = $request->get('proveedor_rut');
             $actualizar->sucursal_id = $request->get('sucursal_id');
             $actualizar->save();
@@ -930,6 +981,7 @@ class AdminController extends Controller
                 'descripcion' => ['required','string','max:255'],
                 'nivel_demanda' => ['required'],
                 'familia' => ['required','string','min:2'],
+                'estado' => ['required'],
             ]);
             
             $actualizar=Producto::find($key);
@@ -938,6 +990,7 @@ class AdminController extends Controller
             $actualizar->descripcion = $request->get('descripcion');
             $actualizar->nivel_demanda = $request->get('nivel_demanda');
             $actualizar->familia = $request->get('familia');
+            $actualizar->estado = $request->get('estado');
            
 
             if($familia_anterior == $actualizar->familia){ //si la familia se conservó durante la edición
@@ -1266,15 +1319,167 @@ class AdminController extends Controller
         }elseif ($tabla=='detalle_ventas') {
             $request->validate([
                 'cantidad' => ['required', 'integer', 'gte:1'],
-                'rut' => ['required'],
+                'venta_id' => ['required'],
                 'producto_id' => ['required'],
             ]);
-            $actualizar=Detalle_venta::find($key);
-            $actualizar->cantidad = $request->get('cantidad');
-            $actualizar->cliente_rut = $request->get('rut');
-            $actualizar->producto_id = $request->get('producto_id');
-            $actualizar->save();
+
+            if ($key == $request->get('venta_id') && $key2 == $request->get('producto_id')){ // misma venta, mismo producto
+                
+                $Venta=Venta::find($key);
+                $sucursal=$Venta->sucursal_id;
+                $registro_actual=DB::table('detalle_ventas')->where('venta_id',$key)->where('producto_id',$key2);
+                $inventario=DB::table('localizacions')->where('producto_id',$key2)->where('sucursal_id',$sucursal);
+                $stock_anterior=$inventario->value('stock');
+                $cantidad_anterior=$registro_actual->value('cantidad');
+                $aux=$stock_anterior + $cantidad_anterior;
+                
+
+                if($aux < $request->get('cantidad')){ 
+                    $request->validate([
+                        'supera_stock' => ['integer'],
+                    ]);
+                }
+                
+                //Valores pre-update
+                
+                $total_producto_anterior=$registro_actual->value('total_producto');
+                $stock_anterior=$inventario->value('stock');
+                $total_venta_anterior=$Venta->total_venta;
+
+                //Valores post-update
+                $stock_nuevo=$stock_anterior + $cantidad_anterior - $request->get('cantidad');
+                $precio=$inventario->value('precio_venta');
+                $total_producto_actual=$request->get('cantidad') * $precio;
+                $total_venta_nuevo=$total_venta_anterior + $total_producto_actual - $total_producto_anterior;
+                $Venta->total_venta=$total_venta_nuevo;
+                
+                //Guardar cambios
+                $inventario->update(['stock' => $stock_nuevo]);  
+                $Venta->save();
+                $registro_actual->update(['cantidad' => $request->get('cantidad'),'total_producto' => $total_producto_actual]);
+
+            }else{
+                $existencia=DB::table('detalle_ventas')->where('venta_id',$request->get('venta_id'))->where('producto_id',$request->get('producto_id'))->first();
+                if($existencia != null){ 
+                    $request->validate([
+                        'venta_id' => ['unique:detalle_ventas'],
+                        'producto_id' => ['unique:detalle_ventas'],
+                    ]);
+                }
+
+                //*** TODO LO REFERENTE A DEJAR LAS COSAS COMO SI NO HUBIERA EXISTIDO ESTA VENTA
+                $Venta=Venta::find($key);
+                $sucursal=$Venta->sucursal_id;
+                $registro_actual=DB::table('detalle_ventas')->where('venta_id',$key)->where('producto_id',$key2);
+                $inventario=DB::table('localizacions')->where('producto_id',$key2)->where('sucursal_id',$sucursal);
+                $stock_anterior=$inventario->value('stock');
+                $cantidad_anterior=$registro_actual->value('cantidad');
+                $aux=$stock_anterior + $cantidad_anterior;
+
+                if($key == $request->get('venta_id')){ //misma venta, distinto producto
+                   
+                    $inventario_nuevo_producto=DB::table('localizacions')->where('producto_id',$request->get('producto_id'))->where('sucursal_id',$sucursal);
+                    $aux=$inventario_nuevo_producto->value('stock'); 
+                    if($aux < $request->get('cantidad')){ 
+                        $request->validate([
+                            'supera_stock' => ['integer'],
+                        ]);
+                    }
+                    
+                }elseif($key2 == $request->get('producto_id')){//distinta venta, mismo producto
+                    $nueva_venta=Venta::find($request->get('venta_id'));
+                    $nueva_sucursal=$nueva_venta->sucursal_id;
+                    $aux=DB::table('localizacions')->where('producto_id',$key2)->where('sucursal_id',$nueva_sucursal)->value('stock');
+                    if($nueva_sucursal == $sucursal){ 
+                        $aux=$aux + $registro_actual->value('cantidad');
+                    }
+                    //dd($aux,$request->get('cantidad'));
+                    if($aux < $request->get('cantidad')){ 
+                        $request->validate([
+                            'supera_stock' => ['integer'],
+                        ]);
+                    }
+                }else{ //distinta venta, distinto producto
+
+                    $nueva_venta=Venta::find($request->get('venta_id'));
+                    $nueva_sucursal=$nueva_venta->sucursal_id;
+                    $inventario_nuevo_producto=DB::table('localizacions')->where('producto_id',$request->get('producto_id'))->where('sucursal_id',$nueva_sucursal);
+                    $aux=$inventario_nuevo_producto->value('stock');
+                    if($aux < $request->get('cantidad')){ 
+                        $request->validate([
+                            'supera_stock' => ['integer'],
+                        ]);
+                    }
+                }
+
+                //Valores pre-update
+                $total_producto_anterior=$registro_actual->value('total_producto'); //114390
+                $total_venta_anterior=$Venta->total_venta; //total venta general
+
+                //Valores post-update
+                $stock_nuevo=$stock_anterior + $cantidad_anterior;
+                $total_venta_nuevo=$total_venta_anterior  - $total_producto_anterior;
+                $Venta->total_venta=$total_venta_nuevo;
+                $inventario->update(['stock' => $stock_nuevo]);  
+                $Venta->save();
+
+                if($key == $request->get('venta_id')){ //misma venta, distinto producto
+                    
+                    //Referente al "nuevo producto"
+                    $precio_nuevo_producto=$inventario_nuevo_producto->value('precio_venta');
+                    $stock_before=$inventario_nuevo_producto->value('stock');
+                    $stock_after=$stock_before - $request->get('cantidad');
+                    $total_venta_before=$Venta->total_venta;
+                    $total_producto_agora=$request->get('cantidad') * $precio_nuevo_producto;
+                    $total_venta_after= $total_venta_before + $total_producto_agora; 
+                    $Venta->total_venta=$total_venta_after;
+                    $inventario_nuevo_producto->update(['stock' => $stock_after]);  
+                    $Venta->save();
+                    $registro_actual->update(['producto_id' => $request->get('producto_id'),'cantidad' => $request->get('cantidad'),'total_producto' => $total_producto_agora]);
+
+                }elseif($key2 == $request->get('producto_id')){ //distinta venta, mismo producto
+                    
+                    //Referente al "nuevo producto"
+                    $nueva_venta=Venta::find($request->get('venta_id'));
+                    $nueva_sucursal=$nueva_venta->sucursal_id;
+                    if($nueva_sucursal != $sucursal){
+                        $inventario=DB::table('localizacions')->where('producto_id',$key2)->where('sucursal_id',$nueva_sucursal);
+                    }
+                    $precio=$inventario->value('precio_venta');
+
+                    $stock_before=$inventario->value('stock');
+                    $stock_after=$stock_before - $request->get('cantidad');
+                    $total_venta_before=$nueva_venta->total_venta;
+                    $total_producto_agora=$request->get('cantidad') * $precio;
+                    $total_venta_after= $total_venta_before + $total_producto_agora; 
+                    $nueva_venta->total_venta=$total_venta_after;
+                    $inventario->update(['stock' => $stock_after]);  
+                    $nueva_venta->save();
+                    $registro_actual->update(['venta_id' => $request->get('venta_id'),'cantidad' => $request->get('cantidad'),'total_producto' => $total_producto_agora]);
+                
+                }else{ //distinta venta, distinto producto
+                   
+                     //Referente al "nuevo producto"
+                     
+                     $precio_nuevo_producto=$inventario_nuevo_producto->value('precio_venta');
+
+                     $stock_before=$inventario_nuevo_producto->value('stock');
+                     $stock_after=$stock_before - $request->get('cantidad');
+                     $total_venta_before=$nueva_venta->total_venta;
+                     $total_producto_agora=$request->get('cantidad') * $precio_nuevo_producto;
+                     $total_venta_after= $total_venta_before + $total_producto_agora; 
+                     $nueva_venta->total_venta=$total_venta_after;
+                     $inventario_nuevo_producto->update(['stock' => $stock_after]);  
+                     $nueva_venta->save();
+                     $registro_actual->update(['venta_id' => $request->get('venta_id'),'producto_id' => $request->get('producto_id'),'cantidad' => $request->get('cantidad'),'total_producto' => $total_producto_agora]);
+
+                }
+
+              
+               
+            }
             $datos=DB::table('detalle_ventas')->get();
+
         }elseif ($tabla=='clavos') {
             $request->validate([
                 'material' => ['required','string','max:255'],
@@ -1289,30 +1494,133 @@ class AdminController extends Controller
             $actualizar->longitud = $request->get('longitud');
             $actualizar->save();
             $datos=DB::table('clavos')->get();
-        }elseif ($tabla=='detalle_compras') { //validar que sean unique
+        }elseif ($tabla=='detalle_compras') { 
             $request->validate([
-                'oc_id' => ['required'],
-                'producto_id' => ['required'],
                 'nivel_calidad' => ['required'],
                 'cantidad' => ['required','numeric', 'gt:0'],
                 'precio_unitario' => ['required','numeric'],
+                'oc_id' => ['required'],
+                'producto_id' => ['required'],
             ]);
-            
-            $total=$request->get('precio_unitario')*$request->get('cantidad');
-            DB::table('detalle_compras')->where('oc_id',$key)->where('producto_id',$key2)->update(['oc_id' => $request->get('oc_id'),'producto_id' => $request->get('producto_id'),'nivel_calidad' => $request->get('nivel_calidad'),'cantidad' => $request->get('cantidad'),'precio_unitario' => $request->get('precio_unitario'),'total' => $total]);
+            $registro_actual=DB::table('detalle_compras')->where('oc_id',$key)->where('producto_id',$key2);
+            $total_anterior=$registro_actual->value('total');
+            $total_nuevo=$request->get('cantidad') * $request->get('precio_unitario');
+            if ($key == $request->get('oc_id') && $key2 == $request->get('producto_id')){ // misma orden de compra y mismo producto
+                $Compra=Orden_compra::find($key);
+                $sucursal=$Compra->sucursal_id;
+
+                //Actualizando inventario
+                $inventario=DB::table('localizacions')->where('sucursal_id',$sucursal)->where('producto_id',$key2);
+                $stock_anterior=$inventario->value('stock');
+                $stock_nuevo=$stock_anterior - $registro_actual->value('cantidad') + $request->get('cantidad');
+                $inventario->update(['stock' => $stock_nuevo]);
+
+                //Actualizando orden de compra
+                $valor_anterior=$Compra->total_oocc;
+                $valor_nuevo=$valor_anterior - $total_anterior + $total_nuevo;
+                $Compra->total_oocc=$valor_nuevo;
+                $Compra->save();
+
+                $registro_actual->update(['nivel_calidad' => $request->get('nivel_calidad'),'cantidad' => $request->get('cantidad'),'precio_unitario' => $request->get('precio_unitario'),'total' => $total_nuevo]);
+
+            }else{
+                $existencia=DB::table('detalle_compras')->where('oc_id',$request->get('oc_id'))->where('producto_id',$request->get('producto_id'))->first();
+                if($existencia != null){ 
+                    $request->validate([
+                        'oc_id' => ['unique:detalle_compras'],
+                        'producto_id' => ['unique:detalle_compras'],
+                    ]);
+                }
+                // Anulando la compra de ese producto en la orden de compra anterior
+                $Compra_anterior=Orden_compra::find($key);
+                $sucursal_anterior=$Compra_anterior->sucursal_id;
+                $valor_anterior=$Compra_anterior->total_oocc;
+                $valor_nuevo=$valor_anterior - $total_anterior;
+                $Compra_anterior->total_oocc=$valor_nuevo;
+                $Compra_anterior->save();
+
+                // Disminuye el stock del producto que se canceló
+                $inventario_anterior=DB::table('localizacions')->where('sucursal_id',$sucursal_anterior)->where('producto_id',$key2);
+                $stock_anterior=$inventario_anterior->value('stock');
+                $stock_nuevo=$stock_anterior - $registro_actual->value('cantidad');
+                $inventario_anterior->update(['stock' => $stock_nuevo]);
+
+                if($key == $request->get('oc_id')){ //misma orden de compra y diferente producto
+                    
+                    //Actualizando orden de compra
+                    $old_valor_total=$Compra_anterior->total_oocc;
+                    $new_valor_total=$old_valor_total + $total_nuevo;
+                    $Compra_anterior->total_oocc=$new_valor_total;
+                    $Compra_anterior->save();
+
+                    //Actualizando inventario
+                    $inventario=DB::table('localizacions')->where('sucursal_id',$sucursal_anterior)->where('producto_id',$request->get('producto_id'));
+                    $stock_anterior=$inventario->value('stock');
+                    $stock_nuevo=$stock_anterior + $request->get('cantidad');
+                    $inventario->update(['stock' => $stock_nuevo]);
+
+                    $registro_actual->update(['producto_id' => $request->get('producto_id'),'nivel_calidad' => $request->get('nivel_calidad'),'cantidad' => $request->get('cantidad'),'precio_unitario' => $request->get('precio_unitario'),'total' => $total_nuevo ]);
+
+                }elseif($key == $request->get('producto_id')){ // distinta orden de compra y mismo producto
+
+                    //Actualizando la "nueva" orden de compra
+                    $nova_compra=Orden_compra::find($request->get('oc_id'));
+                    $nova_sucursal=$nova_compra->sucursal_id;
+                    $antigo_valor=$nova_compra->total_oocc;
+                    $novo_valor=$antigo_valor + $total_nuevo;
+                    $nova_compra->total_oocc=$novo_valor;
+                    $nova_compra->save();
+
+                    //Actualizando inventario
+                    $inventario=DB::table('localizacions')->where('sucursal_id',$nova_sucursal)->where('producto_id',$key2);
+                    $stock_anterior=$inventario->value('stock');
+                    $stock_nuevo=$stock_anterior + $request->get('cantidad');
+                    $inventario->update(['stock' => $stock_nuevo]);
+                    
+                    $registro_actual->update(['oc_id' => $request->get('oc_id'),'nivel_calidad' => $request->get('nivel_calidad'),'cantidad' => $request->get('cantidad'),'precio_unitario' => $request->get('precio_unitario'),'total' => $total_nuevo ]);
+    
+
+                }else{  //distinta orden de compra y diferent producto
+                    
+                    //Actualizando la "nueva" orden de compra
+                    $nova_compra=Orden_compra::find($request->get('oc_id'));
+                    $nova_sucursal=$nova_compra->sucursal_id;
+                    $antigo_valor=$nova_compra->total_oocc;
+                    $novo_valor=$antigo_valor + $total_nuevo;
+                    $nova_compra->total_oocc=$novo_valor;
+                    $nova_compra->save();
+
+                    //Actualizando inventario
+                    $inventario=DB::table('localizacions')->where('sucursal_id',$nova_sucursal)->where('producto_id',$request->get('producto_id'));
+                    $stock_anterior=$inventario->value('stock');
+                    $stock_nuevo=$stock_anterior + $request->get('cantidad');
+                    $inventario->update(['stock' => $stock_nuevo]);
+
+                    $registro_actual->update(['oc_id' => $request->get('oc_id'), 'producto_id' => $request->get('producto_id'),'nivel_calidad' => $request->get('nivel_calidad'),'cantidad' => $request->get('cantidad'),'precio_unitario' => $request->get('precio_unitario'),'total' => $total_nuevo ]);
+
+                    
+                }
+
+
+
+
+    
+            }
+
             $datos=DB::table('detalle_compras')->get();
+           
         }elseif ($tabla=='ventas') {
             $request->validate([
                 'sucursal_id' => ['required'],
                 'cliente_rut' => ['required'],
                 'medio_de_pago' => ['required'], 
-                'total_venta' => ['required','integer'],
+                'con_factura' => ['required'],
             ]);
             $actualizar=Venta::find($key);
             $actualizar->sucursal_id = $request->get('sucursal_id');
             $actualizar->cliente_rut = $request->get('cliente_rut');
             $actualizar->medio_de_pago = $request->get('medio_de_pago');
-            $actualizar->total_venta = $request->get('total_venta');
+            $actualizar->con_factura = $request->get('con_factura');
             $actualizar->save();
             $datos=DB::table('ventas')->get();
         }
@@ -1395,18 +1703,53 @@ class AdminController extends Controller
             $dato->delete();
             $datos=DB::table('ejecutivos')->get();
         }elseif ($tabla=='detalle_ventas') {
-            $dato=Detalle_venta::find($key);
-            $dato->delete();
+            $registro_actual=DB::table('detalle_ventas')->where('venta_id',$key)->where('producto_id',$key2);
+           
+            //Actualizando tabla de ventas
+            $Venta=Venta::find($key);
+            $sucursal=$Venta->sucursal_id;
+            $valor_anterior=$Venta->total_venta;
+            $valor_nuevo=$valor_anterior - $registro_actual->value('total_producto');
+            $Venta->total_venta=$valor_nuevo;
+            $Venta->save();
+
+            //Actualizando stock tabla localizacions
+            $inventario=DB::table('localizacions')->where('producto_id',$key2)->where('sucursal_id',$sucursal);
+            $stock_nuevo= $inventario->value('stock') + $registro_actual->value('cantidad');
+            $inventario->update(['stock' => $stock_nuevo]); 
+
+            $registro_actual->delete();
             $datos=DB::table('detalle_ventas')->get();
+
         }elseif ($tabla=='clavos') {
             $dato=Producto::find($key);
             $dato->delete();
             $datos=DB::table('clavos')->get();
         }elseif ($tabla=='detalle_compras') { 
-            DB::table('detalle_compras')->where('oc_id',$key)->where('sucursal_id',$key2)->delete();
+            $borrar=DB::table('detalle_compras')->where('oc_id',$key)->where('producto_id',$key2);
+
+            //Actualizando tabla de orden_compras
+            $Compra=Orden_compra::find($key);
+
+            $valor_anterior=$Compra->value('total_oocc');
+            $valor_nuevo=$valor_anterior - $borrar->value('total');
+            $Compra->total_oocc=$valor_nuevo;
+            $Compra->save();
+
+            $borrar->delete();
             $datos=DB::table('detalle_compras')->get();
         }elseif ($tabla=='ventas') {
             $dato=Venta::find($key);
+            $detalle_ventas=DB::table('detalle_ventas')->where('venta_id',$key)->get();
+            
+            foreach($detalle_ventas as $individual){
+                $inventario=DB::table('localizacions')->where('producto_id',$individual->producto_id)->where('sucursal_id',$dato->sucursal_id);
+                $stock_anterior=$inventario->value('stock');
+                $sumar=$individual->cantidad;
+                $stock_nuevo=$stock_anterior + $sumar;
+                $inventario->update(['stock' => $stock_nuevo]); 
+            }
+
             $dato->delete();
             $datos=DB::table('ventas')->get();
         }
