@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\EjecutivoController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\EjecutivoController;
 
 
 
@@ -35,7 +36,7 @@ Route::get('/ayudameme', function () {
 });
 
 
-
+//Inventario
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');
 Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
@@ -45,8 +46,10 @@ Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actual
 Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');
 Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');
 Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');
-
 Route::resource('ventas',VentaController::class);
+
+//Catálogo
+Route::get('/catalogo',[CatalogoController::class,'index'])->name('ver_catalogo');
 
 
 Route::middleware(['auth'])->group(function(){
