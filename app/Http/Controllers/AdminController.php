@@ -1650,8 +1650,20 @@ class AdminController extends Controller
             $datos=DB::table('trabajadors')->get();
         }elseif ($tabla=='orden_compras') {
             $dato=Orden_Compra::find($key);
+
+            //Actualizando el stock
+            $detalle_compras=DB::table('detalle_compras')->where('oc_id',$key)->get();
+            foreach($detalle_compras as $individual){
+                $inventario=DB::table('localizacions')->where('producto_id',$individual->producto_id)->where('sucursal_id',$dato->sucursal_id);
+                $stock_anterior=$inventario->value('stock');
+                $restar=$individual->cantidad;
+                $stock_nuevo=$stock_anterior - $restar;
+                $inventario->update(['stock' => $stock_nuevo]); 
+            }
+
             $dato->delete();
             $datos=DB::table('orden_compras')->get();
+            
         }elseif ($tabla=='transportes') {
             $dato=Transporte::find($key);
             $dato->delete();
@@ -1730,13 +1742,20 @@ class AdminController extends Controller
 
             //Actualizando tabla de orden_compras
             $Compra=Orden_compra::find($key);
-
-            $valor_anterior=$Compra->value('total_oocc');
+            $sucursal=$Compra->sucursal_id;
+            $valor_anterior=$Compra->total_oocc;
             $valor_nuevo=$valor_anterior - $borrar->value('total');
             $Compra->total_oocc=$valor_nuevo;
             $Compra->save();
 
+            //Actualizando tabla de localizacions (stock inventario)
+            $inventario=DB::table('localizacions')->where('sucursal_id',$sucursal)->where('producto_id',$key2);
+            $stock_anterior=$inventario->value('stock');
+            $stock_nuevo=$stock_anterior - $borrar->value('cantidad');
+            $inventario->update(['stock' => $stock_nuevo]);
+
             $borrar->delete();
+
             $datos=DB::table('detalle_compras')->get();
         }elseif ($tabla=='ventas') {
             $dato=Venta::find($key);

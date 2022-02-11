@@ -132,9 +132,7 @@
             @enderror
         </div> 
 
-    @endif
-
-    @if ($tabla == 'clientes') 
+    @elseif($tabla == 'clientes') 
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
             <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="11" value="{{$dato->telefono}}">
@@ -143,9 +141,7 @@
             @enderror
         </div>
         
-    @endif
-
-    @if ($tabla == 'trabajadores') 
+    @elseif($tabla == 'trabajadores') 
         @php($sucursales=DB::table('inventarios')->get())
 
         <div class="mb-3">
@@ -165,9 +161,7 @@
             </select>
         </div>
         
-    @endif
-
-    @if ($tabla == 'orden_compras') 
+    @elseif($tabla == 'orden_compras') 
         @php($proveedores=DB::table('proveedors')->get())
         @php($sucursales=DB::table('inventarios')->get())
 
@@ -190,9 +184,7 @@
         </div>
        
         
-    @endif
-
-    @if ($tabla == 'transportes') 
+    @elseif($tabla == 'transportes') 
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Nombre transportista</label>
@@ -231,9 +223,7 @@
             </select>
         </div>
         
-    @endif
-
-    @if ($tabla == 'tornillos') 
+    @elseif($tabla == 'tornillos') 
         <div class="mb-3">
             <label for="" class="form-label">Cabeza</label>
             <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="1" value="{{$dato->cabeza}}">
@@ -278,9 +268,7 @@
         </div>
 
         
-    @endif
-
-    @if ($tabla == 'telefono_proveedores') 
+    @elseif($tabla == 'telefono_proveedores') 
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Proveedor</label>
@@ -298,9 +286,7 @@
             @enderror
         </div>
         
-    @endif
-
-    @if ($tabla == 'techumbres') 
+    @elseif($tabla == 'techumbres') 
         <div class="mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material" name="material" type="text" class="form-control" tabindex="1" value="{{$dato->material}}">
@@ -329,9 +315,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-    @endif
-
-    @if ($tabla == 'proveedores') 
+    @elseif($tabla == 'proveedores') 
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{$dato->nombre}}">
@@ -369,9 +353,7 @@
         </div>
 
     
-    @endif
-
-    @if ($tabla == 'productos') 
+    @elseif($tabla == 'productos') 
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{$dato->nombre}}">
@@ -642,9 +624,7 @@
             @enderror
         </div>
 
-    @endif
-
-    @if ($tabla == 'planchas_construccion') 
+    @elseif($tabla == 'planchas_construccion') 
         <div class="mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material" name="material" type="text" class="form-control" tabindex="1" value="{{$dato->material}}">
@@ -673,9 +653,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-    @endif
-
-    @if ($tabla == 'muebles')
+    @elseif($tabla == 'muebles')
         <div class="mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material" name="material" type="text" class="form-control" tabindex="1" value="{{$dato->material}}">
@@ -711,9 +689,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-    @endif
-
-    @if ($tabla == 'maderas') 
+    @elseif($tabla == 'maderas') 
         <div class="mb-3">
             <label for="" class="form-label">Alto</label>
             <input id="alto" name="alto" type="number" step="0.01" class="form-control" tabindex="1" value="{{$dato->alto}}">
@@ -749,10 +725,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-    @endif
-
-    {{-- Verificar al final --}}
-    @if ($tabla == 'sucursal_producto') 
+    @elseif($tabla == 'sucursal_producto') 
         @php($sucursales=DB::table('inventarios')->get())
         @php($productos=DB::table('productos')->get())
         <div class="mb-3">
@@ -792,9 +765,7 @@
             @enderror
         </div>
         
-    @endif
-
-    @if ($tabla == 'inventarios') 
+    @elseif($tabla == 'inventarios') 
         <div class="mb-3">
             <label for="" class="form-label">Direccion sucursal</label>
             <input id="direccion_sucursal" name="direccion_sucursal" type="text" class="form-control" tabindex="5" value="{{$dato->direccion_sucursal}}">
@@ -802,9 +773,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-    @endif
-
-    @if ($tabla == 'fotos') 
+    @elseif($tabla == 'fotos') 
         <div class="mb-3">
             <label for="" class="form-label">Url</label>
             <input id="url" name="url" type="text" class="form-control" tabindex="5" value="{{$dato->url}}">
@@ -827,9 +796,7 @@
             @enderror
         </div>
         
-    @endif
-
-    @if ($tabla == 'ejecutivos')
+    @elseif($tabla == 'ejecutivos')
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -868,9 +835,7 @@
             </select>
         </div> 
         
-    @endif
-
-    @if ($tabla == 'detalle_ventas') 
+    @elseif($tabla == 'detalle_ventas') 
         @php($ventas=DB::table('ventas')->get())
         @php($productos=DB::table('productos')->get())
     
@@ -902,9 +867,7 @@
                 <small style="color:red;">*No puedes superar el stock de este producto en el inventario.</small>
             @enderror
         </div>
-    @endif
-
-    @if ($tabla == 'clavos') 
+    @elseif($tabla == 'clavos') 
         <div class="mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material" name="material" type="text" class="form-control" tabindex="5" value="{{$dato->material}}">
@@ -933,9 +896,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-    @endif
-
-    @if ($tabla == 'detalle_compras')
+    @elseif($tabla == 'detalle_compras')
         @php($ordenes=DB::table('orden_compras')->get())
         @php($productos=DB::table('productos')->get())
 
@@ -987,9 +948,7 @@
             @enderror
         </div>
 
-    @endif
-
-    @if ($tabla == 'ventas') 
+    @elseif($tabla == 'ventas') 
         @php($clientes=DB::table('clientes')->get())
         @php($sucursales=DB::table('inventarios')->get())
 

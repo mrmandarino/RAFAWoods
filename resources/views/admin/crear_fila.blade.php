@@ -127,9 +127,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="10">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="11">Guardar</button>
         
-    @endif
-
-    @if ($tabla == 'clientes')
+    @elseif($tabla == 'clientes')
         <div class="mb-3">
             <label for="" class="form-label">Rut</label>
             <input id="rut" name="rut" type="text" class="form-control" tabindex="1" value="{{old('rut')}}">
@@ -180,9 +178,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
         
-    @endif
-
-    @if ($tabla == 'trabajadores')
+    @elseif($tabla == 'trabajadores')
         @php($sucursales=DB::table('inventarios')->get())
 
         <div class="mb-3">
@@ -245,9 +241,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="8">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="9">Guardar</button>
         
-    @endif
-
-    @if ($tabla == 'orden_compras')  
+    @elseif($tabla == 'orden_compras')  
         @php($proveedores=DB::table('proveedors')->get())
         @php($sucursales=DB::table('inventarios')->get())
 
@@ -276,9 +270,69 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="3">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
     
-    @endif
+    @elseif($tabla == 'detalle_compras')
+        @php($ordenes=DB::table('orden_compras')->get())
+        @php($productos=DB::table('productos')->get())
 
-    @if ($tabla == 'transportes')
+        <div class="mb-3">
+            <label for="" class="form-label">ID Orden de compra</label>
+            <select class="form-control select" name="oc_id" id="oc_id" tabindex="1">
+                @foreach ($ordenes as $orden)
+                    <option value={{$orden->id}} {{ old('oc_id')==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
+                @endforeach  
+            </select>
+            @error('oc_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Producto</label>
+            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
+                @foreach ($productos as $producto)
+                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                @endforeach  
+            </select>
+            @error('producto_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Nivel de calidad</label>
+            <select class="form-control select" name="nivel_calidad" id="nivel_calidad" tabindex="3">
+                <option value=1 {{ old('nivel_calidad')==1? 'selected' : ''  }}>Bajo</option>  
+                <option value=2 {{ old('nivel_calidad')==2? 'selected' : ''  }}>Aceptable</option>  
+                <option value=3 {{ old('nivel_calidad')==3? 'selected' : ''  }}>Medio</option>  
+                <option value=4 {{ old('nivel_calidad')==4? 'selected' : ''  }}>Bueno</option>  
+                <option value=5 {{ old('nivel_calidad')==5? 'selected' : ''  }}>Excelente</option>  
+            </select>
+            @error('nivel_calidad')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Cantidad</label>
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="4" value="{{old('cantidad')}}">
+            @error('cantidad')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Precio unitario</label>
+            <input id="precio_unitario" name="precio_unitario" type="number" class="form-control" tabindex="5" value="{{old('precio_unitario')}}">
+            @error('precio_unitario')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
+        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
+        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
+
+
+    @elseif($tabla == 'transportes')
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Nombre transportista</label>
@@ -319,9 +373,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="6">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'tornillos')
+    @elseif($tabla == 'tornillos')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -381,9 +433,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="9">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="10">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'telefono_proveedores') 
+    @elseif($tabla == 'telefono_proveedores') 
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Proveedor</label>
@@ -403,9 +453,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="3">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'techumbres')
+    @elseif($tabla == 'techumbres')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -451,9 +499,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'proveedores')
+    @elseif($tabla == 'proveedores')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -493,9 +539,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="6">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'productos')  
+    @elseif($tabla == 'productos')  
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -640,9 +684,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="18">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="19">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'planchas_construccion')
+    @elseif($tabla == 'planchas_construccion')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -688,9 +730,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'muebles')
+    @elseif($tabla == 'muebles')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -743,9 +783,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="8">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="9">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'maderas')
+    @elseif($tabla == 'maderas')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -798,9 +836,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="8">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="9">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'sucursal_producto')
+    @elseif($tabla == 'sucursal_producto')
         @php($sucursales=DB::table('inventarios')->get())
         @php($productos=DB::table('productos')->get())
         <div class="mb-3">
@@ -842,9 +878,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'inventarios')
+    @elseif($tabla == 'inventarios')
         <div class="mb-3">
             <label for="" class="form-label">Direccion sucursal</label>
             <input id="direccion_sucursal" name="direccion_sucursal" type="text" class="form-control" tabindex="1" value="{{old('direccion_sucursal')}}">
@@ -855,9 +889,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="2">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="3">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'fotos')
+    @elseif($tabla == 'fotos')
         <div class="mb-3">
             <label for="" class="form-label">Url</label>
             <input id="url" name="url" type="text" class="form-control" tabindex="1" value="{{old('url')}}">
@@ -882,9 +914,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'ejecutivos')
+    @elseif($tabla == 'ejecutivos')
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -925,9 +955,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="6">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'clavos')
+    @elseif($tabla == 'clavos')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
@@ -973,73 +1001,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
     
-    @endif
-
-    @if ($tabla == 'detalle_compras')
-        @php($ordenes=DB::table('orden_compras')->get())
-        @php($productos=DB::table('productos')->get())
-
-        <div class="mb-3">
-            <label for="" class="form-label">ID Orden de compra</label>
-            <select class="form-control select" name="oc_id" id="oc_id" tabindex="1">
-                @foreach ($ordenes as $orden)
-                    <option value={{$orden->id}} {{ old('oc_id')==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
-                @endforeach  
-            </select>
-            @error('oc_id')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
-                @foreach ($productos as $producto)
-                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
-            @error('producto_id')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="" class="form-label">Nivel de calidad</label>
-            <select class="form-control select" name="nivel_calidad" id="nivel_calidad" tabindex="3">
-                <option value=1 {{ old('nivel_calidad')==1? 'selected' : ''  }}>Bajo</option>  
-                <option value=2 {{ old('nivel_calidad')==2? 'selected' : ''  }}>Aceptable</option>  
-                <option value=3 {{ old('nivel_calidad')==3? 'selected' : ''  }}>Medio</option>  
-                <option value=4 {{ old('nivel_calidad')==4? 'selected' : ''  }}>Bueno</option>  
-                <option value=5 {{ old('nivel_calidad')==5? 'selected' : ''  }}>Excelente</option>  
-            </select>
-            @error('nivel_calidad')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="" class="form-label">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="4" value="{{old('cantidad')}}">
-            @error('cantidad')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="" class="form-label">Precio unitario</label>
-            <input id="precio_unitario" name="precio_unitario" type="number" class="form-control" tabindex="5" value="{{old('precio_unitario')}}">
-            @error('precio_unitario')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
-
-
-    @endif
-
-    @if ($tabla == 'ventas')
+    @elseif($tabla == 'ventas')
         @php($clientes=DB::table('clientes')->get())
         @php($sucursales=DB::table('inventarios')->get())
 
@@ -1088,9 +1050,7 @@
         <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
         <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
 
-    @endif
-
-    @if ($tabla == 'detalle_ventas')
+    @elseif($tabla == 'detalle_ventas')
         @php($ventas=DB::table('ventas')->get())
         @php($productos=DB::table('productos')->get())
 

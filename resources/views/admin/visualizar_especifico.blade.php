@@ -91,9 +91,7 @@
 				@endforeach
 			</tbody>
 	
-		@endif
-
-		@if ($tabla == 'clientes')
+		@elseif($tabla == 'clientes')
 			<table id="clientes" class="table" style="width:100%">
 			<thead>
 				<tr>
@@ -124,9 +122,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'trabajadores')
+		@elseif($tabla == 'trabajadores')
 			<table id="trabajadores" class="table" style="width:100%">
 			<thead>
 				<tr>
@@ -160,9 +156,7 @@
 			</tbody>
 
 			
-		@endif
-
-		@if ($tabla == 'orden_compras')
+		@elseif($tabla == 'orden_compras')
 			<table id="orden_compras" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
@@ -197,9 +191,7 @@
 			</tbody>
 
 				
-		@endif
-		
-		@if ($tabla == 'transportes')
+		@elseif($tabla == 'transportes')
 			<table id="transportes" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
@@ -234,9 +226,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'tornillos')
+		@elseif($tabla == 'tornillos')
 			<table id="tornillos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
@@ -275,9 +265,7 @@
 				@endforeach
 			</tbody>
 				
-		@endif
-
-		@if ($tabla == 'telefono_proveedores')
+		@elseif($tabla == 'telefono_proveedores')
 			<table id="telefono_proveedores" class="table" style="width:100%">
 			<thead>
 				<th> RUT PROVEEDOR </th>
@@ -306,9 +294,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'techumbres')
+		@elseif($tabla == 'techumbres')
 			<table id="techumbres" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
@@ -343,9 +329,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'proveedores')
+		@elseif($tabla == 'proveedores')
 			<table id="proveedores" class="table" style="width:100%">
 			<thead>
 				<th> RUT </th>
@@ -380,9 +364,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'productos')
+		@elseif($tabla == 'productos')
 			<table id="productos" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
@@ -419,9 +401,7 @@
 				@endforeach 
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'planchas_construccion')
+		@elseif($tabla == 'planchas_construccion')
 			<table id="planchas_construccion" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
@@ -456,9 +436,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'muebles')
+		@elseif($tabla == 'muebles')
 			<table id="muebles" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
@@ -495,9 +473,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'maderas')
+		@elseif($tabla == 'maderas')
 			<table id="maderas" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
@@ -534,9 +510,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'sucursal_producto')
+		@elseif($tabla == 'sucursal_producto')
 			<table id="sucursal_producto" class="table" style="width:100%">
 			<thead>
 				<th> ID SUCURSAL </th>
@@ -571,9 +545,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'inventarios')
+		@elseif($tabla == 'inventarios')
 			<table id="inventarios" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
@@ -602,9 +574,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'fotos')
+		@elseif($tabla == 'fotos')
 			<table id="fotos" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
@@ -635,9 +605,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'ejecutivos')
+		@elseif($tabla == 'ejecutivos')
 			<table id="ejecutivos" class="table" style="width:100%">
 			<thead>
 				<th> ID </th>
@@ -674,9 +642,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'detalle_ventas')
+		@elseif($tabla == 'detalle_ventas')
 			<table id="detalle_ventas" class="table" style="width:100%">
 			<thead>
 				<th> ID VENTA </th>
@@ -709,9 +675,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'clavos')
+		@elseif($tabla == 'clavos')
 			<table id="clavos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
@@ -746,9 +710,7 @@
 				@endforeach
 			</tbody>
 
-		@endif
-
-		@if ($tabla == 'detalle_compras')
+		@elseif($tabla == 'detalle_compras')
 			<table id="detalle_compras" class="table" style="width:100%">
 			<thead>
 				<th> ID OC </th>
@@ -787,10 +749,7 @@
 			</tbody>
 
 				
-		@endif
-
-
-		@if ($tabla == 'ventas')
+		@elseif($tabla == 'ventas')
 			<table id="ventas" class="table" style="width:100%">
 				<thead>
 					<th> ID </th>
@@ -889,9 +848,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'clientes')
+	@elseif($tabla == 'clientes')
 		<script>
 			$(document).ready(function() {
 				$('#clientes').DataTable({
@@ -931,9 +888,7 @@
 				});
 			});
 		</script> 	
-	@endif
-	
-	@if ($tabla == 'trabajadores')
+	@elseif($tabla == 'trabajadores')
 		<script>
 			$(document).ready(function() {
 				$('#trabajadores').DataTable({
@@ -973,9 +928,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'orden_compras')
+	@elseif($tabla == 'orden_compras')
 		<script>
 			$(document).ready(function() {
 				$('#orden_compras').DataTable({
@@ -1015,9 +968,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'transportes')
+	@elseif($tabla == 'transportes')
 		<script>
 			$(document).ready(function() {
 				$('#transportes').DataTable({
@@ -1057,9 +1008,7 @@
 				});
 			});
 		</script> 	
-	@endif
-	
-	@if ($tabla == 'tornillos')
+	@elseif($tabla == 'tornillos')
 		<script>
 			$(document).ready(function() {
 				$('#tornillos').DataTable({
@@ -1099,9 +1048,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'telefono_proveedores')
+	@elseif($tabla == 'telefono_proveedores')
 		<script>
 			$(document).ready(function() {
 				$('#telefono_proveedores').DataTable({
@@ -1141,9 +1088,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'techumbres')
+	@elseif($tabla == 'techumbres')
 		<script>
 			$(document).ready(function() {
 				$('#techumbres').DataTable({
@@ -1186,9 +1131,7 @@
 				});
 			});
 		</script> 	
-	@endif
-	
-	@if ($tabla == 'proveedores')
+	@elseif($tabla == 'proveedores')
 		<script>
 			$(document).ready(function() {
 				$('#proveedores').DataTable({
@@ -1228,9 +1171,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'productos')
+	@elseif($tabla == 'productos')
 		<script>
 			$(document).ready(function() {
 				$('#productos').DataTable({
@@ -1270,9 +1211,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'planchas_construccion')
+	@elseif($tabla == 'planchas_construccion')
 		<script>
 			$(document).ready(function() {
 				$('#planchas_construccion').DataTable({
@@ -1312,9 +1251,7 @@
 				});
 			});
 		</script> 	
-	@endif
-	
-	@if ($tabla == 'muebles')
+	@elseif($tabla == 'muebles')
 		<script>
 			$(document).ready(function() {
 				$('#muebles').DataTable({
@@ -1354,9 +1291,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'maderas')
+	@elseif($tabla == 'maderas')
 		<script>
 			$(document).ready(function() {
 				$('#maderas').DataTable({
@@ -1396,9 +1331,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'sucursal_producto')
+	@elseif($tabla == 'sucursal_producto')
 		<script>
 			$(document).ready(function() {
 				$('#sucursal_producto').DataTable({
@@ -1438,9 +1371,7 @@
 				});
 			});
 		</script> 	
-	@endif
-	
-	@if ($tabla == 'inventarios')
+	@elseif($tabla == 'inventarios')
 		<script>
 			$(document).ready(function() {
 				$('#inventarios').DataTable({
@@ -1480,9 +1411,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'fotos')
+	@elseif($tabla == 'fotos')
 		<script>
 			$(document).ready(function() {
 				$('#fotos').DataTable({
@@ -1522,9 +1451,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'ejecutivos')
+	@elseif($tabla == 'ejecutivos')
 		<script>
 			$(document).ready(function() {
 				$('#ejecutivos').DataTable({
@@ -1564,9 +1491,7 @@
 				});
 			});
 		</script> 	
-	@endif
-	
-	@if ($tabla == 'detalle_ventas')
+	@elseif($tabla == 'detalle_ventas')
 		<script>
 			$(document).ready(function() {
 				$('#detalle_ventas').DataTable({
@@ -1606,9 +1531,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'clavos')
+	@elseif($tabla == 'clavos')
 		<script>
 			$(document).ready(function() {
 				$('#clavos').DataTable({
@@ -1648,9 +1571,7 @@
 				});
 			});
 		</script> 	
-	@endif
-
-	@if ($tabla == 'detalle_compras')
+	@elseif($tabla == 'detalle_compras')
 		<script>
 			$(document).ready(function() {
 				$('#detalle_compras').DataTable({
@@ -1690,49 +1611,47 @@
 				});
 			});
 		</script> 	
-	@endif
+	@elseif($tabla == 'ventas')
+		<script>
+			$(document).ready(function() {
+				$('#ventas').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
 
-	@if ($tabla == 'ventas')
-	<script>
-		$(document).ready(function() {
-			$('#ventas').DataTable({
-				responsive: true,
-				autoWidth: false,
-				dom: '<"floatRight"B>lftrp',
-
-				 buttons: {
-				   buttons: [
-					   
-					{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Ventas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
-					{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Ventas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
-						  ],
-					   dom: {
-						  button: {
-						  className: 'btn'
-							 }
-					   }
-				 },
-				"language": {
-					"lengthMenu": "Mostrar " + 
-								   `<select class="custom-select custom-select-sm form-control form-control-sm">
-									<option value = '10'>10</option>
-									<option value = '25'>25</option>
-									<option value = '50'>50</option>
-									<option value = '100'>100</option>
-									<option value = '-1'>Total</option>
-									</select>` + 
-									" registros por página",
-					"zeroRecords": "No se encontraron registros",
-					"info": "Visualizando página _PAGE_ de _PAGES_",
-					"infoEmpty": "No hay registros disponibles",
-					"infoFiltered": "(filtrado de _MAX_ registros totales)",
-					"search": "Buscar :",
-					"paginate": {"next": "Siguiente", "previous": "Anterior"}
-				}
+					buttons: {
+					buttons: [
+						
+						{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Ventas', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+						{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Ventas', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+							],
+						dom: {
+							button: {
+							className: 'btn'
+								}
+						}
+					},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									`<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+										</select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+					}
+				});
 			});
-		});
-	</script> 	
-@endif
+		</script> 	
+	@endif
 
 
 </body>
