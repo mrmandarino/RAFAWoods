@@ -8,12 +8,13 @@
 
 
 
-  <title>Inventario</title>
+  <title>Gráficos</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
+  <!-- estilos dashboard  -->
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -34,9 +35,15 @@
       overflow: scroll;
     }
 
-    .form-arriba {
+    .col-form-izq {
       height: 400px;
       align-self: center;
+
+    }
+
+    .form-izq {
+      display: flex;
+      justify-content: center;
     }
 
     .botones {
@@ -148,11 +155,11 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="#" class="nav-link active">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2" />
             </svg>
-            Dashboard
+            Gráficos
           </a>
         </li>
         <li>
@@ -180,7 +187,7 @@
           </a>
         </li>
         <li>
-          <a href="{{route('ver_inventario')}}" class="nav-link active">
+          <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#inventario" />
             </svg>
@@ -220,22 +227,10 @@
 
   </main>
 
-  <script>
-    $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-          $(".dropdown-menu li").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
-        });
-      });
-  </script>
-
-
-
 
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>
+
 </body>
 
 </html>
