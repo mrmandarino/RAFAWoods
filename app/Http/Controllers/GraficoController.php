@@ -22,7 +22,9 @@ class GraficoController extends Controller
         $year_m4 = strval($current_year - 4);
         $years_arr = [$current_year, $year_m1, $year_m2, $year_m3, $year_m4];
 
-        return view('graficos.menu_graficos', compact('years_arr'));
+        //return view('graficos.menu_graficos', compact('years_arr'));
+        return view('graficos.eleccion_fecha');
+
     }
 
     /*

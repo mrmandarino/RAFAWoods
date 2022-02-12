@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-
-
-  <title>Gráficos</title>
-
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    
+    
+    <title>Gráficos</title>
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/sidebars.js') }}"></script>
+  <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
   <!-- estilos dashboard  -->
   <style>
     .bd-placeholder-img {
@@ -125,13 +131,12 @@
     .shopping-cart-total {
       min-height: 96px;
     }
-
+    
     .row-carrito {
       display: flex;
       justify-content: right;
     }
-  </style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </style>
 
 </head>
 
@@ -228,8 +233,7 @@
   </main>
 
 
-  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('js/sidebars.js') }}"></script>
+ 
 
 </body>
 
