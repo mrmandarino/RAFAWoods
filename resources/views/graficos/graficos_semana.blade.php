@@ -34,20 +34,45 @@
     ];
 
     const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Total de ventas por día',
-            data: [datos_json_obj.ventas_totales.lunes, datos_json_obj.ventas_totales.martes, datos_json_obj.ventas_totales.miercoles, datos_json_obj.ventas_totales.jueves, datos_json_obj.ventas_totales.viernes, datos_json_obj.ventas_totales.sabado, datos_json_obj.ventas_totales.domingo],
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
+    labels: labels,
+    datasets: [{
+        label: 'Total de ventas por día',
+        data: [datos_json_obj.ventas_totales.lunes, datos_json_obj.ventas_totales.martes, datos_json_obj.ventas_totales.miercoles, datos_json_obj.ventas_totales.jueves, datos_json_obj.ventas_totales.viernes, datos_json_obj.ventas_totales.sabado, datos_json_obj.ventas_totales.domingo],
+        backgroundColor: [
+        
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)'
+        
+        ],
+        borderColor: [
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)'
+        
+        ],
+        borderWidth: 1
     }]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
-    options: {}
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
+    },
     };
 </script>
 

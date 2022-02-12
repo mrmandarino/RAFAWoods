@@ -45,7 +45,8 @@ class GraficoController extends Controller
         if ($tipo_grafico == 0) {
             //data del mes 
             return view('graficos.graficos_mes');
-        } else {
+        } 
+        else {
             //data de la semana
             $ano = $request->ano;
             $mes = $request->mes;
@@ -55,7 +56,7 @@ class GraficoController extends Controller
             $semana_del_ano = $semana;
             if($mes!=1)
             {
-                if($mes==12 and $semana==4){
+                if($mes==12 and $semana==4){//mes de diciembre
 
                     $semana_del_ano = ($mes * 4) + $semana;
                 }
@@ -64,7 +65,18 @@ class GraficoController extends Controller
                     $semana_del_ano = (($mes-1) * 4) + $semana;
                 }
             }
-           
+
+
+
+            //suponiendo que se resive ahora una fecha
+            $ddate = '2021-12-28';
+            $date = new DateTime($ddate);
+            
+            $week = $date->format("W");
+            $fecha_test = date_create();
+            $fecha_de_semana_test = date_isodate_set($fecha_test, 2021, $week);//aqui poner el ano y el numero de semana obtenidos desde el formulario del menu_graficos
+            //dd($fecha_de_semana_test);
+            
 
 
             //transformar info de request en datos para query

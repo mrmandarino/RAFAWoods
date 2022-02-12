@@ -34,14 +34,14 @@ Route::get('/ayudameme', function () {
     
 
     //return view('graficos.graficos');
-    return view('graficos.menu_graficos');
+    return view('graficos.charts');
 });
 
 
 
 //Graficos
 Route::get('/graficos', [GraficoController::class,'index'])->name('graficos');
-Route::get('/graficos/redireccion', [GraficoController::class,'redireccion'])->name('redireccion');
+Route::get('/graficos/rendimiento', [GraficoController::class,'redireccion'])->name('redireccion');
 
 //las conexiones estan listas, falta validaciones varias
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino
