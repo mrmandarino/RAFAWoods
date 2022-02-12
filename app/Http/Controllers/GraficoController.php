@@ -22,7 +22,6 @@ class GraficoController extends Controller
         $year_m4 = strval($current_year - 4);
         $years_arr = [$current_year, $year_m1, $year_m2, $year_m3, $year_m4];
 
-        //return view('graficos.menu_graficos', compact('years_arr'));
         return view('graficos.eleccion_fecha');
 
     }
@@ -41,6 +40,9 @@ class GraficoController extends Controller
     */
     public function redireccion(Request $request)
     {
+        $request->validate([
+            'input_fecha' => ['required'],
+        ]);
         //dd($request);
         $tipo_grafico = $request->tipo_grafico;
 
@@ -49,45 +51,20 @@ class GraficoController extends Controller
             return view('graficos.graficos_mes');
         } 
         else {
-            //data de la semana
-            $ano = $request->ano;
-            $mes = $request->mes;
-            $semana = $request->option_semana;
-            $datos = [$ano, $mes, $semana];
-
-            $semana_del_ano = $semana;
-            if($mes!=1)
-            {
-                if($mes==12 and $semana==4){//mes de diciembre
-
-                    $semana_del_ano = ($mes * 4) + $semana;
-                }
-                else{
-
-                    $semana_del_ano = (($mes-1) * 4) + $semana;
-                }
-            }
-
-
-
-            //suponiendo que se resive ahora una fecha
-            $ddate = '2021-12-28';
-            $date = new DateTime($ddate);
-            
+            //fecha recibida desde graficos.eleccion_fecha
+            $input_fecha = $request->input_fecha;
+            $date = new DateTime($input_fecha);
+                     
+            $year = $date->format("Y");
+            $month = $date->format("m");
             $week = $date->format("W");
-            $fecha_test = date_create();
-            $fecha_de_semana_test = date_isodate_set($fecha_test, 2021, $week);//aqui poner el ano y el numero de semana obtenidos desde el formulario del menu_graficos
-            //dd($fecha_de_semana_test);
+            $day = $date->format("d");
             
-
-
             //transformar info de request en datos para query
-            $fecha_init = date_create();
-            //$fecha_de_semana = date_isodate_set($fecha_init, 2021, 3);//aqui poner el ano y el numero de semana obtenidos desde el formulario del menu_graficos
-            $fecha_de_semana = date_isodate_set($fecha_init, $ano, $semana_del_ano);//aqui poner el ano y el numero de semana obtenidos desde el formulario del menu_graficos
-            $fecha_inicio_semana_mysql = Date_format($fecha_de_semana, "Y-m-d");//fecha en formato string con el formato de mysql excluyendo la hora para que calce con los dias almacenados en la base de datos
-
-            //ya teniendo lo anterior listo          
+            $fecha_init = date_create();//instancia en blanco de un objeto tipo date
+            $fecha_inicio_semana = date_isodate_set($fecha_init, $year, $week);//aqui poner el ano y el numero de semana obtenidos desde el formulario del menu_graficos
+            $fecha_inicio_semana_mysql = Date_format($fecha_inicio_semana, "Y-m-d");//fecha en formato string con el formato de mysql excluyendo la hora para que calce con los dias almacenados en la base de datos
+         
             $fecha_lunes_str = $fecha_inicio_semana_mysql;
             $fecha_lunes_obj = new DateTime($fecha_lunes_str);//fecha lunes tipo objeto para usar en indices para bigmama
             
@@ -125,7 +102,7 @@ class GraficoController extends Controller
             //dd($big_mama);
      
             $datos_json = json_encode($big_mama);
-            return view('graficos.graficos_semana',compact('datos_json','ano','mes','semana'));
+            return view('graficos.graficos_semana',compact('datos_json','year','month','day'));
         }
     }
 }

@@ -32,17 +32,17 @@
                         <div class="row justify-content-center">
 
                             <div class="col-12">
-                                <div class="row">
+                                <div class="row" >
                                     
-                                    <svg class="bi me-2" width="40" height="40">
+                                    <svg class="bi me-2" width="40" height="40" >
                                         <use xlink:href="#calendar3" />
                                     </svg>
                                 </div>
                                 <div class="row">
                                     <div class="col">
 
-                                        <label for="input_fecha">Fecha:</label>
-                                        <input type="text" class="form-control date mandarino-date" id="input_fecha">
+                                        <label for="input_fecha" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">Fecha:</label>
+                                        <input type="text" class="form-control date mandarino-date" id="input_fecha" name="input_fecha" required>
         
                                         
                                         <div class="form-check form-switch mt-3">
@@ -50,7 +50,7 @@
                                             id="tipo_grafico" value="0" required>
                                             <input class="form-check-input" type="checkbox" role="switch" id="switch_semana"
                                             onchange="cambiar_estado()">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked" id="label_semana">Ver gráfico
+                                            <label class="form-check-label" for="flexSwitchCheckChecked" id="label_semana" data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta.">Ver gráfico
                                                 de una semana</label>
                                         </div>
 
@@ -85,9 +85,9 @@
     $('.mandarino-date').datepicker({
     weekStart: 1,
     language: "es",
-    todayHighlight: true,
     autoclose: true,
-    orientation: 'left'
+    orientation: 'left',
+    format: 'yyyy/mm/dd'
     });
 </script>
 

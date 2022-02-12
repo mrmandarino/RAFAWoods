@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.min.css') }}">
   <!-- estilos dashboard  -->
   <style>
     .bd-placeholder-img {
