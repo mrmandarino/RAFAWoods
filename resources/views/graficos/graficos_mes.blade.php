@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <h1>Ventas ultima semana</h1>
+    <h1>Gráficos x mes</h1>
     <div>
         <canvas id="myChart"></canvas>
     </div>
@@ -12,15 +12,11 @@
 </div>
 
 <script>
-    const labels = [
-    'Lunes',
-    'Martes',
-    'Miercoles',
-    'Jueves',
-    'Viernes',
-    'Sábado',
-    'Domingo',
-    ];
+    const labels = [];
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        
+    }
 
     const data = {
     labels: labels,

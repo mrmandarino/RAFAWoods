@@ -38,23 +38,10 @@ Route::get('/ayudameme', function () {
 });
 
 
-//ruta catalogo
-//ruta intermedia
-//ruta catalogo/familia
-
-
-
-
-
-
-
-
-
-
-
 
 //Graficos
-Route::get('/graficos', [GraficoController::class,'index'])->name('graficos');//vista control_inv - listo - mandarino
+Route::get('/graficos', [GraficoController::class,'index'])->name('graficos');
+Route::get('/graficos/redireccion', [GraficoController::class,'redireccion'])->name('redireccion');
 
 //las conexiones estan listas, falta validaciones varias
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino

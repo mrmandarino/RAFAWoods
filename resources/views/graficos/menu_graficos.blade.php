@@ -26,14 +26,14 @@
                 {{-- columna formulario --}}
                 <div class="col-12">
 
-                    <form class="row g-3 mt-3" style="justify-content: center">
+                    <form action="{{route('redireccion')}}" class="row g-3 mt-3" style="justify-content: center">
                         @csrf
 
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <label class="input-group-text" for="inputGroupSelect01">Año:</label>
-                                    <select class="form-select" id="inputGroupSelect01">
+                                    <select class="form-select" id="ano" name="ano">
                                         @foreach ($years_arr as $year)
                                         <option value="{{$year}}">{{$year}}</option>
                                         @endforeach
@@ -45,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <label class="input-group-text" for="inputGroupSelect01">Mes:</label>
-                                    <select class="form-select" id="inputGroupSelect01">
+                                    <select class="form-select" id="mes" name="mes">
                                         <option value="1">Enero</option>
                                         <option value="2">Febrero</option>
                                         <option value="3">Marzo</option>
@@ -65,21 +65,18 @@
                         </div>
                         <div class="row mt-3 justify-content-left" >
                             <div class="col-md-6">
-                                <input type="number" class="visually-hidden" type="number" name="tipo_grafico"
-                                    id="tipo_grafico" value="0" required>
+                                <input type="number" class="visually-hidden" type="number" name="tipo_grafico" id="tipo_grafico" value="0" required>
 
                                 <div id="producto_on">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            id="flexSwitchCheckDefault" onchange="cambiar_estado()">
-                                        <label class="form-check-label" for="flexSwitchCheckChecked"
-                                            id="label_semana">Ver gráfico de una semana</label>
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onchange="cambiar_estado()">
+                                        <label class="form-check-label" for="flexSwitchCheckChecked" id="label_semana">Ver gráfico de una semana</label>
                                     </div>
                                 </div>
                                 <div id="div_grafico_semana" style="margin-top: 10px">
                                     <div class="input-group">
                                         <label class="input-group-text" for="inputGroupSelect01">Semana:</label>
-                                        <select class="form-select" id="inputGroupSelect01">
+                                        <select class="form-select" id="option_semana" name="option_semana">
                                             <option value="1">Semana 1</option>
                                             <option value="2">Semana 2</option>
                                             <option value="3">Semana 3</option>
@@ -92,7 +89,7 @@
                         </div>
                         <div class="row mt-3 justify-content-center">
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary">Ir a gráfico</button>
+                                <button type="submit" class="btn btn-primary">Ir a gráfico</button>
                             </div>
                         </div>
 
@@ -114,11 +111,11 @@
 
 <script type="text/javascript">
     var este_ano = new Date().getFullYear();
-console.log(este_ano);
-console.log(este_ano-1);
-console.log(este_ano-2);
-console.log(este_ano-3);
-console.log(este_ano-4);
+    console.log(este_ano);
+    console.log(este_ano-1);
+    console.log(este_ano-2);
+    console.log(este_ano-3);
+    console.log(este_ano-4);
 
 </script>
 
