@@ -31,26 +31,31 @@ class GraficoController extends Controller
         y redirige a la vista con el grafico por semana o por mes, según
         la opción ingresada.
 
-        tipo_grafico = 0 es grafico por mes
-        tipo_grafico = 1 es grafico por semana
+        
 
         de la manera en que se hacen las consultas de los valores totales por dia, 
         cuando se intenta conseguir el total de ventas de un dia que no tuvo ventas
         no se cae el programa, simplemente arroja 0.
     */
     public function redireccion(Request $request)
-    {
+    {   
         $request->validate([
             'input_fecha' => ['required'],
+            'tipo_grafico' => ['required'],
         ]);
-        //dd($request);
+        
         $tipo_grafico = $request->tipo_grafico;
 
-        if ($tipo_grafico == 0) {
+        if ($tipo_grafico == "grafico_ano") {
+            //data del mes 
+            return view('graficos.graficos_mes');
+        } 
+        if ($tipo_grafico == "grafico_mes") {
             //data del mes 
             return view('graficos.graficos_mes');
         } 
         else {
+            
             //fecha recibida desde graficos.eleccion_fecha
             $input_fecha = $request->input_fecha;
             $date = new DateTime($input_fecha);

@@ -32,38 +32,51 @@
                         <div class="row justify-content-center">
 
                             <div class="col-12">
-                                <div class="row" >
-                                    
-                                    <svg class="bi me-2" width="40" height="40" >
+                                <div class="row">
+
+                                    <svg class="bi me-2" width="40" height="40">
                                         <use xlink:href="#calendar3" />
                                     </svg>
                                 </div>
                                 <div class="row">
                                     <div class="col">
 
-                                        <label for="input_fecha" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">Fecha:</label>
-                                        <input type="text" class="form-control date mandarino-date" id="input_fecha" name="input_fecha" required>
-        
-                                        
-                                        <div class="form-check form-switch mt-3">
-                                            <input type="number" class="visually-hidden" type="number" name="tipo_grafico"
-                                            id="tipo_grafico" value="0" required>
-                                            <input class="form-check-input" type="checkbox" role="switch" id="switch_semana"
-                                            onchange="cambiar_estado()">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked" id="label_semana" data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta.">Ver gráfico
-                                                de una semana</label>
+                                        <h6 data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on left">Fecha:</h6>
+                                        <input type="text" class="form-control date mandarino-date" id="input_fecha"
+                                            name="input_fecha" required>
+
+                                        <div class="div mt-3">
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tipo_grafico"
+                                                    id="radio_ano" value="grafico_ano" required>
+                                                <label class="form-check-label" for="radio_ano">Gráfico del año</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tipo_grafico"
+                                                    id="radio_mes" value="grafico_mes" required>
+                                                <label class="form-check-label" for="radio_mes">Gráfico del mes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tipo_grafico"
+                                                    id="radio_semana" value="grafico_semana" required>
+                                                <label class="form-check-label" for="radio_semana">Gráfico de la semana</label>
+                                            </div>
+
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-                                
+
                         </div>
-                        <div class="row mt-3 justify-content-center">
-                            <div class="col-5">
-                                <button type="submit" class="btn btn-primary">Ir a gráfico</button>
+                        
+                            <div class="col-md-3 text-center">
+                                <button type="submit" class="btn btn-primary" style="justify-self: center;width: 130px">Ir a gráfico</button>
+
                             </div>
-                        </div>
+                            
+                        
 
 
 
@@ -91,24 +104,47 @@
     });
 </script>
 
+<script type="text/javascript">
+    var boton_mes = document.getElementById('check_mes');
+    var boton_semana = document.getElementById('check_semana');
+    function click_check_mes(){
+        
+        boton_mes.click();
+        boton_semana.click();
+    }
+    function click_check_semana(){
+        
+        //boton_semana.click();
+        boton_mes.click();
+    }
+</script>
 
 
 <script type="text/javascript">
     var input_semana = document.getElementById('tipo_grafico');
-    
+
+    var boton_mes = document.getElementById('check_mes');
+    var boton_semana = document.getElementById('check_semana');
     console.log(input_semana.value);
+
     function cambiar_estado(){
 
-        if(input_semana.value == 0){
-
+        if(input_semana.value == 0){//input semana = grafico mes
+            
+            boton_semana.click();
+            boton_mes.click();
             input_semana.value=1; 
+            
             console.log(input_semana.value);
-            $("#div_grafico_semana").show();
+            
         }
         else{
+            boton_mes.click();
+            boton_semana.click();
             input_semana.value=0; 
+            
             console.log(input_semana.value);
-            $("#div_grafico_semana").hide();
+            
         }
         
     }
