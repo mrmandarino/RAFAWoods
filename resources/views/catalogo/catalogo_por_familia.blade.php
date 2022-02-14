@@ -136,10 +136,9 @@
         </div>
         <br>
         {{-- Paginador --}}
-        <nav aria-label="...">
-          <ul class="pagination" id="paginacion">
-          </ul>
-        </nav>
+        <div class="d-flex justify-content-end">
+          {!! $productos->links() !!}
+        </div>
     </div>
   </div>
 
@@ -148,113 +147,10 @@
 
 
 <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
-{{-- Script de actualizacion de catalogo dinamico --}}
+
+
 <script type="text/javascript">
-  <?php
-  $js_array = json_encode($productos->total());
-  echo "var cantidad_productos_js = ". $js_array . ";\n";
-  ?>
-
-  <?php
-  $js_array = json_encode($cantidad_productos_pag);
-  echo "var cantidad_productos_pag_js = ". $js_array . ";\n";
-  ?>
-
-  <?php
-  $js_array = json_encode($familia);
-  echo "var familia_js = ". $js_array . ";\n";
-  ?>
-
-  // var aux_url = `http://rafawoods.test/catalogo/${familia_js}`;
-  // if(window.location.href == aux_url)
-  // {
-  //   var content = `http://rafawoods.test/catalogo/${familia_js}?page=1`
-  //   window.location.href = content;
-  // }
-
-  
-  
-
-  const pagination = document.getElementById('paginacion');
-  var division = Math.ceil(cantidad_productos_js/cantidad_productos_pag_js);//Calculando cantidad de páginas
-
-  //Crear botón de 'previo'
-  var new_boton_prev = document.createElement('li'); 
-  new_boton_prev.setAttribute('class','page-item');
-  new_boton_prev.setAttribute('id','boton_anterior');
-  var new_boton_prev_content = `
-  <a id="link_anterior" class="page-link" href="#">Anterior</a>
-  `;
-  new_boton_prev.innerHTML = new_boton_prev_content;
-  pagination.append(new_boton_prev);
-
-
-  //Crear numeradores
-  for(let i = 0;i<division;i++)
-  {
-    var numero_pagina = i+1;
-    var new_boton_numero = document.createElement('li'); 
-    new_boton_numero.setAttribute('class','page-item');
-    var new_boton_numero_content = `
-    <a id="link_numerico" class="page-link" href="http://rafawoods.test/catalogo/${familia_js}?page=${numero_pagina}">${numero_pagina}</a>
-    `;
-    new_boton_numero.innerHTML = new_boton_numero_content;
-    pagination.append(new_boton_numero);
-  }
-
-
-  //Crear botón de 'siguiente'
-  var new_boton_next = document.createElement('li'); 
-  new_boton_next.setAttribute('class','page-item');
-  new_boton_next.setAttribute('id','boton_siguiente');
-  var new_boton_next_content = `
-  <a id="link_siguiente" class="page-link" href="#">Siguiente</a>
-  `;
-  new_boton_next.innerHTML = new_boton_next_content;
-  pagination.append(new_boton_next);
-
-
-  //Actualizar número seleccionado
-  const page_items = pagination.getElementsByClassName('page-item');
-  var url = window.location.href;
-  var actual_page;
-  if(url == ('http://rafawoods.test/catalogo/'+familia_js))
-  {
-    actual_page = 1;
-  }else{
-    actual_page = url.replace('http://rafawoods.test/catalogo/'+familia_js+'?page=','');
-  } 
-
-  //Se setea activo el botón nuevo
-  for(let i = 0;i<page_items.length;i++){
-    if(page_items[i].innerText == actual_page)
-    {
-      page_items[i].setAttribute('class','page-item active');
-      break;
-    }
-  }
-
-  //Seteando disabled y active boton de 'anterior' y 'siguiente'
-  const boton_anterior = document.getElementById('boton_anterior');
-  const boton_siguiente = document.getElementById('boton_siguiente');
-  if(actual_page == '1'){
-    boton_anterior.setAttribute('class','page-item disabled');
-  }
-
-  if(actual_page == division){
-    boton_siguiente.setAttribute('class','page-item disabled');
-  }
-
-  //Establer rutas de los botones 'siguiente' y 'anterior'
-  let actual_page_int = parseInt(actual_page);
-  const boton_anterior_link = document.getElementById('link_anterior');
-  const boton_siguiente_link = document.getElementById('link_siguiente');
-  boton_anterior_link.setAttribute('href','http://rafawoods.test/catalogo/'+familia_js+'?page='+(actual_page_int-1));
-  boton_siguiente_link.setAttribute('href','http://rafawoods.test/catalogo/'+familia_js+'?page='+(actual_page_int+1));
-</script>
-
-<script>
-  function submit_formulario_familia()
+function submit_formulario_familia()
   {
     //Actualizacion de ruta de formulario de familias
     const datalist_familia_productos = document.getElementById('datalist_familia_productos');
@@ -268,10 +164,6 @@
     // const boton_automatico = document.getElementById('boton_automatico');
     // boton_automatico.click();
   }
-
 </script>
-
-
-
   </body>
 </html>
