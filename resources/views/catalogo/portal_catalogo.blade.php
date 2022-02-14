@@ -202,7 +202,13 @@
   //Actualizar número seleccionado
   const page_items = pagination.getElementsByClassName('page-item');
   var url = window.location.href;
-  var actual_page = url.replace('http://rafawoods.test/catalogo?page=','');
+  var actual_page;
+  if(url == 'http://rafawoods.test/catalogo'){
+    actual_page = 1;
+  }else{
+    actual_page = url.replace('http://rafawoods.test/catalogo?page=','');
+  }
+
 
   //Se setea activo el botón nuevo
   for(let i = 0;i<page_items.length;i++){

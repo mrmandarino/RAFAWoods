@@ -165,6 +165,16 @@
   echo "var familia_js = ". $js_array . ";\n";
   ?>
 
+  // var aux_url = `http://rafawoods.test/catalogo/${familia_js}`;
+  // if(window.location.href == aux_url)
+  // {
+  //   var content = `http://rafawoods.test/catalogo/${familia_js}?page=1`
+  //   window.location.href = content;
+  // }
+
+  
+  
+
   const pagination = document.getElementById('paginacion');
   var division = Math.ceil(cantidad_productos_js/cantidad_productos_pag_js);//Calculando cantidad de páginas
 
@@ -207,7 +217,13 @@
   //Actualizar número seleccionado
   const page_items = pagination.getElementsByClassName('page-item');
   var url = window.location.href;
-  var actual_page = url.replace('http://rafawoods.test/catalogo/'+familia_js+'?page=','');
+  var actual_page;
+  if(url == ('http://rafawoods.test/catalogo/'+familia_js))
+  {
+    actual_page = 1;
+  }else{
+    actual_page = url.replace('http://rafawoods.test/catalogo/'+familia_js+'?page=','');
+  } 
 
   //Se setea activo el botón nuevo
   for(let i = 0;i<page_items.length;i++){
