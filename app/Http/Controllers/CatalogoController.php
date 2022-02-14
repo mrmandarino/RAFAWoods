@@ -18,10 +18,26 @@ class CatalogoController extends Controller
         $cantidad_productos_pag = 6;
         $productos = DB::table('productos')->paginate($cantidad_productos_pag);
         $imagenes = DB::table('imagens')->get();
-        $cantidad_productos = DB::table('productos')->count();
         $productos_en_stock = DB::table('localizacions')->get();
         $productos_familia = Producto::distinct()->get('familia');
-        return view('catalogo.portal_catalogo',compact('productos','imagenes','cantidad_productos','cantidad_productos_pag','productos_en_stock','productos_familia'));
+        return view('catalogo.portal_catalogo',compact('productos','imagenes','cantidad_productos_pag','productos_en_stock','productos_familia'));
+    }
+
+    public function intermedio(Request $request)
+    {
+        $familia = $request->input_hidden;
+        return redirect()->route('ver_catalogo_por_familia',['familia'=>$familia]);
+        // compact('productos','imagenes','cantidad_productos_pag','productos_en_stock','productos_familia','familia')
+    }
+
+    public function index_por_familia($familia)
+    {
+        $cantidad_productos_pag = 6;
+        $productos = DB::table('productos')->where('familia', $familia)->paginate($cantidad_productos_pag);
+        $imagenes = DB::table('imagens')->get();
+        $productos_en_stock = DB::table('localizacions')->get();
+        $productos_familia = Producto::distinct()->get('familia');
+        return view('catalogo.catalogo_por_familia', compact('productos','imagenes','productos_en_stock','productos_familia','cantidad_productos_pag','familia'));
     }
 
     /**

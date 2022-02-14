@@ -50,7 +50,8 @@ Route::resource('ventas',VentaController::class);
 
 //Catálogo
 Route::get('/catalogo',[CatalogoController::class,'index'])->name('ver_catalogo');
-
+Route::get('/catalogo/intermedio',[CatalogoController::class,'intermedio'])->name('ver_catalogo_intermedio');
+Route::get('/catalogo/{familia}',[CatalogoController::class,'index_por_familia'])->name('ver_catalogo_por_familia');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/visualizar/{tabla}',[AdminController::class, 'index'])->name('admin_visualizar_especifico');

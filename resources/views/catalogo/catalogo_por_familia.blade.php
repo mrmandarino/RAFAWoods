@@ -160,6 +160,11 @@
   echo "var cantidad_productos_pag_js = ". $js_array . ";\n";
   ?>
 
+  <?php
+  $js_array = json_encode($familia);
+  echo "var familia_js = ". $js_array . ";\n";
+  ?>
+
   const pagination = document.getElementById('paginacion');
   var division = Math.ceil(cantidad_productos_js/cantidad_productos_pag_js);//Calculando cantidad de páginas
 
@@ -181,7 +186,7 @@
     var new_boton_numero = document.createElement('li'); 
     new_boton_numero.setAttribute('class','page-item');
     var new_boton_numero_content = `
-    <a id="link_numerico" class="page-link" href="http://rafawoods.test/catalogo?page=${numero_pagina}">${numero_pagina}</a>
+    <a id="link_numerico" class="page-link" href="http://rafawoods.test/catalogo/${familia_js}?page=${numero_pagina}">${numero_pagina}</a>
     `;
     new_boton_numero.innerHTML = new_boton_numero_content;
     pagination.append(new_boton_numero);
@@ -202,7 +207,7 @@
   //Actualizar número seleccionado
   const page_items = pagination.getElementsByClassName('page-item');
   var url = window.location.href;
-  var actual_page = url.replace('http://rafawoods.test/catalogo?page=','');
+  var actual_page = url.replace('http://rafawoods.test/catalogo/'+familia_js+'?page=','');
 
   //Se setea activo el botón nuevo
   for(let i = 0;i<page_items.length;i++){
@@ -228,8 +233,8 @@
   let actual_page_int = parseInt(actual_page);
   const boton_anterior_link = document.getElementById('link_anterior');
   const boton_siguiente_link = document.getElementById('link_siguiente');
-  boton_anterior_link.setAttribute('href','http://rafawoods.test/catalogo?page='+(actual_page_int-1));
-  boton_siguiente_link.setAttribute('href','http://rafawoods.test/catalogo?page='+(actual_page_int+1));
+  boton_anterior_link.setAttribute('href','http://rafawoods.test/catalogo/'+familia_js+'?page='+(actual_page_int-1));
+  boton_siguiente_link.setAttribute('href','http://rafawoods.test/catalogo/'+familia_js+'?page='+(actual_page_int+1));
 </script>
 
 <script>
@@ -242,7 +247,6 @@
     const input_hidden = document.getElementById('input_hidden');
     const familia_datalist = familia_seleccionada.value;
     input_hidden.value = familia_datalist;
-    // form_input_hidden.setAttribute('action',ruta);
 
     // //Click automatico de datalist
     // const boton_automatico = document.getElementById('boton_automatico');
