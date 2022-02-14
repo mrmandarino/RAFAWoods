@@ -9,8 +9,7 @@
     
     
     <title>Gráficos</title>
-    
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>
   <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>

@@ -4,9 +4,12 @@
 
 
 <div class="container">
-    <h1 class="text-center">Rendimiento en ventas</h1>
-    <h5 class="text-center">semana del año: {{$year}} mes: {{$month}} día: {{$day}}</h5>
-    <input type="text" class="visually-hidden" id="hidden" value="{{$datos_json}}">
+    <div class="div mt-2">
+
+        <h4 class="text-center">Semana del año: {{$year}} mes: {{$month}} día: {{$day}}</h4>
+        <h5 class="text-center">Venta total de la semana: ${{$total_semana_separador}}</h5>
+        <input type="text" class="visually-hidden" id="hidden" value="{{$datos_json}}">
+    </div>
     <div>
         <canvas id="myChart"></canvas>
     </div>

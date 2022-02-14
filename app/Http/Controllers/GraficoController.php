@@ -15,12 +15,7 @@ class GraficoController extends Controller
     */
     public function index()
     {
-        $current_year = date("Y");
-        $year_m1 = strval($current_year - 1);
-        $year_m2 = strval($current_year - 2);
-        $year_m3 = strval($current_year - 3);
-        $year_m4 = strval($current_year - 4);
-        $years_arr = [$current_year, $year_m1, $year_m2, $year_m3, $year_m4];
+        
 
         return view('graficos.eleccion_fecha');
 
@@ -54,7 +49,7 @@ class GraficoController extends Controller
             //data del mes 
             return view('graficos.graficos_mes');
         } 
-        else {
+        else {//grafico mes
             
             //fecha recibida desde graficos.eleccion_fecha
             $input_fecha = $request->input_fecha;
@@ -92,22 +87,23 @@ class GraficoController extends Controller
             $big_mama = [];       
             $num_dias = [];
             $ventas_totales = [];
-                    
+            $total_semana = 0;        
             
             for ($i=0; $i < 7; $i++) { 
                 
                 $num_dias[$dias[$i]] = $numeros_semana[$i]; 
                 $ventas_totales[$dias[$i]] = DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta'); 
-                
+                $total_semana = $total_semana + DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta'); 
             }
             
             $big_mama['num_dias'] = $num_dias;
             $big_mama['ventas_totales'] = $ventas_totales;
+            $total_semana_separador = number_format($total_semana, 0, ',', '.');
 
-            //dd($big_mama);
+            //dd($total_semana_separador);
      
             $datos_json = json_encode($big_mama);
-            return view('graficos.graficos_semana',compact('datos_json','year','month','day'));
+            return view('graficos.graficos_semana',compact('datos_json','year','month','day','total_semana_separador'));
         }
     }
 }
