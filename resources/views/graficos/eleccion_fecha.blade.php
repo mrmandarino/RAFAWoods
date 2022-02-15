@@ -41,7 +41,7 @@
                                 <div class="row">
                                     <div class="col">
 
-                                        <h6 data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltip on left">Fecha:</h6>
+                                        <h6 data-bs-toggle="tooltip" data-bs-placement="left" title="Elija una fecha para generar un gráfico. Independiente del tipo de gráfico, debe elegir un día, ya sea de la semana que desea ver, del mes o del año.">Fecha:</h6>
                                         <input type="text" class="form-control date mandarino-date" id="input_fecha"
                                             name="input_fecha" required>
 
@@ -93,7 +93,12 @@
 
 
 </div>
-
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 <script type="text/javascript">
     $('.mandarino-date').datepicker({
     weekStart: 1,
