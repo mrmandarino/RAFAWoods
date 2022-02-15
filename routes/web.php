@@ -40,8 +40,11 @@ Route::get('/ayudameme', function () {
 
 
 //Graficos
-Route::get('/graficos', [GraficoController::class,'index'])->name('graficos');
-Route::get('/graficos/rendimiento', [GraficoController::class,'redireccion'])->name('redireccion');
+Route::get('graficos', [GraficoController::class,'index'])->name('graficos');
+Route::get('/graficos/redireccion', [GraficoController::class,'redireccion'])->name('redireccion');
+Route::get('/graficos/grafico_anual/{ano}', [GraficoController::class,'grafico_anual'])->name('grafico_anual');
+Route::get('/graficos/grafico_mes/{fecha_mes}', [GraficoController::class,'grafico_mes'])->name('grafico_mes');
+Route::get('/graficos/grafico_semana/{fecha_semana}', [GraficoController::class,'grafico_semana'])->name('grafico_semana');
 
 //las conexiones estan listas, falta validaciones varias
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino

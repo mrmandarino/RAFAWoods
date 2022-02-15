@@ -50,7 +50,7 @@
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="tipo_grafico"
                                                     id="radio_ano" value="grafico_ano" required>
-                                                <label class="form-check-label" for="radio_ano">Gráfico del año</label>
+                                                <label class="form-check-label" for="radio_ano" >Gráfico del año</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="tipo_grafico"
@@ -72,7 +72,7 @@
                         </div>
                         
                             <div class="col-md-3 text-center">
-                                <button type="submit" class="btn btn-primary" style="justify-self: center;width: 130px">Ir a gráfico</button>
+                                <button type="submit" class="btn btn-primary text-center">Ir a gráfico</button>
 
                             </div>
                             
@@ -104,51 +104,6 @@
     });
 </script>
 
-<script type="text/javascript">
-    var boton_mes = document.getElementById('check_mes');
-    var boton_semana = document.getElementById('check_semana');
-    function click_check_mes(){
-        
-        boton_mes.click();
-        boton_semana.click();
-    }
-    function click_check_semana(){
-        
-        //boton_semana.click();
-        boton_mes.click();
-    }
-</script>
-
-
-<script type="text/javascript">
-    var input_semana = document.getElementById('tipo_grafico');
-
-    var boton_mes = document.getElementById('check_mes');
-    var boton_semana = document.getElementById('check_semana');
-    console.log(input_semana.value);
-
-    function cambiar_estado(){
-
-        if(input_semana.value == 0){//input semana = grafico mes
-            
-            boton_semana.click();
-            boton_mes.click();
-            input_semana.value=1; 
-            
-            console.log(input_semana.value);
-            
-        }
-        else{
-            boton_mes.click();
-            boton_semana.click();
-            input_semana.value=0; 
-            
-            console.log(input_semana.value);
-            
-        }
-        
-    }
-</script>
 
 
 @endsection

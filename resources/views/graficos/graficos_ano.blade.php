@@ -4,9 +4,12 @@
 
 
 <div class="container">
-    <h1 class="text-center">Rendimiento en ventas</h1>
-    <h5 class="text-center">año: {{$year}}</h5>
-    <input type="text" class="visually-hidden" id="hidden" value="{{$datos_json}}">
+    <div class="div mt-2">
+
+        <h4 class="text-center">Año: {{$ano}}</h4>
+        <h5 class="text-center">Venta total del año: ${{$total_ano_separador}}</h5>
+        <input type="text" class="visually-hidden" id="hidden_ano" value="{{$datos_json}}">
+    </div>
     <div>
         <canvas id="myChart"></canvas>
     </div>
@@ -14,65 +17,42 @@
 </div>
 
 <script>
-    var input_hidden = document.getElementById('hidden');
+    var input_hidden = document.getElementById('hidden_ano');
     var datos_json_str = input_hidden.value;
     var datos_json_obj = JSON.parse(input_hidden.value);
-   
-    
-    
+    console.log(datos_json_obj);
 </script>
 
 <script>
     const labels = [
-    'Lunes '+datos_json_obj.num_dias.lunes,
-    'Martes '+datos_json_obj.num_dias.martes,
-    'Miercoles '+datos_json_obj.num_dias.miercoles,
-    'Jueves '+datos_json_obj.num_dias.jueves,
-    'Viernes '+datos_json_obj.num_dias.viernes,
-    'Sábado '+datos_json_obj.num_dias.sabado,
-    'Domingo '+datos_json_obj.num_dias.domingo,
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
     ];
 
     const data = {
     labels: labels,
     datasets: [{
         label: 'Total de ventas por día',
-        data: [datos_json_obj.ventas_totales.lunes, datos_json_obj.ventas_totales.martes, datos_json_obj.ventas_totales.miercoles, datos_json_obj.ventas_totales.jueves, datos_json_obj.ventas_totales.viernes, datos_json_obj.ventas_totales.sabado, datos_json_obj.ventas_totales.domingo],
-        backgroundColor: [
-        
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(54, 162, 235, 0.2)'
-        
-        ],
-        borderColor: [
-        'rgb(54, 162, 235)',
-        'rgb(54, 162, 235)',
-        'rgb(54, 162, 235)',
-        'rgb(54, 162, 235)',
-        'rgb(54, 162, 235)',
-        'rgb(54, 162, 235)',
-        'rgb(54, 162, 235)'
-        
-        ],
-        borderWidth: 1
+        data: datos_json_obj.ventas_totales,
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.2
     }]
     };
 
     const config = {
-    type: 'bar',
+    type: 'line',
     data: data,
-    options: {
-        scales: {
-        y: {
-            beginAtZero: true
-        }
-        }
-    },
     };
 </script>
 
