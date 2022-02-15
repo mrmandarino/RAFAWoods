@@ -13,6 +13,9 @@ class CatalogoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+     //Redireccionamiento a catalogo principal
     public function index()
     {
         $cantidad_productos_pag = 6;
@@ -20,16 +23,22 @@ class CatalogoController extends Controller
         $imagenes = DB::table('imagens')->get();
         $productos_en_stock = DB::table('localizacions')->get();
         $productos_familia = Producto::distinct()->get('familia');
-        return view('catalogo.portal_catalogo',compact('productos','imagenes','cantidad_productos_pag','productos_en_stock','productos_familia'));
+        $productos_totales = DB::table('productos')->get();
+        return view('catalogo.portal_catalogo',compact('productos','imagenes','cantidad_productos_pag','productos_en_stock','productos_familia','productos_totales'));
     }
 
+    //Redireccionamiento intermedio para filtro por familia
     public function intermedio(Request $request)
     {
         $familia = $request->input_hidden;
+        if($familia == "Todos los productos")
+        {
+            return redirect()->route('ver_catalogo');
+        }
         return redirect()->route('ver_catalogo_por_familia',['familia'=>$familia]);
-        // compact('productos','imagenes','cantidad_productos_pag','productos_en_stock','productos_familia','familia')
     }
 
+    //Redireccionamiento a catalogo filtrado por familia
     public function index_por_familia($familia)
     {
         $cantidad_productos_pag = 6;
@@ -37,7 +46,19 @@ class CatalogoController extends Controller
         $imagenes = DB::table('imagens')->get();
         $productos_en_stock = DB::table('localizacions')->get();
         $productos_familia = Producto::distinct()->get('familia');
-        return view('catalogo.catalogo_por_familia', compact('productos','imagenes','productos_en_stock','productos_familia','cantidad_productos_pag','familia'));
+        $productos_totales = DB::table('productos')->get();
+        return view('catalogo.catalogo_por_familia', compact('productos','imagenes','cantidad_productos_pag','productos_en_stock','productos_familia','productos_totales'));
+    }
+
+    public function intermedio_producto(Request $request)
+    {
+        $nombre_producto = $request->input_hidden_producto;
+        return redirect()->route('ver_detalle_producto',['nombre_producto'=>$nombre_producto]);
+    }
+
+    public function detalle_producto($nombre_producto)
+    {
+        dd($nombre_producto);
     }
 
     /**
