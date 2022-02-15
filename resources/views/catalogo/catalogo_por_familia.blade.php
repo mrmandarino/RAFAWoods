@@ -55,6 +55,31 @@
         width: 30px;
         height: 48px;
       }
+
+      .ajustarderecho {  
+      position: absolute;  
+        top: 20%;
+        bottom: 80%;
+        left: 85%;
+        right: 50%;
+      }
+
+      .ajustarizquierdo {  
+        position: absolute;  
+        top: 20%;
+        bottom: 80%;
+        left: 0%;
+        right: 0%;
+      }
+      
+      .ajustaranteprimas{
+        position: absolute;  
+        top: 50%;
+        bottom: 50%;
+        left: 50%;
+        right: 50%;
+      }
+
     </style>
 
     
@@ -185,7 +210,7 @@
                         id='carouselExampleIndicators'
                         class='carousel slide'
                         data-bs-ride='carousel'>
-                      <ol class='carousel-indicators'>
+                      <ol class='carousel-indicators '>
                         @php
                           $contador_aux = 0;
                           for($i = 0;$i<$imagenes->count();$i++){
@@ -197,7 +222,7 @@
                         @for ($j = 0;$j<$contador_aux;$j++)
                         @if($j<=0)
                           <li
-                          data-bs-target='#carouselExampleIndicators'
+                          data-bs-target='#carouselExampleIndicators '
                           data-bs-slide-to= {{$j}}
                           class='active'
                           ></li>
@@ -239,7 +264,7 @@
                         @endforeach
                       </div>
                       <a
-                        class='carousel-control-prev'
+                        class='carousel-control-prev ajustarizquierdo'
                         href='#carouselExampleIndicators'
                         role='button'
                         data-bs-slide='prev'
@@ -250,7 +275,7 @@
                         <span class='sr-only'></span>
                       </a>
                       <a
-                        class='carousel-control-next'
+                        class='carousel-control-next ajustarderecho'
                         href='#carouselExampleIndicators'
                         role='button'
                         data-bs-slide='next'
@@ -263,7 +288,7 @@
                       </a>
                       
                         {{-- Información sobre el detalle del producto --}}
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label></b>
                         <input type="text" value="{{$producto->nombre}}" style="background-color:white" class="form-control" name="nombre" id="nombre" readonly></b>
                         <b><label for="recipient-name" class="col-form-label" style="color:black">Descripción</label></b>
                         <input type="text" value="{{$producto->descripcion}}" style="background-color:white" class="form-control" name="descripcion" id="descripcion" readonly>

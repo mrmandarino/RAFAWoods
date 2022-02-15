@@ -58,7 +58,21 @@ class CatalogoController extends Controller
 
     public function detalle_producto($nombre_producto)
     {
-        dd($nombre_producto);
+        //productos para datalists de búsqueda
+        $cantidad_productos_pag = 6;
+        $productos = DB::table('productos')->paginate($cantidad_productos_pag);
+        $imagenes = DB::table('imagens')->get();
+        $productos_en_stock = DB::table('localizacions')->get();
+        $productos_familia = Producto::distinct()->get('familia');
+        $productos_totales = DB::table('productos')->get();
+
+        //Producto en particular
+        $producto = DB::table('productos')->where('nombre',$nombre_producto)->first();
+        $familia = $producto->familia;
+        $familia_fixed = EjecutivoController::detectar_nombre($familia);
+        $producto_en_stock = DB::table('localizacions')->where('producto_id',$producto->id)->first();
+        $producto_en_tabla = DB::table($familia_fixed)->where('producto_id',$producto->id)->first();
+        return view('catalogo.detalle_producto',['producto'=>$producto,'producto_en_tabla'=>$producto_en_tabla,'producto_en_stock'=>$producto_en_stock,'productos'=>$productos,'imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_en_stock'=>$productos_en_stock,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales]);
     }
 
     /**
