@@ -151,11 +151,30 @@
       </div>
     </form>
 
-    <form method="GET" action="{{route('ver_filtro_intermedio',$familia)}}">
-    @csrf
-      <button name="action" value="filtrar_precio" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por precio</button>
-      <button name="action" value="filtrar_alfabetico" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por orden alfabético</button>
-    </form>
+          {{-- Filtro por precio --}}
+      <div class="input-group mb-3">
+        <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar por precio</label>
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a name="tipo_filtro" id="tipo_filtro" value="ascendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_precio"])}}">Ascendente</a></li>
+          <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_precio"])}}">Descendente</a></li>
+        </ul>
+      </div>
+
+
+      {{-- Filtro por alfabeto --}}
+      <div class="input-group mb-3">
+        <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar alfabéticamente</label>
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a name="tipo_filtro" id="tipo_filtro" value="ascendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_alfb"])}}">Ascendente</a></li>
+          <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_alfb"])}}">Descendente</a></li>
+        </ul>
+      </div>
 
   </section>
 

@@ -153,13 +153,6 @@
     
   </section>
 
-  <form method="GET" action="{{route('ver_filtro_intermedio')}}">
-    @csrf
-    <button name="action" value="filtrar_precio" type="submit" class="btn btn-sm btn-outline-secondary" disabled>Filtrar por precio</button>
-    <button name="action" value="filtrar_alfabetico" type="submit" class="btn btn-sm btn-outline-secondary" disabled>Filtrar por orden alfabético</button>
-  </form>
-</section>
-
 
   {{-- Catalogo de productos --}}
   <div class="album py-5 bg-light" onload="carga_datos()">

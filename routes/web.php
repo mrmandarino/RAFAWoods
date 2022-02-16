@@ -52,7 +52,7 @@ Route::resource('ventas',VentaController::class);
 Route::get('/catalogo',[CatalogoController::class,'index'])->name('ver_catalogo');
 Route::get('/catalogo/intermedio',[CatalogoController::class,'intermedio'])->name('ver_catalogo_intermedio');
 Route::get('catalogo/intermedio/producto',[CatalogoController::class,'intermedio_producto'])->name('ver_producto_intermedio');
-Route::get('/catalogo/intermedio/filtrar/{tipo_filtro}',[CatalogoController::class,'intermedio_filtro'])->name('ver_filtro_intermedio');
+Route::get('/catalogo/intermedio/filtrar/{familia}/{tipo_filtro}',[CatalogoController::class,'intermedio_filtro'])->name('ver_filtro_intermedio');
 Route::get('/catalogo/{familia}',[CatalogoController::class,'index_por_familia'])->name('ver_catalogo_por_familia');
 Route::get('/catalogo/detalle_producto/{nombre_producto}',[CatalogoController::class,'detalle_producto'])->name('ver_detalle_producto');
 Route::get('/catalogo/filtrar/{tipo_filtro}/{familia}',[CatalogoController::class,'index_filtro'])->name('ver_catalogo_filtrado');
