@@ -121,6 +121,15 @@ class AdminController extends Controller
         if ($tabla=='usuarios') {
             $request->validate([
                 'rut' => ['required','cl_rut','unique:users'],
+            ]);
+            $rut_normalizado = Rut::parse($request->rut)->normalize();
+            $comprobacion = User::find($rut_normalizado);
+            if ($comprobacion != null){ 
+                $request->validate([
+                    'duplicado' => ['integer'],
+                ]);
+            }
+            $request->validate([
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -128,7 +137,7 @@ class AdminController extends Controller
                 'tipo_usuario' => ['required','integer'],
                 'telefono' => ['nullable'],
             ]);
-            $rut_normalizado = Rut::parse($request->rut)->normalize();
+            
             $nuevo_dato = new User();
             $nuevo_dato->rut = $rut_normalizado;
             $nuevo_dato->nombre = $request->get('nombre');
@@ -160,13 +169,22 @@ class AdminController extends Controller
         }elseif ($tabla=='clientes') {
             $request->validate([
                 'rut' => ['required','cl_rut','unique:users'],
+            ]);
+            $rut_normalizado = Rut::parse($request->rut)->normalize();
+            $comprobacion = User::find($rut_normalizado);
+            if ($comprobacion != null){ 
+                $request->validate([
+                    'duplicado' => ['integer'],
+                ]);
+            }
+            $request->validate([
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'min:8', 'max:16',Rules\Password::defaults()],
                 'telefono' => ['nullable'],
             ]);
-            $rut_normalizado = Rut::parse($request->rut)->normalize();
+            
             $nuevo_dato = new User();
             $nuevo_dato->rut = $rut_normalizado;
             $nuevo_dato->nombre = $request->get('nombre');
@@ -187,6 +205,15 @@ class AdminController extends Controller
         }elseif ($tabla=='trabajadores') {
             $request->validate([
                 'rut' => ['required','cl_rut','unique:users'],
+            ]);
+            $rut_normalizado = Rut::parse($request->rut)->normalize();
+            $comprobacion = User::find($rut_normalizado);
+            if ($comprobacion != null){ 
+                $request->validate([
+                    'duplicado' => ['integer'],
+                ]);
+            }
+            $request->validate([
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -194,7 +221,7 @@ class AdminController extends Controller
                 'tipo_trabajador' => ['required'],
                 'sucursal_id' => ['required'],
             ]);
-            $rut_normalizado = Rut::parse($request->rut)->normalize();
+           
             $nuevo_dato = new User();
             $nuevo_dato->rut = $rut_normalizado;
             $nuevo_dato->nombre = $request->get('nombre');
@@ -310,18 +337,25 @@ class AdminController extends Controller
 
             $datos=DB::table('techumbres')->get();
 
-        }elseif ($tabla=='proveedores') {;
+        }elseif ($tabla=='proveedores') {
             $request->validate([
                 'rut' => ['required','cl_rut','unique:proveedors'],
-                'nombre' => ['required', 'string', 'max:255'],
+            ]);
+            $rut_normalizado = Rut::parse($request->rut)->normalize();
+            $comprobacion = Proveedor::find($rut_normalizado);
+            if ($comprobacion != null){ 
+                $request->validate([
+                    'duplicado' => ['integer'],
+                ]);
+            }
+            $request->validate([
                 'razon_social' => ['required','string','max:255'],
                 'correo' => ['required', 'string', 'email', 'max:255', 'unique:proveedors'],
                 'ubicacion' => ['required','string','max:255'],
             ]);
+            
             $nuevo_dato = new Proveedor();
-            $rut_normalizado = Rut::parse($request->rut)->normalize();
             $nuevo_dato->rut = $rut_normalizado;
-            $nuevo_dato->nombre = $request->get('nombre');
             $nuevo_dato->razon_social = $request->get('razon_social');
             $nuevo_dato->correo = $request->get('correo');
             $nuevo_dato->ubicacion = $request->get('ubicacion');
@@ -531,10 +565,18 @@ class AdminController extends Controller
 
         }elseif ($tabla=='sucursal_producto') { 
             $request->validate([
-                'sucursal_id' => ['required'],
                 'producto_id' => ['required'],
+            ]);
+            $existe_producto=Producto::find($request->get('producto_id'));
+            if($existe_producto == null){ 
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                ]);
+            }
+            $request->validate([
+                'sucursal_id' => ['required'],
                 'stock' => ['required', 'integer', 'gte:1'],
-                'precio_Venta' => ['required','integer', 'gte:0'],
+                'precio_compra' => ['required','integer', 'gte:0'],
             ]);
             $existencia=DB::table('localizacions')->where('sucursal_id',$request->get('sucursal_id'))->where('producto_id',$request->get('producto_id'))->first();
             if($existencia != null){ 
@@ -543,8 +585,11 @@ class AdminController extends Controller
                     'producto_id' => ['unique:localizacions'],
                 ]);
             }
+            $precio_venta_bruto=$request->get('precio_compra')/0.85;
+            $resto=$precio_venta_bruto%100;
+            $precio_venta= $precio_venta_bruto - $resto;
             
-            DB::insert('insert into localizacions (sucursal_id, producto_id, stock, precio_Venta, created_at, updated_at) values (?, ?, ?, ?, ?, ?)', [$request->get('sucursal_id'),$request->get('producto_id'),$request->get('stock'),$request->get('precio_Venta'),date("Y-m-d H:i:s"),date("Y-m-d H:i:s")]);
+            DB::insert('insert into localizacions (sucursal_id, producto_id, stock, precio_compra, precio_venta, created_at, updated_at) values (?, ?, ?, ?, ?, ?,?)', [$request->get('sucursal_id'),$request->get('producto_id'),$request->get('stock'),$request->get('precio_compra'),round($precio_venta),date("Y-m-d H:i:s"),date("Y-m-d H:i:s")]);
             $datos=DB::table('localizacions')->get();
 
         }elseif ($tabla=='inventarios') {
@@ -559,14 +604,23 @@ class AdminController extends Controller
 
         }elseif ($tabla=='fotos') { //dudas
             $request->validate([
-                'url' => ['required','string','max:255'],
                 'imagenable_id' => ['required', 'integer'],
-                'imanegable_tipo' => ['required','string','max:255'],
+            ]);
+            $existe_producto=Producto::find($request->get('imagenable_id'));
+            if($existe_producto == null){ 
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                ]);
+            }
+            $request->validate([
+                'url' => ['required','string','max:255'],
+                // 'imanegable_tipo' => ['required','string','max:255'],
             ]);
             $nuevo_dato = new Imagen();
             $nuevo_dato->url = $request->get('url');
             $nuevo_dato->imagenable_id = $request->get('imagenable_id');
-            $nuevo_dato->imagenable_tipo = $request->get('imagenable_tipo');
+            // $nuevo_dato->imagenable_tipo = $request->get('imagenable_tipo');
+            $nuevo_dato->imagenable_tipo = 'App\Models\Producto';
             $nuevo_dato->save();
 
             $datos=DB::table('imagens')->get();
@@ -591,9 +645,17 @@ class AdminController extends Controller
 
         }elseif ($tabla=='detalle_ventas') { 
             $request->validate([
+                'producto_id' => ['required'],
+            ]);
+            $existe_producto=Producto::find($request->get('producto_id'));
+            if($existe_producto == null){ 
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                ]);
+            }
+            $request->validate([
                 'cantidad' => ['required', 'integer', 'gte:1'],
                 'venta_id' => ['required'],
-                'producto_id' => ['required'],
             ]);
             $existencia=DB::table('detalle_ventas')->where('venta_id',$request->get('venta_id'))->where('producto_id',$request->get('producto_id'))->first();
             if($existencia != null){ 
@@ -618,6 +680,7 @@ class AdminController extends Controller
             $nuevo_dato->producto_id = $request->get('producto_id');
             $nuevo_dato->venta_id = $request->get('venta_id');
             $precio=$inventario->value('precio_venta');
+            $precio_compra=$inventario->value('precio_compra');
             $valor_total=$precio * $nuevo_dato->cantidad;
             $nuevo_dato->total_producto=$valor_total;
             $nuevo_dato->save();
@@ -629,6 +692,10 @@ class AdminController extends Controller
             //Actualizando tabla de ventas
             $valor_anterior=$Venta->total_venta;
             $valor_nuevo=$valor_total + $valor_anterior;
+            $utilidad_anterior=$Venta->utilidad_bruta;
+            $diferencia= $valor_total - ($precio_compra * $nuevo_dato->cantidad);
+            $utilidad_nueva=$utilidad_anterior + $diferencia;
+            $Venta->utilidad_bruta= $utilidad_nueva;
             $Venta->total_venta=$valor_nuevo;
             $Venta->save();
 
@@ -661,13 +728,31 @@ class AdminController extends Controller
 
         }elseif ($tabla=='detalle_compras') {
             $request->validate([
+                'producto_id' => ['required'],
+                'oc_id' => ['required'],
+            ]);
+            $existe_producto=Producto::find($request->get('producto_id'));
+            $existe_orden=Orden_compra::find($request->get('oc_id'));
+            if($existe_producto == null && $existe_orden == null){ 
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                    'existe_orden' => ['integer'],
+                ]);
+            }elseif($existe_producto != null && $existe_orden == null){ 
+                $request->validate([
+                    'existe_orden' => ['integer'],
+                ]);
+            }elseif($existe_producto == null && $existe_orden != null){
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                ]);
+            }
+            $request->validate([
                 'nivel_calidad' => ['required'],
                 'cantidad' => ['required','numeric', 'gt:0'],
-                'precio_unitario' => ['required','numeric'],
-                'oc_id' => ['required'],
-                'producto_id' => ['required'],
+                'precio_unitario' => ['required','numeric'],  
             ]);
-
+            
             $existencia=DB::table('detalle_compras')->where('oc_id',$request->get('oc_id'))->where('producto_id',$request->get('producto_id'))->first();
             if($existencia != null){ 
                 $request->validate([
@@ -683,7 +768,7 @@ class AdminController extends Controller
             $nuevo_dato->cantidad = $request->get('cantidad');
             $nuevo_dato->precio_unitario = $request->get('precio_unitario');
             $nuevo_dato->total = $nuevo_dato->precio_unitario * $nuevo_dato->cantidad;
-            $nuevo_dato->save();
+            
 
             //Actualizando tabla de ventas
             $Compra=Orden_compra::find($request->get('oc_id'));
@@ -694,11 +779,21 @@ class AdminController extends Controller
             
             //Actualizando tabla localizacions (stock)
             $inventario=DB::table('localizacions')->where('sucursal_id',$sucursal)->where('producto_id',$nuevo_dato->producto_id);
-            $stock_anterior=$inventario->value('stock');
-            $stock_nuevo=$stock_anterior + $nuevo_dato->cantidad;
-            $inventario->update(['stock' => $stock_nuevo]);
+            
+            if($inventario->first() != null){
+                $stock_anterior=$inventario->value('stock');
+                $stock_nuevo=$stock_anterior + $nuevo_dato->cantidad;
+                $inventario->update(['stock' => $stock_nuevo]);
+            }else{
+                $precio_venta_bruto=$request->get('precio_unitario')/0.85;
+                $resto=$precio_venta_bruto%100;
+                $precio_venta= $precio_venta_bruto - $resto;
+                //dd(round($precio_venta));
+                DB::insert('insert into localizacions (sucursal_id, producto_id, stock, precio_compra, precio_venta, created_at, updated_at) values (?, ?, ?, ?, ?, ?,?)', [$sucursal,$request->get('producto_id'),$request->get('cantidad'),$request->get('precio_unitario'),round($precio_venta),date("Y-m-d H:i:s"),date("Y-m-d H:i:s")]);
+            }
+            
             $Compra->save();
-
+            $nuevo_dato->save();
             $datos=DB::table('detalle_compras')->get();
 
 
@@ -707,18 +802,20 @@ class AdminController extends Controller
             $request->validate([
                 'medio_de_pago' => ['required'],
                 'sucursal_id' => ['required'],
-                'cliente_rut' => ['required'],
                 'con_factura' => ['required'],
+                'cliente_rut' => ['required','cl_rut'],
+                'vendedor_rut' => ['required'],
             ]);
+            $rut_normalizado = Rut::parse($request->cliente_rut)->normalize();
             $nuevo_dato = new Venta();
             $nuevo_dato->sucursal_id = $request->get('sucursal_id');
-            $nuevo_dato->cliente_rut = $request->get('cliente_rut');
+            $nuevo_dato->cliente_rut = $rut_normalizado;
             $nuevo_dato->medio_de_pago = $request->get('medio_de_pago');
             $nuevo_dato->total_venta = 0;
+            $nuevo_dato->utilidad_bruta = 0;
             $nuevo_dato->con_factura = $request->get('con_factura');
-            
+            $nuevo_dato->vendedor_rut = $request->get('vendedor_rut');
             $nuevo_dato->save();
-
             $datos=DB::table('ventas')->get();
 
         }
@@ -793,6 +890,7 @@ class AdminController extends Controller
         
         if ($tabla=='usuarios') {
             $request->validate([
+                'rut' => ['required','cl_rut'],
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
                 'tipo_usuario' => ['required','integer'],
@@ -800,9 +898,12 @@ class AdminController extends Controller
             ]);
             $rut_normalizado = Rut::parse($request->rut)->normalize();
             if ($key != $rut_normalizado){
-                $request->validate([
-                    'rut' => ['required','cl_rut','unique:users'],
-                ]);
+                $comprobacion = User::find($rut_normalizado);
+                if ($comprobacion != null){ 
+                    $request->validate([
+                        'duplicado' => ['integer'],
+                    ]);
+                }
 
             };
             $actualizar=User::find($key);
@@ -951,15 +1052,18 @@ class AdminController extends Controller
             $datos=DB::table('techumbres')->get();
         }elseif ($tabla=='proveedores') {
             $request->validate([
-                'nombre' => ['required', 'string', 'max:255'],
+                'rut' => ['required','cl_rut'],
                 'razon_social' => ['required','string','max:255'],
                 'ubicacion' => ['required','string','max:255'],
             ]);
             $rut_normalizado = Rut::parse($request->rut)->normalize();
             if ($key != $rut_normalizado){
-                $request->validate([
-                    'rut' => ['required','cl_rut','unique:proveedors'],
-                ]);
+                $comprobacion = Proveedor::find($rut_normalizado);
+                if ($comprobacion != null){ 
+                    $request->validate([
+                        'duplicado' => ['integer'],
+                    ]);
+                }
 
             };
             $actualizar=Proveedor::find($key);
@@ -969,7 +1073,6 @@ class AdminController extends Controller
                 ]);
             }
             $actualizar->rut = $rut_normalizado;
-            $actualizar->nombre = $request->get('nombre');
             $actualizar->razon_social = $request->get('razon_social');
             $actualizar->correo = $request->get('correo');
             $actualizar->ubicacion = $request->get('ubicacion');
@@ -1262,11 +1365,14 @@ class AdminController extends Controller
                 'sucursal_id' => ['required'],
                 'producto_id' => ['required'],
                 'stock' => ['required', 'integer', 'gte:1'],
-                'precio_Venta' => ['required','integer', 'gte:0'],
+                'precio_compra' => ['required','integer', 'gte:0'],
             ]);
 
+            $precio_venta_bruto=$request->get('precio_compra')/0.85;
+            $resto=$precio_venta_bruto%100;
+            $precio_venta= $precio_venta_bruto - $resto;
             if ($key == $request->get('sucursal_id') && $key2 == $request->get('producto_id')){ // si se refiere al mismo registro
-                DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['stock' => $request->get('stock'),'precio_Venta' => $request->get('precio_Venta')]);
+                DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['stock' => $request->get('stock'),'precio_compra' => $request->get('precio_compra'), 'precio_venta' => round($precio_venta)]);
                 
             }else{
                 $existencia=DB::table('localizacions')->where('sucursal_id',$request->get('sucursal_id'))->where('producto_id',$request->get('producto_id'))->first();
@@ -1276,7 +1382,7 @@ class AdminController extends Controller
                         'producto_id' => ['unique:localizacions'],
                     ]);    
                 }
-                DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['sucursal_id' => $request->get('sucursal_id'),'producto_id' => $request->get('producto_id'),'stock' => $request->get('stock'),'precio_Venta' => $request->get('precio_Venta')]);    
+                DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->update(['sucursal_id' => $request->get('sucursal_id'),'producto_id' => $request->get('producto_id'),'stock' => $request->get('stock'),'precio_compra' => $request->get('precio_compra'), 'precio_venta' => round($precio_venta)]);    
             }
 
             $datos=DB::table('localizacions')->get();
@@ -1318,11 +1424,18 @@ class AdminController extends Controller
             $datos=DB::table('ejecutivos')->get();
         }elseif ($tabla=='detalle_ventas') {
             $request->validate([
-                'cantidad' => ['required', 'integer', 'gte:1'],
-                'venta_id' => ['required'],
                 'producto_id' => ['required'],
             ]);
-
+            $existe_producto=Producto::find($request->get('producto_id'));
+            if($existe_producto == null){ 
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                ]);
+            }
+            $request->validate([
+                'cantidad' => ['required', 'integer', 'gte:1'],
+                'venta_id' => ['required'],
+            ]);
             if ($key == $request->get('venta_id') && $key2 == $request->get('producto_id')){ // misma venta, mismo producto
                 
                 $Venta=Venta::find($key);
@@ -1332,6 +1445,8 @@ class AdminController extends Controller
                 $stock_anterior=$inventario->value('stock');
                 $cantidad_anterior=$registro_actual->value('cantidad');
                 $aux=$stock_anterior + $cantidad_anterior;
+
+               
                 
 
                 if($aux < $request->get('cantidad')){ 
@@ -1339,19 +1454,25 @@ class AdminController extends Controller
                         'supera_stock' => ['integer'],
                     ]);
                 }
-                
+            
                 //Valores pre-update
-                
                 $total_producto_anterior=$registro_actual->value('total_producto');
                 $stock_anterior=$inventario->value('stock');
                 $total_venta_anterior=$Venta->total_venta;
+
+                $utilidad_bruta_total_anterior=$Venta->utilidad_bruta;
+                $utilidad_bruta_anterior= $total_producto_anterior - ($cantidad_anterior * $inventario->value('precio_compra'));
 
                 //Valores post-update
                 $stock_nuevo=$stock_anterior + $cantidad_anterior - $request->get('cantidad');
                 $precio=$inventario->value('precio_venta');
                 $total_producto_actual=$request->get('cantidad') * $precio;
+
+                $utilidad_bruta_actual=$total_producto_actual - ($request->get('cantidad') * $inventario->value('precio_compra')) ;
+                
                 $total_venta_nuevo=$total_venta_anterior + $total_producto_actual - $total_producto_anterior;
                 $Venta->total_venta=$total_venta_nuevo;
+                $Venta->utilidad_bruta= $utilidad_bruta_total_anterior - $utilidad_bruta_anterior +  $utilidad_bruta_actual;
                 
                 //Guardar cambios
                 $inventario->update(['stock' => $stock_nuevo]);  
@@ -1416,10 +1537,17 @@ class AdminController extends Controller
                 $total_producto_anterior=$registro_actual->value('total_producto'); //114390
                 $total_venta_anterior=$Venta->total_venta; //total venta general
 
+                $utilidad_bruta_total_anterior=$Venta->utilidad_bruta;
+                $utilidad_bruta_anterior= $total_producto_anterior - ($cantidad_anterior * $inventario->value('precio_compra'));
+        
                 //Valores post-update
                 $stock_nuevo=$stock_anterior + $cantidad_anterior;
                 $total_venta_nuevo=$total_venta_anterior  - $total_producto_anterior;
+
+                $total_utilidad_bruta_nuevo= $utilidad_bruta_total_anterior -  $utilidad_bruta_anterior;
+
                 $Venta->total_venta=$total_venta_nuevo;
+                $Venta->utilidad_bruta= $total_utilidad_bruta_nuevo;
                 $inventario->update(['stock' => $stock_nuevo]);  
                 $Venta->save();
 
@@ -1431,6 +1559,12 @@ class AdminController extends Controller
                     $stock_after=$stock_before - $request->get('cantidad');
                     $total_venta_before=$Venta->total_venta;
                     $total_producto_agora=$request->get('cantidad') * $precio_nuevo_producto;
+
+                    $total_utilidad_bruta_before=$Venta->utilidad_bruta;
+                    $utilidad_bruta_agora=$total_producto_agora - ($request->get('cantidad') * $inventario_nuevo_producto->value('precio_compra'));
+                    $total_utilidad_bruta_after= $total_utilidad_bruta_before + $utilidad_bruta_agora;
+                    $Venta->utilidad_bruta=$total_utilidad_bruta_after;
+                    
                     $total_venta_after= $total_venta_before + $total_producto_agora; 
                     $Venta->total_venta=$total_venta_after;
                     $inventario_nuevo_producto->update(['stock' => $stock_after]);  
@@ -1446,13 +1580,18 @@ class AdminController extends Controller
                         $inventario=DB::table('localizacions')->where('producto_id',$key2)->where('sucursal_id',$nueva_sucursal);
                     }
                     $precio=$inventario->value('precio_venta');
-
                     $stock_before=$inventario->value('stock');
                     $stock_after=$stock_before - $request->get('cantidad');
                     $total_venta_before=$nueva_venta->total_venta;
                     $total_producto_agora=$request->get('cantidad') * $precio;
                     $total_venta_after= $total_venta_before + $total_producto_agora; 
                     $nueva_venta->total_venta=$total_venta_after;
+
+                    $total_utilidad_bruta_before=$nueva_venta->utilidad_bruta;
+                    $utilidad_bruta_agora=$total_producto_agora - ($request->get('cantidad') * $inventario->value('precio_compra'));
+                    $total_utilidad_bruta_after= $total_utilidad_bruta_before + $utilidad_bruta_agora;
+                    $nueva_venta->utilidad_bruta=$total_utilidad_bruta_after;
+
                     $inventario->update(['stock' => $stock_after]);  
                     $nueva_venta->save();
                     $registro_actual->update(['venta_id' => $request->get('venta_id'),'cantidad' => $request->get('cantidad'),'total_producto' => $total_producto_agora]);
@@ -1462,13 +1601,18 @@ class AdminController extends Controller
                      //Referente al "nuevo producto"
                      
                      $precio_nuevo_producto=$inventario_nuevo_producto->value('precio_venta');
-
                      $stock_before=$inventario_nuevo_producto->value('stock');
                      $stock_after=$stock_before - $request->get('cantidad');
                      $total_venta_before=$nueva_venta->total_venta;
                      $total_producto_agora=$request->get('cantidad') * $precio_nuevo_producto;
                      $total_venta_after= $total_venta_before + $total_producto_agora; 
                      $nueva_venta->total_venta=$total_venta_after;
+
+                     $total_utilidad_bruta_before=$nueva_venta->utilidad_bruta;
+                     $utilidad_bruta_agora=$total_producto_agora - ($request->get('cantidad') * $inventario_nuevo_producto->value('precio_compra'));
+                     $total_utilidad_bruta_after= $total_utilidad_bruta_before + $utilidad_bruta_agora;
+                     $nueva_venta->utilidad_bruta=$total_utilidad_bruta_after;
+
                      $inventario_nuevo_producto->update(['stock' => $stock_after]);  
                      $nueva_venta->save();
                      $registro_actual->update(['venta_id' => $request->get('venta_id'),'producto_id' => $request->get('producto_id'),'cantidad' => $request->get('cantidad'),'total_producto' => $total_producto_agora]);
@@ -1613,11 +1757,13 @@ class AdminController extends Controller
             $request->validate([
                 'sucursal_id' => ['required'],
                 'cliente_rut' => ['required'],
+                'vendedor_rut' => ['required'],
                 'medio_de_pago' => ['required'], 
                 'con_factura' => ['required'],
             ]);
             $actualizar=Venta::find($key);
             $actualizar->sucursal_id = $request->get('sucursal_id');
+            $actualizar->vendedor_rut = $request->get('vendedor_rut');
             $actualizar->cliente_rut = $request->get('cliente_rut');
             $actualizar->medio_de_pago = $request->get('medio_de_pago');
             $actualizar->con_factura = $request->get('con_factura');
@@ -1642,11 +1788,13 @@ class AdminController extends Controller
             $datos=DB::table('users')->get();
         }elseif ($tabla=='clientes') {
             $dato=User::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('clientes')->get();
         }elseif ($tabla=='trabajadores') {
             $dato=User::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('trabajadors')->get();
         }elseif ($tabla=='orden_compras') {
             $dato=Orden_Compra::find($key);
@@ -1670,14 +1818,16 @@ class AdminController extends Controller
             $datos=DB::table('transportes')->get();
         }elseif ($tabla=='tornillos') {  
             $dato=Producto::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('tornillos')->get();
         }elseif ($tabla=='telefono_proveedores') { 
             DB::table('telefono_proveedors')->where('proveedor_rut',$key)->where('telefono',$key2)->delete();
             $datos=DB::table('telefono_proveedors')->get();
         }elseif ($tabla=='techumbres') {
             $dato=Producto::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('techumbres')->get();
         }elseif ($tabla=='proveedores') {
             $dato=Proveedor::find($key);
@@ -1689,15 +1839,18 @@ class AdminController extends Controller
             $datos=DB::table('productos')->get();
         }elseif ($tabla=='planchas_construccion'){
             $dato=Producto::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('plancha_construccions')->get();
         }elseif ($tabla=='muebles') {
             $dato=Producto::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('muebles')->get();
         }elseif ($tabla=='maderas') {
             $dato=Producto::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('maderas')->get();
         }elseif ($tabla=='sucursal_producto') { 
             DB::table('localizacions')->where('sucursal_id',$key)->where('producto_id',$key2)->delete();
@@ -1716,12 +1869,17 @@ class AdminController extends Controller
             $datos=DB::table('ejecutivos')->get();
         }elseif ($tabla=='detalle_ventas') {
             $registro_actual=DB::table('detalle_ventas')->where('venta_id',$key)->where('producto_id',$key2);
-           
             //Actualizando tabla de ventas
             $Venta=Venta::find($key);
             $sucursal=$Venta->sucursal_id;
             $valor_anterior=$Venta->total_venta;
             $valor_nuevo=$valor_anterior - $registro_actual->value('total_producto');
+
+            $inventario=DB::table('localizacions')->where('sucursal_id',$sucursal)->where('producto_id',$key2);
+            $utilidad_anterior=$Venta->utilidad_bruta;
+            $utilidad_nueva= $utilidad_anterior - ($inventario->value('precio_compra') * $registro_actual->value('cantidad'));
+            $Venta->utilidad_bruta=$utilidad_nueva;
+
             $Venta->total_venta=$valor_nuevo;
             $Venta->save();
 
@@ -1735,7 +1893,8 @@ class AdminController extends Controller
 
         }elseif ($tabla=='clavos') {
             $dato=Producto::find($key);
-            $dato->delete();
+            $dato->estado="0";
+            $dato->save();
             $datos=DB::table('clavos')->get();
         }elseif ($tabla=='detalle_compras') { 
             $borrar=DB::table('detalle_compras')->where('oc_id',$key)->where('producto_id',$key2);

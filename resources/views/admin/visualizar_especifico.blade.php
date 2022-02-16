@@ -104,21 +104,24 @@
 			</thead>
 			<tbody>
 				@foreach ($datos as $cliente)
-					<tr>
-						<td> {{$cliente->usuario_rut}} </td>
-						<td> {{$cliente->telefono}} </td>
-						<td> {{$cliente->created_at}} </td>
-						<td> {{$cliente->updated_at}} </td>
-						<td> 
-							<form action="{{route('admin_borrar_datos',['key' => $cliente->usuario_rut,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $cliente->usuario_rut,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($usuario=DB::table('users')->where('rut',$cliente->usuario_rut)->first())
+					@if ($usuario->estado==1)
+						<tr>
+							<td> {{$cliente->usuario_rut}} </td>
+							<td> {{$cliente->telefono}} </td>
+							<td> {{$cliente->created_at}} </td>
+							<td> {{$cliente->updated_at}} </td>
+							<td> 
+								<form action="{{route('admin_borrar_datos',['key' => $cliente->usuario_rut,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $cliente->usuario_rut,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -136,22 +139,25 @@
 			</thead>
 			<tbody>
 				@foreach ($datos as $trabajador)
-					<tr>
-						<td> {{$trabajador->usuario_rut}} </td>
-						<td> {{$trabajador->tipo_trabajador}} </td>
-						<td> {{$trabajador->sucursal_id}} </td>
-						<td> {{$trabajador->created_at}} </td>
-						<td> {{$trabajador->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $trabajador->usuario_rut,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $trabajador->usuario_rut,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($usuario=DB::table('users')->where('rut',$trabajador->usuario_rut)->first())
+					@if ($usuario->estado==1)
+						<tr>
+							<td> {{$trabajador->usuario_rut}} </td>
+							<td> {{$trabajador->tipo_trabajador}} </td>
+							<td> {{$trabajador->sucursal_id}} </td>
+							<td> {{$trabajador->created_at}} </td>
+							<td> {{$trabajador->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $trabajador->usuario_rut,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $trabajador->usuario_rut,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -230,38 +236,41 @@
 			<table id="tornillos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
-				<th> CABEZA </th>
+				<th> CABEZA (mm) </th>
 				<th> TIPO ROSCA </th>
-				<th> SEPARACION ROSCA </th>
+				<th> SEPARACION ROSCA (mm) </th>
 				<th> PUNTA </th>
-				<th> ROSCA PARCIAL </th>
-				<th> VASTAGO </th>
+				<th> ROSCA PARCIAL (mm) </th>
+				<th> VASTAGO (mm) </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
 			</thead>
 			<tbody>
 				@foreach ($datos as $tornillo)
-					<tr>
-						<td> {{$tornillo->producto_id}} </td>
-						<td> {{$tornillo->cabeza}} </td>
-						<td> {{$tornillo->tipo_rosca}} </td>
-						<td> {{$tornillo->separacion_rosca}} </td>
-						<td> {{$tornillo->punta}} </td>
-						<td> {{$tornillo->rosca_parcial}} </td>
-						<td> {{$tornillo->vastago}} </td>
-						<td> {{$tornillo->created_at}} </td>
-						<td> {{$tornillo->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $tornillo->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $tornillo->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($producto=DB::table('productos')->where('id',$tornillo->producto_id)->first())
+					@if ($producto->estado==1)
+						<tr>
+							<td> {{$tornillo->producto_id}} </td>
+							<td> {{$tornillo->cabeza}} </td>
+							<td> {{$tornillo->tipo_rosca}} </td>
+							<td> {{$tornillo->separacion_rosca}} </td>
+							<td> {{$tornillo->punta}} </td>
+							<td> {{$tornillo->rosca_parcial}} </td>
+							<td> {{$tornillo->vastago}} </td>
+							<td> {{$tornillo->created_at}} </td>
+							<td> {{$tornillo->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $tornillo->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $tornillo->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 				
@@ -308,24 +317,27 @@
 			</thead>
 			<tbody>
 				@foreach ($datos as $techumbre)
-					<tr>
-						<td> {{$techumbre->producto_id}} </td>
-						<td> {{$techumbre->material}} </td>
-						<td> {{$techumbre->alto}} </td>
-						<td> {{$techumbre->ancho}} </td>
-						<td> {{$techumbre->largo}} </td>
-						<td> {{$techumbre->created_at}} </td>
-						<td> {{$techumbre->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $techumbre->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $techumbre->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($producto=DB::table('productos')->where('id',$techumbre->producto_id)->first())
+					@if ($producto->estado==1)
+						<tr>
+							<td> {{$techumbre->producto_id}} </td>
+							<td> {{$techumbre->material}} </td>
+							<td> {{$techumbre->alto}} </td>
+							<td> {{$techumbre->ancho}} </td>
+							<td> {{$techumbre->largo}} </td>
+							<td> {{$techumbre->created_at}} </td>
+							<td> {{$techumbre->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $techumbre->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $techumbre->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -333,7 +345,6 @@
 			<table id="proveedores" class="table" style="width:100%">
 			<thead>
 				<th> RUT </th>
-				<th> NOMBRE </th>
 				<th> RAZON SOCIAL </th>
 				<th> CORREO </th>
 				<th> UBICACION </th>
@@ -345,7 +356,6 @@
 				@foreach ($datos as $proveedor)
 					<tr>
 						<td> {{$proveedor->rut}} </td>
-						<td> {{$proveedor->nombre}} </td>
 						<td> {{$proveedor->razon_social}} </td>
 						<td> {{$proveedor->correo}} </td>
 						<td> {{$proveedor->ubicacion}} </td>
@@ -406,33 +416,36 @@
 			<thead>
 				<th> ID PRODUCTO </th>
 				<th> MATERIAL </th>
-				<th> ALTO </th>
-				<th> ANCHO </th>
-				<th> LARGO </th>
+				<th> ALTO (m) </th>
+				<th> ANCHO (mm) </th>
+				<th> LARGO (m) </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
 			</thead>
 			<tbody>
 				@foreach ($datos as $plancha)
-					<tr>
-						<td> {{$plancha->producto_id}} </td>
-						<td> {{$plancha->material}} </td>
-						<td> {{$plancha->alto}} </td>
-						<td> {{$plancha->ancho}} </td>
-						<td> {{$plancha->largo}} </td>
-						<td> {{$plancha->created_at}} </td>
-						<td> {{$plancha->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $plancha->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $plancha->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($producto=DB::table('productos')->where('id',$plancha->producto_id)->first())
+					@if ($producto->estado==1)
+						<tr>
+							<td> {{$plancha->producto_id}} </td>
+							<td> {{$plancha->material}} </td>
+							<td> {{$plancha->alto}} </td>
+							<td> {{$plancha->ancho}} </td>
+							<td> {{$plancha->largo}} </td>
+							<td> {{$plancha->created_at}} </td>
+							<td> {{$plancha->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $plancha->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $plancha->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -442,34 +455,37 @@
 				<th> ID PRODUCTO </th>
 				<th> MATERIAL </th>
 				<th> ACABADO </th>
-				<th> ALTO </th>
-				<th> ANCHO </th>
-				<th> LARGO </th>
+				<th> ALTO (m) </th>
+				<th> ANCHO (m) </th>
+				<th> LARGO (m) </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
 			</thead>
 			<tbody>
 				@foreach ($datos as $mueble)
-					<tr>
-						<td> {{$mueble->producto_id}} </td>
-						<td> {{$mueble->material}} </td>
-						<td> {{$mueble->acabado}} </td>
-						<td> {{$mueble->alto}} </td>
-						<td> {{$mueble->ancho}} </td>
-						<td> {{$mueble->largo}} </td>
-						<td> {{$mueble->created_at}} </td>
-						<td> {{$mueble->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $mueble->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $mueble->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($producto=DB::table('productos')->where('id',$mueble->producto_id)->first())
+					@if ($producto->estado==1)
+						<tr>
+							<td> {{$mueble->producto_id}} </td>
+							<td> {{$mueble->material}} </td>
+							<td> {{$mueble->acabado}} </td>
+							<td> {{$mueble->alto}} </td>
+							<td> {{$mueble->ancho}} </td>
+							<td> {{$mueble->largo}} </td>
+							<td> {{$mueble->created_at}} </td>
+							<td> {{$mueble->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $mueble->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $mueble->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -477,9 +493,9 @@
 			<table id="maderas" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
-				<th> ALTO </th>
-				<th> ANCHO </th>
-				<th> LARGO </th>
+				<th> ALTO (in) </th>
+				<th> ANCHO (in) </th>
+				<th> LARGO (m) </th>
 				<th> TIPO MADERA </th>
 				<th> TRATAMIENTO </th>
 				<th> FECHA REGISTRO </th>
@@ -488,25 +504,28 @@
 			</thead>
 			<tbody>
 				@foreach ($datos as $madera)
-					<tr>
-						<td> {{$madera->producto_id}} </td>
-						<td> {{$madera->alto}} </td>
-						<td> {{$madera->ancho}} </td>
-						<td> {{$madera->largo}} </td>
-						<td> {{$madera->tipo_madera}} </td>
-						<td> {{$madera->tratamiento}} </td>
-						<td> {{$madera->created_at}} </td>
-						<td> {{$madera->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $madera->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $madera->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($producto=DB::table('productos')->where('id',$madera->producto_id)->first())
+					@if ($producto->estado==1)
+						<tr>
+							<td> {{$madera->producto_id}} </td>
+							<td> {{$madera->alto}} </td>
+							<td> {{$madera->ancho}} </td>
+							<td> {{$madera->largo}} </td>
+							<td> {{$madera->tipo_madera}} </td>
+							<td> {{$madera->tratamiento}} </td>
+							<td> {{$madera->created_at}} </td>
+							<td> {{$madera->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $madera->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $madera->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -580,6 +599,7 @@
 				<th> ID </th>
 				<th> URL </th>
 				<th> ID PRODUCTO </th>
+				<th> TIPO PRODUCTO </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
@@ -590,6 +610,7 @@
 						<td> {{$foto->id}} </td>
 						<td> {{$foto->url}} </td>
 						<td> {{$foto->imagenable_id}} </td>
+						<td> {{$foto->imagenable_tipo}} </td>
 						<td> {{$foto->created_at}} </td>
 						<td> {{$foto->updated_at}} </td>
 						<td>
@@ -680,33 +701,36 @@
 			<thead>
 				<th> ID PRODUCTO </th>
 				<th> MATERIAL </th>
-				<th> CABEZA </th>
 				<th> PUNTA </th>
-				<th> LONGITUD </th>
+				<th> CABEZA (mm) </th>
+				<th> LONGITUD (mm) </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
 			</thead>
 			<tbody>
 				@foreach ($datos as $clavo)
-					<tr>
-						<td> {{$clavo->producto_id}} </td>
-						<td> {{$clavo->material}} </td>
-						<td> {{$clavo->cabeza}} </td>
-						<td> {{$clavo->punta}} </td>
-						<td> {{$clavo->longitud}} </td>
-						<td> {{$clavo->created_at}} </td>
-						<td> {{$clavo->updated_at}} </td>
-						<td>
-							<form action="{{route('admin_borrar_datos',['key' => $clavo->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
-								<a href="{{route('admin_editar_fila',['key' => $clavo->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-								&nbsp;&nbsp;&nbsp;&nbsp;
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
-							</form>
-						</td>
-					</tr>
+					@php($producto=DB::table('productos')->where('id',$clavo->producto_id)->first())
+					@if ($producto->estado==1)
+						<tr>
+							<td> {{$clavo->producto_id}} </td>
+							<td> {{$clavo->material}} </td>
+							<td> {{$clavo->punta}} </td>
+							<td> {{$clavo->cabeza}} </td>
+							<td> {{$clavo->longitud}} </td>
+							<td> {{$clavo->created_at}} </td>
+							<td> {{$clavo->updated_at}} </td>
+							<td>
+								<form action="{{route('admin_borrar_datos',['key' => $clavo->producto_id,'tabla' => $tabla])}}" method="GET" class="btn-group">
+									<a href="{{route('admin_editar_fila',['key' => $clavo->producto_id,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					@endif
 				@endforeach
 			</tbody>
 
@@ -754,10 +778,12 @@
 				<thead>
 					<th> ID </th>
 					<th> ID SUCURSAL </th>
+					<th> RUT VENDEDOR </th>
 					<th> RUT CLIENTE </th>
 					<th> MEDIO DE PAGO </th>
 					<th> FACTURA </th>
 					<th> TOTAL VENTA </th>
+					<th> UTILIDAD BRUTA </th>
 					<th> FECHA REGISTRO </th>
 					<th> FECHA ACTUALIZACION </th>
 					<th> ACCION </th>
@@ -768,10 +794,12 @@
 						<tr>
 							<td> {{$venta->id}} </td>
 							<td> {{$venta->sucursal_id}} </td>
+							<td> {{$venta->vendedor_rut}} </td>
 							<td> {{$venta->cliente_rut}} </td>
 							<td> {{$venta->medio_de_pago}} </td>
 							<td> {{$venta->con_factura}} </td>
 							<td> {{$venta->total_venta}} </td>
+							<td> {{$venta->utilidad_bruta}} </td>
 							<td> {{$venta->created_at}} </td>
 							<td> {{$venta->updated_at}} </td>
 							<td>
@@ -1059,8 +1087,8 @@
 					 buttons: {
       				 buttons: [
 						   
-            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Teléfono proveedores', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
-        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Teléfono proveedores', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Teléfono_proveedores', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Teléfono_proveedores', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
 							  ],
        					dom: {
 		  					button: {
@@ -1222,8 +1250,8 @@
 					 buttons: {
       				 buttons: [
 						   
-            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Planchas de construcción', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
-        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Planchas de construcción', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Planchas_construcción', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Planchas_construcción', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
 							  ],
        					dom: {
 		  					button: {
@@ -1342,8 +1370,8 @@
 					 buttons: {
       				 buttons: [
 						   
-            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Productos por inventario', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
-        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Productos por inventario', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Inventario', className: 'btn btn-success', exportOptions: {columns: ':not(:last-child)', } },
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Inventario', className: 'btn btn-danger', exportOptions: {columns: ':not(:last-child)', } },
 							  ],
        					dom: {
 		  					button: {

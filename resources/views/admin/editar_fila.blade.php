@@ -47,34 +47,38 @@
             @error('rut')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
+            <input id="duplicado" name="duplicado" type="hidden" class="form-control" tabindex="2" value="si">
+            @error('duplicado')
+                <small style="color:red;">*El valor del campo rut ya está en uso.</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="2" value="{{$dato->nombre}}">
+            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="3" value="{{$dato->nombre}}">
             @error('nombre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Apellido</label>
-            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="3" value="{{$dato->apellido}}">
+            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="4" value="{{$dato->apellido}}">
             @error('apellido')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Correo</label>
-            <input id="correo" name="correo" type="email" class="form-control" tabindex="4" value="{{$dato->correo}}">
+            <input id="correo" name="correo" type="email" class="form-control" tabindex="5" value="{{$dato->correo}}">
             @error('correo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Tipo Usuario</label>
-            <select class="form-control select" name="tipo_usuario" id="tipo_usuario" tabindex="5" value="{{$dato->tipo_usuario}}">
+            <select class="form-control select" name="tipo_usuario" id="tipo_usuario" tabindex="6" value="{{$dato->tipo_usuario}}">
                 <option selected>Escoge un tipo de usuario</option>
-                <option value=2>Trabajador</option>  
-                <option value=3>Cliente</option>  
+                <option value=2 {{ $dato->tipo_usuario==2 ? 'selected' : ''  }}>Trabajador</option>  
+                <option value=3 {{ $dato->tipo_usuario==3 ? 'selected' : ''  }}>Cliente</option>  
             </select>
             @error('tipo_usuario')
                 <small style="color:red;">*Debes escoger un tipo de usuario para continuar</small>
@@ -83,9 +87,9 @@
 
         <div class="mb-3">
             <label for="" class="form-label">Estado</label>
-            <select class="form-control select" name="estado" id="estado" tabindex="6" value="{{$dato->estado}}">
-                <option value=1>Activado</option>  
-                <option value=0>Desactivado</option>  
+            <select class="form-control select" name="estado" id="estado" tabindex="7" value="{{$dato->estado}}">
+                <option value=1 {{ $dato->estado==1 ? 'selected' : ''  }}>Activado</option>  
+                <option value=0 {{ $dato->estado==0 ? 'selected' : ''  }}>Desactivado</option>  
             </select>
             @error('estado')
                 <small style="color:red;">*{{$message}}</small>
@@ -96,7 +100,7 @@
         @php($trabajador=App\Models\Trabajador::find($key))
         <div class="form-group trabajadores">
             <label for="" class="form-label">Tipo trabajador</label>
-            <select class="form-control select" name="tipo_trabajador" id="tipo_trabajador" tabindex="7">
+            <select class="form-control select" name="tipo_trabajador" id="tipo_trabajador" tabindex="8">
                 @if ($trabajador!=null)
                     <option value=1 {{$trabajador->tipo_trabajador==1 ? 'selected' : ''  }}>Ejecutivo</option>  
                     <option value=2 {{$trabajador->tipo_trabajador==2 ? 'selected' : ''  }}>Vendedor</option> 
@@ -109,7 +113,7 @@
         
         <div class="form-group trabajadores">
             <label for="" class="form-label">Sucursal</label>
-            <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="8">
+            <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="9">
                 @if ($trabajador!=null)
                     @foreach ($sucursales as $sucursal)
                         <option value={{$sucursal->id}} {{ $trabajador->sucursal_id==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->direccion_sucursal}}</option> 
@@ -126,7 +130,7 @@
         @php($cliente=App\Models\Cliente::find($key))
         <div class="form-group clientes">
             <label for="" class="form-label">Telefono(Opcional)</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="9" @if ($cliente!=null) value="{{$cliente->telefono}}" @endif>
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="10" @if ($cliente!=null) value="{{$cliente->telefono}}" @endif>
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -135,7 +139,7 @@
     @elseif($tabla == 'clientes') 
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="11" value="{{$dato->telefono}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="1" value="{{$dato->telefono}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -178,7 +182,7 @@
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="2">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div>
@@ -218,7 +222,7 @@
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="5">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{$dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                <option value={{$proveedor->rut}} {{$dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div>
@@ -274,7 +278,7 @@
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="1">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div>
@@ -317,17 +321,14 @@
         </div>
     @elseif($tabla == 'proveedores') 
         <div class="mb-3">
-            <label for="" class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{$dato->nombre}}">
-            @error('nombre')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-        <div class="mb-3">
             <label for="" class="form-label">Rut</label>
-            <input id="rut" name="rut" type="text" class="form-control" tabindex="2" value="{{$dato->rut}}">
+            <input id="rut" name="rut" type="text" class="form-control" tabindex="1" value="{{$dato->rut}}">
             @error('rut')
                 <small style="color:red;">*{{$message}}</small>
+            @enderror
+            <input id="duplicado" name="duplicado" type="hidden" class="form-control" tabindex="2" value="si">
+            @error('duplicado')
+                <small style="color:red;">*El valor del campo rut ya está en uso.</small>
             @enderror
         </div>
         <div class="mb-3">
@@ -380,7 +381,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Estado</label>
-            <select class="form-control select" name="estado" id="estado" tabindex="5">
+            <select class="form-control select" name="estado" id="estado" tabindex="4">
                 <option value=1 {{ $dato->estado==1 ? 'selected' : ''  }}>Activado</option>  
                 <option value=0 {{ $dato->estado==0 ? 'selected' : ''  }}>Desactivado</option>  
             </select>
@@ -390,7 +391,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Familia</label>
-            <select class="form-control select" name="familia" id="familia" tabindex="4">
+            <select class="form-control select" name="familia" id="familia" tabindex="5">
                 <option selected value=1>Selecciona una familia</option>
                 <option value="Tornillo" {{ $dato->familia=="Tornillo" ? 'selected' : ''  }}>Tornillo</option>  
                 <option value="Plancha_construccion" {{ $dato->familia=="Plancha_construccion" ? 'selected' : ''  }}>Plancha de construcción</option>  
@@ -739,27 +740,39 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
-                @foreach ($productos as $producto)
-                <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
+
+        <label for="" class="form-label">Producto</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="producto_id" id="producto_id" tabindex="2" value="{{$dato->producto_id}}">
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_producto')
+            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
             @error('producto_id')
-                <small style="color:red;">*{{$message}}</small>
+            <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
+
+
         <div class="mb-3">
             <label for="" class="form-label">Stock</label>
-            <input id="stock" name="stock" type="number" class="form-control" tabindex="3" value="{{$dato->stock}}">
+            <input id="stock" name="stock" type="number" class="form-control" tabindex="4" value="{{$dato->stock}}">
             @error('stock')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Precio compra</label>
-            <input id="precio_compra" name="precio_compra" type="number" class="form-control" tabindex="4" value="{{$dato->precio_compra}}">
+            <input id="precio_compra" name="precio_compra" type="number" class="form-control" tabindex="5" value="{{$dato->precio_compra}}">
             @error('precio_compra')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -768,7 +781,7 @@
     @elseif($tabla == 'inventarios') 
         <div class="mb-3">
             <label for="" class="form-label">Direccion sucursal</label>
-            <input id="direccion_sucursal" name="direccion_sucursal" type="text" class="form-control" tabindex="5" value="{{$dato->direccion_sucursal}}">
+            <input id="direccion_sucursal" name="direccion_sucursal" type="text" class="form-control" tabindex="1" value="{{$dato->direccion_sucursal}}">
             @error('direccion_sucursal')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -776,22 +789,15 @@
     @elseif($tabla == 'fotos') 
         <div class="mb-3">
             <label for="" class="form-label">Url</label>
-            <input id="url" name="url" type="text" class="form-control" tabindex="5" value="{{$dato->url}}">
+            <input id="url" name="url" type="text" class="form-control" tabindex="1" value="{{$dato->url}}">
             @error('url')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">ID imagenable</label>
-            <input id="imagenable_id" name="imagenable_id" type="number" class="form-control" tabindex="6" value="{{$dato->imagenable_id}}">
+            <input id="imagenable_id" name="imagenable_id" type="number" class="form-control" tabindex="2" value="{{$dato->imagenable_id}}">
             @error('imagenable_id')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Tipo imanegenable</label>
-            <input id="imagenable_tipo" name="imagenable_tipo" type="text" class="form-control" tabindex="7" value="{{$dato->imagenable_tipo}}">
-            @error('tipo_imagenable')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
@@ -800,37 +806,37 @@
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="5" value="{{$dato->nombre}}">
+            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{$dato->nombre}}">
             @error('nombre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Apellido</label>
-            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="6" value="{{$dato->apellido}}">
+            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="2" value="{{$dato->apellido}}">
             @error('apellido')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Correo</label>
-            <input id="correo" name="correo" type="email" class="form-control" tabindex="7" value="{{$dato->correo}}">
+            <input id="correo" name="correo" type="email" class="form-control" tabindex="3" value="{{$dato->correo}}">
             @error('correo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="8" value="{{$dato->telefono}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="4" value="{{$dato->telefono}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Proveedor</label>
-            <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="9">
+            <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="5">
                 @foreach ($proveedores as $proveedor)
-                    <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                    <option value={{$proveedor->rut}} {{ $dato->proveedor_rut==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div> 
@@ -841,28 +847,41 @@
     
         <div class="mb-3">
             <label for="" class="form-label">ID Venta</label>
-            <select class="form-control select" name="venta_id" id="venta_id" tabindex="5">
+            <select class="form-control select" name="venta_id" id="venta_id" tabindex="1">
                 @foreach ($ventas as $venta)
                     <option value={{$venta->id}} {{ $dato->venta_id==$venta->id ? 'selected' : ''  }}>{{$venta->id}}</option> 
                 @endforeach  
             </select>
         </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="6">
-                @foreach ($productos as $producto)
-                    <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
+
+        <label for="" class="form-label">Producto</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="producto_id" id="producto_id" tabindex="2" value="{{$dato->producto_id}}">
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_producto')
+            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
+            @error('producto_id')
+            <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
         <div class="mb-3">
             <label for="" class="form-label">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="7" value="{{$dato->cantidad}}">
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="4" value="{{$dato->cantidad}}">
             @error('cantidad')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
-            <input id="supera_stock" name="supera_stock" type="hidden" class="form-control" tabindex="8" value="si">
+            <input id="supera_stock" name="supera_stock" type="hidden" class="form-control" tabindex="5" value="si">
             @error('supera_stock')
                 <small style="color:red;">*No puedes superar el stock de este producto en el inventario.</small>
             @enderror
@@ -870,28 +889,28 @@
     @elseif($tabla == 'clavos') 
         <div class="mb-3">
             <label for="" class="form-label">Material</label>
-            <input id="material" name="material" type="text" class="form-control" tabindex="5" value="{{$dato->material}}">
+            <input id="material" name="material" type="text" class="form-control" tabindex="1" value="{{$dato->material}}">
             @error('material')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Cabeza</label>
-            <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="6" value="{{$dato->cabeza}}">
+            <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="2" value="{{$dato->cabeza}}">
             @error('cabeza')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Punta</label>
-            <input id="punta" name="punta" type="text" class="form-control" tabindex="7" value="{{$dato->punta}}">
+            <input id="punta" name="punta" type="text" class="form-control" tabindex="3" value="{{$dato->punta}}">
             @error('punta')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Longitud</label>
-            <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="8" value="{{$dato->longitud}}">
+            <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="4" value="{{$dato->longitud}}">
             @error('longitud')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -951,6 +970,7 @@
     @elseif($tabla == 'ventas') 
         @php($clientes=DB::table('clientes')->get())
         @php($sucursales=DB::table('inventarios')->get())
+        @php($vendedores=DB::table('trabajadors')->where('tipo_trabajador',2)->get())
 
         <div class="mb-3">
             <label for="" class="form-label">Sucursal</label>
@@ -962,17 +982,35 @@
         </div>
 
         <div class="mb-3">
-            <label for="" class="form-label">Rut Cliente</label>
-            <select class="form-control select" name="cliente_rut" id="cliente_rut" tabindex="2">
-                @foreach ($clientes as $cliente)
-                <option value={{$cliente->usuario_rut}} {{ $dato->cliente_rut==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
+            <label for="" class="form-label">Rut vendedor</label>
+            <select class="form-control select" name="vendedor_rut" id="vendedor_rut" tabindex="2">
+                @foreach ($vendedores as $vendedor)
+                    <option value={{$vendedor->usuario_rut}} {{ $dato->vendedor_rut==$vendedor->usuario_rut? 'selected' : ''  }}>{{$vendedor->usuario_rut}}</option> 
                 @endforeach  
             </select>
         </div>
 
+        <label for="" class="form-label">Rut cliente</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_clientes" name="cliente_rut" id="cliente_rut" tabindex="3" value="{{$dato->cliente_rut}}">
+            <datalist id="datalist_clientes" >
+                <select>
+                    @foreach ($clientes as $cliente)
+                    <option value={{$cliente->usuario_rut}} {{ $dato->cliente_rut==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
+                    @endforeach  
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="4" value="no">
+        </div>
+        <div>
+            @error('cliente_rut')
+            <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
         <div class="mb-3">
             <label for="" class="form-label">Medio de pago</label>
-            <select class="form-control select" name="medio_de_pago" id="medio_de_pago" tabindex="3">
+            <select class="form-control select" name="medio_de_pago" id="medio_de_pago" tabindex="5">
                 <option value=1 {{ $dato->medio_de_pago==1? 'selected' : ''  }}>Efectivo</option>  
                 <option value=2 {{ $dato->medio_de_pago==2? 'selected' : ''  }}>Tarjeta de débito</option>  
                 <option value=3 {{ $dato->medio_de_pago==3? 'selected' : ''  }}>Tarjeta de crédito</option>  
@@ -985,7 +1023,7 @@
 
         <div class="mb-3">
             <label for="" class="form-label">¿Compra con factura?</label>
-            <select class="form-control select" name="con_factura" id="con_factura" tabindex="4">
+            <select class="form-control select" name="con_factura" id="con_factura" tabindex="6">
                 <option value=0 {{ $dato->con_factura==0? 'selected' : ''  }}>No</option>  
                 <option value=1 {{ $dato->con_factura==1? 'selected' : ''  }}>Si</option>  
             </select>
@@ -998,8 +1036,8 @@
     @endif
 
     <br>
-    <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="10">Cancelar</a>
-    <button type="submit" class="btn btn-primary" tabindex="11">Guardar</button>
+    <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="20">Cancelar</a>
+    <button type="submit" class="btn btn-primary" tabindex="21">Guardar</button>
     
 </form>
 

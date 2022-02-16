@@ -35,7 +35,18 @@
         .tornillos_clavos{
           display: none;   
         }
+        /* Styles for Opera Style datalist */
+        .options-opera-shadowdom .different-label-value span {
+            width: 49%;
+            overflow: hidden;
+        }
+                            
+        .options-opera-shadowdom .different-label-value .option-value {
+            display: inline-block;
+        }
+
     </style>
+    
 @endsection
 
 @section('contenido')
@@ -49,6 +60,10 @@
             <input id="rut" name="rut" type="text" class="form-control" tabindex="1" value="{{old('rut')}}">
             @error('rut')
                 <small style="color:red;">*{{$message}}</small>
+            @enderror
+            <input id="duplicado" name="duplicado" type="hidden" class="form-control" tabindex="2" value="si">
+            @error('duplicado')
+                <small style="color:red;">*El valor del campo rut ya está en uso.</small>
             @enderror
         </div>
         <div class="mb-3">
@@ -68,7 +83,7 @@
         <div class="mb-3">
             <label for="" class="form-label">Password</label>
             <div class="input-group">
-                <input id="password" name="password" type="password" class="form-control" tabindex="4">
+                <input id="password" name="password" type="password" class="form-control" tabindex="4" value="{{old('password')}}">
                 <div class="input-group-append">
                     <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                 </div>
@@ -122,10 +137,6 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div> 
-
-        <br>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="10">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="11">Guardar</button>
         
     @elseif($tabla == 'clientes')
         <div class="mb-3">
@@ -134,17 +145,21 @@
             @error('rut')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
+            <input id="duplicado" name="duplicado" type="hidden" class="form-control" tabindex="2" value="si">
+            @error('duplicado')
+                <small style="color:red;">*El valor del campo rut ya está en uso.</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="2" value="{{old('nombre')}}">
+            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="3" value="{{old('nombre')}}">
             @error('nombre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Apellido</label>
-            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="3" value="{{old('apellido')}}">
+            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="4" value="{{old('apellido')}}">
             @error('apellido')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -152,7 +167,7 @@
         <div class="mb-3">
             <label for="" class="form-label">Password</label>
             <div class="input-group">
-                <input id="password" name="password" type="password" class="form-control" tabindex="4">
+                <input id="password" name="password" type="password" class="form-control" tabindex="5">
                 <div class="input-group-append">
                     <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                 </div>
@@ -163,20 +178,18 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Correo</label>
-            <input id="correo" name="correo" type="email" class="form-control" tabindex="5" value="{{old('correo')}}">
+            <input id="correo" name="correo" type="email" class="form-control" tabindex="6" value="{{old('correo')}}">
             @error('correo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Telefono(Opcional)</label>
-            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="6" value="{{old('telefono')}}">
+            <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="7" value="{{old('telefono')}}">
             @error('telefono')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
         
     @elseif($tabla == 'trabajadores')
         @php($sucursales=DB::table('inventarios')->get())
@@ -187,17 +200,21 @@
             @error('rut')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
+            <input id="duplicado" name="duplicado" type="hidden" class="form-control" tabindex="2" value="si">
+            @error('duplicado')
+                <small style="color:red;">*El valor del campo rut ya está en uso.</small>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="2" value="{{old('nombre')}}">
+            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="3" value="{{old('nombre')}}">
             @error('nombre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Apellido</label>
-            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="3" value="{{old('apellido')}}">
+            <input id="apellido" name="apellido" type="text" class="form-control" tabindex="4" value="{{old('apellido')}}">
             @error('apellido')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -205,7 +222,7 @@
         <div class="mb-3">
             <label for="" class="form-label">Password</label>
             <div class="input-group">
-                <input id="password" name="password" type="password" class="form-control" tabindex="4">
+                <input id="password" name="password" type="password" class="form-control" tabindex="5">
                 <div class="input-group-append">
                     <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                 </div>
@@ -216,7 +233,7 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Correo</label>
-            <input id="correo" name="correo" type="email" class="form-control" tabindex="5" value="{{old('correo')}}">
+            <input id="correo" name="correo" type="email" class="form-control" tabindex="6" value="{{old('correo')}}">
             @error('correo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -224,7 +241,7 @@
 
         <div class="mb-3">
             <label for="" class="form-label">Tipo trabajador</label>
-            <select class="form-control select" name="tipo_trabajador" id="tipo_trabajador" tabindex="6"> 
+            <select class="form-control select" name="tipo_trabajador" id="tipo_trabajador" tabindex="7"> 
                 <option value=1 {{ old('tipo_trabajador')==1 ? 'selected' : ''  }}>Ejecutivo</option>  
                 <option value=2 {{ old('tipo_trabajador')==2 ? 'selected' : ''  }}>Vendedor</option>  
             </select>
@@ -232,14 +249,12 @@
 
         <div class="mb-3">
             <label for="" class="form-label">Sucursal</label>
-            <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="7">
+            <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="8">
                 @foreach ($sucursales as $sucursal)
                 <option value={{$sucursal->id}}>{{$sucursal->direccion_sucursal}}</option> 
                 @endforeach  
             </select>
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="8">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="9">Guardar</button>
         
     @elseif($tabla == 'orden_compras')  
         @php($proveedores=DB::table('proveedors')->get())
@@ -258,49 +273,63 @@
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="2">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option>  {{-- ojo con el old --}}
+                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option>  {{-- ojo con el old --}}
                 @endforeach  
             </select>
             @error('proveedor_rut')
             <small style="color:red;">*No se encontraron proveedores. Debe existir al menos un proveedor en la base de datos antes de registrar la orden de compra.</small>
             @enderror
         </div>
-        
 
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="3">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-    
     @elseif($tabla == 'detalle_compras')
         @php($ordenes=DB::table('orden_compras')->get())
         @php($productos=DB::table('productos')->get())
 
-        <div class="mb-3">
-            <label for="" class="form-label">ID Orden de compra</label>
-            <select class="form-control select" name="oc_id" id="oc_id" tabindex="1">
+        <label for="" class="form-label">ID Orden de compra</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_orden" name="oc_id" id="oc_id" tabindex="1" value="{{old('oc_id')}}"  >
+            <datalist id="datalist_orden" >
+            <select>
                 @foreach ($ordenes as $orden)
                     <option value={{$orden->id}} {{ old('oc_id')==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
                 @endforeach  
             </select>
+            </datalist>
+            <input id="existe_orden" name="existe_orden" type="hidden" class="form-control" tabindex="2" value="no">
+        </div>
+        <div>
+            @error('existe_orden')
+            <small style="color:red;">*El ID de la orden de compra ingresada no existe.</small>
+            @enderror
             @error('oc_id')
-                <small style="color:red;">*{{$message}}</small>
+            <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
-                @foreach ($productos as $producto)
-                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
+            
+        <label for="" class="form-label">Producto</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="producto_id" id="producto_id" tabindex="3" value="{{old('producto_id')}}" >
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="4" value="no">
+        </div>
+        <div>
+            @error('existe_producto')
+            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
             @error('producto_id')
-                <small style="color:red;">*{{$message}}</small>
+            <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
 
         <div class="mb-3">
             <label for="" class="form-label">Nivel de calidad</label>
-            <select class="form-control select" name="nivel_calidad" id="nivel_calidad" tabindex="3">
+            <select class="form-control select" name="nivel_calidad" id="nivel_calidad" tabindex="5">
                 <option value=1 {{ old('nivel_calidad')==1? 'selected' : ''  }}>Bajo</option>  
                 <option value=2 {{ old('nivel_calidad')==2? 'selected' : ''  }}>Aceptable</option>  
                 <option value=3 {{ old('nivel_calidad')==3? 'selected' : ''  }}>Medio</option>  
@@ -314,7 +343,7 @@
 
         <div class="mb-3">
             <label for="" class="form-label">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="4" value="{{old('cantidad')}}">
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="6" value="{{old('cantidad')}}">
             @error('cantidad')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -322,15 +351,11 @@
 
         <div class="mb-3">
             <label for="" class="form-label">Precio unitario</label>
-            <input id="precio_unitario" name="precio_unitario" type="number" class="form-control" tabindex="5" value="{{old('precio_unitario')}}">
+            <input id="precio_unitario" name="precio_unitario" type="number" class="form-control" tabindex="7" value="{{old('precio_unitario')}}">
             @error('precio_unitario')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
-
 
     @elseif($tabla == 'transportes')
         @php($proveedores=DB::table('proveedors')->get())
@@ -366,13 +391,11 @@
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="5">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="6">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
-    
+
     @elseif($tabla == 'tornillos')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -430,16 +453,14 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="9">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="10">Guardar</button>
-    
+
     @elseif($tabla == 'telefono_proveedores') 
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="1">
                 @foreach ($proveedores as $proveedor)
-                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div>
@@ -450,9 +471,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="3">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="4">Guardar</button>
-    
+
     @elseif($tabla == 'techumbres')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -496,22 +515,17 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
-    
+
     @elseif($tabla == 'proveedores')
         <div class="mb-3">
-            <label for="" class="form-label">Nombre</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" tabindex="1" value="{{old('nombre')}}">
-            @error('nombre')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-        <div class="mb-3">
             <label for="" class="form-label">Rut</label>
-            <input id="rut" name="rut" type="text" class="form-control" tabindex="2" value="{{old('rut')}}">
+            <input id="rut" name="rut" type="text" class="form-control" tabindex="1" value="{{old('rut')}}">
             @error('rut')
                 <small style="color:red;">*{{$message}}</small>
+            @enderror
+            <input id="duplicado" name="duplicado" type="hidden" class="form-control" tabindex="2" value="si">
+            @error('duplicado')
+                <small style="color:red;">*El valor del campo rut ya está en uso.</small>
             @enderror
         </div>
         <div class="mb-3">
@@ -535,10 +549,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-   
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="6">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
-    
+
     @elseif($tabla == 'productos')  
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -679,11 +690,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <br>
 
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="18">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="19">Guardar</button>
-    
     @elseif($tabla == 'planchas_construccion')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -727,9 +734,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
-    
+
     @elseif($tabla == 'muebles')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -780,9 +785,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="8">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="9">Guardar</button>
-    
+
     @elseif($tabla == 'maderas')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -833,9 +836,7 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="8">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="9">Guardar</button>
-    
+
     @elseif($tabla == 'sucursal_producto')
         @php($sucursales=DB::table('inventarios')->get())
         @php($productos=DB::table('productos')->get())
@@ -850,34 +851,41 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
-                @foreach ($productos as $producto)
-                <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
+        <label for="" class="form-label">Producto</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="producto_id" id="producto_id" tabindex="2" value="{{old('producto_id')}}">
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_producto')
+            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
             @error('producto_id')
-                <small style="color:red;">*{{$message}}</small>
+            <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Stock</label>
-            <input id="stock" name="stock" type="number" class="form-control" tabindex="3" value="{{old('stock')}}">
+            <input id="stock" name="stock" type="number" class="form-control" tabindex="4" value="{{old('stock')}}">
             @error('stock')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Precio compra</label>
-            <input id="precio_compra" name="precio_compra" type="number" class="form-control" tabindex="4" value="{{old('precio_compra')}}">
+            <input id="precio_compra" name="precio_compra" type="number" class="form-control" tabindex="5" value="{{old('precio_compra')}}">
             @error('precio_compra')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
-    
+
     @elseif($tabla == 'inventarios')
         <div class="mb-3">
             <label for="" class="form-label">Direccion sucursal</label>
@@ -886,10 +894,9 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="2">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="3">Guardar</button>
     
     @elseif($tabla == 'fotos')
+        @php($productos=DB::table('productos')->get())
         <div class="mb-3">
             <label for="" class="form-label">Url</label>
             <input id="url" name="url" type="text" class="form-control" tabindex="1" value="{{old('url')}}">
@@ -897,23 +904,36 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="" class="form-label">ID imagenable</label>
-            <input id="imagenable_id" name="imagenable_id" type="number" class="form-control" tabindex="2" value="{{old('imagenable_id')}}">
+        
+        <label for="" class="form-label">ID imagenable</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" id="imagenable_id" name="imagenable_id" type="number" tabindex="2" value="{{old('imagenable_id')}}" >
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_producto')
+            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
             @error('imagenable_id')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="mb-3">
+
+        {{-- <div class="mb-3">
             <label for="" class="form-label">Tipo imanegenable</label>
             <input id="imagenable_tipo" name="imagenable_tipo" type="text" class="form-control" tabindex="3" value="{{old('imagenable_tipo')}}">
             @error('tipo_imagenable')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
-        </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="4">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-    
+        </div> --}}
+
     @elseif($tabla == 'ejecutivos')
         @php($proveedores=DB::table('proveedors')->get())
         <div class="mb-3">
@@ -948,13 +968,11 @@
             <label for="" class="form-label">Proveedor</label>
             <select class="form-control select" name="proveedor_rut" id="proveedor_rut" tabindex="5">
                 @foreach ($proveedores as $proveedor)
-                    <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->nombre}}</option> 
+                    <option value={{$proveedor->rut}} {{ old('proveedor_rut')==$proveedor->rut ? 'selected' : ''  }}>{{$proveedor->razon_social}}</option> 
                 @endforeach  
             </select>
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="6">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="7">Guardar</button>
-    
+
     @elseif($tabla == 'clavos')
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
@@ -998,12 +1016,11 @@
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="7">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
-    
+
     @elseif($tabla == 'ventas')
         @php($clientes=DB::table('clientes')->get())
         @php($sucursales=DB::table('inventarios')->get())
+        @php($vendedores=DB::table('trabajadors')->where('tipo_trabajador',2)->get())
 
         <div class="mb-3">
             <label for="" class="form-label">ID Sucursal</label>
@@ -1015,17 +1032,35 @@
         </div>
 
         <div class="mb-3">
-            <label for="" class="form-label">Rut cliente</label>
-            <select class="form-control select" name="cliente_rut" id="cliente_rut" tabindex="2">
-                @foreach ($clientes as $cliente)
-                    <option value={{$cliente->usuario_rut}} {{ old('cliente_rut')==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
+            <label for="" class="form-label">Rut vendedor</label>
+            <select class="form-control select" name="vendedor_rut" id="vendedor_rut" tabindex="2">
+                @foreach ($vendedores as $vendedor)
+                    <option value={{$vendedor->usuario_rut}} {{ old('vendedor_rut')==$vendedor->usuario_rut? 'selected' : ''  }}>{{$vendedor->usuario_rut}}</option> 
                 @endforeach  
             </select>
         </div>
 
+        <label for="" class="form-label">Rut cliente</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="cliente_rut" id="cliente_rut" tabindex="3" value="{{old('cliente_rut')}}">
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($clientes as $cliente)
+                    <option value={{$cliente->usuario_rut}} {{ old('cliente_rut')==$cliente->usuario_rut ? 'selected' : ''  }}>{{$cliente->usuario_rut}}</option> 
+                    @endforeach  
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="4" value="no">
+        </div>
+        <div>
+            @error('cliente_rut')
+            <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
         <div class="mb-3">
             <label for="" class="form-label">Medio de pago</label>
-            <select class="form-control select" name="medio_de_pago" id="medio_de_pago" tabindex="3">
+            <select class="form-control select" name="medio_de_pago" id="medio_de_pago" tabindex="5">
                 <option value=1 {{ old('medio_de_pago')==1? 'selected' : ''  }}>Efectivo</option>  
                 <option value=2 {{ old('medio_de_pago')==2? 'selected' : ''  }}>Tarjeta de débito</option>  
                 <option value=3 {{ old('medio_de_pago')==3? 'selected' : ''  }}>Tarjeta de crédito</option>  
@@ -1038,7 +1073,7 @@
 
         <div class="mb-3">
             <label for="" class="form-label">¿Compra con factura?</label>
-            <select class="form-control select" name="con_factura" id="con_factura" tabindex="4">
+            <select class="form-control select" name="con_factura" id="con_factura" tabindex="6">
                 <option value=0 {{ old('con_factura')==0? 'selected' : ''  }}>No</option>  
                 <option value=1 {{ old('con_factura')==1? 'selected' : ''  }}>Si</option>  
             </select>
@@ -1046,9 +1081,6 @@
                 <small style="color:red;">{{$message}}</small>
             @enderror
         </div>
-
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
 
     @elseif($tabla == 'detalle_ventas')
         @php($ventas=DB::table('ventas')->get())
@@ -1066,36 +1098,44 @@
             @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
-                @foreach ($productos as $producto)
-                    <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
+        <label for="" class="form-label">Producto</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="producto_id" id="producto_id" tabindex="2" value="{{old('producto_id')}}">
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_producto')
+            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
             @error('producto_id')
-                <small style="color:red;">*{{$message}}</small>
+            <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
 
         <div class="mb-3">
             <label for="" class="form-label">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="3" value="{{old('cantidad')}}">
+            <input id="cantidad" name="cantidad" type="number" class="form-control" tabindex="4" value="{{old('cantidad')}}">
             @error('cantidad')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
-            <input id="supera_stock" name="supera_stock" type="hidden" class="form-control" tabindex="4" value="si">
+            <input id="supera_stock" name="supera_stock" type="hidden" class="form-control" tabindex="5" value="si">
             @error('supera_stock')
                 <small style="color:red;">*No puedes superar el stock de este producto en el inventario.</small>
             @enderror
         </div>
 
-
-        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="5">Cancelar</a>
-        <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
-    
     @endif
 
+    <br>
+    <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="20">Cancelar</a>
+    <button type="submit" class="btn btn-primary" tabindex="21">Guardar</button>
     
 </form>
  
@@ -1206,5 +1246,6 @@
             $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
         });
     });
-</script>    
+</script>  
+
 @endsection
