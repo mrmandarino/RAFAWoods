@@ -296,6 +296,25 @@ class EjecutivoController extends Controller
 
     }
 
+    public function historico_ventas(){;
+        $datos=DB::table('ventas')->get();
+        return view('ventas.visualizar_historico',compact('datos'));
+    }
+
+    public function ver_detalle_venta($id){;
+        $datos=DB::table('detalle_ventas')->where('venta_id',$id)->get();
+        return view('ventas.visualizar_detalle_historico',compact('datos'));
+    }
+
+    public function ver_productos(){;
+        $datos=DB::table('productos')->get();
+        return view('ventas.visualizar_producto',compact('datos'));
+    }
+
+
+
+
+
     /**
      * Show the form for creating a new resource.
      *

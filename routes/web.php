@@ -73,6 +73,9 @@ Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->n
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2'); //obsoleto
 Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');//obsoleto
 
+Route::get('/detalle/historico', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
+Route::get('/productos/visualizar', [EjecutivoController::class,'ver_productos'])->name('ver_productos');
+Route::get('/detalle/historico/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
 
 
 Route::resource('ventas',VentaController::class);
