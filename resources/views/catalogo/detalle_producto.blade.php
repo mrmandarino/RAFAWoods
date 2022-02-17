@@ -150,45 +150,15 @@
         </datalist>
       </div>
     </form>
-
-      {{-- <button name="action" value="filtrar_precio" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por precio</button>
-      <button name="action" value="filtrar_alfabetico" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por orden alfabético</button> --}}
     
-      {{-- Filtro por precio --}}
-      <div class="input-group mb-3">
-        <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar por precio</label>
-        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="visually-hidden">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a name="tipo_filtro" id="tipo_filtro" value="ascendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_precio"])}}">Ascendente</a></li>
-          <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_precio"])}}">Descendente</a></li>
-        </ul>
-      </div>
-
-
-      {{-- Filtro por alfabeto --}}
-      <div class="input-group mb-3">
-        <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar alfabéticamente</label>
-        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="visually-hidden">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a name="tipo_filtro" id="tipo_filtro" value="ascendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_alfb"])}}">Ascendente</a></li>
-          <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_alfb"])}}">Descendente</a></li>
-        </ul>
-      </div>
-
-
   </section>
 
 
   {{-- Catalogo de productos --}}
   <div class="album py-5 bg-light" onload="carga_datos()">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach($productos as $producto)
-            <div class="col">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center">
+            <div class="col ">
                 <div class="card shadow-sm">
                     @foreach($imagenes as $imagen)
                     @if($imagen->imagenable_id == $producto->id)
@@ -197,7 +167,6 @@
                         $url_img_fixed = str_replace("productos","images",$url_img);
                     @endphp 
                     <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset($url_img_fixed) }}" height="315" width="420" ></svg></a>
-                    
                     @break
                     @endif
                     @endforeach
@@ -383,11 +352,9 @@
                 </div>
               </div>
             </div>
-            @endforeach
         </div>
         <br>
         <div class="d-flex justify-content-end">
-          {!! $productos->links() !!}
         </div>
     </div>
   </div>
@@ -426,7 +393,7 @@
     input_hidden_producto.value = producto_datalist;
   }
 
-  // function submit_formulario_filtro()
+  
 </script>
 
 

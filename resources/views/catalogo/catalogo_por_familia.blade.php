@@ -119,6 +119,7 @@
 </header>
 
 <main>
+  
 
   {{-- Datalist de familia de productos --}}
   <section class="py-5 text-center container">
@@ -151,9 +152,6 @@
       </div>
     </form>
 
-      {{-- <button name="action" value="filtrar_precio" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por precio</button>
-      <button name="action" value="filtrar_alfabetico" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por orden alfabético</button> --}}
-    
       {{-- Filtro por precio --}}
       <div class="input-group mb-3">
         <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar por precio</label>
@@ -178,8 +176,7 @@
           <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_alfb"])}}">Descendente</a></li>
         </ul>
       </div>
-
-
+    
   </section>
 
 
@@ -426,7 +423,7 @@
     input_hidden_producto.value = producto_datalist;
   }
 
-  // function submit_formulario_filtro()
+  
 </script>
 
 

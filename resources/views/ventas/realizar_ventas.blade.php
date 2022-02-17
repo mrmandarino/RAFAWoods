@@ -4,7 +4,7 @@
 
 {{-- script de carrito de compras --}}
 
-<script type=text/javascript defer>
+<script type="text/javascript" defer>
   $(document).ready(function() {
 	const bclick = document.getElementById('boton_agregar_a_compra');
   const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
@@ -327,6 +327,7 @@
             <h4 class="text-center">🛒 Carrito 🛒</h4>
           </div>
         </div>
+
 
         <table class="table table-hover pb-3">
           <thead>

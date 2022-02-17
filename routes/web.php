@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\EjecutivoController;
 
 
@@ -55,12 +56,32 @@ Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actual
 Route::put('/productos/{id}/estado',[EjecutivoController::class,'cambiar_estado_producto'])->name('cambiar_estado');//metodo de vista administrar_prod, activa o desactiva un producto - listo - mandarino
 
 
+
+//Inventario
+Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');
+Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
+Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
+Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
+Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');
+Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');
+Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');
+Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');
+Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2'); //obsoleto
 Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');//obsoleto
 
 
+
 Route::resource('ventas',VentaController::class);
 
+//Catálogo
+Route::get('/catalogo',[CatalogoController::class,'index'])->name('ver_catalogo');
+Route::get('/catalogo/intermedio',[CatalogoController::class,'intermedio'])->name('ver_catalogo_intermedio');
+Route::get('catalogo/intermedio/producto',[CatalogoController::class,'intermedio_producto'])->name('ver_producto_intermedio');
+Route::get('/catalogo/intermedio/filtrar/{familia}/{tipo_filtro}',[CatalogoController::class,'intermedio_filtro'])->name('ver_filtro_intermedio');
+Route::get('/catalogo/{familia}',[CatalogoController::class,'index_por_familia'])->name('ver_catalogo_por_familia');
+Route::get('/catalogo/detalle_producto/{nombre_producto}',[CatalogoController::class,'detalle_producto'])->name('ver_detalle_producto');
+Route::get('/catalogo/filtrar/{tipo_filtro}/{familia}',[CatalogoController::class,'index_filtro'])->name('ver_catalogo_filtrado');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/visualizar/{tabla}',[AdminController::class, 'index'])->name('admin_visualizar_especifico');
