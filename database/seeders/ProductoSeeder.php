@@ -6,11 +6,12 @@ use App\Models\Clavo;
 use App\Models\Imagen;
 use App\Models\Madera;
 use App\Models\Mueble;
-use App\Models\Plancha_construccion;
 use App\Models\Producto;
-use App\Models\Techumbre;
 use App\Models\Tornillo;
+use App\Models\Techumbre;
+use App\Models\Localizacion;
 use Illuminate\Database\Seeder;
+use App\Models\Plancha_construccion;
 
 class ProductoSeeder extends Seeder
 {
@@ -31,8 +32,24 @@ class ProductoSeeder extends Seeder
         $acabados=['Aceite de tung','Aceite de linaza','Aceite danés','Aceite de cedro', //hasta aquí son acabados penetrantes
     'Goma laca','Laca','Barniz','Cera','Poliuretano','Teñir','Pulido francés','Acabado a base de agua','Pintura']; //acabados superficiales
         
-        $productos=Producto::factory(20)->create();
+        $productos=Producto::factory(30)->create();
         foreach ($productos as $producto){
+            Localizacion::create([
+                'sucursal_id' => rand(1,2),
+                'producto_id' => $producto->id,
+                'stock' => rand(50,100),
+                'precio_compra' => rand(5000,10000),
+                'precio_venta' => rand(8000,15000)
+            ]);
+
+            Localizacion::create([
+                'sucursal_id' => rand(3,4),
+                'producto_id' => $producto->id,
+                'stock' => rand(50,100),
+                'precio_compra' => rand(5000,10000),
+                'precio_venta' => rand(8000,15000)
+            ]); 
+
             Imagen::factory(1)->create([
                 'imagenable_id' => $producto->id,
                 'imagenable_tipo' => 'App\Models\Producto'

@@ -9,6 +9,9 @@ class Trabajador extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'usuario_rut'; //se sobreescribe la primary key para no usar id()
+    public $incrementing = false; //se desactiva la funcion de autoincrementar la "id" porque se trabaja con rut
+    
     const ejecutivo = 1;
     const vendedor = 2;
     

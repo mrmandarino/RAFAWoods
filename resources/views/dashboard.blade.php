@@ -16,7 +16,21 @@
                 <button>
                     Admin
                 </button>
-            </a>    
+            </a> 
+            <a href="{{route('admin_visualizar_datos')}}" class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
+                <button>
+                    Visualizar BD
+                </button>
+            </a>
+            
+            <!-- PONER LA LLAVE { FALTANTE ANTES DE ROUTE
+            <a href="{route('admin_test')}}" class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
+                <button>
+                    Testeo
+                </button>
+            </a>  
+            -->
+            
         </div>
     </div>
 

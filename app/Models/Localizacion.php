@@ -5,18 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tornillo extends Model
+class Localizacion extends Model
 {
+
     use HasFactory;
 
-    const completa = 1;
-    const parcial = 2;
+    protected $primaryKey =['sucursal_id','producto_id'];  //se sobreescribe la primary key para no usar id()
 
-    protected $primaryKey = 'producto_id'; //se sobreescribe la primary key para no usar id()
     public $incrementing = false; //se desactiva la funcion de autoincrementar la "id" porque se trabaja con rut
-    
-
     protected $fillable = [
+        'sucursal_id',
         'producto_id',
+        'stock',
+        'precio_compra',
+        'precio_venta',
     ];
+
 }

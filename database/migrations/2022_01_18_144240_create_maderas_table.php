@@ -15,10 +15,10 @@ class CreateMaderasTable extends Migration
     {
         Schema::create('maderas', function (Blueprint $table) {
             $table->unsignedBigInteger('producto_id')->primary();
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('alto');
             $table->integer('ancho');
-            $table->integer('largo');
+            $table->float('largo');
             $table->string('tipo_madera');
             $table->string('tratamiento');
             $table->timestamps();
