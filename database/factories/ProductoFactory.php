@@ -13,7 +13,7 @@ class ProductoFactory extends Factory
      */
     public function definition()
     {
-        $familias=['Plancha_construccion','Techumbre', 'Mueble', 'Tornillo','Clavo','Madera'];
+        $familias=['Plancha_construccion','Techumbre', 'Mueble', 'Tornillo','Clavo','Madera','Herramienta','Otro'];
         $random=$this->faker->randomElement($familias);
 
         return [
@@ -21,6 +21,7 @@ class ProductoFactory extends Factory
             'descripcion' => $this->faker->sentence(), //'descripcion' => $this->faker->paragraph(),
             'nivel_demanda' => rand(1,3),
             'familia' => $random,
+            'estado' => 1,
         ];
     }
 }
