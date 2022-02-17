@@ -3,7 +3,7 @@
 @include('ventas.partials.iconos')
 
 
-<div class="container-fluid tabla-h-scroll" >
+<div class="container-fluid tabla-h-scroll mt-2">
 	<table id="productos" class="table" style="width:100%">
 		<thead>
 			<th> ID </th>
@@ -12,34 +12,32 @@
 			<th> NIVEL DEMANDA </th>
 			<th> FAMILIA </th>
 			<th> ESTADO </th>
-			<th> FECHA REGISTRO </th>
-			<th> FECHA ACTUALIZACION </th>
 		</thead>
 		<tbody>
 			@foreach ($datos as $producto)
-				<tr>
-					<td> {{$producto->id}} </td>
-					<td> {{$producto->nombre}} </td>
-					<td> {{$producto->descripcion}} </td>
-					<td> {{$producto->nivel_demanda}} </td>
-					<td> {{$producto->familia}} </td>
-					<td> {{$producto->estado}} </td>
-					<td> {{$producto->created_at}} </td>
-					<td> {{$producto->updated_at}} </td>
-				</tr>
-			@endforeach 
+			<tr>
+				<td> {{$producto->id}} </td>
+				<td> {{$producto->nombre}} </td>
+				<td> {{$producto->descripcion}} </td>
+				<td> {{$producto->nivel_demanda}} </td>
+				<td> {{$producto->familia}} </td>
+				<td> {{$producto->estado}} </td>
+			</tr>
+			@endforeach
 		</tbody>
+	</table>
 </div>
 
 
 
 
-	<script>
-			$(document).ready(function() {
+<script>
+	$(document).ready(function() {
 				$('#productos').DataTable({
 					responsive: true,
 					autoWidth: false,
 					dom: '<"floatRight"B>lftrp',
+					lengthMenu: [15, 20, 25, -1],
 					 buttons: {
       				 buttons: [
 						   
@@ -55,11 +53,10 @@
 					"language": {
 						"lengthMenu": "Mostrar " + 
 									   `<select class="custom-select custom-select-sm form-control form-control-sm">
-										<option value = '10'>10</option>
+										<option value = '15'>15</option>
+										<option value = '20'>20</option>
 										<option value = '25'>25</option>
-										<option value = '50'>50</option>
-										<option value = '100'>100</option>
-										<option value = '-1'>Total</option>
+									<option value = '-1'>Total</option>
 									    </select>` + 
 										" registros por página",
 						"zeroRecords": "No se encontraron registros",
@@ -71,7 +68,7 @@
         			}
 				});
 			});
-		</script> 	
+</script>
 
 
 

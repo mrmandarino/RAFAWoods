@@ -3,19 +3,17 @@
 @include('ventas.partials.iconos')
 
 
-<div class="container-fluid tabla-h-scroll">
+<div class="container-fluid tabla-h-scroll mt-3">
 	<table id="ventas" class="table" style="width:100%">
 		<thead>
 			<th> ID </th>
-			<th> ID SUCURSAL </th>
 			<th> RUT VENDEDOR </th>
 			<th> RUT CLIENTE </th>
-			<th> MEDIO DE PAGO </th>
+			<th> M. PAGO </th>
 			<th> FACTURA </th>
 			<th> TOTAL VENTA </th>
 			<th> UTILIDAD BRUTA </th>
-			<th> FECHA REGISTRO </th>
-			<th> FECHA ACTUALIZACION </th>
+			<th> FECHA</th>
 			<th> ACCION </th>
 		</thead>
 	
@@ -23,14 +21,12 @@
 			@foreach ($datos as $venta)
 			<tr>
 				<td> {{$venta->id}} </td>
-				<td> {{$venta->sucursal_id}} </td>
 				<td> {{$venta->vendedor_rut}} </td>
 				<td> {{$venta->cliente_rut}} </td>
 				<td> {{$venta->medio_de_pago}} </td>
 				<td> {{$venta->con_factura}} </td>
 				<td> {{$venta->total_venta}} </td>
 				<td> {{$venta->utilidad_bruta}} </td>
-				<td> {{$venta->created_at}} </td>
 				<td> {{$venta->updated_at}} </td>
 				<td>
 					<a href="{{route('ver_detalle_historico',['id' => $venta->id])}}" class="btn btn-info">
@@ -72,9 +68,9 @@
 										<option value = '25'>25</option>
 										<option value = '50'>50</option>
 										<option value = '100'>100</option>
-										<option value = '-1'>Total</option>
-										</select>` + 
-										" registros por página",
+										<option value = '-1'>Todos</option>
+										</select>`,
+										
 						"zeroRecords": "No se encontraron registros",
 						"info": "Visualizando página _PAGE_ de _PAGES_",
 						"infoEmpty": "No hay registros disponibles",
