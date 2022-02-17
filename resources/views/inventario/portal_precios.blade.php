@@ -94,6 +94,7 @@
 			$('#precios_productos').DataTable({
 				responsive: true,
 				autoWidth: false,
+				lengthMenu: [15, 20, 25, -1],
 				dom: '<"floatRight"B>lftrp',
 
 				 buttons: {
@@ -111,10 +112,9 @@
 				"language": {
 					"lengthMenu": "Mostrar " + 
 								   `<select class="custom-select custom-select-sm form-control form-control-sm">
-									<option value = '10'>10</option>
+									<option value = '15'>15</option>
+									<option value = '20'>20</option>
 									<option value = '25'>25</option>
-									<option value = '50'>50</option>
-									<option value = '100'>100</option>
 									<option value = '-1'>Total</option>
 									</select>` + 
 									" registros por página",
