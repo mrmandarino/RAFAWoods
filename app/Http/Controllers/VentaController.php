@@ -70,18 +70,6 @@ class VentaController extends Controller
         }
 
         $nuevo_total =0;//nuevo valor de stock de los productos recientemente vendidos
-
-    {  
-        // $request->validate([
-        //     'rut' => ['required','cl_rut','unique:users'],
-        //     'nombre' => ['required', 'string', 'max:255'],
-        //     'apellido' => ['required','string','max:255'],
-        //     'correo' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'confirmed', 'min:8', 'max:16',Rules\Password::defaults()],
-        //     'telefono' => ['digits:8', 'integer'],
-        // ]);
-        $nuevo_total =0;
-
         $total_compra = $request->total_compra;
         $total_compra_coma = str_replace(".","",$total_compra);
         $detalle_ventas = json_decode($request->hidden);
