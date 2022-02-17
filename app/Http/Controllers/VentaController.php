@@ -68,15 +68,29 @@ class VentaController extends Controller
             }
         }
 
-        $nuevo_total =0;
+        $nuevo_total =0;//nuevo valor de stock de los productos recientemente vendidos
         $total_compra = $request->total_compra;
         $total_compra_coma = str_replace(".","",$total_compra);
         $detalle_ventas = json_decode($request->hidden);
+        $utilidad_bruta = 0;
+
+        //calcular utilidad bruta de la venta
+        foreach($detalle_ventas as $detalle_venta)
+        {
+            $precio_compra = DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->value('precio_compra');
+            $total_producto = $detalle_venta->total_producto;//valor total de lo vendido en este producto (valor de venta x cantidad vendida)
+            $cantidad = $detalle_venta->cantidad;
+            $utilidad_individual = $total_producto - ($cantidad*$precio_compra);
+            $utilidad_bruta = $utilidad_bruta + $utilidad_individual;
+            
+        }
         $venta = Venta::create([
             'sucursal_id' => 1,
             'medio_de_pago' => $request->medio_pago,
+            'vendedor_rut' => $request->rut_vendedor,
             'cliente_rut' => $request->rut_cliente,
             'total_venta' => intval($total_compra_coma),
+            'utilidad_bruta' => intval($utilidad_bruta),
         ]);
 
         if($request->con_factura != null)

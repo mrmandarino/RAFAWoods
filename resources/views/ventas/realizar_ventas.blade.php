@@ -266,6 +266,7 @@
           <div class="col-md-12">
             <div class="input-group">
               <label for="total_compra" class="input-group-text">Total Venta:</label>
+              <input type="text" class="visually-hidden" name="rut_vendedor" value="{{Auth::user()->rut}}">
               <input class="form-control form-control-lg" type="text" name="total_compra" id="total_compra" value="0"
                 placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
