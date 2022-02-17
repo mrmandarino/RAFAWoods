@@ -91,6 +91,7 @@
     }else{
       alert('Estás excediendo el stock disponible');
     }
+    quitar_producto();
   }
 
   function update_total_compra() 
