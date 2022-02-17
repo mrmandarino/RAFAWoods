@@ -303,10 +303,13 @@ class EjecutivoController extends Controller
 
     public function ver_detalle_venta($id){;
         $datos=DB::table('detalle_ventas')->where('venta_id',$id)->get();
-        return view('ventas.visualizar_detalle_historico',compact('datos'));
+        return view('ventas.visualizar_detalle_historico',compact('datos','activado'));
     }
 
-
+    public function ver_productos(){;
+        $datos=DB::table('productos')->get();
+        return view('ventas.visualizar_producto',compact('datos'));
+    }
 
 
 

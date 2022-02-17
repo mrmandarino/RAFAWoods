@@ -3,8 +3,7 @@
 @include('ventas.partials.iconos')
 
 
-
-<div class="container">
+<div class="container-fluid tabla-h-scroll">
 	<table id="ventas" class="table" style="width:100%">
 		<thead>
 			<th> ID </th>
@@ -34,8 +33,8 @@
 				<td> {{$venta->created_at}} </td>
 				<td> {{$venta->updated_at}} </td>
 				<td>
-					<a href="{{route('ver_detalle_historico',['id' => $venta->id])}}" class="btn btn-info">Ver
-						detalle</a>
+					<a href="{{route('ver_detalle_historico',['id' => $venta->id])}}" class="btn btn-info">
+						Detalle</a>
 				</td>
 			</tr>
 			@endforeach
@@ -48,15 +47,12 @@
 
 
 
-
-
 <script>
 	$(document).ready(function() {
 				$('#ventas').DataTable({
 					responsive: true,
 					autoWidth: false,
 					dom: '<"floatRight"B>lftrp',
-
 					buttons: {
 					buttons: [
 						

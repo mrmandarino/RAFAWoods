@@ -89,13 +89,13 @@
 				responsive: true,
 				autoWidth: false,
 				dom: '<"floatRight"B>lftrp',
-
+				
 				 buttons: {
 				   buttons: [
-					   
-					{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Detalle_venta_{{$detalle_venta->venta_id}}', className: 'btn btn-success'},
-					{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Detalle_ventas', className: 'btn btn-danger'},
-						  ],
+						{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Detalle_venta', className: 'btn btn-success'},
+						{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Detalle_ventas', className: 'btn btn-danger'},
+						],
+				
 					   dom: {
 						  button: {
 						  className: 'btn'

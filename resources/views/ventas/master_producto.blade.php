@@ -29,8 +29,8 @@
             }
         }
 
-        .tabla-h-scroll {
-            height: 750px !important;
+        .tabla-scroll {
+            height: 250px !important;
             overflow: scroll;
         }
 
@@ -68,8 +68,10 @@
             justify-content: center;
             align-content: center;
         }
-        
-
+        .tabla-h-scroll {
+            height: 750px !important;
+            overflow: scroll;
+        }
         #myInput {
           padding: 20px;
           margin-top: -6px;
@@ -167,7 +169,7 @@
 <body>
     <main>
       
-        <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 230px ;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 200px ;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <svg class="bi me-2" width="40" height="32">
                 <use xlink:href="#accesos" />
@@ -201,7 +203,7 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#table" />
                   </svg>
@@ -209,7 +211,7 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link text-white">
+                <a href="#" class="nav-link active">
                   <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#grid" />
                   </svg>
