@@ -34,32 +34,45 @@
 
 
 
-<script>
-	$(document).ready(function() {
-		$('#productos').DataTable({
-			responsive: true,
-			autoWidth: false,
-			dom: '<"floatRight">lftrp',
-			"language": {
-				"lengthMenu": "Mostrar " + 
-							   `<select class="custom-select custom-select-sm form-control form-control-sm">
-								<option value = '10'>10</option>
-								<option value = '25'>25</option>
-								<option value = '50'>50</option>
-								<option value = '100'>100</option>
-								<option value = '-1'>Total</option>
-								</select>` + 
-								" registros por página",
-				"zeroRecords": "No se encontraron registros",
-				"info": "Visualizando página _PAGE_ de _PAGES_",
-				"infoEmpty": "No hay registros disponibles",
-				"infoFiltered": "(filtrado de _MAX_ registros totales)",
-				"search": "Buscar :",
-				"paginate": {"next": "Siguiente", "previous": "Anterior"}
-			}
-		});
-	});
-</script> 	
+	<script>
+			$(document).ready(function() {
+				$('#productos').DataTable({
+					responsive: true,
+					autoWidth: false,
+					dom: '<"floatRight"B>lftrp',
+					 buttons: {
+      				 buttons: [
+						   
+            			{ extend: 'excel', text: '<i class="fas fa-file-excel"></i> Excel', title: '', filename:'Productos', className: 'btn btn-success'},
+        				{ extend: 'print', text: '<i class="fas fa-file-pdf"></i> PDF', title: '', filename:'Productos', className: 'btn btn-danger'},
+							  ],
+       					dom: {
+		  					button: {
+		  					className: 'btn'
+	        					 }
+       					}
+     				},
+					"language": {
+						"lengthMenu": "Mostrar " + 
+									   `<select class="custom-select custom-select-sm form-control form-control-sm">
+										<option value = '10'>10</option>
+										<option value = '25'>25</option>
+										<option value = '50'>50</option>
+										<option value = '100'>100</option>
+										<option value = '-1'>Total</option>
+									    </select>` + 
+										" registros por página",
+						"zeroRecords": "No se encontraron registros",
+						"info": "Visualizando página _PAGE_ de _PAGES_",
+						"infoEmpty": "No hay registros disponibles",
+						"infoFiltered": "(filtrado de _MAX_ registros totales)",
+						"search": "Buscar :",
+						"paginate": {"next": "Siguiente", "previous": "Anterior"}
+        			}
+				});
+			});
+		</script> 	
+
 
 
 
