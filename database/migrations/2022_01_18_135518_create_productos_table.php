@@ -19,6 +19,7 @@ class CreateProductosTable extends Migration
             $table->string('descripcion');
             $table->integer('nivel_demanda')->default(1);
             $table->string('familia');
+            $table->boolean('estado')->default(1);
 
             $table->timestamps();
         });

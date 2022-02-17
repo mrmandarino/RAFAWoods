@@ -4,7 +4,7 @@
 
 {{-- script de carrito de compras --}}
 
-<script type=text/javascript defer>
+<script type="text/javascript" defer>
   $(document).ready(function() {
 	const bclick = document.getElementById('boton_agregar_a_compra');
   const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
@@ -360,6 +360,7 @@
 
       <div class="col-md-12 card bg-light tabla-scroll">
         
+
 
         <table class="table table-hover pb-3">
           <thead >
