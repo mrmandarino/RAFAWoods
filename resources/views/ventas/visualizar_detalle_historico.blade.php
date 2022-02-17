@@ -1,48 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Base de datos</title>
+@extends('ventas.master_historico')
+@section('content')
+@include('ventas.partials.iconos')
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<style type="text/css">
-		
-		.floatRight{
-		float:right;
-		margin-left:10px;
-		margin-right:10px;
-		}
-		
-		.dataTables_length {
-		float:left;
-		font-size: 15px;
-		}	
-
-		.buttons-excel {
-			font-size: 12.5px;
-		}
-
-		.buttons-print {
-			font-size: 12.5px;
-		}
-    </style> 
-
-
-
-
-
-</head>
-<body>
-
-	<div> 
-		<a href="{{route('ver_historico')}}" class="btn btn-primary" >VOLVER</a>
-	</div>
+<div class="container-fluid tabla-h-scroll mt-3">
 
 	<table id="detalle_ventas" class="table" style="width:100%">
 		<thead>
@@ -124,6 +84,8 @@
 	</script> 		
 
 
-</body>
-</html>
 
+</div>
+
+
+@endsection
