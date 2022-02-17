@@ -14,5 +14,9 @@ class Plancha_construccion extends Model
     
     protected $fillable = [
         'producto_id',
+        'material',
+        'alto',
+        'ancho',
+        'largo',
     ];
 }

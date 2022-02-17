@@ -12,10 +12,11 @@
                     Hola Admin!
                 </div>
             </div>
-            <a href="{{route('admin_crear_usuario')}}" class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
-                <button>
+            <a href="{{route('admin_crear_usuario')}}">
+                <button class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
                     Admin
                 </button>
+
             </a> 
             <a href="{{route('admin_visualizar_datos')}}" class="bg-ucn-color hover:bg-ucn-color focus:bg-green-900 | focus:outline-none border rounded-md text-white focus:text-white p-2 transition ease-in-out duration-150">
                 <button>

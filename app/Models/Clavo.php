@@ -14,5 +14,9 @@ class Clavo extends Model
     
     protected $fillable = [
         'producto_id',
+        'material',
+        'cabeza',
+        'punta',
+        'longitud',
     ];
 }

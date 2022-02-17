@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProveedorSeeder::class);
         $this->call(Orden_compraSeeder::class);
 
+
     }
 }

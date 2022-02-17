@@ -18,6 +18,8 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\View\View
      */
+
+    //Redireccionamiento a vista de login
     public function create()
 
     {
@@ -30,6 +32,8 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+
+     //Redireccionamiento al tipo de vista correspondiente según el tipo de usuario que inicia sesión.
     public function store(LoginRequest $request)
     {   
         //Normalizar Rut de Inicio de Sesion para coincidir con data en base de datos
