@@ -151,10 +151,7 @@
       </div>
     </form>
 
-      {{-- <button name="action" value="filtrar_precio" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por precio</button>
-      <button name="action" value="filtrar_alfabetico" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por orden alfabético</button> --}}
-    
-      {{-- Filtro por precio --}}
+          {{-- Filtro por precio --}}
       <div class="input-group mb-3">
         <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar por precio</label>
         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
@@ -179,15 +176,15 @@
         </ul>
       </div>
 
-
   </section>
 
 
+  @if($tipo_filtro == "filtrar_alfabetico")
   {{-- Catalogo de productos --}}
   <div class="album py-5 bg-light" onload="carga_datos()">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach($productos as $producto)
+            @foreach($productos_filtrados as $producto)
             <div class="col">
                 <div class="card shadow-sm">
                     @foreach($imagenes as $imagen)
@@ -387,12 +384,227 @@
         </div>
         <br>
         <div class="d-flex justify-content-end">
-          {!! $productos->links() !!}
+          {!! $productos_filtrados->links() !!}
         </div>
     </div>
   </div>
 
-  
+
+  {{-- Filtro por precio --}}
+  @else
+  {{-- Catalogo de productos --}}
+  <div class="album py-5 bg-light" onload="carga_datos()">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach($productos_filtrados as $producto)
+            <div class="col">
+                <div class="card shadow-sm">
+                    @foreach($imagenes as $imagen)
+                    @if($imagen->imagenable_id == $producto->id)
+                    @php
+                        $url_img = $imagen->url;
+                        $url_img_fixed = str_replace("productos","images",$url_img);
+                    @endphp 
+                    <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset($url_img_fixed) }}" height="315" width="420" ></svg></a>
+                    
+                    @break
+                    @endif
+                    @endforeach
+
+                  
+                  <div class="card-body">
+                    <small><b><p class="card-text">{{$producto->familia}}</p></b></small>
+                    <p class="card-text">{{$producto->nombre}}</p>
+                    
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <button id="{{$producto->id}}" type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}">Ver Detalle</button>
+                          </div>
+                          @foreach ($productos_en_stock as $producto_en_stock)
+                          @if ($producto_en_stock->producto_id == $producto->id)
+                          @php
+                            $numero_formateado = number_format($producto_en_stock->precio_venta,0,',','.');
+                          @endphp
+                          <small class="text-muted">Precio: ${{$numero_formateado}}</small>
+                          @if ($producto_en_stock->stock == 0)
+                          <small class="text-muted">Agotado</small>
+                          @else
+                          <small class="text-muted">Stock: {{$producto_en_stock->stock}}</small>
+                          @endif
+                          @endif
+                          @endforeach
+                      </div>
+                  </div>
+                </div>
+              </div>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="modal_detalle{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <!-- Carousel -->
+                    <div
+                        id='carouselExampleIndicators'
+                        class='carousel slide'
+                        data-bs-ride='carousel'>
+                      <ol class='carousel-indicators '>
+                        @php
+                          $contador_aux = 0;
+                          for($i = 0;$i<$imagenes->count();$i++){
+                            if($imagenes[$i]->imagenable_id == $producto->id){
+                              $contador_aux++;
+                            }
+                          }
+                        @endphp
+                        @for ($j = 0;$j<$contador_aux;$j++)
+                        @if($j<=0)
+                          <li
+                          data-bs-target='#carouselExampleIndicators '
+                          data-bs-slide-to= {{$j}}
+                          class='active'
+                          ></li>
+                        @else
+                        <li
+                          data-bs-target='#carouselExampleIndicators'
+                          data-bs-slide-to= {{$j}}
+                          ></li>
+                        @endif
+                        @endfor
+                      </ol>
+        
+                      {{-- Imagenes --}}
+                      <div class='carousel-inner'>
+                        @php
+                          $contador_imgs = 0;
+                        @endphp
+                        @foreach ($imagenes as $imagen)
+                        @if($imagen->imagenable_id == $producto->id && $contador_imgs <= 0)
+                        @php
+                          $contador_imgs++;
+                          $url_img = $imagen->url;
+                          $url_img_fixed = str_replace("productos","images",$url_img);
+                        @endphp
+                        <div class='carousel-item active'>
+                          <img class='img-size' src="{{ asset($url_img_fixed) }}" alt='First slide' />
+                        </div>
+                        @else
+                        @if ($imagen->imagenable_id == $producto->id) 
+                        @php
+                          $url_img = $imagen->url;
+                          $url_img_fixed = str_replace("productos","images",$url_img);
+                        @endphp
+                        <div class='carousel-item'>
+                          <img class='img-size' src="{{ asset($url_img_fixed) }}" alt='First slide' />
+                        </div>
+                        @endif
+                        @endif
+                        @endforeach
+                      </div>
+                      <a
+                        class='carousel-control-prev ajustarizquierdo'
+                        href='#carouselExampleIndicators'
+                        role='button'
+                        data-bs-slide='prev'
+                        >
+                        <span class='carousel-control-prev-icon'
+                              aria-hidden='true'
+                              ></span>
+                        <span class='sr-only'></span>
+                      </a>
+                      <a
+                        class='carousel-control-next ajustarderecho'
+                        href='#carouselExampleIndicators'
+                        role='button'
+                        data-bs-slide='next'
+                        >
+                        <span
+                              class='carousel-control-next-icon'
+                              aria-hidden='true'
+                              ></span>
+                        <span class='sr-only'></span>
+                      </a>
+                      
+                        {{-- Información sobre el detalle del producto --}}
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label></b>
+                        <input type="text" value="{{$producto->nombre}}" style="background-color:white" class="form-control" name="nombre" id="nombre" readonly></b>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Descripción</label></b>
+                        <input type="text" value="{{$producto->descripcion}}" style="background-color:white" class="form-control" name="descripcion" id="descripcion" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Familia</label></b>
+                        <input type="text" value="{{$producto->familia}}" style="background-color:white" class="form-control" name="familia" id="familia" readonly>
+                      
+                        @php
+                          $familia = App\Http\Controllers\EjecutivoController::detectar_nombre($producto->familia);
+                          $producto_en_tabla = DB::table($familia)->where('producto_id', $producto->id)->first();
+                        @endphp
+
+                        @if ($producto->familia=="Madera" || $producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion" || $producto->familia=="Mueble")
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Alto</label></b>
+                        <input type="text" value="{{$producto_en_tabla->alto}}" style="background-color:white" class="form-control" name="alto" id="alto" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Ancho</label></b>
+                        <input type="text" value="{{$producto_en_tabla->ancho}}" style="background-color:white" class="form-control" name="ancho" id="ancho" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Largo</label></b>
+                        <input type="text" value="{{$producto_en_tabla->largo}}" style="background-color:white" class="form-control" name="largo" id="largo" readonly>
+                        @endif
+
+                        @if ($producto->familia=="Madera")
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label></b>
+                        <input type="text" value="{{$producto_en_tabla->tipo_madera}}" style="background-color:white" class="form-control" name="tipo_madera" id="tipo_madera" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label></b>
+                        <input type="text" value="{{$producto_en_tabla->tratamiento}}" style="background-color:white" class="form-control" name="tratamiento" id="tratamiento" readonly>
+                        @endif
+
+                        @if ($producto->familia=="Clavo")
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
+                        <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
+                        <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
+                        <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Longitud</label></b>
+                        <input type="text" value="{{$producto_en_tabla->longitud}}" style="background-color:white" class="form-control" name="longitud" id="longitud" readonly>
+                        @endif
+
+                        @if ($producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion")
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
+                        <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
+                        @endif
+
+                        @if ($producto->familia=="Tornillo")
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
+                        <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label></b>
+                        <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" style="background-color:white" class="form-control" name="tipo_rosca" id="tipo_rosca" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label></b>
+                        <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" style="background-color:white" class="form-control" name="separacion_rosca" id="separacion_rosca" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
+                        <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label></b>
+                        <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" style="background-color:white" class="form-control" name="rosca_parcial" id="rosca_parcial" readonly>
+                        <b><label for="recipient-name" class="col-form-label" style="color:black">Vastago</label></b>
+                        <input type="text" value="{{$producto_en_tabla->vastago}}" style="background-color:white" class="form-control" name="vastago" id="vastago" readonly>
+                        @endif
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+        </div>
+        <br>
+
+        <div id="links" class="d-flex justify-content-end">
+            {!! $productos_filtrados->links() !!}
+        </div>
+        
+        
+
+    </div>
+  </div>
+  @endif
     
   
 </main>
@@ -403,6 +615,7 @@
 <script>
   const textareas = document.getElementsByClassName('descripcion-producto');
   const botones = document.getElementsByClassName('btn-outline-secondary');
+
 
 
   function submit_formulario_familia()
@@ -426,7 +639,6 @@
     input_hidden_producto.value = producto_datalist;
   }
 
-  // function submit_formulario_filtro()
 </script>
 
 

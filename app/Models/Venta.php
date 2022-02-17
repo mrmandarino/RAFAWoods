@@ -15,6 +15,7 @@ class Venta extends Model
     protected $fillable = [
         'sucursal_id',
         'medio_de_pago',
+        'vendedor_rut',
         'cliente_rut',
         'total_venta',
     ];

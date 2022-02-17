@@ -19,10 +19,10 @@ class CreateOrdenComprasTable extends Migration
             $table->integer('total_oocc');
            
             $table->unsignedBigInteger('sucursal_id');
-            $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade')->onUpdate('cascade');
+            //$table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('proveedor_rut');
-            $table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade')->onUpdate('cascade');
+            //$table->foreign('proveedor_rut')->references('rut')->on('proveedors')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });
