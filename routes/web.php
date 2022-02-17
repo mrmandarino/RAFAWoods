@@ -6,8 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\EjecutivoController;
-
-
+use App\Http\Controllers\GraficoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,17 +31,21 @@ Route::get('/cover', function () {
     return view('cover.cover_home');
 });
 
-// Route::get('/ayudameme', function () {
-//     $id_producto_int=1;
-//     $familia = DB::table('productos')->where('id',$id_producto_int)->value('familia');
-//     $tabla_familia = strtolower($familia.'s');
-//     $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_int)->first();
-//     $producto_en_bruto = DB::table('productos')->where('id',$id_producto_int)->first(); 
-//     $producto_en_tabla = DB::table($tabla_familia)->where('producto_id',$id_producto_int)->first();
+Route::get('/ayudameme', function () {
+    
 
-//     return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
-// });
+    //return view('graficos.graficos');
+    return view('graficos.charts');
+});
 
+
+
+//Graficos
+Route::get('graficos', [GraficoController::class,'index'])->name('graficos');
+Route::get('/graficos/redireccion', [GraficoController::class,'redireccion'])->name('redireccion');
+Route::get('/graficos/grafico_anual/{ano}', [GraficoController::class,'grafico_anual'])->name('grafico_anual');
+Route::get('/graficos/grafico_mes/{fecha_mes}', [GraficoController::class,'grafico_mes'])->name('grafico_mes');
+Route::get('/graficos/grafico_semana/{fecha_semana}', [GraficoController::class,'grafico_semana'])->name('grafico_semana');
 
 //las conexiones estan listas, falta validaciones varias
 Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino
