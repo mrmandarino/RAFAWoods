@@ -18,6 +18,8 @@ class Venta extends Model
         'vendedor_rut',
         'cliente_rut',
         'total_venta',
+        'utilidad_bruta',
+        'con_factura',
     ];
 
 

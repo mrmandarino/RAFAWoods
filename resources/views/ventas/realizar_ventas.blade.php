@@ -41,27 +41,24 @@
           let element_quant_int = parseInt(element_quant.innerText);
           let new_element_quant = element_quant_int + parseInt(cantidad_producto);
           element_quant.innerText = new_element_quant;
-          
+          element_quant.value = new_element_quant;          
 
           //Actualizar precio total del item duplicado
           let element_price = elementsId[i].parentElement.querySelector('.shoppingCartItemPrice');
           let new_element_price = new_element_quant*parseInt(valor_producto);
           element_price.innerText = new_element_price;
+          element_price.value = new_element_price;
 
-
+          
           //Removiendo registro repetido de archivo JSON
           var json_arr = JSON.parse(json_final.value);
           var pos = 0;
           for(json_obj of json_arr){
             if(json_obj.producto_id == id_producto){
-              json_arr[pos].cantidad = new_element_quant;
-              json_arr[pos].total_producto = new_element_price;
-              pos = 0;
-              var json_arr_str = JSON.stringify(json_arr);
-              var contenido = json_arr_str.replace("[","");
-              var contenido = json_arr_str.replace("]","");
-              JSON_update(json_arr_str,contenido);
+              JSON_remove(id_producto,nombre_producto,json_arr[pos].cantidad,json_arr[pos].total_producto);
+              JSON_append(id_producto,nombre_producto,new_element_quant,new_element_price);
               update_total_compra();
+              quitar_producto();
               return;
             }
             pos++;
@@ -85,7 +82,7 @@
       shoppingCartRow.innerHTML = shoppingCartContent;
       shoppingCartItemsContainer.append(shoppingCartRow);
   
-      shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final);});
+      shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,valor_producto)});
       update_total_compra();
       JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
     }else{
@@ -97,10 +94,6 @@
   function update_total_compra() 
   {
     let total = 0;
-    // const total_compra = document.getElementById('total_compra');
-    // const total_compra_string = total_compra.value;
-    // const total_compra_int = parseInt(total_compra_string);
-    // total_compra.value =(total_compra_int + valor_final);
 
     const items_carrito = document.querySelectorAll('.shoppingCartItem');
     
@@ -115,18 +108,34 @@
     
     
   }
-  function removeShoppingCartItem(event,id_producto,nombre_producto,cantidad_producto,valor_final)
+  function removeShoppingCartItem(event,id_producto,nombre_producto,valor_producto)
   {
-    JSON_remove(id_producto,nombre_producto,cantidad_producto,valor_final);
+    const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
+    for(let i = 0; i<elementsId.length;i++)
+    {
+      if(elementsId[i].innerText == id_producto)
+      {
+        //Obtener valor de cantidad en carrito 
+        let element_quant = elementsId[i].parentElement.querySelector('.shoppingCartItemQuantity');
+        let element_quant_int = parseInt(element_quant.innerText);
+        //Obtener valor de precio final en carrito
+        let element_price = elementsId[i].parentElement.querySelector('.shoppingCartItemPrice');
+        let element_price_int = parseInt(element_price.innerText);
+
+        JSON_remove(id_producto,nombre_producto,element_quant_int,element_price_int);
+      }
+    }
+    
     const button_clicked = event.target;
     button_clicked.closest('.shoppingCartItem').remove();
     update_total_compra();
+    quitar_producto();
   }
 
   function check_stock() {
     var stock_js = document.getElementById('stock');
     var cantidad_js = document.getElementById('cantidad');
-    if(stock_js.value >= cantidad_js.value)
+    if(stock_js.value >= cantidad_js.value && stock_js.value>0)
     {
       return true;
     }
@@ -142,15 +151,27 @@
 
   {{-- Fila global 2 formularios y Tabla --}}
   <div class="row justify-content-evenly mt-3">
-
+    
     {{-- Fila 2 formularios --}}
-    <div class="row justify-content-evenly">
+    <div class="row justify-content-evenly align-content-center formularios">
+
+      @if (session()->has('correcto'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <h5 class="text-center" >{{ session()->get('correcto') }} </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      @endif
       {{-- Columna formulario agregar producto a la venta (IZQUIERDA) --}}
       <div class="col-6 card p-3 bg-light mt-3 col-form-izq">
 
         <div class="row mx-3 justify-content-center">
-          <div class="col-md-7 card form-izq ml-3">
-            <h4 class="text-center">🪵 Productos 🪵</h4>
+          <div class="col-md-4 card form-izq ml-3">
+            <h4 class="text-center">
+              <svg class="bi me-2" width="16" height="16">
+                <use xlink:href="#etiqueta_producto" />
+              </svg>
+                Productos 
+            </h4>
           </div>
         </div>
 
@@ -215,7 +236,7 @@
 
           <div class="row justify-content-evenly botones ">
             <div class="col-md-4">
-              <button type="button" class="btn btn-danger" onclick="quitar_producto()">Quitar Producto</button>
+              <button type="button" class="btn btn-danger" onclick="quitar_producto()" title="Esta opción reinicia el formulario">Quitar Producto</button>
             </div>
             <div class="col-md-4 ">
               <button type="button" id="boton_agregar_a_compra" class="btn btn-primary">Agregar a Venta</button>
@@ -231,8 +252,13 @@
       <div class="col-5 card p-3 bg-light col-form-der">
 
         <div class="row mx-3 justify-content-center">
-          <div class="col-md-7 card form-der ml-3">
-            <h4 class="text-center">💲 Venta 💲</h4>
+          <div class="col-md-4 card form-der ml-3">
+            <h4 class="text-center">
+              <svg class="bi me-2" width="20" height="20" style="margin: 0px;" >
+                <use xlink:href="#billete"/>
+              </svg>
+              Venta
+            </h4>
           </div>
         </div>
         <form action="{{route('ventas.store')}}"class="row g-3 my-auto col-form-der form-der" method="POST">
@@ -240,9 +266,13 @@
           <div class="col-md-12">
             <div class="input-group">
               <label for="total_compra" class="input-group-text">Total Venta:</label>
+              <input type="text" class="visually-hidden" name="rut_vendedor" value="{{Auth::user()->rut}}">
               <input class="form-control form-control-lg" type="text" name="total_compra" id="total_compra" value="0"
                 placeholder="El total es de:" aria-label=".form-control-lg example" readonly>
             </div>
+            @error('total_compra')
+            <small style="color:red;">*Debes escoger al menos un producto para la venta</small>
+            @enderror
           </div>
 
           <div class="col-6">
@@ -270,6 +300,9 @@
               <option value="3">T. Crédito 💳</option>
               <option value="4">Transferencia 🏦</option>
             </select>
+            @error('medio_pago')
+            <small style="color:red;">*Debes escoger un medio de pago</small>
+            @enderror
           </div>
           <div class="col-6">
             <div class="row">
@@ -290,9 +323,13 @@
             <div class="row mt-1">
               <div class="col">
                 <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onclick="con_factura()">
+                  <input class="form-check-input" type="checkbox" role="switch" name="con_factura" id="flexSwitchCheckDefault" onclick="con_factura()">
                   <label class="form-check-label" for="flexSwitchCheckDefault"data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta." id="documento_fiscal">Se Requiere Factura.</label>
                   <label data-bs-toggle="tooltip" data-bs-placement="right" title="Si la opción está desactivada la venta se hará con boleta."><small>📄</small></label>
+                  @if (session('incorrecto'))
+                  <br>
+                  <small style="color:red;">*{{session('incorrecto')}}</small>    
+                  @endif
                 </div>
 
               </div>
@@ -322,21 +359,17 @@
     <div class="row mt-3 px-5">
 
       <div class="col-md-12 card bg-light tabla-scroll">
-        <div class="row mx-3 mt-3 justify-content-center">
-          <div class="col-md-3 card form-izq ml-3">
-            <h4 class="text-center">🛒 Carrito 🛒</h4>
-          </div>
-        </div>
+        
 
 
         <table class="table table-hover pb-3">
-          <thead>
-            <tr>
-              <th class="text-center">Codigo</th>
-              <th class="text-center">nombre</th>
-              <th class="text-center">cantidad</th>
-              <th class="text-center">valor total</th>
-              <th class="text-center">descartar</th>
+          <thead >
+            <tr data-bs-toggle="tooltip" data-bs-placement="left" title="Aquí se agregan todos los productos que serán incluidos en la venta junto a su valor total por producto.">
+              <th class="text-center">Código</th>
+              <th class="text-center">Nombre</th>
+              <th class="text-center">Cantidad</th>
+              <th class="text-center">Valor Total</th>
+              <th class="text-center">Eliminar</th>
 
             </tr>
           </thead>
@@ -371,8 +404,11 @@
 
     var extraer ="";
     function JSON_remove(id,nombre,cantidad,final){
-      extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'}';
-      json_final = json_final.replace(extraer,"");
+      extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'},';
+      content = content.replace(extraer,"");
+      json_final = '['+ content +']';
+      json_final = json_final.replace("},]","}]");
+      json_final = json_final.replace("},,]","}]");
       json_final = json_final.replace("[,{","[{");
       json_final = json_final.replace("},,{","},{");
       var input_hidden = document.getElementById('hidden'); 
@@ -424,11 +460,13 @@
     var codigo_js = document.getElementById('codigo');
     var stock_js = document.getElementById('stock');
     var valor_unidad_js = document.getElementById('valor_unidad');
+    var cantidad_unidad_js = document.getElementById('cantidad');
 
     nombre_producto_js.value = "";
     codigo_js.value = "";
     stock_js.value = "";
     valor_unidad_js.value = "";
+    cantidad_unidad_js.value = "1";
   }
     
   
@@ -446,11 +484,13 @@
   $js_array = json_encode($productos_en_stock);
   echo "var productos_en_stock_js = ". $js_array . ";\n";
   ?>
+
+  
   
 
   function cargar_datos(){
 
-    
+    const shoppingCartItemsContainer = document.querySelector('.shoppingCartItemsContainer');
     
     //obtener id segun seleccion en datalist (producto)
     const productos = document.getElementById('datalist_productos');
@@ -463,6 +503,7 @@
     var stock_js = document.getElementById('stock');
     var cantidad_js = document.getElementById('cantidad');
     var valor_unidad_js = document.getElementById('valor_unidad');
+    var stock_js_dinamico = 0;
     
 
     var stock_p = 0;
@@ -477,23 +518,25 @@
       }
       
     }
-    
+
+    const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
+    for(let i = 0; i<elementsId.length;i++)
+    {
+      if(elementsId[i].innerText == id_producto)
+      {
+        let element_quant = elementsId[i].parentElement.querySelector('.shoppingCartItemQuantity');
+        let element_quant_int = parseInt(element_quant.innerText);
+        stock_js_dinamico = stock_js_dinamico + element_quant_int;
+      }
+    }
     codigo_js.value = id_producto;
-    stock_js.value = stock_p;
+    stock_js.value = stock_p - stock_js_dinamico;
     valor_unidad_js.value = valor_unidad_p;
     cantidad_js.setAttribute('max',stock_js.value); 
   }
   </script>
 
 
-  <div class="col-12 col-md-4 col-lg-3">
-                    <!--Mensaje de eliminado con exito -->
-                    @if (session()->has('correcto'))
-                        <div class="alert alert-success">
-                            {{ session()->get('correcto') }}
-                        </div><br>
-                    @endif
-  </div>
 </div>
 
 

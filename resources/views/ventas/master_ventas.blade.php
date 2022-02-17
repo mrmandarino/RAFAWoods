@@ -37,6 +37,7 @@
         .col-form-izq {
             height: 400px;
             align-self: center;
+            margin-bottom: 13px;
             
         }
         
@@ -59,7 +60,13 @@
 
         .form-der {
             display: flex;
-            justify-content: left;
+            justify-content: center;
+        }
+        
+        .formularios {
+            display: flex;
+            justify-content: center;
+            align-content: center;
         }
         
 
@@ -146,7 +153,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
               <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
+                <a href="#" class="nav-link text-white" aria-current="page">
                   <svg class="bi me-2" width="16" height="16">
                     <use xlink:href="#home" />
                   </svg>
@@ -159,6 +166,14 @@
                     <use xlink:href="#speedometer2" />
                   </svg>
                   Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link active">
+                  <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#dollar" />
+                  </svg>
+                  Realizar Venta
                 </a>
               </li>
               <li>
@@ -188,7 +203,7 @@
               <li>
                 <a href="#" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#basedatos" />
+                    <use xlink:href="#server" />
                   </svg>
                   Base de Datos
                 </a>
@@ -200,7 +215,7 @@
               <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mandarino</strong>
+                <strong>{{Auth::user()->nombre}}</strong>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">New project...</a></li>
