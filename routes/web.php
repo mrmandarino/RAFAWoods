@@ -48,36 +48,40 @@ Route::get('/graficos/grafico_mes/{fecha_mes}', [GraficoController::class,'grafi
 Route::get('/graficos/grafico_semana/{fecha_semana}', [GraficoController::class,'grafico_semana'])->name('grafico_semana');
 
 //las conexiones estan listas, falta validaciones varias
-Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino
-Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');//metodo de vista control_inv, ir a lista de precios - listo - mandarino
-Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');//metodo de vista control_inv, agregar nuevo producto - listo - mandarino
+// Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino
+// Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');//metodo de vista control_inv, ir a lista de precios - listo - mandarino
+// Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');//metodo de vista control_inv, agregar nuevo producto - listo - mandarino
 
-Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');//vista administrar_prod - listo - mandarino
-Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');//metodo de vista administrar_prod, actualizar stock - listo - mandarino
-Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');//metodo de vista administrar_prod, actualizar precio de venta - listo - mandarino
-Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');//metodo de vista administrar_prod, Editar producto - listo - mandarino
-Route::put('/productos/{id}/estado',[EjecutivoController::class,'cambiar_estado_producto'])->name('cambiar_estado');//metodo de vista administrar_prod, activa o desactiva un producto - listo - mandarino
+// Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');//vista administrar_prod - listo - mandarino
+// Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');//metodo de vista administrar_prod, actualizar stock - listo - mandarino
+// Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');//metodo de vista administrar_prod, actualizar precio de venta - listo - mandarino
+// Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');//metodo de vista administrar_prod, Editar producto - listo - mandarino
+
 
 
 
 //Inventario
-Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');
-Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
+Route::get('/inventario', [EjecutivoController::class,'index'])->name('ver_inventario');
+Route::post('/inventario/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
 Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
 Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');
 Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');
 Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');
 Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');
-Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');
+Route::get('/inventario/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');
 Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2'); //obsoleto
 Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');//obsoleto
+Route::put('/inventario/{id}/estado',[EjecutivoController::class,'cambiar_estado_producto'])->name('cambiar_estado');//metodo de vista administrar_prod, activa o desactiva un producto - listo - mandarino
 
+
+//Historico de ventas
 Route::get('/detalle/historico', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
 Route::get('/productos/visualizar', [EjecutivoController::class,'ver_productos'])->name('ver_productos');
 Route::get('/detalle/historico/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
 
 
+//Ventas
 Route::resource('ventas',VentaController::class);
 
 //Catálogo
@@ -88,6 +92,9 @@ Route::get('/catalogo/intermedio/filtrar/{familia}/{tipo_filtro}',[CatalogoContr
 Route::get('/catalogo/{familia}',[CatalogoController::class,'index_por_familia'])->name('ver_catalogo_por_familia');
 Route::get('/catalogo/detalle_producto/{nombre_producto}',[CatalogoController::class,'detalle_producto'])->name('ver_detalle_producto');
 Route::get('/catalogo/filtrar/{tipo_filtro}/{familia}',[CatalogoController::class,'index_filtro'])->name('ver_catalogo_filtrado');
+
+
+Route::get('/menu_bd',[AdminController::class,'menu'])->name('menu_bd');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/admin/visualizar/{tabla}',[AdminController::class, 'index'])->name('admin_visualizar_especifico');

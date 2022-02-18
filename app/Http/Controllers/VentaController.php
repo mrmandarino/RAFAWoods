@@ -117,7 +117,7 @@ class VentaController extends Controller
 
         return redirect()->route('ventas.create')->with('correcto','Venta realizada con éxito.');
     }
-}
+
 
     /**
      * Display the specified resource.

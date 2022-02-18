@@ -135,7 +135,51 @@
       display: flex;
       justify-content: right;
     }
-  </style>
+    .madera {
+      background-color: #007373;
+      color: white;
+    }
+    .madera:hover {
+      background-color: #006767;
+      color: white;
+    }
+
+    .informacion {
+      background-color: #009999;
+      color: white;
+    }
+    .informacion:hover {
+      background-color: #008989;
+      color: white;
+    }
+    
+    .provedor {
+      background-color: #004040;
+      color: white;
+    }
+    .provedor:hover {
+      background-color: #195353;
+      color: white;
+    }
+    
+    .usuarios {
+      background-color: #002626;
+      color: white;
+    }
+    .usuarios:hover {
+      background-color: #193b3b;
+      color: white;
+    }
+    .productos {
+      background-color: #009999;
+      color: white;
+    }
+    .productos:hover {
+      background-color: #008989;
+      color: white;
+    }
+
+    </style>
 
 </head>
 

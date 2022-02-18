@@ -33,6 +33,10 @@ use function GuzzleHttp\Promise\each;
 
 class AdminController extends Controller
 {
+    public function menu(){
+        return view('admin.menu_bd');
+    }
+
     /**
      * Display a listing of the resource.
      *
