@@ -158,6 +158,11 @@ class EjecutivoController extends Controller
                 'vastago' => $request->vastago]);
             }
         }
+        $request->validate([
+            'nombre' => ['required','max:255'],
+            'descripcion' => ['required','max:255'],
+            'familia' => ['required'],
+        ]);
         DB::table('productos')->where('id',$id)
         ->update(['nombre'=>$request->nombre,
         'descripcion'=>$request->descripcion,
@@ -190,6 +195,11 @@ class EjecutivoController extends Controller
     public function agregar_producto(Request $request)
     {
 
+        $request->validate([
+            'nombre' => ['required','max:255'],
+            'descripcion' => ['required','max:255'],
+            'familia' => ['required'],
+        ]);
         $producto_nuevo = Producto::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
@@ -318,6 +328,10 @@ class EjecutivoController extends Controller
             ]);
         }
 
+        $request->validate([
+            'stock' => ['required','integer', 'gt:0'],
+            'precio_compra' => ['required','integer', 'gt:0'],
+        ]);
         Localizacion::create([
             'sucursal_id' => 1,
             'producto_id' => $producto_nuevo->id,

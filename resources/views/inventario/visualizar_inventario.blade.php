@@ -335,7 +335,7 @@
 
                             <div>
                                 <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
-                                <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" step="100" required>
+                                <input type="number" class="form-control" name="precio_compra" id="precio_compra"  step="100" required>
                                 @error('precio_compra')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror

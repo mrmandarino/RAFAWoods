@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="row justify-content-center mt-3 form-arriba">
-        {{-- editar stock --}}
+        {{-- ingresar stock --}}
 
         <div class="row justify-content-center">
             {{-- Columna formulario agregar producto a la venta (IZQUIERDA) --}}
@@ -28,10 +28,10 @@
                     @method('GET')
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 for="nombre_producto" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema.">Productos en inventario</h5>
+                            <h5 for="nombre_producto" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, ingresar sus carácteristicas y activarlo o desactivarlo en el sistema.">Productos en inventario</h5>
                             <div class="input-group">
 
-                                <label for="nombre_producto" class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema.">Producto:</label>
+                                <label for="nombre_producto" class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, ingresar sus carácteristicas y activarlo o desactivarlo en el sistema.">Producto:</label>
                                 <input class="form-control" list="datalist_productos" name="nombre_producto" id="nombre_producto" placeholder="Escriba para buscar..." onchange="cargar_datos()">
                                 <input type="number" class="visually-hidden" name="id_producto_hidden" id="id_producto_hidden">
                                 <datalist id="datalist_productos">
@@ -69,6 +69,24 @@
 
         <div class="row justify-content-center mt-3">
             <div class="col-8 card p-3 bg-light mt-3 col-form-izq">
+                <div class="row">
+                    @if (session()->has('correcto_agregado'))
+                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                            {{ session()->get('correcto_agregado') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                    @endif
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                    @endif
+
+
+                     
+                </div>
                 <div class="row mx-3 justify-content-center">
                     <div class="col-md-7 card form-izq ml-3">
                         <h4 class="text-center">
@@ -142,26 +160,43 @@
                     <div class="modal-body">
                         <form action="{{route('agregar_producto')}}" method="POST">
                             @csrf
+                            @method('POST')
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" value="" required>
-                                <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
-                                <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
-                                <label for="recipient-name" class="col-form-label" style="color:black">Tipo de Producto</label>
-                                <select class="form-control select" name="familia" id="familia">
-                                    <option selected value="default">Seleccione un tipo de producto</option>
-                                    <option value="Tornillo">Tornillo</option>  
-                                    <option value="Plancha_construccion">Plancha de construcción</option>  
-                                    <option value="Techumbre">Techumbre</option>  
-                                    <option value="Mueble">Mueble</option>  
-                                    <option value="Madera">Madera</option>  
-                                    <option value="Clavo">Clavo</option>  
-                                </select>
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" value="" >
+                                    @error('nombre')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
+                                    <textarea class="form-control" name="descripcion" id="descripcion" ></textarea>
+                                    @error('descripcion')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Tipo de Producto</label>
+                                    <select class="form-control select" name="familia" id="familia">
+                                        <option selected value="default">Seleccione un tipo de producto</option>
+                                        <option value="Tornillo">Tornillo</option>  
+                                        <option value="Plancha_construccion">Plancha de construcción</option>  
+                                        <option value="Techumbre">Techumbre</option>  
+                                        <option value="Mueble">Mueble</option>  
+                                        <option value="Madera">Madera</option>  
+                                        <option value="Clavo">Clavo</option>  
+                                    </select>
+                                    @error('familia')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
     
                                 <div class="form-group tornillos_clavos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Cabeza</label>
-                                        <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" required>
+                                        <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" >
                                         @error('cabeza')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -171,7 +206,7 @@
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Tipo rosca</label>
-                                        <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5" required> 
+                                        <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5" > 
                                             <option value="total">Total</option>  
                                             <option value="parcial">Parcial</option> 
                                         </select>
@@ -181,7 +216,7 @@
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Separación rosca</label>
-                                        <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" required>
+                                        <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" >
                                         @error('separacion_rosca')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -191,14 +226,14 @@
                                 <div class="form-group tornillos_clavos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Punta</label>
-                                        <input id="punta" name="punta" type="text" class="form-control" tabindex="7" required>
+                                        <input id="punta" name="punta" type="text" class="form-control" tabindex="7" >
                                     </div>
                                 </div>
     
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Rosca parcial</label>
-                                        <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" required>
+                                        <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" >
                                         @error('rosca_parcial')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -208,7 +243,7 @@
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Vastago</label>
-                                        <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" required>
+                                        <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" >
                                         @error('vastago')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -218,14 +253,14 @@
                                 <div class="form-group material">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Material</label>
-                                        <input id="material" name="material" type="text" class="form-control" tabindex="10" required>
+                                        <input id="material" name="material" type="text" class="form-control" tabindex="10" >
                                     </div>
                                 </div>
     
                                 <div class="form-group medidas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Alto</label>
-                                        <input id="alto" name="alto" type="number" class="form-control" tabindex="11" required>
+                                        <input id="alto" name="alto" type="number" class="form-control" tabindex="11" >
                                         @error('alto')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -235,7 +270,7 @@
                                 <div class="form-group medidas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Ancho</label>
-                                        <input id="ancho" name="ancho" type="number" class="form-control" tabindex="12" required>
+                                        <input id="ancho" name="ancho" type="number" class="form-control" tabindex="12" >
                                         @error('ancho')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -245,7 +280,7 @@
                                 <div class="form-group medidas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Largo</label>
-                                        <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" required>
+                                        <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" >
                                         @error('largo')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -255,28 +290,28 @@
                                 <div class="form-group muebles">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Acabado</label>
-                                        <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" required>
+                                        <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" >
                                     </div>
                                 </div>
     
                                 <div class="form-group maderas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Tipo madera</label>
-                                        <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" required>
+                                        <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" >
                                     </div>
                                 </div>
     
                                 <div class="form-group maderas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Tratamiento</label>
-                                        <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" required>
+                                        <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" >
                                     </div>
                                 </div>
     
                                 <div class="form-group clavos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Longitud</label>
-                                        <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" required>
+                                        <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" >
                                         @error('longitud')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -285,7 +320,7 @@
     
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Stock</label>
-                                    <input type="number" class="form-control" name="stock" id="stock" required>
+                                    <input type="number" class="form-control" name="stock" id="stock" step="10" >
                                     @error('stock')
                                     <small style="color:red;">*{{$message}}</small>
                                     @enderror
@@ -293,7 +328,7 @@
     
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
-                                    <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" step="100" required>
+                                    <input type="number" class="form-control" name="precio_compra" id="precio_compra" step="100" >
                                     @error('precio_compra')
                                     <small style="color:red;">*{{$message}}</small>
                                     @enderror
@@ -303,7 +338,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary"
-                                    onclick="return confirm('¿Estás seguro del stock ingresado?')">Confirmar</button>
+                                    onclick="return confirm('¿Estás seguro de los datos ingresados?')">Confirmar</button>
                             </div>
                         </form>
                     </div>
