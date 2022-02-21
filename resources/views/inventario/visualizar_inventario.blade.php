@@ -98,6 +98,63 @@
                                 {{ session()->get('correcto_eliminado') }}
                             </div><br>
                         @endif
+
+                        {{-- Mensaje validacion edicion producto --}}
+                        @error('alto')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+
+                        @error('ancho')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+                       
+                        @error('largo')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+                        
+                        @error('cabeza')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+                        
+                        @error('longitud')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+                        
+                        @error('separacion_rosca')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+                        
+                        @error('rosca_parcial')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
+                        
+                        @error('vastago')
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                        @enderror
                     </div>        
                 </div>
                 <div class="row justify-content-between">
@@ -144,83 +201,146 @@
 
                             
                             <div class="form-group tornillos_clavos">
-                                <label for="" class="form-label" style="color:black">Cabeza</label>
-                                <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" value="{{old('cabeza')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Cabeza</label>
+                                    <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" required>
+                                    @error('cabeza')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group tornillos">
-                                <label for="" class="form-label" style="color:black">Tipo rosca</label>
-                                <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5"> 
-                                    <option value="total" {{ old('tipo_rosca')=="total" ? 'selected' : ''  }}>Total</option>  
-                                    <option value="parcial" {{ old('tipo_rosca')=="parcial" ? 'selected' : ''  }}>Parcial</option> 
-                                </select>
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Tipo rosca</label>
+                                    <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5" required> 
+                                        <option value="total">Total</option>  
+                                        <option value="parcial">Parcial</option> 
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-group tornillos">
-                                <label for="" class="form-label" style="color:black">Separación rosca</label>
-                                <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" value="{{old('separacion_rosca')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Separación rosca</label>
+                                    <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" required>
+                                    @error('separacion_rosca')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group tornillos_clavos">
-                                <label for="" class="form-label" style="color:black">Punta</label>
-                                <input id="punta" name="punta" type="text" class="form-control" tabindex="7" value="{{old('punta')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Punta</label>
+                                    <input id="punta" name="punta" type="text" class="form-control" tabindex="7" required>
+                                </div>
                             </div>
 
                             <div class="form-group tornillos">
-                                <label for="" class="form-label" style="color:black">Rosca parcial</label>
-                                <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" value="{{old('rosca_parcial')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Rosca parcial</label>
+                                    <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" required>
+                                    @error('rosca_parcial')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group tornillos">
-                                <label for="" class="form-label" style="color:black">Vastago</label>
-                                <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" value="{{old('vastago')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Vastago</label>
+                                    <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" required>
+                                    @error('vastago')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group material">
-                                <label for="" class="form-label" style="color:black">Material</label>
-                                <input id="material" name="material" type="text" class="form-control" tabindex="10" value="{{old('material')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Material</label>
+                                    <input id="material" name="material" type="text" class="form-control" tabindex="10" required>
+                                </div>
                             </div>
 
                             <div class="form-group medidas">
-                                <label for="" class="form-label" style="color:black">Alto</label>
-                                <input id="alto" name="alto" type="number" step="0.01" class="form-control" tabindex="11" value="{{old('alto')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Alto</label>
+                                    <input id="alto" name="alto" type="number" class="form-control" tabindex="11" required>
+                                    @error('alto')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group medidas">
-                                <label for="" class="form-label" style="color:black">Ancho</label>
-                                <input id="ancho" name="ancho" type="number" step="0.01" class="form-control" tabindex="12" value="{{old('ancho')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Ancho</label>
+                                    <input id="ancho" name="ancho" type="number" class="form-control" tabindex="12" required>
+                                    @error('ancho')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group medidas">
-                                <label for="" class="form-label" style="color:black">Largo</label>
-                                <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" value="{{old('largo')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Largo</label>
+                                    <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" required>
+                                    @error('largo')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="form-group muebles">
-                                <label for="" class="form-label" style="color:black">Acabado</label>
-                                <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" value="{{old('acabado')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Acabado</label>
+                                    <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" required>
+                                </div>
                             </div>
 
                             <div class="form-group maderas">
-                                <label for="" class="form-label" style="color:black">Tipo madera</label>
-                                <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" value="{{old('tipo_madera')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Tipo madera</label>
+                                    <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" required>
+                                </div>
                             </div>
 
                             <div class="form-group maderas">
-                                <label for="" class="form-label" style="color:black">Tratamiento</label>
-                                <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" value="{{old('tratamiento')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Tratamiento</label>
+                                    <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" required>
+                                </div>
                             </div>
 
                             <div class="form-group clavos">
-                                <label for="" class="form-label" style="color:black">Longitud</label>
-                                <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" value="{{old('longitud')}}">
+                                <div>
+                                    <label for="" class="form-label" style="color:black">Longitud</label>
+                                    <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" required>
+                                    @error('longitud')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
                             </div>
 
-                            <label for="recipient-name" class="col-form-label" style="color:black">Stock</label>
-                            <input type="number" class="form-control" name="stock" id="stock" min="1" required>
+                            <div>
+                                <label for="recipient-name" class="col-form-label" style="color:black">Stock</label>
+                                <input type="number" class="form-control" name="stock" id="stock" required>
+                                @error('stock')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
 
-                            <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
-                            <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" step="100" required>
+                            <div>
+                                <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
+                                <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" step="100" required>
+                                @error('precio_compra')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
