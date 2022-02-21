@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <form class="row g-3 mt-3 col-form-izq form-izq" action="{{route('ver_detalle')}}" method="POST">
+                <form class="row g-3 mt-3 col-form-izq form-izq" action="{{route('cargar_administrar')}}" method="POST">
                     @csrf
                     @method('GET')
                     <div class="row">

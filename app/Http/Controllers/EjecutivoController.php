@@ -26,7 +26,6 @@ class EjecutivoController extends Controller
         $productos = DB::table('productos')->get();
         return view('inventario.control_inv',compact('productos'));
     }
-
     //Redireccionamiento al portal de los precios de los productos del sistema.
     public function index_precios()
     {
@@ -35,62 +34,29 @@ class EjecutivoController extends Controller
         return view('inventario.portal_precios',compact('productos_en_bruto','productos_en_stock'));
     }
 
-
-    //Método responsivo para realizar dropdowns dinámicos en la selección de producto en el inventario.
-    // public function familias(Request $request){
-        
-    //     if(isset($request->texto)){
-    //         $familias = Producto::where('Familia',$request->texto)->get();
-    //         return response()->json(
-    //             [
-    //                 'lista' => $familias,
-    //                 'success' => true
-    //             ]
-    //             );
-    //     }else{
-    //         return response()->json(
-    //             [
-    //                 'success' => false
-    //             ]
-    //             );
-
-    //     }
-
-    // }
-
-    //con el id de producto se puede detectar todo lo que se necesita:familia,productos, localizacions
-    public function detalle_producto(Request $request)
+    public function cargar_administrar(Request $request)//entrega el id para cargar la pagina para administrar un producto
     {   
         $id_producto_str = $request->id_producto_hidden;
         $id_producto_int = intval($id_producto_str);
 
-        if($request->action != null){//para verificar desde donde se llama a este metodo, se verifica el contenido de action de la request, si action tiene un valor es porque la request viene desde la vista inicial, si action es null es porque la request viene de detalle de producto luego de cambiar el stock
-            
-            //$tipo_submit = $request->input('action');
-            $familia = DB::table('productos')->where('id',$id_producto_int)->value('familia');
-            $tabla_familia = EjecutivoController::detectar_nombre($familia);
-            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_int)->first();
-            $producto_en_bruto = DB::table('productos')->where('id',$id_producto_int)->first(); 
-            $producto_en_tabla = DB::table($tabla_familia)->where('producto_id',$id_producto_int)->first();
-                        
-            return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
-
-        }
-        else{
-
-            $id_producto_redirect=$request->id_redirect;
-            
-            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
-            $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
-            $familia = DB::table('productos')->where('id',$id_producto_redirect)->value('familia');
-            $tabla_familia = EjecutivoController::detectar_nombre($familia);
-            $producto_en_tabla = DB::table($tabla_familia)->where('producto_id',$id_producto_redirect)->first();
-            return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
-
-        }
-        
+        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto_int]);
         
     }
+
+    //con el id de producto se puede detectar todo lo que se necesita:familia,productos, localizacions
+    public function detalle_producto($id_redirect)
+    {   
+        
+        $id_producto_redirect=$id_redirect;
+        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
+        $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
+        $familia = DB::table('productos')->where('id',$id_producto_redirect)->value('familia');
+        $tabla_familia = EjecutivoController::detectar_nombre($familia);
+        $producto_en_tabla = DB::table($tabla_familia)->where('producto_id',$id_producto_redirect)->first();
+        return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
+
+    }
+    
 
     public function detalle_producto_stock_actualizado(Request $request,$id)
     {   
@@ -104,7 +70,7 @@ class EjecutivoController extends Controller
     }
 
     public function actualizar_producto(Request $request,$id)
-    {
+    {   
         $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
         if($producto_en_bruto->familia == "Madera")
         {
