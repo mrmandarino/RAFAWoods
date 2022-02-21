@@ -7,7 +7,7 @@
     <div class="div mt-2">
 
         <h4 class="text-center">Año: {{$ano}}</h4>
-        <h5 class="text-center">Venta total del año: ${{$total_ano_separador}}</h5>
+        <h5 class="text-center">Venta del año: ${{$total_ano_separador}} | Utilidad bruta del año: ${{$total_utilidad_separador}}</h5>
         <input type="text" class="visually-hidden" id="hidden_ano" value="{{$datos_json}}">
     </div>
     <div>
@@ -46,6 +46,12 @@
         data: datos_json_obj.ventas_totales,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
+        tension: 0.2
+    },{
+        label: 'Utilidad bruta total por día',
+        data: datos_json_obj.utilidad_totales,
+        fill: false,
+        borderColor: 'rgb(153, 102, 255)',
         tension: 0.2
     }]
     };

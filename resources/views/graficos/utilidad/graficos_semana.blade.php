@@ -7,7 +7,7 @@
     <div class="div mt-2">
 
         <h4 class="text-center">Semana del año: {{$year}} mes: {{$month}} día: {{$day}}</h4>
-        <h5 class="text-center">Venta de la semana: ${{$total_semana_separador}} | Utilidad bruta de la semana: ${{$total_utilidad_separador}}</h5>
+        <h5 class="text-center">Venta total de la semana: ${{$total_semana_separador}}</h5>
         <input type="text" class="visually-hidden" id="hidden" value="{{$datos_json}}">
     </div>
     <div>
@@ -20,7 +20,7 @@
     var input_hidden = document.getElementById('hidden');
     var datos_json_str = input_hidden.value;
     var datos_json_obj = JSON.parse(input_hidden.value);
-    console.log(datos_json_obj);
+   
    
     
 </script>
@@ -41,21 +41,41 @@
     datasets: [{
         label: 'Total de ventas por día',
         data: [datos_json_obj.ventas_totales.lunes, datos_json_obj.ventas_totales.martes, datos_json_obj.ventas_totales.miercoles, datos_json_obj.ventas_totales.jueves, datos_json_obj.ventas_totales.viernes, datos_json_obj.ventas_totales.sabado, datos_json_obj.ventas_totales.domingo],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.2
-    },{
-        label: 'Utilidad bruta total por día',
-        data: [datos_json_obj.total_utilidad_semana.lunes, datos_json_obj.total_utilidad_semana.martes, datos_json_obj.total_utilidad_semana.miercoles, datos_json_obj.total_utilidad_semana.jueves, datos_json_obj.total_utilidad_semana.viernes, datos_json_obj.total_utilidad_semana.sabado, datos_json_obj.total_utilidad_semana.domingo],
-        fill: false,
-        borderColor: 'rgb(153, 102, 255)',
-        tension: 0.2
+        backgroundColor: [
+        
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(54, 162, 235, 0.2)'
+        
+        ],
+        borderColor: [
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)',
+        'rgb(54, 162, 235)'
+        
+        ],
+        borderWidth: 1
     }]
     };
 
     const config = {
-    type: 'line',
+    type: 'bar',
     data: data,
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
+    },
     };
 </script>
 
