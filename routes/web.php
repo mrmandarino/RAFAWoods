@@ -47,18 +47,11 @@ Route::get('/graficos/grafico_anual/{ano}', [GraficoController::class,'grafico_a
 Route::get('/graficos/grafico_mes/{fecha_mes}', [GraficoController::class,'grafico_mes'])->name('grafico_mes');
 Route::get('/graficos/grafico_semana/{fecha_semana}', [GraficoController::class,'grafico_semana'])->name('grafico_semana');
 
-//las conexiones estan listas, falta validaciones varias
-// Route::get('/productos', [EjecutivoController::class,'index'])->name('ver_inventario');//vista control_inv - listo - mandarino
-// Route::get('/productos/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');//metodo de vista control_inv, ir a lista de precios - listo - mandarino
-// Route::post('/productos/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');//metodo de vista control_inv, agregar nuevo producto - listo - mandarino
-
-// Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');//vista administrar_prod - listo - mandarino
-// Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');//metodo de vista administrar_prod, actualizar stock - listo - mandarino
-// Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');//metodo de vista administrar_prod, actualizar precio de venta - listo - mandarino
-// Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');//metodo de vista administrar_prod, Editar producto - listo - mandarino
 
 
 
+//Lobby
+Route::get('/inicio',function(){return view('login.lobby');})->name('inicio');
 
 //Inventario
 Route::get('/inventario', [EjecutivoController::class,'index'])->name('ver_inventario');

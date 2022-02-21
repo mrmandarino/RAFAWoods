@@ -1,4 +1,4 @@
-@extends('ventas.master_producto')
+@extends('inventario.master_inv')
 @section('content')
 @include('ventas.partials.iconos')
 

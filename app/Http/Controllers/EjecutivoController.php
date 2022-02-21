@@ -30,9 +30,8 @@ class EjecutivoController extends Controller
     //Redireccionamiento al portal de los precios de los productos del sistema.
     public function index_precios()
     {
-        $productos_en_bruto = DB::table('productos')->get();
-        $productos_en_stock = DB::table('localizacions')->get();
-        return view('inventario.portal_precios',compact('productos_en_bruto','productos_en_stock'));
+        $datos=DB::table('productos')->get();
+        return view('ventas.visualizar_producto',compact('datos'));
     }
 
 
@@ -307,8 +306,10 @@ class EjecutivoController extends Controller
     }
 
     public function ver_productos(){;
-        $datos=DB::table('productos')->get();
-        return view('ventas.visualizar_producto',compact('datos'));
+
+        $productos_en_bruto = DB::table('productos')->get();
+        $productos_en_stock = DB::table('localizacions')->get();
+        return view('inventario.portal_precios',compact('productos_en_bruto','productos_en_stock'));
     }
 
 

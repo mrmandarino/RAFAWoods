@@ -96,17 +96,7 @@
                             </a>
                             <a href="{{route('ver_detalle_precios')}}" class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Consultar Precios
-                                        <svg class="bi me-2" width="16" height="16">
-                                            <use xlink:href="#consultar_precios" />
-                                        </svg>
-                                    </h5>
-                                </div>
-                                <p class="mb-1">Ver lista de productos y sus precios.</p>
-                            </a>
-                            <a href="{{route('ver_detalle_precios')}}" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Ver Inventario y Stock
+                                    <h5 class="mb-1">Consultar productos
                                         <svg class="bi me-2" width="16" height="16">
                                             <use xlink:href="#ver_inventario" />
                                         </svg>

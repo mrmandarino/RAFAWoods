@@ -8,20 +8,12 @@
 
 
 
-  <title>Gráficos</title>
+  <title>Inicio</title>
 
-  <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('js/sidebars.js') }}"></script>
-  <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.min.css') }}">
-  <!-- estilos dashboard  -->
-
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -42,15 +34,9 @@
       overflow: scroll;
     }
 
-    .col-form-izq {
+    .form-arriba {
       height: 400px;
       align-self: center;
-
-    }
-
-    .form-izq {
-      display: flex;
-      justify-content: center;
     }
 
     .botones {
@@ -138,8 +124,9 @@
       justify-content: right;
     }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-</head>
+</head>             
 
 <body>
   <main>
@@ -153,7 +140,7 @@
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="{{route('inicio')}}" class="nav-link text-white" aria-current="page">
+          <a href="{{route('inicio')}}" class="nav-link active" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
@@ -161,7 +148,7 @@
           </a>
         </li>
         <li>
-          <a href="{{route('graficos')}}" class="nav-link active">
+          <a href="{{route('graficos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2" />
             </svg>
@@ -239,9 +226,22 @@
 
   </main>
 
+  <script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $(".dropdown-menu li").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+  </script>
 
 
 
+
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/sidebars.js') }}"></script>
 </body>
 
 </html>

@@ -45,22 +45,25 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $tipo_usuario = DB::table('users')->where('rut',$request->rut)->value('tipo_usuario');
-        if($tipo_usuario == 1){
-            return view('dashboard');
-        }
+        // if($tipo_usuario == 1){
+        //     return view('admin.menu_bd');
+        // }
 
-        if($tipo_usuario == 2){
-            $tipo_trabajador = DB::table('trabajadors')->where('usuario_rut',$request->rut)->value('tipo_trabajador');
-            if($tipo_trabajador == 1){
-                return view('inventario.portal_inventario');
-            }else{
-                return view('ventas.portal_ventas');
-            }
-        }
+        // if($tipo_usuario == 2){
+        //     $tipo_trabajador = DB::table('trabajadors')->where('usuario_rut',$request->rut)->value('tipo_trabajador');
+        //     if($tipo_trabajador == 1){
+        //         $productos = DB::table('productos')->get();
+        //         return view('inventario.control_inv',compact('productos'));
+        //     }else{
+        //         return view('ventas.portal_ventas');
+        //     }
+        // }
 
         if($tipo_usuario == 3){
             return view('catalogo.portal_catalogo');
         }
+
+        return redirect()->route('inicio');
         //return redirect()->intended(RouteServiceProvider::HOME);
     }
 
