@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    
-    
-    <title>Gráficos</title>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+  <title>Gráficos</title>
+
   <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>
@@ -20,6 +21,7 @@
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.min.css') }}">
   <!-- estilos dashboard  -->
+
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -130,7 +132,7 @@
     .shopping-cart-total {
       min-height: 96px;
     }
-    
+
     .row-carrito {
       display: flex;
       justify-content: right;
@@ -199,7 +201,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="{{route('menu_bd')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#server" />
             </svg>
@@ -232,7 +234,7 @@
   </main>
 
 
- 
+
 
 </body>
 

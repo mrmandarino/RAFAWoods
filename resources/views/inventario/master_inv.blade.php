@@ -126,11 +126,11 @@
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-</head>
+</head>             
 
 <body>
   <main>
-    <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 280px ;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 230px ;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32">
           <use xlink:href="#accesos" />
@@ -148,15 +148,15 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="{{route('graficos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2" />
             </svg>
-            Dashboard
+            Gráficos
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="{{route('ventas.create')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#dollar" />
             </svg>
@@ -164,7 +164,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="{{route('ver_historico')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#table" />
             </svg>
@@ -172,7 +172,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="{{route('ver_productos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#grid" />
             </svg>
@@ -188,7 +188,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href="{{route('menu_bd')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#server" />
             </svg>

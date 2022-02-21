@@ -203,7 +203,7 @@
           </a>
         </li>
         <li>
-          <a href="{{route('graficos')}}" class="nav-link active">
+          <a href="{{route('graficos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2" />
             </svg>
@@ -243,7 +243,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white">
+          <a href=""{{route('menu_bd')}}"" class="nav-link active">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#server" />
             </svg>
