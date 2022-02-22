@@ -57,6 +57,7 @@
                             <th class="text-center text-black">Nombre</th>
                             <th class="text-center text-black">Stock</th>
                             <th class="text-center text-black">Precio (IVA incluido)</th>
+							<th> Ver detalle </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y">
@@ -68,7 +69,105 @@
                                 <td class="text-center text-black">{{$producto_en_bruto->nombre}}</td>
                                 <td class="text-center text-black">{{$producto_en_stock->stock}}</td>
                                 <td class="text-center text-black">${{($producto_en_stock->precio_compra+($producto_en_stock->precio_compra*0.19))}}</td>
+								<td>
+									<a data-bs-toggle="modal" data-bs-target="#modal_aux{{$producto_en_bruto->id}}" class="btn btn-info" type="button">Ver detalle</a> 
+								</td>
                                 </tr>
+								<div class="modal fade" id="modal_aux{{$producto_en_bruto->id}}" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+									<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel" style="color:black"> {{$producto_en_bruto->nombre}} </h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
+												<textarea class="form-control" name="descripcion" id="descripcion" required disabled>{{$producto_en_bruto->descripcion}}</textarea>
+
+												@if ($producto_en_bruto->familia == "Tornillo")
+													@php($tornillo=App\Models\Tornillo::find($producto_en_bruto->id))
+													<label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+													<input type="text" value="{{$tornillo->cabeza}}" class="form-control" name="cabeza" id="cabeza" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Tipo rosca</label>
+													<input type="text" value="{{$tornillo->tipo_rosca}}" class="form-control" name="tipo_rosca" id="tipo_rosca" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Separación rosca</label>
+													<input type="text" value="{{$tornillo->separacion_rosca}}" class="form-control" name="separacion_rosca" id="separacion_rosca" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
+													<input type="text" value="{{$tornillo->punta}}" class="form-control" name="punta" id="punta" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Rosca parcial</label>
+													<input type="text" value="{{$tornillo->rosca_parcial}}" class="form-control" name="rosca_parcial" id="rosca_parcial" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Vástago</label>
+													<input type="text" value="{{$tornillo->vastago}}" class="form-control" name="vastago" id="vastago" required disabled>
+
+												@elseif ($producto_en_bruto->familia == "Mueble") 
+													@php($mueble=App\Models\Mueble::find($producto_en_bruto->id))
+													<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+													<input type="text" value="{{$mueble->material}}" class="form-control" name="material" id="material" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Acabado</label>
+													<input type="text" value="{{$mueble->acabado}}" class="form-control" name="acabado" id="acabado" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+													<input type="text" value="{{$mueble->alto}}" class="form-control" name="alto" id="alto" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+													<input type="text" value="{{$mueble->ancho}}" class="form-control" name="ancho" id="ancho" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+													<input type="text" value="{{$mueble->largo}}" class="form-control" name="largo" id="largo" required disabled> 
+
+												@elseif($producto_en_bruto->familia == "Plancha_construccion")
+													@php($plancha_construccion=App\Models\Plancha_construccion::find($producto_en_bruto->id)) 
+													<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+													<input type="text" value="{{$plancha_construccion->material}}" class="form-control" name="material" id="material" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+													<input type="text" value="{{$plancha_construccion->alto}}" class="form-control" name="alto" id="alto" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+													<input type="text" value="{{$plancha_construccion->ancho}}" class="form-control" name="ancho" id="ancho" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+													<input type="text" value="{{$plancha_construccion->largo}}" class="form-control" name="largo" id="largo" required disabled> 
+
+												@elseif ($producto_en_bruto->familia == "Techumbre")
+													@php($techumbre=App\Models\Techumbre::find($producto_en_bruto->id))
+													<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+													<input type="text" value="{{$techumbre->material}}" class="form-control" name="material" id="material" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+													<input type="text" value="{{$techumbre->alto}}" class="form-control" name="alto" id="alto" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+													<input type="text" value="{{$techumbre->ancho}}" class="form-control" name="ancho" id="ancho" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+													<input type="text" value="{{$techumbre->largo}}" class="form-control" name="largo" id="largo" required disabled> 
+
+												@elseif($producto_en_bruto->familia == "Madera")
+													@php($madera=App\Models\Madera::find($producto_en_bruto->id))
+													<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+													<input type="text" value="{{$madera->alto}}" class="form-control" name="alto" id="alto" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+													<input type="text" value="{{$madera->ancho}}" class="form-control" name="ancho" id="ancho" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+													<input type="text" value="{{$madera->largo}}" class="form-control" name="largo" id="largo" required disabled> 
+													<label for="recipient-name" class="col-form-label" style="color:black">Tipo de madera</label>
+													<input type="text" value="{{$madera->tipo_madera}}" class="form-control" name="tipo_madera" id="tipo_madera" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label>
+													<input type="text" value="{{$madera->tratamiento}}" class="form-control" name="tratamiento" id="tratamiento" required disabled>
+
+												@elseif($producto_en_bruto->familia == "Clavo") 
+													@php($clavo=App\Models\Clavo::find($producto_en_bruto->id))
+													<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+													<input type="text" value="{{$clavo->material}}" class="form-control" name="material" id="material" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+													<input type="text" value="{{$clavo->cabeza}}" class="form-control" name="cabeza" id="cabeza" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
+													<input type="text" value="{{$clavo->punta}}" class="form-control" name="punta" id="punta" required disabled>
+													<label for="recipient-name" class="col-form-label" style="color:black">Longitud</label>
+													<input type="text" value="{{$clavo->longitud}}" class="form-control" name="longitud" id="longitud" required disabled> 
+
+												@endif
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+												</div> 
+
+											</div>
+										</div>
+									</div>
+								</div>
+								
                                 @endif    
                                 @endforeach
                             
@@ -77,6 +176,8 @@
                 </table>
         </div>
     </div>
+
+
 
 	<script src="/js/bootstrap.bundle.min.js"></script>
     
