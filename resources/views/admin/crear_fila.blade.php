@@ -51,7 +51,7 @@
 
 @section('contenido')
 <h2>CREAR REGISTROS</h2>
-<form action={{route('admin_guardar_datos',$tabla)}} method="POST">
+<form action={{route('admin_guardar_datos',$tabla)}} method="POST" enctype="multipart/form-data">
     @csrf
     @if ($tabla == 'usuarios') 
         @php($sucursales=DB::table('inventarios')->get())
@@ -899,9 +899,15 @@
         @php($productos=DB::table('productos')->get())
         <div class="mb-3">
             <label for="" class="form-label">Url</label>
-            <input id="url" name="url" type="text" class="form-control" tabindex="1" value="{{old('url')}}">
+
+            <input id="url" name="url" type="file" class="form-control" tabindex="1" accept="image/*">
+
             @error('url')
                 <small style="color:red;">*{{$message}}</small>
+            @enderror
+            <input id="existe_imagen" name="existe_imagen" type="hidden" class="form-control" tabindex="3" value="no">
+            @error('existe_imagen')
+                <small style="color:red;">*Ya existe una imagen con ese nombre en la base de datos.</small>
             @enderror
         </div>
         
