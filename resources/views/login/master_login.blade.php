@@ -163,7 +163,6 @@
             Realizar Venta
           </a>
         </li>
-        @if (Auth::user()->tipo_usuario == 1 || Auth::user()->tipo_usuario == 2)
         <li>
           <a href="{{route('ver_historico')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -172,7 +171,6 @@
             Histórico de Ventas
           </a>
         </li>
-        @endif
         <li>
           <a href="{{route('ver_productos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -180,8 +178,7 @@
             </svg>
             Productos
           </a>
-        </li>
-        @if (Auth::user()->tipo_usuario == 1 || Auth::user()->tipo_usuario == 2)    
+        </li>   
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -190,8 +187,6 @@
             Inventario
           </a>
         </li>
-        @endif
-        @if(Auth::user()->tipo_usuario == 1)
         <li>
           <a href="{{route('menu_bd')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -200,7 +195,6 @@
             Base de Datos
           </a>
         </li>
-        @endif
       </ul>
       <hr>
 

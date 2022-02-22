@@ -20,7 +20,6 @@ class CreateVentasTable extends Migration
             $table->foreign('sucursal_id')->references('id')->on('inventarios')->onDelete('set null');
             $table->enum('medio_de_pago',[Venta::efectivo, Venta::tarjeta_debito,Venta::tarjeta_credito,Venta::transferencia]);
             $table->string('vendedor_rut');
-            //$table->foreign('vendedor_rut')->references('usuario_rut')->on('trabajadors')->onDelete('set null');
             $table->string('cliente_rut')->nullable();
             //$table->foreign('cliente_rut')->references('usuario_rut')->on('clientes')->onDelete('set null');
             $table->integer('total_venta');

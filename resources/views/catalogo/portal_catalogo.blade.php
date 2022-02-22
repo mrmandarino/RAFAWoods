@@ -74,10 +74,7 @@
       
       .ajustaranteprimas{
         position: absolute;  
-        top: 50%;
-        bottom: 50%;
-        left: 50%;
-        right: 50%;
+        opacity: 0.2;
       }
 
     </style>
@@ -119,6 +116,7 @@
 </header>
 
 <main>
+  
 
   {{-- Datalist de familia de productos --}}
   <section class="py-5 text-center container">
@@ -151,9 +149,6 @@
       </div>
     </form>
 
-      {{-- <button name="action" value="filtrar_precio" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por precio</button>
-      <button name="action" value="filtrar_alfabetico" type="submit" class="btn btn-sm btn-outline-secondary">Filtrar por orden alfabético</button> --}}
-    
       {{-- Filtro por precio --}}
       <div class="input-group mb-3">
         <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar por precio</label>
@@ -178,8 +173,7 @@
           <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" class="dropdown-item" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_alfb"])}}">Descendente</a></li>
         </ul>
       </div>
-
-
+    
   </section>
 
 
@@ -211,19 +205,15 @@
                           <div class="btn-group">
                               <button id="{{$producto->id}}" type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}">Ver Detalle</button>
                           </div>
-                          @foreach ($productos_en_stock as $producto_en_stock)
-                          @if ($producto_en_stock->producto_id == $producto->id)
                           @php
-                            $numero_formateado = number_format($producto_en_stock->precio_venta,0,',','.');
+                            $numero_formateado = number_format($producto->precio_venta,0,',','.');
                           @endphp
                           <small class="text-muted">Precio: ${{$numero_formateado}}</small>
-                          @if ($producto_en_stock->stock == 0)
+                          @if ($producto->stock == 0)
                           <small class="text-muted">Agotado</small>
                           @else
-                          <small class="text-muted">Stock: {{$producto_en_stock->stock}}</small>
+                          <small class="text-muted">Stock: {{$producto->stock}}</small>
                           @endif
-                          @endif
-                          @endforeach
                       </div>
                   </div>
                 </div>
@@ -235,10 +225,7 @@
                 <div class="modal-content">
                   <div class="modal-body">
                     <!-- Carousel -->
-                    <div
-                        id='carouselExampleIndicators'
-                        class='carousel slide'
-                        data-bs-ride='carousel'>
+                    <div id='carouselExampleIndicators' class='carousel slide' data-bs-ride='carousel'>
                       <ol class='carousel-indicators '>
                         @php
                           $contador_aux = 0;
@@ -263,6 +250,7 @@
                         @endif
                         @endfor
                       </ol>
+                      
         
                       {{-- Imagenes --}}
                       <div class='carousel-inner'>
@@ -293,7 +281,7 @@
                         @endforeach
                       </div>
                       <a
-                        class='carousel-control-prev ajustarizquierdo'
+                        class='carousel-control-prev'
                         href='#carouselExampleIndicators'
                         role='button'
                         data-bs-slide='prev'
@@ -304,7 +292,7 @@
                         <span class='sr-only'></span>
                       </a>
                       <a
-                        class='carousel-control-next ajustarderecho'
+                        class='carousel-control-next'
                         href='#carouselExampleIndicators'
                         role='button'
                         data-bs-slide='next'
@@ -316,69 +304,72 @@
                         <span class='sr-only'></span>
                       </a>
                       
-                        {{-- Información sobre el detalle del producto --}}
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label></b>
-                        <input type="text" value="{{$producto->nombre}}" style="background-color:white" class="form-control" name="nombre" id="nombre" readonly></b>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Descripción</label></b>
-                        <input type="text" value="{{$producto->descripcion}}" style="background-color:white" class="form-control" name="descripcion" id="descripcion" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Familia</label></b>
-                        <input type="text" value="{{$producto->familia}}" style="background-color:white" class="form-control" name="familia" id="familia" readonly>
-                      
-                        @php
-                          $familia = App\Http\Controllers\EjecutivoController::detectar_nombre($producto->familia);
-                          $producto_en_tabla = DB::table($familia)->where('producto_id', $producto->id)->first();
-                        @endphp
-
-                        @if ($producto->familia=="Madera" || $producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion" || $producto->familia=="Mueble")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Alto</label></b>
-                        <input type="text" value="{{$producto_en_tabla->alto}}" style="background-color:white" class="form-control" name="alto" id="alto" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Ancho</label></b>
-                        <input type="text" value="{{$producto_en_tabla->ancho}}" style="background-color:white" class="form-control" name="ancho" id="ancho" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Largo</label></b>
-                        <input type="text" value="{{$producto_en_tabla->largo}}" style="background-color:white" class="form-control" name="largo" id="largo" readonly>
-                        @endif
-
-                        @if ($producto->familia=="Madera")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label></b>
-                        <input type="text" value="{{$producto_en_tabla->tipo_madera}}" style="background-color:white" class="form-control" name="tipo_madera" id="tipo_madera" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label></b>
-                        <input type="text" value="{{$producto_en_tabla->tratamiento}}" style="background-color:white" class="form-control" name="tratamiento" id="tratamiento" readonly>
-                        @endif
-
-                        @if ($producto->familia=="Clavo")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
-                        <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
-                        <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
-                        <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Longitud</label></b>
-                        <input type="text" value="{{$producto_en_tabla->longitud}}" style="background-color:white" class="form-control" name="longitud" id="longitud" readonly>
-                        @endif
-
-                        @if ($producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
-                        <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
-                        @endif
-
-                        @if ($producto->familia=="Tornillo")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
-                        <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label></b>
-                        <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" style="background-color:white" class="form-control" name="tipo_rosca" id="tipo_rosca" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label></b>
-                        <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" style="background-color:white" class="form-control" name="separacion_rosca" id="separacion_rosca" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
-                        <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label></b>
-                        <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" style="background-color:white" class="form-control" name="rosca_parcial" id="rosca_parcial" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Vastago</label></b>
-                        <input type="text" value="{{$producto_en_tabla->vastago}}" style="background-color:white" class="form-control" name="vastago" id="vastago" readonly>
-                        @endif
                     </div>
                   </div>
+                    {{-- Información sobre el detalle del producto --}}
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label></b>
+                    <input type="text" value="{{$producto->nombre}}" style="background-color:white" class="form-control" name="nombre" id="nombre" readonly></b>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Descripción</label></b>
+                    <input type="text" value="{{$producto->descripcion}}" style="background-color:white" class="form-control" name="descripcion" id="descripcion" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Familia</label></b>
+                    <input type="text" value="{{$producto->familia}}" style="background-color:white" class="form-control" name="familia" id="familia" readonly>
+                  
+                    @php
+                      if($producto->familia != "Herramienta" && $producto->familia != "Otro")
+                      {
+                        $familia = App\Http\Controllers\EjecutivoController::detectar_nombre($producto->familia);
+                        $producto_en_tabla = DB::table($familia)->where('producto_id', $producto->id)->first();
+                      }
+                    @endphp
+
+                    @if ($producto->familia=="Madera" || $producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion" || $producto->familia=="Mueble")
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Alto</label></b>
+                    <input type="text" value="{{$producto_en_tabla->alto}}" style="background-color:white" class="form-control" name="alto" id="alto" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Ancho</label></b>
+                    <input type="text" value="{{$producto_en_tabla->ancho}}" style="background-color:white" class="form-control" name="ancho" id="ancho" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Largo</label></b>
+                    <input type="text" value="{{$producto_en_tabla->largo}}" style="background-color:white" class="form-control" name="largo" id="largo" readonly>
+                    @endif
+
+                    @if ($producto->familia=="Madera")
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label></b>
+                    <input type="text" value="{{$producto_en_tabla->tipo_madera}}" style="background-color:white" class="form-control" name="tipo_madera" id="tipo_madera" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label></b>
+                    <input type="text" value="{{$producto_en_tabla->tratamiento}}" style="background-color:white" class="form-control" name="tratamiento" id="tratamiento" readonly>
+                    @endif
+
+                    @if ($producto->familia=="Clavo")
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
+                    <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
+                    <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
+                    <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Longitud</label></b>
+                    <input type="text" value="{{$producto_en_tabla->longitud}}" style="background-color:white" class="form-control" name="longitud" id="longitud" readonly>
+                    @endif
+
+                    @if ($producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion")
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
+                    <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
+                    @endif
+
+                    @if ($producto->familia=="Tornillo")
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
+                    <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label></b>
+                    <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" style="background-color:white" class="form-control" name="tipo_rosca" id="tipo_rosca" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label></b>
+                    <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" style="background-color:white" class="form-control" name="separacion_rosca" id="separacion_rosca" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
+                    <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label></b>
+                    <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" style="background-color:white" class="form-control" name="rosca_parcial" id="rosca_parcial" readonly>
+                    <b><label for="recipient-name" class="col-form-label" style="color:black">Vastago</label></b>
+                    <input type="text" value="{{$producto_en_tabla->vastago}}" style="background-color:white" class="form-control" name="vastago" id="vastago" readonly>
+                    @endif
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   </div>
                 </div>
               </div>
@@ -426,7 +417,7 @@
     input_hidden_producto.value = producto_datalist;
   }
 
-  // function submit_formulario_filtro()
+  
 </script>
 
 
