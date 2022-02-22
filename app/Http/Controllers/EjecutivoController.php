@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clavo;
-use App\Models\Localizacion;
+use App\Models\Imagen;
 use App\Models\Madera;
 use App\Models\Mueble;
 use App\Models\Producto;
 use App\Models\Tornillo;
 use App\Models\Techumbre;
+use App\Models\Localizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Plancha_construccion;
@@ -312,6 +313,29 @@ class EjecutivoController extends Controller
         return view('inventario.portal_precios',compact('productos_en_bruto','productos_en_stock'));
     }
 
+    public function subir_imagen(Request $request,$id)
+    {
+        $request->validate([
+            'url' => ['required','image','max:2048'],
+            // 'imanegable_tipo' => ['required','string','max:255'],
+        ]);
+        $auxiliar="\hola";
+        $existe_url=Imagen::where('url',"images".$auxiliar[0].$request->file('url')->getClientOriginalName())->first();
+        if($existe_url != null){ 
+            $request->validate([
+                'existe_imagen' => ['integer'],
+            ]);
+        }
+
+        $guardarImagen=$request->file('url');
+        $guardarImagen->move('images', $guardarImagen->getClientOriginalName());
+        
+        $nuevo_dato = new Imagen();
+        $nuevo_dato->url = "images".$auxiliar[0].$guardarImagen->getClientOriginalName();
+        $nuevo_dato->imagenable_id = $id;
+        $nuevo_dato->imagenable_tipo = 'App\Models\Producto';
+        $nuevo_dato->save();
+    }
 
 
 

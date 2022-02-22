@@ -106,6 +106,16 @@
                                 </div>
                                 <p class="mb-1">Cambiar estado del producto para mostrarlo u ocultarlo en el sistema.</p>
                             </a>
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#subir_imagen_modal" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Subir imagen
+                                        <svg class="bi me-2" width="16" height="16">
+                                            <use xlink:href="#fotito_icon" />
+                                        </svg>
+                                    </h5>
+                                </div>
+                                <p class="mb-1">Asocia la foto subida a un producto existente, desplegando esta foto en el catálogo.</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -116,7 +126,7 @@
     {{-- formularios modal --}}
     
     {{-- Actualizar stock --}}
-    <div class="modal fade" id="actualizar_stock_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="actualizar_stock_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -146,7 +156,7 @@
     </div>
 
     {{-- Actualizar Precio de Venta--}}
-    <div class="modal fade" id="actualizar_precio_venta_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="actualizar_precio_venta_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -199,7 +209,7 @@
     </div>
 
     {{-- Editar Producto --}}
-    <div class="modal fade" id="editar_producto_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editar_producto_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -285,7 +295,7 @@
     </div>
 
     {{-- Activar Desactivar Producto --}}
-    <div class="modal fade" id="activar_desactivar_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="activar_desactivar_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -328,6 +338,42 @@
             </div>
         </div>
     </div>
+
+    {{-- Subir img --}}
+    <div class="modal fade" id="subir_imagen_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:black">Subir Imagen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('subir_imagen_producto', $producto_en_bruto->id) }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="" class="form-label">Url</label>
+                
+                            <input id="url" name="url" type="file" class="form-control" tabindex="1" accept="image/*">
+                
+                            @error('url')
+                                <small style="color:red;">*{{$message}}</small>
+                            @enderror
+                            <input id="existe_imagen" name="existe_imagen" type="hidden" class="form-control" tabindex="3" value="no">
+                            @error('existe_imagen')
+                                <small style="color:red;">*Ya existe una imagen con ese nombre en la base de datos.</small>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary"
+                                onclick="return confirm('¿Está usted seguro de subir esta imagen?')">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script type="text/javascript">
