@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Cliente;
+use App\Models\Comentario;
 use App\Models\Trabajador;
 use App\Models\Venta;
 use Illuminate\Database\Seeder;
@@ -115,6 +116,11 @@ class VentaSeeder extends Seeder
             ]);
             $fecha = $fecha_un_dia_mas_str;
         }
-
+        for ($i=0; $i < 6; $i++) { 
+            Comentario::create([
+                'nombre' => 'default',
+                'apellido' => 'default',
+            ]);
+        }
     }
 }
