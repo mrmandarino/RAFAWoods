@@ -71,9 +71,9 @@ Route::put('/inventario/{id}/estado',[EjecutivoController::class,'cambiar_estado
 
 
 //Historico de ventas
-Route::get('/detalle/historico', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
+Route::get('/historico/ventas', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
 Route::get('/productos/visualizar', [EjecutivoController::class,'ver_productos'])->name('ver_productos');
-Route::get('/detalle/historico/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
+Route::get('/historico/ventas/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
 
 
 //Ventas
