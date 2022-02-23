@@ -102,10 +102,12 @@ Route::middleware(['auth','activo','ejecutivo'])->group(function(){
     Route::get('/graficos/grafico_semana/{fecha_semana}', [GraficoController::class,'grafico_semana'])->name('grafico_semana');
 
     //inventario
+    Route::get('/cargar',[EjecutivoController::class, 'cargar_administrar'])->name('cargar_administrar');
+    Route::post('/detalle/{id}/producto/imagen/created',[EjecutivoController::class, 'subir_imagen'])->name('subir_imagen_producto');
     Route::get('/inventario', [EjecutivoController::class,'index'])->name('ver_inventario');
     Route::post('/inventario/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
     Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');
-    Route::get('/detalle',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
+    Route::get('/detalle/{id_redirect}',[EjecutivoController::class, 'detalle_producto'])->name('ver_detalle');
     Route::put('/detalle/{id}/stock/updated',[EjecutivoController::class, 'detalle_producto_stock_actualizado'])->name('ver_detalle_stock_actualizado');
     Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');
     Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');
@@ -116,8 +118,8 @@ Route::middleware(['auth','activo','ejecutivo'])->group(function(){
     Route::put('/inventario/{id}/estado',[EjecutivoController::class,'cambiar_estado_producto'])->name('cambiar_estado');//metodo de vista administrar_prod, activa o desactiva un producto - listo - mandarino
 
     //historico ventas
-    Route::get('/detalle/historico', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
-    Route::get('/detalle/historico/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
+    Route::get('/historico/ventas', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
+    Route::get('/historico/ventas/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
 
 
 });

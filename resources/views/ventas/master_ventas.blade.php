@@ -139,6 +139,7 @@
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
 </head>
 
 <body>
@@ -148,7 +149,7 @@
         <svg class="bi me-2" width="40" height="32">
           <use xlink:href="#accesos" />
         </svg>
-        <span class="fs-4">Accesos Directos</span>
+        <span class="fs-4">RAFA Woods</span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -214,7 +215,7 @@
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          
           <strong>{{Auth::user()->nombre}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
