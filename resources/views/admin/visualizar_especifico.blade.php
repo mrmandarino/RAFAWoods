@@ -61,7 +61,7 @@
 	<div> 
 		<a href="{{route('admin_crear_fila',$tabla)}}" class="btn btn-primary" >CREAR</a> 
 		&nbsp;&nbsp;
-		<a href="{{route('admin_visualizar_datos')}}" class="btn btn-primary" >VOLVER</a>
+		<a href="{{route('menu_bd')}}" class="btn btn-primary" >VOLVER</a>
 	</div>
 		
 		@if ($tabla == 'usuarios')

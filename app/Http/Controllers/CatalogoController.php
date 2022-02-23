@@ -19,11 +19,11 @@ class CatalogoController extends Controller
     public function index()
     {
         $cantidad_productos_pag = 6;
-        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->paginate($cantidad_productos_pag);
+        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->paginate($cantidad_productos_pag);
         $imagenes = DB::table('imagens')->get();
         //Productos para los filtros
         $productos_familia = Producto::distinct()->get('familia');
-        $productos_totales = DB::table('productos')->get();
+        $productos_totales = DB::table('productos')->where('estado',1)->get();
         $familia = "todas";
         return view('catalogo.portal_catalogo',compact('productos','imagenes','cantidad_productos_pag','productos_familia','productos_totales','familia'));
     }
@@ -43,10 +43,10 @@ class CatalogoController extends Controller
     public function index_por_familia($familia)
     {
         $cantidad_productos_pag = 6;
-        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->where('familia',$familia)->paginate($cantidad_productos_pag);
+        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->paginate($cantidad_productos_pag);
         $imagenes = DB::table('imagens')->get();
         $productos_familia = Producto::distinct()->get('familia');
-        $productos_totales = DB::table('productos')->get();
+        $productos_totales = DB::table('productos')->where('estado',1)->get();
         return view('catalogo.catalogo_por_familia', compact('productos','imagenes','cantidad_productos_pag','productos_familia','productos_totales','familia'));
     }
 
@@ -63,7 +63,7 @@ class CatalogoController extends Controller
         //productos para datalists de búsqueda
         $imagenes = DB::table('imagens')->get();
         $productos_familia = Producto::distinct()->get('familia');
-        $productos_totales = DB::table('productos')->get();
+        $productos_totales = DB::table('productos')->where('estado',1)->get();
 
         //Producto en particular
         $producto = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('nombre',$nombre_producto)->first();
@@ -82,7 +82,7 @@ class CatalogoController extends Controller
         $cantidad_productos_pag = 6;
         $imagenes = DB::table('imagens')->get();
         $productos_familia = Producto::distinct()->get('familia');
-        $productos_totales = DB::table('productos')->get();
+        $productos_totales = DB::table('productos')->where('estado',1)->get();
         $productos_filtrados = null;
         
         //Filtras para todo tipo de producto
@@ -91,23 +91,23 @@ class CatalogoController extends Controller
             //Filtrar alfabeticamente
             if($tipo_filtro == "asc_alfb")
             {
-                $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->orderBy('nombre')->paginate($cantidad_productos_pag);
+                $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->orderBy('nombre')->paginate($cantidad_productos_pag);
                 return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
             }else{
                 if($tipo_filtro == "des_alfb")
                 {
-                    $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->orderBy('nombre','desc')->paginate($cantidad_productos_pag);
+                    $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->orderBy('nombre','desc')->paginate($cantidad_productos_pag);
                     return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
                 }else{
 
                     //Filtrar por precio
                     if($tipo_filtro == "asc_precio"){
-                        $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->orderBy('precio_venta')->paginate($cantidad_productos_pag);
+                        $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->orderBy('precio_venta')->paginate($cantidad_productos_pag);
                         return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
                     }else{
                         if($tipo_filtro == "des_precio")
                         {
-                            $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->orderBy('precio_venta','desc')->paginate($cantidad_productos_pag);
+                            $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->orderBy('precio_venta','desc')->paginate($cantidad_productos_pag);
                             return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
                         }
                     }
@@ -123,23 +123,23 @@ class CatalogoController extends Controller
             //Filtrar alfabeticamente
             if($tipo_filtro == "asc_alfb")
             {
-                $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->where('familia',$familia)->orderBy('nombre')->paginate($cantidad_productos_pag);
+                $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->orderBy('nombre')->paginate($cantidad_productos_pag);
                 return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
             }else{
                 if($tipo_filtro == "des_alfb")
                 {
-                    $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->where('familia',$familia)->orderBy('nombre','desc')->paginate($cantidad_productos_pag);
+                    $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->orderBy('nombre','desc')->paginate($cantidad_productos_pag);
                     return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
                 }else{
 
                     //Filtrar por precio
                     if($tipo_filtro == "asc_precio"){
-                        $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->where('familia',$familia)->orderBy('precio_venta')->paginate($cantidad_productos_pag);
+                        $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->orderBy('precio_venta')->paginate($cantidad_productos_pag);
                         return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
                     }else{
                         if($tipo_filtro == "des_precio")
                         {
-                            $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',1)->where('familia',$familia)->orderBy('precio_venta','desc')->paginate($cantidad_productos_pag);
+                            $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->orderBy('precio_venta','desc')->paginate($cantidad_productos_pag);
                             return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
                         }
                     }

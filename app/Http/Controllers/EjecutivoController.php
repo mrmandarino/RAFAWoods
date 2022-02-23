@@ -47,7 +47,6 @@ class EjecutivoController extends Controller
     //con el id de producto se puede detectar todo lo que se necesita:familia,productos, localizacions
     public function detalle_producto($id_redirect)
     {   
-        
         $id_producto_redirect=$id_redirect;
         $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
         $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
@@ -363,17 +362,17 @@ class EjecutivoController extends Controller
 
     }
 
-    public function historico_ventas(){;
+    public function historico_ventas(){
         $datos=DB::table('ventas')->get();
         return view('ventas.visualizar_historico',compact('datos'));
     }
 
-    public function ver_detalle_venta($id){;
+    public function ver_detalle_venta($id){
         $datos=DB::table('detalle_ventas')->where('venta_id',$id)->get();
         return view('ventas.visualizar_detalle_historico',compact('datos'));
     }
 
-    public function ver_productos(){;
+    public function ver_productos(){
 
         $productos_en_bruto = DB::table('productos')->get();
         $productos_en_stock = DB::table('localizacions')->get();
