@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Cliente;
+use App\Models\Comentario;
 use App\Models\Trabajador;
 use App\Models\Venta;
 use Illuminate\Database\Seeder;
@@ -33,7 +34,7 @@ class VentaSeeder extends Seeder
                 'medio_de_pago' => rand(1, 4),
                 'vendedor_rut' => '199670484',
                 'total_venta' => rand(150000, 180000),
-                'utilidad_bruta' => rand(500000, 700000),
+                'utilidad_bruta' => rand(100000, 130000),
                 'con_factura' => rand(1,2),
                 'created_at' => $fecha,
             ]);
@@ -51,7 +52,7 @@ class VentaSeeder extends Seeder
                 'medio_de_pago' => rand(1, 4),
                 'vendedor_rut' => '199670484',
                 'total_venta' => rand(150000, 180000),
-                'utilidad_bruta' => rand(500000, 700000),
+                'utilidad_bruta' => rand(100000, 130000),
                 'con_factura' => rand(1,2),
                 'created_at' => $fecha,
             ]);
@@ -71,7 +72,7 @@ class VentaSeeder extends Seeder
                 'medio_de_pago' => rand(1, 4),
                 'vendedor_rut' => '199670484',
                 'total_venta' => rand(150000, 180000),
-                'utilidad_bruta' => rand(500000, 700000),
+                'utilidad_bruta' => rand(100000, 130000),
                 'con_factura' => rand(1,2),
                 'created_at' => $fecha,
             ]);
@@ -89,7 +90,7 @@ class VentaSeeder extends Seeder
                 'medio_de_pago' => rand(1, 4),
                 'vendedor_rut' => '199670484',
                 'total_venta' => rand(150000, 180000),
-                'utilidad_bruta' => rand(500000, 700000),
+                'utilidad_bruta' => rand(100000, 130000),
                 'con_factura' => rand(1,2),
                 'created_at' => $fecha,
             ]);
@@ -109,12 +110,17 @@ class VentaSeeder extends Seeder
                 'medio_de_pago' => rand(1, 4),
                 'vendedor_rut' => '199670484',
                 'total_venta' => rand(3000000, 6000000),
-                'utilidad_bruta' => rand(5000000, 7000000),
+                'utilidad_bruta' => rand(2000000, 3000000),
                 'con_factura' => rand(1,2),
                 'created_at' => $fecha,
             ]);
             $fecha = $fecha_un_dia_mas_str;
         }
-
+        for ($i=0; $i < 6; $i++) { 
+            Comentario::create([
+                'nombre' => 'default',
+                'apellido' => 'default',
+            ]);
+        }
     }
 }

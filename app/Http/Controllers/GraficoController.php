@@ -66,20 +66,26 @@ class GraficoController extends Controller
 
         $big_mama = [];
         $ventas_totales = [];
+        $utilidad_totales = [];
         $total_ano = 0;
+        $total_utilidad_mes = 0;
 
         for ($i = 0; $i < 12; $i++) {
             $ventas_totales[$i] = DB::table('ventas')->whereDate('created_at', 'like', '%' . $fechas_arr[$i] . '%')->sum('total_venta');
+            $utilidad_totales[$i] = DB::table('ventas')->whereDate('created_at', 'like', '%' . $fechas_arr[$i] . '%')->sum('utilidad_bruta');
             $total_ano = $total_ano + DB::table('ventas')->whereDate('created_at', 'like', '%' . $fechas_arr[$i] . '%')->sum('total_venta');
+            $total_utilidad_mes = $total_utilidad_mes + DB::table('ventas')->whereDate('created_at', 'like', '%' . $fechas_arr[$i] . '%')->sum('utilidad_bruta');
         }
 
         $big_mama['ventas_totales'] = $ventas_totales;
+        $big_mama['utilidad_totales'] = $utilidad_totales;
         $total_ano_separador = number_format($total_ano, 0, ',', '.');
+        $total_utilidad_separador = number_format($total_utilidad_mes, 0, ',', '.');
 
         $datos_json = json_encode($big_mama);
 
         //dd($big_mama,$total_ano_separador);
-        return view('graficos.graficos_ano', compact('datos_json', 'ano', 'total_ano_separador'));
+        return view('graficos.graficos_ano', compact('datos_json', 'ano', 'total_ano_separador', 'total_utilidad_separador'));
     }
 
     public function grafico_mes($fecha_mes)
@@ -109,22 +115,28 @@ class GraficoController extends Controller
 
         $big_mama = [];
         $ventas_totales = [];
+        $utilidad_totales = [];
         $total_mes = 0;
+        $total_utilidad_mes = 0;
 
         for ($i = 0; $i < $last_day_num; $i++) {
             //$ventas_totales[$numeros_dias_mes[$i]] = DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta'); 
             $ventas_totales[$i] = DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta');
+            $utilidad_totales[$i] = DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('utilidad_bruta');
             $total_mes = $total_mes + DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta');
+            $total_utilidad_mes = $total_utilidad_mes + DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('utilidad_bruta');
         }
 
         $big_mama['num_dias'] = $numeros_dias_mes;
         $big_mama['ventas_totales'] = $ventas_totales;
+        $big_mama['utilidad_totales'] = $utilidad_totales;
         $total_mes_separador = number_format($total_mes, 0, ',', '.');
+        $total_utilidad_separador = number_format($total_utilidad_mes, 0, ',', '.');
 
         $datos_json = json_encode($big_mama);
 
         //dd($big_mama,$total_mes_separador);
-        return view('graficos.graficos_mes', compact('datos_json', 'year', 'month', 'total_mes_separador'));
+        return view('graficos.graficos_mes', compact('datos_json', 'year', 'month', 'total_mes_separador', 'total_utilidad_separador'));
     }
 
     public function grafico_semana($fecha_semana)
@@ -161,22 +173,28 @@ class GraficoController extends Controller
         $big_mama = [];
         $num_dias = [];
         $ventas_totales = [];
+        $utilidad_totales = [];
         $total_semana = 0;
+        $total_utilidad_semana = 0;
 
         for ($i = 0; $i < 7; $i++) {
 
             $num_dias[$dias[$i]] = $numeros_semana[$i];
             $ventas_totales[$dias[$i]] = DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta');
+            $utilidad_totales[$dias[$i]] = DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('utilidad_bruta');
             $total_semana = $total_semana + DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('total_venta');
+            $total_utilidad_semana = $total_utilidad_semana + DB::table('ventas')->whereDate('created_at', $fechas_arr[$i])->sum('utilidad_bruta');
         }
 
         $big_mama['num_dias'] = $num_dias;
         $big_mama['ventas_totales'] = $ventas_totales;
+        $big_mama['total_utilidad_semana'] = $utilidad_totales;
         $total_semana_separador = number_format($total_semana, 0, ',', '.');
+        $total_utilidad_separador = number_format($total_utilidad_semana, 0, ',', '.');
 
         //dd($big_mama);
 
         $datos_json = json_encode($big_mama);
-        return view('graficos.graficos_semana', compact('datos_json', 'year', 'month', 'day', 'total_semana_separador'));
+        return view('graficos.graficos_semana', compact('datos_json', 'year', 'month', 'day', 'total_semana_separador', 'total_utilidad_separador'));
     }
 }
