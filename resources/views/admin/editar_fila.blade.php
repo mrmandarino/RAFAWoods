@@ -787,19 +787,18 @@
             @enderror
         </div>
     @elseif($tabla == 'fotos') 
-        <div class="mb-3">
-            <label for="" class="form-label">Url</label>
-            <input id="url" name="url" type="text" class="form-control" tabindex="1" value="{{$dato->url}}">
-            @error('url')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="" class="form-label">ID imagenable</label>
-            <input id="imagenable_id" name="imagenable_id" type="number" class="form-control" tabindex="2" value="{{$dato->imagenable_id}}">
-            @error('imagenable_id')
-                <small style="color:red;">*{{$message}}</small>
-            @enderror
+        @php($productos=DB::table('productos')->get())
+  
+        <label for="" class="form-label">ID imagenable</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" id="imagenable_id" name="imagenable_id" type="number" tabindex="2" value="{{$dato->imagenable_id}}" >
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ old('producto_id')==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
         </div>
         
     @elseif($tabla == 'ejecutivos')

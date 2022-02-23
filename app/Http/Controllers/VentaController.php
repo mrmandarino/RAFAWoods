@@ -27,7 +27,7 @@ class VentaController extends Controller
      */
     public function create()
     {
-        $productos = DB::table('productos')->get();
+        $productos = DB::table('productos')->where('estado',1)->get();
         $productos_en_stock = DB::table('localizacions')->get();
         $clientes = DB::table('clientes')->get();
         $count_ventas = DB::table('ventas')->count('*');//ver cuantos registros hay

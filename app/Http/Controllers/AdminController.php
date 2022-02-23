@@ -28,6 +28,7 @@ use Freshwork\ChileanBundle\Rut;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 use function GuzzleHttp\Promise\each;
 
@@ -606,7 +607,7 @@ class AdminController extends Controller
 
             $datos=DB::table('inventarios')->get();
 
-        }elseif ($tabla=='fotos') { //dudas
+        }elseif ($tabla=='fotos') { 
             $request->validate([
                 'imagenable_id' => ['required', 'integer'],
             ]);
@@ -617,11 +618,22 @@ class AdminController extends Controller
                 ]);
             }
             $request->validate([
-                'url' => ['required','string','max:255'],
+                'url' => ['required','image','max:4096'],
                 // 'imanegable_tipo' => ['required','string','max:255'],
             ]);
+            $auxiliar="\hola";
+            $existe_url=Imagen::where('url',"images".$auxiliar[0].$request->file('url')->getClientOriginalName())->first();
+            if($existe_url != null){ 
+                $request->validate([
+                    'existe_imagen' => ['integer'],
+                ]);
+            }
+
+            $guardarImagen=$request->file('url');
+            $guardarImagen->move('images', $guardarImagen->getClientOriginalName());
+            
             $nuevo_dato = new Imagen();
-            $nuevo_dato->url = $request->get('url');
+            $nuevo_dato->url = "images".$auxiliar[0].$guardarImagen->getClientOriginalName();
             $nuevo_dato->imagenable_id = $request->get('imagenable_id');
             // $nuevo_dato->imagenable_tipo = $request->get('imagenable_tipo');
             $nuevo_dato->imagenable_tipo = 'App\Models\Producto';
@@ -824,7 +836,7 @@ class AdminController extends Controller
 
         }
         
-        return view('admin.visualizar_especifico',compact('datos','tabla'));
+        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('fila_nueva','Se ha agregado la fila correctamente.');
     }
 
     /**
@@ -1400,14 +1412,10 @@ class AdminController extends Controller
             $datos=DB::table('inventarios')->get();
         }elseif ($tabla=='fotos') {
             $request->validate([
-                'url' => ['required','string','max:255'],
                 'imagenable_id' => ['required', 'integer'],
-                'imanegable_tipo' => ['required','string','max:255'],
             ]);
             $actualizar=Imagen::find($key);
-            $actualizar->url = $request->get('url');
             $actualizar->imagenable_id = $request->get('imagenable_id');
-            $actualizar->imagenable_tipo = $request->get('imagenable_tipo');
             $actualizar->save();
             $datos=DB::table('imagens')->get();
         }elseif ($tabla=='ejecutivos') {
@@ -1775,7 +1783,7 @@ class AdminController extends Controller
             $datos=DB::table('ventas')->get();
         }
         
-        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('Se ha actualizado la fila correctamente.');
+        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('fila_actualizada','Se ha actualizado la fila correctamente.');
     }
 
     /**
@@ -1865,6 +1873,11 @@ class AdminController extends Controller
             $datos=DB::table('inventarios')->get();
         }elseif ($tabla=='fotos') {
             $dato=Imagen::find($key);
+            
+            //Borrar la imagen del servidor
+            unlink(public_path($dato->url));
+
+            //Borrar la tupla de la tabla
             $dato->delete();
             $datos=DB::table('imagens')->get();
         }elseif ($tabla=='ejecutivos') {
@@ -1936,7 +1949,7 @@ class AdminController extends Controller
             $datos=DB::table('ventas')->get();
         }
         
-        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('Se ha eliminado la fila correctamente.');
+        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('fila_eliminada','Se ha eliminado la fila correctamente.');
     }
     
 

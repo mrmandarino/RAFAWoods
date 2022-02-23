@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Imagen;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+       
         Storage::deleteDirectory('productos');
         Storage::makeDirectory('productos');
        

@@ -40,10 +40,28 @@
 </head>
 <body>
 
+	<div class="row">
+		@if (session()->has('fila_nueva'))
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				{{ session()->get('fila_nueva') }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div><br>
+		@elseif (session()->has('fila_actualizada'))
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				{{ session()->get('fila_actualizada') }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div><br>
+		@elseif (session()->has('fila_eliminada'))
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				{{ session()->get('fila_eliminada') }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div><br>
+		@endif
+	</div>
 	<div> 
 		<a href="{{route('admin_crear_fila',$tabla)}}" class="btn btn-primary" >CREAR</a> 
 		&nbsp;&nbsp;
-		<a href="{{route('admin_visualizar_datos')}}" class="btn btn-primary" >VOLVER</a>
+		<a href="{{route('menu_bd')}}" class="btn btn-primary" >VOLVER</a>
 	</div>
 		
 		@if ($tabla == 'usuarios')
@@ -81,7 +99,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>	
 						</tr>
@@ -117,7 +135,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -153,7 +171,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -189,7 +207,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -225,7 +243,7 @@
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							@csrf
 							@method('DELETE')
-							<button type="submit" class="btn btn-danger">Eliminar</button>
+							<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -266,7 +284,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -296,7 +314,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -333,7 +351,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -367,7 +385,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -404,7 +422,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -441,7 +459,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -481,7 +499,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -521,7 +539,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -557,7 +575,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -586,7 +604,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -619,7 +637,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -656,7 +674,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -689,7 +707,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -726,7 +744,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -765,7 +783,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn btn-danger">Eliminar</button>
+								<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 							</form>
 						</td>
 					</tr>
@@ -808,7 +826,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger">Eliminar</button>
+									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>
 						</tr>
@@ -1681,7 +1699,7 @@
 		</script> 	
 	@endif
 
-
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
 

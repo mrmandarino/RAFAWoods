@@ -42,8 +42,6 @@ Route::get('inicio', [ComentarioController::class,'create'])->name('inicio');
 Route::put('update/comentario/{id}', [ComentarioController::class,'update'])->name('update_comentario');
 Route::put('destroy/{id}', [ComentarioController::class,'destroy'])->name('destroy_comentario');
 
-
-
 //Graficos
 
 // Route::get('graficos', [GraficoController::class,'index'])->name('graficos');
@@ -66,12 +64,10 @@ Route::put('destroy/{id}', [ComentarioController::class,'destroy'])->name('destr
 // Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');//obsoleto
 // Route::put('/inventario/{id}/estado',[EjecutivoController::class,'cambiar_estado_producto'])->name('cambiar_estado');//metodo de vista administrar_prod, activa o desactiva un producto - listo - mandarino
 
-
 //Historico de ventas
 // Route::get('/detalle/historico', [EjecutivoController::class,'historico_ventas'])->name('ver_historico');
 // Route::get('/detalle/historico/{id}', [EjecutivoController::class,'ver_detalle_venta'])->name('ver_detalle_historico');
 // Route::get('/productos/visualizar', [EjecutivoController::class,'ver_productos'])->name('ver_productos');
-
 
 //Ventas
 // Route::resource('ventas',VentaController::class);

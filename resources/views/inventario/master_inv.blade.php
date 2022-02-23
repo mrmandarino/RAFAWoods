@@ -123,9 +123,32 @@
       display: flex;
       justify-content: right;
     }
+
+    .floatRight{
+      float:right;
+      margin-left:10px;
+      margin-right:10px;
+      }
+      
+      .dataTables_length {
+      float:left;
+      font-size: 15px;
+      }	
+
+      .buttons-excel {
+        font-size: 12.5px;
+      }
+
+      .buttons-print {
+        font-size: 12.5px;
+      }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>             
 
 <body>
@@ -140,7 +163,7 @@
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link text-white" aria-current="page">
+          <a href="{{route('inicio')}}" class="nav-link text-white" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
@@ -178,7 +201,7 @@
             </svg>
             Productos
           </a>
-        </li>
+        </li>   
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link active">
             <svg class="bi me-2" width="16" height="16">
@@ -211,7 +234,12 @@
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+          <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <li><a class="dropdown-item" href="{{route('logout')}}"
+              onclick="event.preventDefault();
+                          this.closest('form').submit();">Cerrar Sesión</a></li>
+          </form>
         </ul>
       </div>
     </div>
@@ -232,7 +260,18 @@
   </script>
 
 
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script> {{-- Necesario para
+    ver los botones --}}
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script> {{-- Necesario para ver los
+    botones --}}
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> {{-- Excel --}}
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> {{-- Imprimir(PDF) --}}
 
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>

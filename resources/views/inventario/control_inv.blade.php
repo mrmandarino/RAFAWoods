@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="row justify-content-center mt-3 form-arriba">
-        {{-- editar stock --}}
+        {{-- ingresar stock --}}
 
         <div class="row justify-content-center">
             {{-- Columna formulario agregar producto a la venta (IZQUIERDA) --}}
@@ -23,16 +23,16 @@
                     </div>
                 </div>
 
-                <form class="row g-3 mt-3 col-form-izq form-izq" action="{{route('ver_detalle')}}" method="POST">
+                <form class="row g-3 mt-3 col-form-izq form-izq" action="{{route('cargar_administrar')}}" method="POST">
                     @csrf
                     @method('GET')
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 for="nombre_producto" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema.">Productos en inventario</h5>
+                            <h5 for="nombre_producto" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, ingresar sus carácteristicas y activarlo o desactivarlo en el sistema.">Productos en inventario</h5>
                             <div class="input-group">
 
-                                <label for="nombre_producto" class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, editar sus carácteristicas y activarlo o desactivarlo en el sistema.">Producto:</label>
-                                <input class="form-control" list="datalist_productos" name="nombre_producto" id="nombre_producto" placeholder="Escriba para buscar..." onchange="cargar_datos()">
+                                <label for="nombre_producto" class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, ingresar sus carácteristicas y activarlo o desactivarlo en el sistema.">Producto:</label>
+                                <input class="form-control" list="datalist_productos" name="nombre_producto" id="nombre_producto" placeholder="Escriba para buscar..." onchange="cargar_datos()" required>
                                 <input type="number" class="visually-hidden" name="id_producto_hidden" id="id_producto_hidden">
                                 <datalist id="datalist_productos">
                                     @foreach ($productos as $producto)
@@ -69,6 +69,24 @@
 
         <div class="row justify-content-center mt-3">
             <div class="col-8 card p-3 bg-light mt-3 col-form-izq">
+                <div class="row">
+                    @if (session()->has('correcto_agregado'))
+                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                            {{ session()->get('correcto_agregado') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                    @endif
+                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            Ha ocurrido un error al ingresar el producto
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                    @endif
+
+
+                     
+                </div>
                 <div class="row mx-3 justify-content-center">
                     <div class="col-md-7 card form-izq ml-3">
                         <h4 class="text-center">
@@ -96,17 +114,7 @@
                             </a>
                             <a href="{{route('ver_detalle_precios')}}" class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Consultar Precios
-                                        <svg class="bi me-2" width="16" height="16">
-                                            <use xlink:href="#consultar_precios" />
-                                        </svg>
-                                    </h5>
-                                </div>
-                                <p class="mb-1">Ver lista de productos y sus precios.</p>
-                            </a>
-                            <a href="{{route('ver_detalle_precios')}}" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Ver Inventario y Stock
+                                    <h5 class="mb-1">Consultar productos
                                         <svg class="bi me-2" width="16" height="16">
                                             <use xlink:href="#ver_inventario" />
                                         </svg>
@@ -142,106 +150,185 @@
                     <div class="modal-body">
                         <form action="{{route('agregar_producto')}}" method="POST">
                             @csrf
+                            @method('POST')
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" value="" required>
-                                <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
-                                <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
-                                <label for="recipient-name" class="col-form-label" style="color:black">Tipo de Producto</label>
-                                <select class="form-control select" name="familia" id="familia">
-                                    <option selected value="default">Seleccione un tipo de producto</option>
-                                    <option value="Tornillo">Tornillo</option>  
-                                    <option value="Plancha_construccion">Plancha de construcción</option>  
-                                    <option value="Techumbre">Techumbre</option>  
-                                    <option value="Mueble">Mueble</option>  
-                                    <option value="Madera">Madera</option>  
-                                    <option value="Clavo">Clavo</option>  
-                                </select>
-    
-                                
-                                <div class="form-group tornillos_clavos">
-                                    <label for="" class="form-label" style="color:black">Cabeza</label>
-                                    <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" value="{{old('cabeza')}}">
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre" value="" >
+                                    @error('nombre')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
                                 </div>
-    
-                                <div class="form-group tornillos">
-                                    <label for="" class="form-label" style="color:black">Tipo rosca</label>
-                                    <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5"> 
-                                        <option value="total" {{ old('tipo_rosca')=="total" ? 'selected' : ''  }}>Total</option>  
-                                        <option value="parcial" {{ old('tipo_rosca')=="parcial" ? 'selected' : ''  }}>Parcial</option> 
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
+                                    <textarea class="form-control" name="descripcion" id="descripcion" ></textarea>
+                                    @error('descripcion')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Tipo de Producto</label>
+                                    <select class="form-control select" name="familia" id="familia">
+                                        <option selected value="default">Seleccione un tipo de producto</option>
+                                        <option value="Tornillo">Tornillo</option>  
+                                        <option value="Plancha_construccion">Plancha de construcción</option>  
+                                        <option value="Techumbre">Techumbre</option>  
+                                        <option value="Mueble">Mueble</option>  
+                                        <option value="Madera">Madera</option>  
+                                        <option value="Clavo">Clavo</option>  
                                     </select>
-                                </div>
-    
-                                <div class="form-group tornillos">
-                                    <label for="" class="form-label" style="color:black">Separación rosca</label>
-                                    <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" value="{{old('separacion_rosca')}}">
+                                    @error('familia')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
                                 </div>
     
                                 <div class="form-group tornillos_clavos">
-                                    <label for="" class="form-label" style="color:black">Punta</label>
-                                    <input id="punta" name="punta" type="text" class="form-control" tabindex="7" value="{{old('punta')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Cabeza</label>
+                                        <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" >
+                                        @error('cabeza')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
                                 </div>
     
                                 <div class="form-group tornillos">
-                                    <label for="" class="form-label" style="color:black">Rosca parcial</label>
-                                    <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" value="{{old('rosca_parcial')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Tipo rosca</label>
+                                        <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5" > 
+                                            <option value="total">Total</option>  
+                                            <option value="parcial">Parcial</option> 
+                                        </select>
+                                    </div>
                                 </div>
     
                                 <div class="form-group tornillos">
-                                    <label for="" class="form-label" style="color:black">Vastago</label>
-                                    <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" value="{{old('vastago')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Separación rosca</label>
+                                        <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" >
+                                        @error('separacion_rosca')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+    
+                                <div class="form-group tornillos_clavos">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Punta</label>
+                                        <input id="punta" name="punta" type="text" class="form-control" tabindex="7" >
+                                    </div>
+                                </div>
+    
+                                <div class="form-group tornillos">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Rosca parcial</label>
+                                        <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" >
+                                        @error('rosca_parcial')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+    
+                                <div class="form-group tornillos">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Vastago</label>
+                                        <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" >
+                                        @error('vastago')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
                                 </div>
     
                                 <div class="form-group material">
-                                    <label for="" class="form-label" style="color:black">Material</label>
-                                    <input id="material" name="material" type="text" class="form-control" tabindex="10" value="{{old('material')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Material</label>
+                                        <input id="material" name="material" type="text" class="form-control" tabindex="10" >
+                                    </div>
                                 </div>
     
                                 <div class="form-group medidas">
-                                    <label for="" class="form-label" style="color:black">Alto</label>
-                                    <input id="alto" name="alto" type="number" step="0.01" class="form-control" tabindex="11" value="{{old('alto')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Alto</label>
+                                        <input id="alto" name="alto" type="number" class="form-control" tabindex="11" >
+                                        @error('alto')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
                                 </div>
     
                                 <div class="form-group medidas">
-                                    <label for="" class="form-label" style="color:black">Ancho</label>
-                                    <input id="ancho" name="ancho" type="number" step="0.01" class="form-control" tabindex="12" value="{{old('ancho')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Ancho</label>
+                                        <input id="ancho" name="ancho" type="number" class="form-control" tabindex="12" >
+                                        @error('ancho')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
                                 </div>
     
                                 <div class="form-group medidas">
-                                    <label for="" class="form-label" style="color:black">Largo</label>
-                                    <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" value="{{old('largo')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Largo</label>
+                                        <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" >
+                                        @error('largo')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
                                 </div>
     
                                 <div class="form-group muebles">
-                                    <label for="" class="form-label" style="color:black">Acabado</label>
-                                    <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" value="{{old('acabado')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Acabado</label>
+                                        <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" >
+                                    </div>
                                 </div>
     
                                 <div class="form-group maderas">
-                                    <label for="" class="form-label" style="color:black">Tipo madera</label>
-                                    <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" value="{{old('tipo_madera')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Tipo madera</label>
+                                        <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" >
+                                    </div>
                                 </div>
     
                                 <div class="form-group maderas">
-                                    <label for="" class="form-label" style="color:black">Tratamiento</label>
-                                    <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" value="{{old('tratamiento')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Tratamiento</label>
+                                        <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" >
+                                    </div>
                                 </div>
     
                                 <div class="form-group clavos">
-                                    <label for="" class="form-label" style="color:black">Longitud</label>
-                                    <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" value="{{old('longitud')}}">
+                                    <div>
+                                        <label for="" class="form-label" style="color:black">Longitud</label>
+                                        <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" >
+                                        @error('longitud')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
+                                    </div>
                                 </div>
     
-                                <label for="recipient-name" class="col-form-label" style="color:black">Stock</label>
-                                <input type="number" class="form-control" name="stock" id="stock" min="1" required>
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Stock</label>
+                                    <input type="number" class="form-control" name="stock" id="stock" step="10" >
+                                    @error('stock')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
     
-                                <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
-                                <input type="number" class="form-control" name="precio_compra" id="precio_compra" min="1" required>
+                                <div>
+                                    <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
+                                    <input type="number" class="form-control" name="precio_compra" id="precio_compra" step="100" >
+                                    @error('precio_compra')
+                                    <small style="color:red;">*{{$message}}</small>
+                                    @enderror
+                                </div>
+                                
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary"
-                                    onclick="return confirm('¿Estás seguro del stock ingresado?')">Confirmar</button>
+                                    onclick="return confirm('¿Estás seguro de los datos ingresados?')">Confirmar</button>
                             </div>
                         </form>
                     </div>

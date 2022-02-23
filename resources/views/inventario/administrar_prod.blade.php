@@ -58,8 +58,36 @@
                                 </div><br>
                             @endif
                             @if (session()->has('producto_actualizado'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                                     {{ session()->get('producto_actualizado') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                            @if (session()->has('imagen_subida'))
+                                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                    {{ session()->get('imagen_subida') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                            {{-- Mensaje validacion de stock --}}
+                            @error('stock')
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    Ha ocurrido un error al actualizar el stock
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @enderror
+                            {{-- Mensaje validacion de precio producto --}}
+                            @error('utilidad')
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                Ha ocurrido un error al actualizar el precio del producto
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div><br>
+                            @enderror
+
+                            {{-- Mensaje validacion edicion producto --}}
+                            @if($errors->get('alto') || $errors->get('largo') || $errors->get('ancho') || $errors->get('cabeza') || $errors->get('longitud') || $errors->get('separacion_rosca') || $errors->get('rosca_parcial') || $errors->get('vastago') || $errors->get('nombre') || $errors->get('descripcion') || $errors->get('familia'))
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    Ha ocurrido un error al editar el producto
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div><br>
                             @endif
@@ -106,6 +134,16 @@
                                 </div>
                                 <p class="mb-1">Cambiar estado del producto para mostrarlo u ocultarlo en el sistema.</p>
                             </a>
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#subir_imagen_modal" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Subir imagen
+                                        <svg class="bi me-2" width="16" height="16">
+                                            <use xlink:href="#fotito_icon" />
+                                        </svg>
+                                    </h5>
+                                </div>
+                                <p class="mb-1">Asocia la foto subida a un producto existente, desplegando esta foto en el catálogo.</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -116,7 +154,7 @@
     {{-- formularios modal --}}
     
     {{-- Actualizar stock --}}
-    <div class="modal fade" id="actualizar_stock_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="actualizar_stock_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -133,7 +171,11 @@
                                 deseado</label>
                                 <input type="number" value={{ $producto_en_stock->stock }} class="form-control"
                                 name="stock" id="stock" required>    
+                                
                         </div>
+                        @error('stock')
+                            <small style="color:red;">*{{$message}}</small>
+                        @enderror
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary"
@@ -144,9 +186,10 @@
             </div>
         </div>
     </div>
+    
 
     {{-- Actualizar Precio de Venta--}}
-    <div class="modal fade" id="actualizar_precio_venta_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="actualizar_precio_venta_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -163,7 +206,7 @@
                                 name="precio_compra" id="precio_compra" readonly>
                             <label for="recipient-name" class="col-form-label" style="color:black">Utilidad</label>
                             <input type="number" value=1 class="form-control"
-                                name="utilidad" id="utilidad" min="1" max="100" onchange="calculo_ganancia()" required>
+                                name="utilidad" id="utilidad" onchange="calculo_ganancia()" required>
 
                             <script>
                                 function calculo_ganancia()
@@ -187,6 +230,9 @@
                             <label for="recipient-name" class="col-form-label" style="color:black">Precio Venta</label>
                             <input type="number" class="form-control" name="precio_venta" id="precio_venta" step="100" min="1" readonly>
                         </div>
+                        @error('utilidad')
+                                <small style="color:red;">*{{$message}}</small>
+                        @enderror
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary"
@@ -199,7 +245,7 @@
     </div>
 
     {{-- Editar Producto --}}
-    <div class="modal fade" id="editar_producto_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editar_producto_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -220,57 +266,145 @@
                             <input type="text" value="{{$producto_en_bruto->familia}}" class="form-control" name="familia" id="familia" required>
 
                             @if ($producto_en_bruto->familia=="Madera" || $producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion" || $producto_en_bruto->familia=="Mueble")
-                            <label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
-                            <input type="text" value="{{$producto_en_tabla->alto}}" class="form-control" name="alto" id="alto" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
-                            <input type="text" value="{{$producto_en_tabla->ancho}}" class="form-control" name="ancho" id="ancho" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
-                            <input type="text" value="{{$producto_en_tabla->largo}}" class="form-control" name="largo" id="largo" required>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+                                <input type="number" value="{{$producto_en_tabla->alto}}" class="form-control" name="alto" id="alto" required>
+                                @error('alto')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+                                <input type="number" value="{{$producto_en_tabla->ancho}}" class="form-control" name="ancho" id="ancho" required>
+                                @error('ancho')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+                            
+
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+                                <input type="number" value="{{$producto_en_tabla->largo}}" class="form-control" name="largo" id="largo" step="0.01" required>
+                                @error('largo')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
                             @endif
 
+                            
                             @if ($producto_en_bruto->familia=="Madera")
-                            <label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label>
-                            <input type="text" value="{{$producto_en_tabla->tipo_madera}}" class="form-control" name="tipo_madera" id="tipo_madera" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label>
-                            <input type="text" value="{{$producto_en_tabla->tratamiento}}" class="form-control" name="tratamiento" id="tratamiento" required>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label>
+                                <input type="text" value="{{$producto_en_tabla->tipo_madera}}" class="form-control" name="tipo_madera" id="tipo_madera" required>
+                            </div>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label>
+                                <input type="text" value="{{$producto_en_tabla->tratamiento}}" class="form-control" name="tratamiento" id="tratamiento" required>
+                            </div>
                             @endif
 
                             @if ($producto_en_bruto->familia=="Clavo")
-                            <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
-                            <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
-                            <input type="text" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
-                            <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Longitud</label>
-                            <input type="text" value="{{$producto_en_tabla->longitud}}" class="form-control" name="longitud" id="longitud" required>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            </div>
+                           
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+                                <input type="number" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" step="0.01" required>
+                                @error('cabeza')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
+                                <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
+                            </div>
+                          
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Longitud</label>
+                                <input type="number" value="{{$producto_en_tabla->longitud}}" class="form-control" name="longitud" id="longitud" step="0.01" required>
+                                @error('longitud')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+                            
                             @endif
 
                             @if ($producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion")
-                            <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
-                            <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            </div>
                             @endif
 
+                            {{-- Tornillo --}}
                             @if ($producto_en_bruto->familia=="Tornillo")
-                            <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
-                            <input type="text" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label>
-                            <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" class="form-control" name="tipo_rosca" id="tipo_rosca" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label>
-                            <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" class="form-control" name="separacion_rosca" id="separacion_rosca" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
-                            <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label>
-                            <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" class="form-control" name="rosca_parcial" id="rosca_parcial" required>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+                                <input type="number" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" step="0.01" required>
+                                @error('cabeza')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label>
+                                <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="4"> 
+                                    @if ($producto_en_tabla->tipo_rosca == 2)
+                                    <option value="parcial">Parcial</option>  
+                                    <option value="total">Total</option> 
+                                    @else
+                                    <option value="total">Total</option>  
+                                    <option value="parcial">Parcial</option> 
+                                    @endif
+                                </select>
+                            </div>
+                            
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label>
+                                <input type="number" value="{{$producto_en_tabla->separacion_rosca}}" class="form-control" name="separacion_rosca" id="separacion_rosca" step="0.01" required>
+                                @error('separacion_rosca')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
+                                <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
+                            </div>
+
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label>
+                                <input type="number" value="{{$producto_en_tabla->rosca_parcial}}" class="form-control" name="rosca_parcial" id="rosca_parcial" step="0.01" required>
+                                @error('rosca_parcial')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
+                            <div class="">
                             <label for="recipient-name" class="col-form-label" style="color:black">Vastago</label>
-                            <input type="text" value="{{$producto_en_tabla->vastago}}" class="form-control" name="vastago" id="vastago" required>
+                            <input type="number" value="{{$producto_en_tabla->vastago}}" class="form-control" name="vastago" id="vastago" step="0.01" required>
+                                @error('vastago')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
+                            </div>
+
                             @endif
 
+                            {{-- Mueble --}}
                             @if ($producto_en_bruto->familia=="Mueble")
-                            <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
-                            <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
-                            <label for="recipient-name" class="col-form-label" style="color:black">Acabado</label>
-                            <input type="text" value="{{$producto_en_tabla->acabado}}" class="form-control" name="acabado" id="acabado" required>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
+                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                            </div>
+                            <div class="">
+                                <label for="recipient-name" class="col-form-label" style="color:black">Acabado</label>
+                                <input type="text" value="{{$producto_en_tabla->acabado}}" class="form-control" name="acabado" id="acabado" required>
+                            </div>
                             @endif
                         </div>
                         <div class="modal-footer">
@@ -285,7 +419,7 @@
     </div>
 
     {{-- Activar Desactivar Producto --}}
-    <div class="modal fade" id="activar_desactivar_modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="activar_desactivar_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -328,6 +462,42 @@
             </div>
         </div>
     </div>
+
+    {{-- Subir img --}}
+    <div class="modal fade" id="subir_imagen_modal" tabindex=-1 aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color:black">Subir Imagen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('subir_imagen_producto', $producto_en_bruto->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="" class="form-label">Url</label>
+                
+                            <input id="url" name="url" type="file" class="form-control" tabindex="1" accept="image/*">
+                
+                            @error('url')
+                                <small style="color:red;">*{{$message}}</small>
+                            @enderror
+                            <input id="existe_imagen" name="existe_imagen" type="hidden" class="form-control" tabindex="3" value="no">
+                            @error('existe_imagen')
+                                <small style="color:red;">*Ya existe una imagen con ese nombre en la base de datos.</small>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary"
+                                onclick="return confirm('¿Está usted seguro de subir esta imagen?')">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script type="text/javascript">

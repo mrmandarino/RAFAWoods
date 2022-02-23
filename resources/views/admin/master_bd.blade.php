@@ -195,7 +195,7 @@
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link text-white" aria-current="page">
+          <a href="{{route('inicio')}}" class="nav-link text-white" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
@@ -233,7 +233,7 @@
             </svg>
             Productos
           </a>
-        </li>
+        </li>   
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -243,7 +243,7 @@
           </a>
         </li>
         <li>
-          <a href=""{{route('menu_bd')}}"" class="nav-link active">
+          <a href="{{route('menu_bd')}}" class="nav-link active">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#server" />
             </svg>
@@ -266,7 +266,12 @@
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+          <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <li><a class="dropdown-item" href="{{route('logout')}}"
+              onclick="event.preventDefault();
+                          this.closest('form').submit();">Cerrar Sesión</a></li>
+          </form>
         </ul>
       </div>
     </div>
