@@ -32,7 +32,7 @@
                             <div class="input-group">
 
                                 <label for="nombre_producto" class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="left" title="Selecciona un producto para administrar y poder actualizar su stock, precio de venta, ingresar sus carácteristicas y activarlo o desactivarlo en el sistema.">Producto:</label>
-                                <input class="form-control" list="datalist_productos" name="nombre_producto" id="nombre_producto" placeholder="Escriba para buscar..." onchange="cargar_datos()">
+                                <input class="form-control" list="datalist_productos" name="nombre_producto" id="nombre_producto" placeholder="Escriba para buscar..." onchange="cargar_datos()" required>
                                 <input type="number" class="visually-hidden" name="id_producto_hidden" id="id_producto_hidden">
                                 <datalist id="datalist_productos">
                                     @foreach ($productos as $producto)

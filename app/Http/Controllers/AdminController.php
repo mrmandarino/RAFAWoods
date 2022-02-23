@@ -618,7 +618,7 @@ class AdminController extends Controller
                 ]);
             }
             $request->validate([
-                'url' => ['required','image','max:2048'],
+                'url' => ['required','image','max:4096'],
                 // 'imanegable_tipo' => ['required','string','max:255'],
             ]);
             $auxiliar="\hola";
@@ -836,7 +836,7 @@ class AdminController extends Controller
 
         }
         
-        return view('admin.visualizar_especifico',compact('datos','tabla'));
+        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('fila_nueva','Se ha agregado la fila correctamente.');
     }
 
     /**
@@ -1783,7 +1783,7 @@ class AdminController extends Controller
             $datos=DB::table('ventas')->get();
         }
         
-        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('Se ha actualizado la fila correctamente.');
+        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('fila_actualizada','Se ha actualizado la fila correctamente.');
     }
 
     /**
@@ -1949,7 +1949,7 @@ class AdminController extends Controller
             $datos=DB::table('ventas')->get();
         }
         
-        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('Se ha eliminado la fila correctamente.');
+        return redirect()->route('admin_visualizar_especifico', ['datos' => $datos, 'tabla' => $tabla])->with('fila_eliminada','Se ha eliminado la fila correctamente.');
     }
     
 

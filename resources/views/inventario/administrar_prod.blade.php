@@ -58,83 +58,39 @@
                                 </div><br>
                             @endif
                             @if (session()->has('producto_actualizado'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                                     {{ session()->get('producto_actualizado') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
+                            @if (session()->has('imagen_subida'))
+                                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                    {{ session()->get('imagen_subida') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div><br>
                             @endif
                             {{-- Mensaje validacion de stock --}}
                             @error('stock')
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                                     Ha ocurrido un error al actualizar el stock
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div><br>
                             @enderror
                             {{-- Mensaje validacion de precio producto --}}
                             @error('utilidad')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                                 Ha ocurrido un error al actualizar el precio del producto
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div><br>
                             @enderror
 
                             {{-- Mensaje validacion edicion producto --}}
-                            @error('alto')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-
-                            @error('ancho')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                           
-                            @error('largo')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                            
-                            @error('cabeza')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                            
-                            @error('longitud')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                            
-                            @error('separacion_rosca')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                            
-                            @error('rosca_parcial')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                            
-                            @error('vastago')
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ha ocurrido un error al editar el producto
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div><br>
-                            @enderror
-                            
+                            @if($errors->get('alto') || $errors->get('largo') || $errors->get('ancho') || $errors->get('cabeza') || $errors->get('longitud') || $errors->get('separacion_rosca') || $errors->get('rosca_parcial') || $errors->get('vastago') || $errors->get('nombre') || $errors->get('descripcion') || $errors->get('familia'))
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    Ha ocurrido un error al editar el producto
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
                         </div>
                         <div class="list-group" style="min-width: 600px">
                             <a type="button" data-bs-toggle="modal" data-bs-target="#actualizar_stock_modal"
@@ -516,7 +472,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('subir_imagen_producto', $producto_en_bruto->id) }}" method="POST">
+                    <form action="{{ route('subir_imagen_producto', $producto_en_bruto->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="" class="form-label">Url</label>

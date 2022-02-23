@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clavo;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Imagen;
 use App\Models\Madera;
 use App\Models\Mueble;
@@ -72,8 +73,9 @@ class EjecutivoController extends Controller
     public function actualizar_producto(Request $request,$id)
     {   
         $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
+
         if($producto_en_bruto->familia == "Madera")
-        {
+        {            
             $request->validate([
                 'alto' => ['required','integer', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
@@ -169,7 +171,6 @@ class EjecutivoController extends Controller
         'familia' => $request->familia]);
         
         return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('producto_actualizado','Producto actualizado correctamente.');
-
     }
 
     public function borrar_producto($id)
@@ -382,7 +383,7 @@ class EjecutivoController extends Controller
     public function subir_imagen(Request $request,$id)
     {
         $request->validate([
-            'url' => ['required','image','max:2048'],
+            'url' => ['required','image','max:4096'],
             // 'imanegable_tipo' => ['required','string','max:255'],
         ]);
         $auxiliar="\hola";
@@ -401,6 +402,8 @@ class EjecutivoController extends Controller
         $nuevo_dato->imagenable_id = $id;
         $nuevo_dato->imagenable_tipo = 'App\Models\Producto';
         $nuevo_dato->save();
+        return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('imagen_subida','Imagen subida con éxito.');
+
     }
 
 
