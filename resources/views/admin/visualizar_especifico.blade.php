@@ -254,6 +254,7 @@
 			<table id="tornillos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> CABEZA (mm) </th>
 				<th> TIPO ROSCA </th>
 				<th> SEPARACION ROSCA (mm) </th>
@@ -270,6 +271,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$tornillo->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$tornillo->cabeza}} </td>
 							<td> {{$tornillo->tipo_rosca}} </td>
 							<td> {{$tornillo->separacion_rosca}} </td>
@@ -325,6 +327,7 @@
 			<table id="techumbres" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> ALTO </th>
 				<th> ANCHO </th>
@@ -339,6 +342,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$techumbre->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$techumbre->material}} </td>
 							<td> {{$techumbre->alto}} </td>
 							<td> {{$techumbre->ancho}} </td>
@@ -433,6 +437,7 @@
 			<table id="planchas_construccion" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> ALTO (m) </th>
 				<th> ANCHO (mm) </th>
@@ -447,6 +452,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$plancha->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$plancha->material}} </td>
 							<td> {{$plancha->alto}} </td>
 							<td> {{$plancha->ancho}} </td>
@@ -471,6 +477,7 @@
 			<table id="muebles" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> ACABADO </th>
 				<th> ALTO (m) </th>
@@ -486,6 +493,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$mueble->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$mueble->material}} </td>
 							<td> {{$mueble->acabado}} </td>
 							<td> {{$mueble->alto}} </td>
@@ -511,6 +519,7 @@
 			<table id="maderas" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> ALTO (in) </th>
 				<th> ANCHO (in) </th>
 				<th> LARGO (m) </th>
@@ -526,6 +535,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$madera->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$madera->alto}} </td>
 							<td> {{$madera->ancho}} </td>
 							<td> {{$madera->largo}} </td>
@@ -718,6 +728,7 @@
 			<table id="clavos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> PUNTA </th>
 				<th> CABEZA (mm) </th>
@@ -732,6 +743,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$clavo->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$clavo->material}} </td>
 							<td> {{$clavo->punta}} </td>
 							<td> {{$clavo->cabeza}} </td>

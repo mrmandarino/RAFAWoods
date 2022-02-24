@@ -98,7 +98,7 @@
 
         {{-- Trabajador --}}
         @php($trabajador=App\Models\Trabajador::find($key))
-        <div class="form-group trabajadores">
+        <div class="form-group trabajadores mb-3">
             <label for="" class="form-label">Tipo trabajador</label>
             <select class="form-control select" name="tipo_trabajador" id="tipo_trabajador" tabindex="8">
                 @if ($trabajador!=null)
@@ -111,7 +111,7 @@
             </select>
         </div>
         
-        <div class="form-group trabajadores">
+        <div class="form-group trabajadores mb-3">
             <label for="" class="form-label">Sucursal</label>
             <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="9">
                 @if ($trabajador!=null)
@@ -128,7 +128,7 @@
 
         {{-- Cliente --}}
         @php($cliente=App\Models\Cliente::find($key))
-        <div class="form-group clientes">
+        <div class="form-group clientes mb-3">
             <label for="" class="form-label">Telefono(Opcional)</label>
             <input id="telefono" name="telefono" type="tel" class="form-control" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." tabindex="10" @if ($cliente!=null) value="{{$cliente->telefono}}" @endif>
             @error('telefono')
@@ -422,42 +422,43 @@
         @endif
 
         
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3" >
             <label for="" class="form-label">Cabeza</label>
             <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="5" @if ($dato->familia == "Tornillo") value="{{$tornillo->cabeza}}" @endif>
             @error('cabeza')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Tipo rosca</label>
             <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="6"> 
                 <option value="total" @if ($dato->familia == "Tornillo") {{ $tornillo->tipo_rosca=="total" ? 'selected' : ''  }} @endif>Total</option>  
                 <option value="parcial" @if ($dato->familia == "Tornillo") {{ $tornillo->tipo_rosca=="parcial" ? 'selected' : ''  }} @endif>Parcial</option> 
             </select>
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Separación rosca</label>
             <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="7" @if ($dato->familia == "Tornillo") value="{{$tornillo->separacion_rosca}}" @endif>
             @error('separacion_rosca')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Punta</label>
             <input id="punta" name="punta" type="text" class="form-control" tabindex="8" @if ($dato->familia == "Tornillo") value="{{$tornillo->punta}}" @endif>
             @error('punta')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Rosca parcial</label>
             <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="9" @if ($dato->familia == "Tornillo") value="{{$tornillo->rosca_parcial}}" @endif>
             @error('rosca_parcial')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Vastago</label>
             <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="10" @if ($dato->familia == "Tornillo") value="{{$tornillo->vastago}}" @endif>
             @error('vastago')
@@ -465,28 +466,28 @@
             @enderror
         </div>  
         
-        <div class="form-group planchas">
+        <div class="form-group planchas mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material_plancha" name="material_plancha" type="text" class="form-control" tabindex="11" @if ($dato->familia == "Plancha_construccion") value="{{$plancha_construccion->material}}" @endif>
             @error('material_plancha')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group planchas">
+        <div class="form-group planchas mb-3">
             <label for="" class="form-label">Alto</label>
             <input id="alto_plancha" name="alto_plancha" type="number" step="0.01" class="form-control" tabindex="12" @if ($dato->familia == "Plancha_construccion") value="{{$plancha_construccion->alto}}" @endif>
             @error('alto_plancha')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group planchas">
+        <div class="form-group planchas mb-3">
             <label for="" class="form-label">Ancho</label>
             <input id="ancho_plancha" name="ancho_plancha" type="number" step="0.01" class="form-control" tabindex="13" @if ($dato->familia == "Plancha_construccion") value="{{$plancha_construccion->ancho}}" @endif>
             @error('ancho_plancha')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group planchas">
+        <div class="form-group planchas mb-3">
             <label for="" class="form-label">Largo</label>
             <input id="largo_plancha" name="largo_plancha" type="number" step="0.01" class="form-control" tabindex="14" @if ($dato->familia == "Plancha_construccion") value="{{$plancha_construccion->largo}}" @endif>
             @error('largo_plancha')
@@ -494,28 +495,28 @@
             @enderror
         </div>
 
-        <div class="form-group techumbres">
+        <div class="form-group techumbres mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material_techumbre" name="material_techumbre" type="text" class="form-control" tabindex="15" @if ($dato->familia == "Techumbre") value="{{$techumbre->material}}" @endif>
             @error('material_techumbre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group techumbres">
+        <div class="form-group techumbres mb-3">
             <label for="" class="form-label">Alto</label>
             <input id="alto_techumbre" name="alto_techumbre" type="number" step="0.01" class="form-control" tabindex="16" @if ($dato->familia == "Techumbre") value="{{$techumbre->alto}}" @endif>
             @error('alto_techumbre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group techumbres">
+        <div class="form-group techumbres mb-3">
             <label for="" class="form-label">Ancho</label>
             <input id="ancho_techumbre" name="ancho_techumbre" type="number" step="0.01" class="form-control" tabindex="17" @if ($dato->familia == "Techumbre") value="{{$techumbre->ancho}}" @endif>
             @error('ancho_techumbre')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group techumbres">
+        <div class="form-group techumbres mb-3">
             <label for="" class="form-label">Largo</label>
             <input id="largo_techumbre" name="largo_techumbre" type="number" step="0.01" class="form-control" tabindex="18" @if ($dato->familia == "Techumbre") value="{{$techumbre->largo}}" @endif>
             @error('largo_techumbre')
@@ -523,35 +524,35 @@
             @enderror
         </div>
 
-        <div class="form-group muebles">
+        <div class="form-group muebles mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material_mueble" name="material_mueble" type="text" class="form-control" tabindex="19" @if ($dato->familia == "Mueble")  value="{{$mueble->material}}" @endif>
             @error('material_mueble')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group muebles">
+        <div class="form-group muebles mb-3">
             <label for="" class="form-label">Acabado</label>
             <input id="acabado_mueble" name="acabado_mueble" type="text" class="form-control" tabindex="20" @if ($dato->familia == "Mueble")  value="{{$mueble->acabado}}" @endif>
             @error('acabado_mueble')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group muebles">
+        <div class="form-group muebles mb-3">
             <label for="" class="form-label">Alto</label>
             <input id="alto_mueble" name="alto_mueble" type="number" step="0.01" class="form-control" tabindex="21" @if ($dato->familia == "Mueble")  value="{{$mueble->alto}}" @endif>
             @error('alto_mueble')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group muebles">
+        <div class="form-group muebles mb-3">
             <label for="" class="form-label">Ancho</label>
             <input id="ancho_mueble" name="ancho_mueble" type="number" step="0.01" class="form-control" tabindex="22" @if ($dato->familia == "Mueble")  value="{{$mueble->ancho}}" @endif>
             @error('ancho_mueble')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group muebles">
+        <div class="form-group muebles mb-3">
             <label for="" class="form-label">Largo</label>
             <input id="largo_mueble" name="largo_mueble" type="number" step="0.01" class="form-control" tabindex="23" @if ($dato->familia == "Mueble")  value="{{$mueble->largo}}" @endif>
             @error('largo_mueble')
@@ -559,35 +560,35 @@
             @enderror
         </div>
         
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Alto</label>
             <input id="alto_madera" name="alto_madera" type="number" step="0.01" class="form-control" tabindex="24" @if ($dato->familia == "Madera") value="{{$madera->alto}}" @endif>
             @error('alto_madera')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Ancho</label>
             <input id="ancho_madera" name="ancho_madera" type="number" step="0.01" class="form-control" tabindex="25" @if ($dato->familia == "Madera") value="{{$madera->ancho}}" @endif>
             @error('ancho_madera')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Largo</label>
             <input id="largo_madera" name="largo_madera" type="number" step="0.01" class="form-control" tabindex="26" @if ($dato->familia == "Madera") value="{{$madera->largo}}" @endif>
             @error('largo_madera')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Tipo madera</label>
             <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="27" @if ($dato->familia == "Madera") value="{{$madera->tipo_madera}}" @endif>
             @error('tipo_madera')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Tratamiento</label>
             <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="28" @if ($dato->familia == "Madera") value="{{$madera->tratamiento}}" @endif>
             @error('tratamiento')
@@ -596,28 +597,28 @@
 
         </div>
             
-        <div class="form-group clavos">
+        <div class="form-group clavos mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material_clavo" name="material_clavo" type="text" class="form-control" tabindex="29" @if ($dato->familia == "Clavo") value="{{$clavo->material}}" @endif>
             @error('material_clavo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group clavos">
+        <div class="form-group clavos mb-3">
             <label for="" class="form-label">Cabeza</label>
             <input id="cabeza_clavo" name="cabeza_clavo" type="number" step="0.01" class="form-control" tabindex="30" @if ($dato->familia == "Clavo") value="{{$clavo->cabeza}}" @endif>
             @error('cabeza_clavo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group clavos">
+        <div class="form-group clavos mb-3">
             <label for="" class="form-label">Punta</label>
             <input id="punta_clavo" name="punta_clavo" type="text" class="form-control" tabindex="31" @if ($dato->familia == "Clavo") value="{{$clavo->punta}}" @endif>
             @error('punta_clavo')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group clavos">
+        <div class="form-group clavos mb-3">
             <label for="" class="form-label">Longitud</label>
             <input id="longitud_clavo" name="longitud_clavo" type="number" step="0.01" class="form-control" tabindex="32" @if ($dato->familia == "Clavo") value="{{$clavo->longitud}}" @endif>
             @error('longitud_clavo')
@@ -693,14 +694,14 @@
     @elseif($tabla == 'maderas') 
         <div class="mb-3">
             <label for="" class="form-label">Alto</label>
-            <input id="alto" name="alto" type="number" step="0.01" class="form-control" tabindex="1" value="{{$dato->alto}}">
+            <input id="alto" name="alto" type="number" class="form-control" tabindex="1" value="{{$dato->alto}}">
             @error('alto')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Ancho</label>
-            <input id="ancho" name="ancho" type="number" step="0.01" class="form-control" tabindex="2" value="{{$dato->ancho}}">
+            <input id="ancho" name="ancho" type="number" class="form-control" tabindex="2" value="{{$dato->ancho}}">
             @error('ancho')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
@@ -843,14 +844,26 @@
     @elseif($tabla == 'detalle_ventas') 
         @php($ventas=DB::table('ventas')->get())
         @php($productos=DB::table('productos')->get())
-    
-        <div class="mb-3">
-            <label for="" class="form-label">ID Venta</label>
-            <select class="form-control select" name="venta_id" id="venta_id" tabindex="1">
-                @foreach ($ventas as $venta)
-                    <option value={{$venta->id}} {{ $dato->venta_id==$venta->id ? 'selected' : ''  }}>{{$venta->id}}</option> 
-                @endforeach  
-            </select>
+
+        <label for="" class="form-label">ID Venta</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_venta" name="venta_id" type="number" id="venta_id" tabindex="1" value="{{$dato->venta_id}}">
+            <datalist id="datalist_venta" >
+                <select>
+                    @foreach ($ventas as $venta)
+                        <option value={{$venta->id}} {{ $dato->venta_id==$venta->id ? 'selected' : ''  }}>{{$venta->id}}</option> 
+                    @endforeach  
+                </select> 
+            </datalist>
+            <input id="existe_venta" name="existe_venta" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_venta')
+                <small style="color:red;">*El ID de la venta ingresada no existe.</small>
+            @enderror
+            @error('venta_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
         <label for="" class="form-label">Producto</label>
@@ -867,10 +880,10 @@
         </div>
         <div>
             @error('existe_producto')
-            <small style="color:red;">*El ID del producto ingresado no existe.</small>
+                <small style="color:red;">*El ID del producto ingresado no existe.</small>
             @enderror
             @error('producto_id')
-            <small style="color:red;">*{{$message}}</small>
+                <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
 
@@ -918,23 +931,48 @@
         @php($ordenes=DB::table('orden_compras')->get())
         @php($productos=DB::table('productos')->get())
 
-        <div class="mb-3">
-            <label for="" class="form-label">ID Orden de compra</label>
-            <select class="form-control select" name="oc_id" id="oc_id" tabindex="1">
-                @foreach ($ordenes as $orden)
-                    <option value={{$orden->id}} {{ $dato->oc_id==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
-                @endforeach  
-            </select>
+        <label for="" class="form-label">ID Orden de compra</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_orden" name="oc_id" type="number" id="oc_id" tabindex="2" value="{{$dato->oc_id}}">
+            <datalist id="datalist_orden" >
+                <select>
+                    @foreach ($ordenes as $orden)
+                        <option value={{$orden->id}} {{ $dato->oc_id==$orden->id ? 'selected' : ''  }}>{{$orden->id}}</option> 
+                    @endforeach  
+                </select> 
+            </datalist>
+            <input id="existe_oc" name="existe_oc" type="hidden" class="form-control" tabindex="3" value="no">
+        </div>
+        <div>
+            @error('existe_oc')
+                <small style="color:red;">*El ID de la ordén de compra ingresada no existe.</small>
+            @enderror
+            @error('oc_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="" class="form-label">Producto</label>
-            <select class="form-control select" name="producto_id" id="producto_id" tabindex="2">
-                @foreach ($productos as $producto)
-                    <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
-                @endforeach  
-            </select>
+        <label for="" class="form-label">Producto</label>
+        <div class="input-group" >
+            <input class="form-control select" list="datalist_productos" name="producto_id" type="number" id="producto_id" tabindex="2" value="{{$dato->producto_id}}">
+            <datalist id="datalist_productos" >
+                <select>
+                    @foreach ($productos as $producto)
+                        <option value={{$producto->id}} {{ $dato->producto_id==$producto->id ? 'selected' : ''  }}>{{$producto->nombre}}</option> 
+                    @endforeach 
+                </select> 
+            </datalist>
+            <input id="existe_producto" name="existe_producto" type="hidden" class="form-control" tabindex="3" value="no">
         </div>
+        <div>
+            @error('existe_producto')
+                <small style="color:red;">*El ID del producto ingresado no existe.</small>
+            @enderror
+            @error('producto_id')
+                <small style="color:red;">*{{$message}}</small>
+            @enderror
+        </div>
+
 
         <div class="mb-3">
             <label for="" class="form-label">Nivel de calidad</label>

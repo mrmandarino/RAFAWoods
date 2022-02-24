@@ -112,7 +112,7 @@
         </div>
         
         {{-- Trabajador --}}
-        <div class="form-group trabajadores">
+        <div class="form-group trabajadores mb-3">
             <label for="" class="form-label">Tipo trabajador</label>
             <select class="form-control select" name="tipo_trabajador" id="tipo_trabajador" tabindex="7">
                 <option value=1 {{ old('tipo_trabajador')==1 ? 'selected' : ''  }}>Ejecutivo</option>  
@@ -120,7 +120,7 @@
             </select>
         </div>
 
-        <div class="form-group trabajadores">
+        <div class="form-group trabajadores mb-3">
             <label for="" class="form-label">Sucursal</label>
             <select class="form-control select" name="sucursal_id" id="sucursal_id" tabindex="8">
                 @foreach ($sucursales as $sucursal)
@@ -130,7 +130,7 @@
         </div>
 
         {{-- Cliente --}}
-        <div class="form-group clientes">
+        <div class="form-group clientes mb-3">
             <label for="" class="form-label">Telefono(Opcional)</label>
             <input id="telefono" name="telefono" type="tel" class="form-control" tabindex="9" pattern="\+569[0-9]{8}" title="El teléfono debe contener el prefijo '+569' y 8 dígitos." value="{{old('telefono')}}">
             @error('telefono')
@@ -584,42 +584,42 @@
         </div>
         
         {{-- Tornillo --}}
-        <div class="form-group tornillos_clavos">
+        <div class="form-group tornillos_clavos mb-3">
             <label for="" class="form-label">Cabeza</label>
             <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" value="{{old('cabeza')}}">
             @error('cabeza')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Tipo rosca</label>
             <select class="form-control select" name="tipo_rosca" id="tipo_rosca" tabindex="5"> 
                 <option value="total" {{ old('tipo_rosca')=="total" ? 'selected' : ''  }}>Total</option>  
                 <option value="parcial" {{ old('tipo_rosca')=="parcial" ? 'selected' : ''  }}>Parcial</option> 
             </select>
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Separación rosca</label>
             <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" value="{{old('separacion_rosca')}}">
             @error('separacion_rosca')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos_clavos">
+        <div class="form-group tornillos_clavos mb-3">
             <label for="" class="form-label">Punta</label>
             <input id="punta" name="punta" type="text" class="form-control" tabindex="7" value="{{old('punta')}}">
             @error('punta')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Rosca parcial</label>
             <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" value="{{old('rosca_parcial')}}">
             @error('rosca_parcial')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group tornillos">
+        <div class="form-group tornillos mb-3">
             <label for="" class="form-label">Vastago</label>
             <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" value="{{old('vastago')}}">
             @error('vastago')
@@ -628,28 +628,28 @@
         </div>
 
         {{-- Plancha construccion y Techumbre --}}
-        <div class="form-group material">
+        <div class="form-group material mb-3">
             <label for="" class="form-label">Material</label>
             <input id="material" name="material" type="text" class="form-control" tabindex="10" value="{{old('material')}}">
             @error('material')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group medidas">
+        <div class="form-group medidas mb-3">
             <label for="" class="form-label">Alto</label>
             <input id="alto" name="alto" type="number" step="0.01" class="form-control" tabindex="11" value="{{old('alto')}}">
             @error('alto')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group medidas">
+        <div class="form-group medidas mb-3">
             <label for="" class="form-label">Ancho</label>
             <input id="ancho" name="ancho" type="number" step="0.01" class="form-control" tabindex="12" value="{{old('ancho')}}">
             @error('ancho')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group medidas">
+        <div class="form-group medidas mb-3">
             <label for="" class="form-label">Largo</label>
             <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" value="{{old('largo')}}">
             @error('largo')
@@ -658,7 +658,7 @@
         </div>
 
          {{-- Mueble --}}
-         <div class="form-group muebles">
+         <div class="form-group muebles mb-3">
             <label for="" class="form-label">Acabado</label>
             <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" value="{{old('acabado')}}">
             @error('acabado')
@@ -667,14 +667,14 @@
         </div>
 
         {{-- Madera --}}
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Tipo madera</label>
             <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" value="{{old('tipo_madera')}}">
             @error('tipo_madera')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
-        <div class="form-group maderas">
+        <div class="form-group maderas mb-3">
             <label for="" class="form-label">Tratamiento</label>
             <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" value="{{old('tratamiento')}}">
             @error('tratamiento')
@@ -683,7 +683,7 @@
         </div>
 
         {{-- Clavo --}}
-        <div class="form-group clavos">
+        <div class="form-group clavos mb-3">
             <label for="" class="form-label">Longitud</label>
             <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" value="{{old('longitud')}}">
             @error('longitud')
@@ -803,14 +803,14 @@
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Alto</label>
-            <input id="alto" name="alto" type="number" step="0.01" class="form-control" tabindex="3" value="{{old('alto')}}">
+            <input id="alto" name="alto" type="number" class="form-control" tabindex="3" value="{{old('alto')}}">
             @error('alto')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Ancho</label>
-            <input id="ancho" name="ancho" type="number" step="0.01" class="form-control" tabindex="4" value="{{old('ancho')}}">
+            <input id="ancho" name="ancho" type="number" class="form-control" tabindex="4" value="{{old('ancho')}}">
             @error('ancho')
                 <small style="color:red;">*{{$message}}</small>
             @enderror
