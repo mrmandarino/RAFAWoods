@@ -1036,7 +1036,7 @@
 
     <br>
     <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary" tabindex="20">Cancelar</a>
-    <button type="submit" class="btn btn-primary" tabindex="21">Guardar</button>
+    <button type="submit" class="btn btn-primary" tabindex="21" onclick="return confirm('¿Está usted seguro de querer guardar los cambios?')">Guardar</button>
     
 </form>
 

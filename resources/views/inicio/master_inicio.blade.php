@@ -8,7 +8,7 @@
 
 
 
-  <title>Dashboard Ventas</title>
+  <title>Inicio</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -229,7 +229,12 @@
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+          <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <li><a class="dropdown-item" href="{{route('logout')}}"
+              onclick="event.preventDefault();
+                          this.closest('form').submit();">Cerrar Sesión</a></li>
+          </form>
         </ul>
       </div>
     </div>

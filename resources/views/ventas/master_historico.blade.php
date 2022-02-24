@@ -8,7 +8,7 @@
 
     
 
-    <title>Dashboard Ventas</title>
+    <title>Histórico Ventas</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
