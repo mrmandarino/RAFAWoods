@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clavo;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Imagen;
 use App\Models\Madera;
 use App\Models\Mueble;
@@ -14,6 +13,8 @@ use App\Models\Localizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Plancha_construccion;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EjecutivoController extends Controller
 {
@@ -25,7 +26,8 @@ class EjecutivoController extends Controller
     //Redirecionamiento al portal del inventario, en donde se acarrean todos los productos para utilizar.
     public function index()
     {
-        $productos = DB::table('productos')->get();
+        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
+        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',$usuario_logeado->sucursal_id)->get();
         return view('inventario.control_inv',compact('productos'));
     }
     //Redireccionamiento al portal de los precios de los productos del sistema.
@@ -47,38 +49,45 @@ class EjecutivoController extends Controller
     //con el id de producto se puede detectar todo lo que se necesita:familia,productos, localizacions
     public function detalle_producto($id_redirect)
     {   
+        if($id_redirect == 0 || $id_redirect == null)
+        {
+            return redirect()->route('ver_inventario')->with('no_product_selected','Ha ocurrido un error. Ha ingresado un producto inválido.');
+        }
+
         $id_producto_redirect=$id_redirect;
         $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
         $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
-        $familia = DB::table('productos')->where('id',$id_producto_redirect)->value('familia');
-        $tabla_familia = EjecutivoController::detectar_nombre($familia);
-        $producto_en_tabla = DB::table($tabla_familia)->where('producto_id',$id_producto_redirect)->first();
-        return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','producto_en_tabla'));
+        return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto'));
 
     }
     
 
     public function detalle_producto_stock_actualizado(Request $request,$id)
     {   
-        
+        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
         $request->validate([
             'stock' => ['required','integer', 'gt:0'],
         ]);
-        DB::table('localizacions')->where('producto_id',$id)->update(['stock'=>$request->stock]);
-        
+        DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('producto_id',$id)->where('sucursal_id',$usuario_logeado->sucursal_id)->update(['stock'=>$request->stock]);
         return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('stock_actualizado','Stock actualizado correctamente.');
     }
 
     public function actualizar_producto(Request $request,$id)
     {   
-        $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
+        $request->validate([
+            'nombre' => ['required','max:255'],
+            'descripcion' => ['required','max:255'],
+        ]);
 
+        $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
         if($producto_en_bruto->familia == "Madera")
         {            
             $request->validate([
                 'alto' => ['required','integer', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
                 'ancho' => ['required','integer', 'gt:0'],
+                'tipo_madera' => ['required'],
+                'tratamiento' => ['required'],
             ]);
             DB::table('maderas')->where('producto_id',$id)
             ->update(['alto'=>$request->alto,
@@ -93,6 +102,8 @@ class EjecutivoController extends Controller
             $request->validate([
                 'cabeza' => ['required','numeric', 'gt:0'],
                 'longitud' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
+                'punta' => ['required'],
             ]);
             DB::table('clavos')->where('producto_id',$id)
             ->update(['material'=>$request->material,
@@ -104,9 +115,10 @@ class EjecutivoController extends Controller
         if($producto_en_bruto->familia == 'Techumbre')
         {
             $request->validate([
-                'alto' => ['required','integer', 'gt:0'],
+                'alto' => ['required','numeric', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
-                'ancho' => ['required','integer', 'gt:0'],
+                'ancho' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
             ]);
             DB::table('techumbres')->where('producto_id',$id)
             ->update(['material'=>$request->material,
@@ -118,9 +130,10 @@ class EjecutivoController extends Controller
         if($producto_en_bruto->familia == 'Plancha_construccion')
         {
             $request->validate([
-                'alto' => ['required','integer', 'gt:0'],
+                'alto' => ['required','numeric', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
-                'ancho' => ['required','integer', 'gt:0'],
+                'ancho' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
             ]);
             DB::table('plancha_construccions')->where('producto_id',$id)
             ->update(['material'=>$request->material,
@@ -136,6 +149,8 @@ class EjecutivoController extends Controller
                 'separacion_rosca' => ['required','numeric', 'gt:0'],
                 'rosca_parcial' => ['required','numeric', 'gt:0'],
                 'vastago' => ['required','numeric', 'gt:0'],
+                'tipo_rosca' => ['required'],
+                'punta' => ['required'],
             ]);
             if($request->tipo_rosca == "total")
             {
@@ -159,11 +174,25 @@ class EjecutivoController extends Controller
                 'vastago' => $request->vastago]);
             }
         }
-        $request->validate([
-            'nombre' => ['required','max:255'],
-            'descripcion' => ['required','max:255'],
-            'familia' => ['required'],
-        ]);
+
+        if($producto_en_bruto->familia == "Mueble")
+        {
+            $request->validate([
+                'alto' => ['required','numeric', 'gt:0'],
+                'largo' => ['required','numeric', 'gt:0'],
+                'ancho' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
+                'acabado' => ['required'],
+            ]);
+
+            DB::table('muebles')->where('producto_id',$id)
+            ->update(['alto'=>$request->alto,
+            'largo'=>$request->largo,
+            'ancho' => $request->ancho,
+            'material' => $request->material,
+            'acabado' => $request->acabado]);
+        }
+
         DB::table('productos')->where('id',$id)
         ->update(['nombre'=>$request->nombre,
         'descripcion'=>$request->descripcion,
@@ -181,33 +210,24 @@ class EjecutivoController extends Controller
 
     public function actualizar_precio_producto(Request $request,$id)
     {
+        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
         $request->validate([
             'utilidad' => ['required','integer', 'gt:0'],
         ]);
-        DB::table('localizacions')->where('producto_id',$id)->update(['precio_venta'=>$request->precio_venta]);
-        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id)->first();
-        $producto_en_bruto = DB::table('productos')->where('id',$id)->first();
-        
+        DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('sucursal_id',$usuario_logeado->sucursal_id)->where('producto_id',$id)->update(['precio_venta'=>$request->precio_venta]);        
         return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('precio_actualizado','Precio de venta del producto actualizado correctamente');
-
     }
 
     public function agregar_producto(Request $request)
     {
-
         $request->validate([
             'nombre' => ['required','max:255'],
             'descripcion' => ['required','max:255'],
-            'familia' => ['required'],
+            'familia' => ['required','max:29'],
+            'stock' => ['required','integer', 'gt:0'],
+            'precio_compra' => ['required','integer', 'gt:0'],
         ]);
-        $producto_nuevo = Producto::create([
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'nivel_demanda' => 1,
-            'familia' => $request->familia,
-        ]);
-
-        $familia = EjecutivoController::detectar_nombre($producto_nuevo->familia);
+        $familia = EjecutivoController::detectar_nombre($request->familia);
 
         if($familia == "maderas")
         {
@@ -215,7 +235,16 @@ class EjecutivoController extends Controller
                 'alto' => ['required','integer', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
                 'ancho' => ['required','integer', 'gt:0'],
+                'tipo_madera' => ['required'],
+                'tratamiento' => ['required'],
                 'stock' => ['required','integer', 'gt:0'],
+                'precio_compra' => ['required','integer', 'gt:0'],
+            ]);
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
             ]);
             Madera::create([
                 'producto_id' => $producto_nuevo->id,
@@ -227,12 +256,21 @@ class EjecutivoController extends Controller
             ]);
         }
 
-        if($familia == "clavos")
+        elseif($familia == "clavos")
         {
             $request->validate([
                 'cabeza' => ['required','numeric', 'gt:0'],
                 'longitud' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
+                'punta' => ['required'],
                 'stock' => ['required','integer', 'gt:0'],
+                'precio_compra' => ['required','integer', 'gt:0'],
+            ]);
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
             ]);
             Clavo::create([
                 'producto_id' => $producto_nuevo->id,
@@ -243,13 +281,22 @@ class EjecutivoController extends Controller
             ]);
         }
 
-        if($familia == "techumbres")
+        elseif($familia == "techumbres")
         {
+            
             $request->validate([
-                'alto' => ['required','integer', 'gt:0'],
+                'alto' => ['required','numeric', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
-                'ancho' => ['required','integer', 'gt:0'],
+                'ancho' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
                 'stock' => ['required','integer', 'gt:0'],
+                'precio_compra' => ['required','integer', 'gt:0'],
+            ]);
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
             ]);
             Techumbre::create([
                 'producto_id' => $producto_nuevo->id,
@@ -260,13 +307,21 @@ class EjecutivoController extends Controller
             ]);
         }
 
-        if($familia == "plancha_construccions")
+        elseif($familia == "plancha_construccions")
         {
             $request->validate([
-                'alto' => ['required','integer', 'gt:0'],
+                'alto' => ['required','numeric', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
-                'ancho' => ['required','integer', 'gt:0'],
+                'ancho' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
                 'stock' => ['required','integer', 'gt:0'],
+                'precio_compra' => ['required','integer', 'gt:0'],
+            ]);
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
             ]);
             Plancha_construccion::create([
                 'producto_id' => $producto_nuevo->id,
@@ -277,17 +332,27 @@ class EjecutivoController extends Controller
             ]);
         }
 
-        if($familia == "tornillos")
+        elseif($familia == "tornillos")
         {
             $request->validate([
                 'cabeza' => ['required','numeric', 'gt:0'],
                 'separacion_rosca' => ['required','numeric', 'gt:0'],
                 'rosca_parcial' => ['required','numeric', 'gte:0'],
                 'vastago' => ['required','numeric', 'gt:0'],
+                'tipo_rosca' => ['required'],
+                'punta' => ['required'],
                 'stock' => ['required','integer', 'gt:0'],
+                'precio_compra' => ['required','integer', 'gt:0'],
+            ]);
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
             ]);
             if($request->tipo_rosca == "total")
             {
+                
                 Tornillo::create([
                     'producto_id' => $producto_nuevo->id,
                     'cabeza' => $request->cabeza,
@@ -310,13 +375,22 @@ class EjecutivoController extends Controller
             }
         }
 
-        if($familia == "muebles")
+        elseif($familia == "muebles")
         {
             $request->validate([
-                'alto' => ['required','integer', 'gt:0'],
+                'alto' => ['required','numeric', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
-                'ancho' => ['required','integer', 'gt:0'],
+                'ancho' => ['required','numeric', 'gt:0'],
+                'material' => ['required'],
+                'acabado' => ['required'],
                 'stock' => ['required','integer', 'gt:0'],
+                'precio_compra' => ['required','integer', 'gt:0'],
+            ]);
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
             ]);
             Mueble::create([
                 'producto_id' => $producto_nuevo->id,
@@ -328,10 +402,16 @@ class EjecutivoController extends Controller
             ]);
         }
 
-        $request->validate([
-            'stock' => ['required','integer', 'gt:0'],
-            'precio_compra' => ['required','integer', 'gt:0'],
-        ]);
+        elseif($familia == "herramientas" || $familia == "otros")
+        {
+            $producto_nuevo = Producto::create([
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'nivel_demanda' => 1,
+                'familia' => $request->familia,
+            ]);
+        }
+
         Localizacion::create([
             'sucursal_id' => 1,
             'producto_id' => $producto_nuevo->id,
@@ -351,6 +431,8 @@ class EjecutivoController extends Controller
         if($nombre == "Plancha_construccion"){$familia="plancha_construccions";}
         if($nombre == "Tornillo"){$familia="tornillos";}
         if($nombre == "Mueble"){$familia="muebles";}
+        if($nombre == "Herramienta"){$familia="herramientas";}
+        if($nombre == "Otro"){$familia="otros";}
         return $familia;
     }
 

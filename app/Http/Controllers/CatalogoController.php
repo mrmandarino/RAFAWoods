@@ -36,6 +36,11 @@ class CatalogoController extends Controller
         {
             return redirect()->route('ver_catalogo');
         }
+        $familia_aux = EjecutivoController::detectar_nombre($familia);
+        if($familia_aux == "")
+        {
+            return back()->with('familia_erronea','Has ingresado una familia inexistente');
+        }   
         return redirect()->route('ver_catalogo_por_familia',['familia'=>$familia]);
     }
 
@@ -53,8 +58,15 @@ class CatalogoController extends Controller
     //Redireccionamiento intermedio para detalle de producto
     public function intermedio_producto(Request $request)
     {
-        $nombre_producto = $request->input_hidden_producto;
-        return redirect()->route('ver_detalle_producto',['nombre_producto'=>$nombre_producto]);
+        $producto = DB::table('productos')->where('nombre',$request->input_hidden_producto)->first();
+        if($producto == null)
+        {
+            return back()->with('producto_erroneo','Has ingresado un producto inexistente');
+
+        }else{
+            $nombre_producto = $producto->nombre;
+            return redirect()->route('ver_detalle_producto',['nombre_producto'=>$nombre_producto]);
+        }
     }
 
     //Redireccionamiento para vista de detalle de producto

@@ -91,6 +91,13 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div><br>
                             @endif
+
+                            @if ($errors->get('url') || $errors->get('existe_imagen'))
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    Ha ocurrido un error al subir el archivo seleccionado
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div><br>
+                            @endif
                         </div>
                         <div class="list-group" style="min-width: 600px">
                             <a type="button" data-bs-toggle="modal" data-bs-target="#actualizar_stock_modal"
@@ -259,16 +266,29 @@
                         @method('PUT')
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
-                            <input type="text" value="{{$producto_en_bruto->nombre}}" class="form-control" name="nombre" id="nombre" required>
+                            <input type="text" value="{{$producto_en_bruto->nombre}}" class="form-control" name="nombre" id="nombre">
+                            @error('alto')
+                            <small style="color:red;">*{{$message}}</small>
+                            @enderror
                             <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
-                            <textarea class="form-control" name="descripcion" id="descripcion" required>{{$producto_en_bruto->descripcion}}</textarea>
+                            <textarea class="form-control" name="descripcion" id="descripcion">{{$producto_en_bruto->descripcion}}</textarea>
+                            @error('alto')
+                            <small style="color:red;">*{{$message}}</small>
+                            @enderror
                             <label for="recipient-name" class="col-form-label" style="color:black">Familia</label>
-                            <input type="text" value="{{$producto_en_bruto->familia}}" class="form-control" name="familia" id="familia" required>
+                            <input type="text" value="{{$producto_en_bruto->familia}}" class="form-control" name="familia" id="familia" disabled>
 
+                            @php
+                                if($producto_en_bruto->familia != "Herramienta" && $producto_en_bruto->familia != "Otro")
+                                {
+                                    $familia = App\Http\Controllers\EjecutivoController::detectar_nombre($producto_en_bruto->familia);
+                                    $producto_en_tabla = DB::table($familia)->where('producto_id', $producto_en_bruto->id)->first();
+                                }
+                            @endphp
                             @if ($producto_en_bruto->familia=="Madera" || $producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion" || $producto_en_bruto->familia=="Mueble")
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
-                                <input type="number" value="{{$producto_en_tabla->alto}}" class="form-control" name="alto" id="alto" required>
+                                <input type="number" value="{{$producto_en_tabla->alto}}" class="form-control" name="alto" id="alto">
                                 @error('alto')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -276,7 +296,7 @@
 
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
-                                <input type="number" value="{{$producto_en_tabla->ancho}}" class="form-control" name="ancho" id="ancho" required>
+                                <input type="number" value="{{$producto_en_tabla->ancho}}" class="form-control" name="ancho" id="ancho">
                                 @error('ancho')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -285,7 +305,7 @@
 
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
-                                <input type="number" value="{{$producto_en_tabla->largo}}" class="form-control" name="largo" id="largo" step="0.01" required>
+                                <input type="number" value="{{$producto_en_tabla->largo}}" class="form-control" name="largo" id="largo" step="0.01">
                                 @error('largo')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -297,23 +317,32 @@
                             @if ($producto_en_bruto->familia=="Madera")
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label>
-                                <input type="text" value="{{$producto_en_tabla->tipo_madera}}" class="form-control" name="tipo_madera" id="tipo_madera" required>
+                                <input type="text" value="{{$producto_en_tabla->tipo_madera}}" class="form-control" name="tipo_madera" id="tipo_madera">
+                                @error('tipo_madera')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label>
-                                <input type="text" value="{{$producto_en_tabla->tratamiento}}" class="form-control" name="tratamiento" id="tratamiento" required>
+                                <input type="text" value="{{$producto_en_tabla->tratamiento}}" class="form-control" name="tratamiento" id="tratamiento">
+                                @error('tratamiento')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
                             @endif
 
                             @if ($producto_en_bruto->familia=="Clavo")
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
-                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material">
+                                @error('material')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
                            
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
-                                <input type="number" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" step="0.01" required>
+                                <input type="number" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" step="0.01">
                                 @error('cabeza')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -321,12 +350,12 @@
 
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
-                                <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
+                                <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta">
                             </div>
                           
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Longitud</label>
-                                <input type="number" value="{{$producto_en_tabla->longitud}}" class="form-control" name="longitud" id="longitud" step="0.01" required>
+                                <input type="number" value="{{$producto_en_tabla->longitud}}" class="form-control" name="longitud" id="longitud" step="0.01">
                                 @error('longitud')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -337,7 +366,10 @@
                             @if ($producto_en_bruto->familia=="Techumbre" || $producto_en_bruto->familia=="Plancha_construccion")
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
-                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material">
+                                @error('material')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
                             @endif
 
@@ -345,7 +377,7 @@
                             @if ($producto_en_bruto->familia=="Tornillo")
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
-                                <input type="number" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" step="0.01" required>
+                                <input type="number" value="{{$producto_en_tabla->cabeza}}" class="form-control" name="cabeza" id="cabeza" step="0.01">
                                 @error('cabeza')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -366,7 +398,7 @@
                             
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label>
-                                <input type="number" value="{{$producto_en_tabla->separacion_rosca}}" class="form-control" name="separacion_rosca" id="separacion_rosca" step="0.01" required>
+                                <input type="number" value="{{$producto_en_tabla->separacion_rosca}}" class="form-control" name="separacion_rosca" id="separacion_rosca" step="0.01">
                                 @error('separacion_rosca')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -374,12 +406,15 @@
 
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
-                                <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta" required>
+                                <input type="text" value="{{$producto_en_tabla->punta}}" class="form-control" name="punta" id="punta">
+                                @error('punta')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
 
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label>
-                                <input type="number" value="{{$producto_en_tabla->rosca_parcial}}" class="form-control" name="rosca_parcial" id="rosca_parcial" step="0.01" required>
+                                <input type="number" value="{{$producto_en_tabla->rosca_parcial}}" class="form-control" name="rosca_parcial" id="rosca_parcial" step="0.01">
                                 @error('rosca_parcial')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -387,7 +422,7 @@
 
                             <div class="">
                             <label for="recipient-name" class="col-form-label" style="color:black">Vastago</label>
-                            <input type="number" value="{{$producto_en_tabla->vastago}}" class="form-control" name="vastago" id="vastago" step="0.01" required>
+                            <input type="number" value="{{$producto_en_tabla->vastago}}" class="form-control" name="vastago" id="vastago" step="0.01">
                                 @error('vastago')
                                 <small style="color:red;">*{{$message}}</small>
                                 @enderror
@@ -399,11 +434,17 @@
                             @if ($producto_en_bruto->familia=="Mueble")
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Material</label>
-                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material" required>
+                                <input type="text" value="{{$producto_en_tabla->material}}" class="form-control" name="material" id="material">
+                                @error('material')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
                             <div class="">
                                 <label for="recipient-name" class="col-form-label" style="color:black">Acabado</label>
-                                <input type="text" value="{{$producto_en_tabla->acabado}}" class="form-control" name="acabado" id="acabado" required>
+                                <input type="text" value="{{$producto_en_tabla->acabado}}" class="form-control" name="acabado" id="acabado">
+                                @error('acabado')
+                                <small style="color:red;">*{{$message}}</small>
+                                @enderror
                             </div>
                             @endif
                         </div>

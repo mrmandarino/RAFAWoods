@@ -48,7 +48,6 @@ class VentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-
     {   
         $request->validate([
             'medio_pago' => ['required','numeric'],
