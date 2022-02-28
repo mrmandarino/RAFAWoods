@@ -116,11 +116,10 @@ class VentaSeeder extends Seeder
             ]);
             $fecha = $fecha_un_dia_mas_str;
         }
-        for ($i=0; $i < 6; $i++) { 
+       /*  for ($i=0; $i < 6; $i++) { 
             Comentario::create([
-                'nombre' => 'default',
-                'apellido' => 'default',
+                'rut' => 'default',
             ]);
-        }
+        }  */
     }
 }

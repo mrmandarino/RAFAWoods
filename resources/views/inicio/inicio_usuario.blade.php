@@ -34,7 +34,8 @@
                     <form action="{{route('destroy_comentario',$comentarios[$i]->id)}}" method="POST">
                       @csrf
                       @method('PUT')
-                      <li><h5>{{$comentarios[$i]->nombre}} {{$comentarios[$i]->apellido}}:</h5></li>
+                      @php($usuario=App\Models\User::find($comentarios[$i]->rut))
+                      <li><h5>{{$usuario->nombre}} {{$usuario->apellido}}:</h5></li>
                       <li><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Anotación disponible...">{{$comentarios[$i]->comentario}}</textarea></li>
                       <li>
                         <hr class="dropdown-divider">
@@ -60,8 +61,7 @@
                           @csrf
                           @method('PUT')
                           <li><h5>Tú:</h5></li>
-                          <input class="visually-hidden" type="text" name="nombre" id="nombre" value="{{Auth::user()->nombre}}">
-                          <input class="visually-hidden" type="text" name="apellido" id="apellido" value="{{Auth::user()->apellido}}">
+                          <input class="visually-hidden" type="text" name="rut" id="rut" value="{{Auth::user()->rut}}">
                           <li><textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Anotación disponible..."></textarea></li>
                           <li>
                             <hr class="dropdown-divider">
@@ -91,7 +91,8 @@
                         <form action="{{route('destroy_comentario',$comentarios[$i]->id)}}" method="POST">
                           @csrf
                           @method('PUT')
-                          <li><h5>{{$comentarios[$i]->nombre}} {{$comentarios[$i]->apellido}}:</h5></li>
+                          @php($usuario=App\Models\User::find($comentarios[$i]->rut))
+                          <li><h5>{{$usuario->nombre}} {{$usuario->apellido}}:</h5></li>
                           <li><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Anotación disponible...">{{$comentarios[$i]->comentario}}</textarea></li>
                           <li>
                             <hr class="dropdown-divider">
@@ -117,8 +118,7 @@
                           @csrf
                           @method('PUT')
                           <li><h5>Tú:</h5></li>
-                          <input class="visually-hidden" type="text" name="nombre" id="nombre" value="{{Auth::user()->nombre}}">
-                          <input class="visually-hidden" type="text" name="apellido" id="apellido" value="{{Auth::user()->apellido}}">
+                          <input class="visually-hidden" type="text" name="rut" id="rut value="{{Auth::user()->rut}}">
                           <li><textarea class="form-control" id="comentario" name="comentario" rows="3" placeholder="Anotación disponible..."></textarea></li>
                           <li>
                             <hr class="dropdown-divider">

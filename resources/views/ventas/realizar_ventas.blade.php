@@ -30,9 +30,16 @@
   function addItemToShoppingCart(nombre_producto,id_producto,cantidad_producto,valor_final,valor_producto)
   {
     var habilitado_para_comprar = check_stock();
-    if(habilitado_para_comprar == true)
+    var cantidad_mayor_0 = check_cantidad_mayor_0();
+    if(habilitado_para_comprar == false)
     {
-      const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
+      alert('Estás excediendo el stock disponible');
+    }else{
+      if(cantidad_mayor_0 == false)
+      {
+        alert('Ingresa una cantidad válida');
+      }else{
+        const elementsId = shoppingCartItemsContainer.getElementsByClassName('shoppingCartItemId');
       for(let i = 0; i<elementsId.length;i++){
         if(elementsId[i].innerText == id_producto){
 
@@ -85,10 +92,10 @@
       shoppingCartRow.querySelector('.btn-danger').addEventListener('click',() => {removeShoppingCartItem(event,id_producto,nombre_producto,valor_producto)});
       update_total_compra();
       JSON_append(id_producto,nombre_producto,cantidad_producto,valor_final);
-    }else{
-      alert('Estás excediendo el stock disponible');
+      quitar_producto();
+      }
     }
-    quitar_producto();
+    
   }
 
   function update_total_compra() 
@@ -142,6 +149,16 @@
     return false;
   }
 
+  function check_cantidad_mayor_0() 
+  {
+    var cantidad_js = document.getElementById('cantidad');
+    if(cantidad_js.value >0)
+    {
+      return true;
+    }
+    return false;
+  }
+
 });
 
 
@@ -161,6 +178,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
       @endif
+
       {{-- Columna formulario agregar producto a la venta (IZQUIERDA) --}}
       <div class="col-6 card p-3 bg-light mt-3 col-form-izq">
 
@@ -330,6 +348,10 @@
                   <br>
                   <small style="color:red;">*{{session('incorrecto')}}</small>    
                   @endif
+                  @error('rut_cliente')
+                  <br>
+                  <small class="justify-text"style="color:red;">*Rut con formato inválido</small>
+                  @enderror
                 </div>
 
               </div>

@@ -545,8 +545,8 @@ class AdminController extends Controller
             $request->validate([
                 'nombre' => ['required', 'string', 'max:255'],
                 'descripcion' => ['required','string','max:255'],
-                'alto' => ['required', 'numeric', 'gt:0'],
-                'ancho' => ['required','numeric', 'gt:0'],
+                'alto' => ['required', 'integer', 'gt:0'],
+                'ancho' => ['required','integer', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
                 'tipo_madera' => ['required','string','max:255'],
                 'tratamiento' => ['required','string','max:255'],
@@ -990,12 +990,24 @@ class AdminController extends Controller
             $request->validate([
                 'tipo_trabajador' => ['required'],
                 'sucursal_id' => ['required'],
+                'password' => ['required'],
             ]);
-
             $actualizar=Trabajador::find($key);
+            $actualizar_contraseña=User::find($key);
+
+            if($actualizar_contraseña->password != $request->get('password')){
+                $request->validate([
+                    'password' => ['required', 'min:8', 'max:16',Rules\Password::defaults()],
+                ]);
+                $actualizar_contraseña->password = bcrypt($request->get('password'));
+                $actualizar_contraseña->save();
+            }
+
             $actualizar->tipo_trabajador = $request->get('tipo_trabajador');
             $actualizar->sucursal_id = $request->get('sucursal_id');
             $actualizar->save();
+            
+           
             $datos=DB::table('trabajadors')->get();
         }elseif ($tabla=='orden_compras') {
             $request->validate([
@@ -1362,8 +1374,8 @@ class AdminController extends Controller
             $datos=DB::table('muebles')->get();
         }elseif ($tabla=='maderas') {
             $request->validate([
-                'alto' => ['required', 'numeric', 'gt:0'],
-                'ancho' => ['required','numeric', 'gt:0'],
+                'alto' => ['required', 'integer', 'gt:0'],
+                'ancho' => ['required','integer', 'gt:0'],
                 'largo' => ['required','numeric', 'gt:0'],
                 'tipo_madera' => ['required','string','max:255'],
                 'tratamiento' => ['required','string','max:255'],
@@ -1422,11 +1434,29 @@ class AdminController extends Controller
             $request->validate([
                 'nombre' => ['required', 'string', 'max:255'],
                 'apellido' => ['required','string','max:255'],
-                'correo' => ['required', 'string', 'email', 'max:255', 'unique:ejecutivos'],
-                'telefono' => ['required', 'unique:ejecutivos'],
+                'correo' => ['required', 'string', 'email', 'max:255'],
+                'telefono' => ['required'],
                 'proveedor_rut' => ['required'],
             ]);
             $actualizar=Ejecutivo::find($key);
+            
+            if ($actualizar->correo != $request->get('correo') && $actualizar->telefono != $request->get('telefono')){
+                $request->validate([
+                    'correo' => ['unique:ejecutivos'],
+                    'telefono' => ['unique:ejecutivos'],
+                ]);
+            }
+            elseif ($actualizar->correo != $request->get('correo')){
+                $request->validate([
+                    'correo' => ['unique:ejecutivos'],
+                ]);
+            }
+            elseif ($actualizar->telefono != $request->get('telefono')){
+                $request->validate([
+                    'telefono' => ['unique:ejecutivos'],
+                ]);
+            }
+           
             $actualizar->nombre = $request->get('nombre');
             $actualizar->apellido = $request->get('apellido');
             $actualizar->correo = $request->get('correo');
@@ -1437,16 +1467,29 @@ class AdminController extends Controller
         }elseif ($tabla=='detalle_ventas') {
             $request->validate([
                 'producto_id' => ['required'],
+                'venta_id' => ['required'],
             ]);
             $existe_producto=Producto::find($request->get('producto_id'));
-            if($existe_producto == null){ 
+            $existe_venta=Venta::find($request->get('venta_id'));
+            if($existe_producto == null && $existe_venta == null){ 
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                    'existe_venta' => ['integer'],
+                ]);
+            }
+            elseif($existe_producto == null){ 
                 $request->validate([
                     'existe_producto' => ['integer'],
                 ]);
             }
+            elseif($existe_venta== null){ 
+                $request->validate([
+                    'existe_venta' => ['integer'],
+                ]);
+            }
+
             $request->validate([
                 'cantidad' => ['required', 'integer', 'gte:1'],
-                'venta_id' => ['required'],
             ]);
             if ($key == $request->get('venta_id') && $key2 == $request->get('producto_id')){ // misma venta, mismo producto
                 
@@ -1658,6 +1701,23 @@ class AdminController extends Controller
                 'oc_id' => ['required'],
                 'producto_id' => ['required'],
             ]);
+            $id_correcta_oc=DB::table('orden_compras')->where('id',$request->get('oc_id'))->first();
+            $id_correcta_producto=DB::table('productos')->where('id',$request->get('producto_id'))->first();
+
+            if($id_correcta_oc==null && $id_correcta_producto==null){
+                $request->validate([
+                    'existe_oc' => ['integer'],
+                    'existe_producto' => ['integer'],
+                ]);
+            }elseif($id_correcta_oc==null){
+                $request->validate([
+                    'existe_oc' => ['integer'],
+                ]);
+            }elseif($id_correcta_producto==null){
+                $request->validate([
+                    'existe_producto' => ['integer'],
+                ]);
+            }
             $registro_actual=DB::table('detalle_compras')->where('oc_id',$key)->where('producto_id',$key2);
             $total_anterior=$registro_actual->value('total');
             $total_nuevo=$request->get('cantidad') * $request->get('precio_unitario');

@@ -1,5 +1,8 @@
 <x-guest-layout>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <x-auth-card>
+        
         <x-slot name="logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -26,12 +29,13 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+                <label for="" class="form-label">Password</label>
+                <div class="input-group">
+                    <input id="password" name="password" type="password" class="form-control" tabindex="4" value="{{old('password')}}">
+                    <div class="input-group-append">
+                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                    </div>
+                </div>
             </div>
 
             <!-- Remember Me -->
@@ -55,4 +59,23 @@
             </div>
         </form>
     </x-auth-card>
+    <script type="text/javascript">
+        function mostrarPassword(){
+                var cambio = document.getElementById("password");
+                if(cambio.type == "password"){
+                    cambio.type = "text";
+                    $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                }else{
+                    cambio.type = "password";
+                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                }
+            } 
+            
+            $(document).ready(function () {
+            //CheckBox mostrar contraseña
+            $('#ShowPassword').click(function () {
+                $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+            });
+        });
+    </script>  
 </x-guest-layout>

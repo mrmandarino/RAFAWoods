@@ -77,6 +77,13 @@
                         </div><br>
                     @endif
                     
+                    @if (session()->has('no_product_selected'))
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            {{ session()->get('no_product_selected') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                    @endif
+                    
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                             Ha ocurrido un error al ingresar el producto
@@ -154,14 +161,14 @@
                             <div class="mb-3">
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" value="" >
+                                    <input type="text" class="form-control" name="nombre" id="nombre" value="{{old('nombre')}}" >
                                     @error('nombre')
                                     <small style="color:red;">*{{$message}}</small>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Descripción</label>
-                                    <textarea class="form-control" name="descripcion" id="descripcion" ></textarea>
+                                    <textarea class="form-control" name="descripcion" id="descripcion" >{{old('descripcion')}}</textarea>
                                     @error('descripcion')
                                     <small style="color:red;">*{{$message}}</small>
                                     @enderror
@@ -170,23 +177,25 @@
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Tipo de Producto</label>
                                     <select class="form-control select" name="familia" id="familia">
-                                        <option selected value="default">Seleccione un tipo de producto</option>
+                                        <option selected >Seleccione un tipo de producto</option>
                                         <option value="Tornillo">Tornillo</option>  
                                         <option value="Plancha_construccion">Plancha de construcción</option>  
                                         <option value="Techumbre">Techumbre</option>  
                                         <option value="Mueble">Mueble</option>  
                                         <option value="Madera">Madera</option>  
                                         <option value="Clavo">Clavo</option>  
+                                        <option value="Herramienta">Herramienta</option>  
+                                        <option value="Otro">Otro</option>  
                                     </select>
                                     @error('familia')
-                                    <small style="color:red;">*{{$message}}</small>
+                                    <small style="color:red;">*Debe seleccionar un tipo de producto</small>
                                     @enderror
                                 </div>
     
                                 <div class="form-group tornillos_clavos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Cabeza</label>
-                                        <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" >
+                                        <input id="cabeza" name="cabeza" type="number" step="0.01" class="form-control" tabindex="4" value="{{old('cabeza')}}">
                                         @error('cabeza')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -206,7 +215,7 @@
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Separación rosca</label>
-                                        <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" >
+                                        <input id="separacion_rosca" name="separacion_rosca" type="number" step="0.01" class="form-control" tabindex="6" value="{{old('separacion_rosca')}}">
                                         @error('separacion_rosca')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -216,14 +225,17 @@
                                 <div class="form-group tornillos_clavos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Punta</label>
-                                        <input id="punta" name="punta" type="text" class="form-control" tabindex="7" >
+                                        <input id="punta" name="punta" type="text" class="form-control" tabindex="7" value="{{old('punta')}}">
+                                        @error('punta')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
                                     </div>
                                 </div>
     
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Rosca parcial</label>
-                                        <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" >
+                                        <input id="rosca_parcial" name="rosca_parcial" type="number" step="0.01" class="form-control" tabindex="8" value="{{old('rosca_parcial')}}">
                                         @error('rosca_parcial')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -233,7 +245,7 @@
                                 <div class="form-group tornillos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Vastago</label>
-                                        <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" >
+                                        <input id="vastago" name="vastago" type="number" step="0.01" class="form-control" tabindex="9" value="{{old('vastago')}}">
                                         @error('vastago')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -243,14 +255,17 @@
                                 <div class="form-group material">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Material</label>
-                                        <input id="material" name="material" type="text" class="form-control" tabindex="10" >
+                                        <input id="material" name="material" type="text" class="form-control" tabindex="10" value="{{old('material')}}">
+                                        @error('material')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
                                     </div>
                                 </div>
     
                                 <div class="form-group medidas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Alto</label>
-                                        <input id="alto" name="alto" type="number" class="form-control" tabindex="11" >
+                                        <input id="alto" name="alto" type="number" class="form-control" tabindex="11" value="{{old('alto')}}">
                                         @error('alto')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -260,7 +275,7 @@
                                 <div class="form-group medidas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Ancho</label>
-                                        <input id="ancho" name="ancho" type="number" class="form-control" tabindex="12" >
+                                        <input id="ancho" name="ancho" type="number" class="form-control" tabindex="12" value="{{old('ancho')}}">
                                         @error('ancho')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -270,7 +285,7 @@
                                 <div class="form-group medidas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Largo</label>
-                                        <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" >
+                                        <input id="largo" name="largo" type="number" step="0.01" class="form-control" tabindex="13" value="{{old('largo')}}">
                                         @error('largo')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -280,28 +295,37 @@
                                 <div class="form-group muebles">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Acabado</label>
-                                        <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" >
+                                        <input id="acabado" name="acabado" type="text" class="form-control" tabindex="14" value="{{old('acabado')}}">
+                                        @error('acabado')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
                                     </div>
                                 </div>
     
                                 <div class="form-group maderas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Tipo madera</label>
-                                        <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" >
+                                        <input id="tipo_madera" name="tipo_madera" type="text" class="form-control" tabindex="15" value="{{old('tipo_madera')}}">
+                                        @error('tipo_madera')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
                                     </div>
                                 </div>
     
                                 <div class="form-group maderas">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Tratamiento</label>
-                                        <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" >
+                                        <input id="tratamiento" name="tratamiento" type="text" class="form-control" tabindex="16" value="{{old('tratamiento')}}">
+                                        @error('tratamiento')
+                                        <small style="color:red;">*{{$message}}</small>
+                                        @enderror
                                     </div>
                                 </div>
     
                                 <div class="form-group clavos">
                                     <div>
                                         <label for="" class="form-label" style="color:black">Longitud</label>
-                                        <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" >
+                                        <input id="longitud" name="longitud" type="number" step="0.01" class="form-control" tabindex="17" value="{{old('longitud')}}">
                                         @error('longitud')
                                         <small style="color:red;">*{{$message}}</small>
                                         @enderror
@@ -310,7 +334,7 @@
     
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Stock</label>
-                                    <input type="number" class="form-control" name="stock" id="stock" step="10" >
+                                    <input type="number" class="form-control" name="stock" id="stock" value="{{old('stock')}}">
                                     @error('stock')
                                     <small style="color:red;">*{{$message}}</small>
                                     @enderror
@@ -318,7 +342,7 @@
     
                                 <div>
                                     <label for="recipient-name" class="col-form-label" style="color:black">Precio Compra</label>
-                                    <input type="number" class="form-control" name="precio_compra" id="precio_compra" step="100" >
+                                    <input type="number" class="form-control" name="precio_compra" id="precio_compra" value="{{old('precio_compra')}}">
                                     @error('precio_compra')
                                     <small style="color:red;">*{{$message}}</small>
                                     @enderror

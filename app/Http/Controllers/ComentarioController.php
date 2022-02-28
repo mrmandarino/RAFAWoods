@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comentario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,6 +25,15 @@ class ComentarioController extends Controller
      */
     public function create()
     {
+        $cantidad=$comentarios = DB::table('comentarios')->get()->count();
+        if($cantidad<6){ 
+            for ($i=0; $i < 6-$cantidad; $i++) { 
+                Comentario::create([
+                    'rut' => 'default',
+                ]);
+            }  
+        }
+        
         $comentarios = DB::table('comentarios')->get();
         return view('inicio.inicio_usuario',compact('comentarios'));
     }
@@ -70,8 +80,8 @@ class ComentarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-            
-        DB::table('comentarios')->where('id',$id)->update(['nombre'=>$request->nombre,'apellido'=>$request->apellido,'comentario'=>$request->comentario]);
+           
+        DB::table('comentarios')->where('id',$id)->update(['rut'=>$request->rut,'comentario'=>$request->comentario]);
         return redirect()->route('inicio');
     }
 
@@ -84,7 +94,7 @@ class ComentarioController extends Controller
     public function destroy($id)
     {
          
-        DB::table('comentarios')->where('id',$id)->update(['nombre'=>'default','apellido'=>'default','comentario'=>""]);
+        DB::table('comentarios')->where('id',$id)->update(['rut'=>'default','comentario'=>""]);
         return redirect()->route('inicio');
     }
 }
