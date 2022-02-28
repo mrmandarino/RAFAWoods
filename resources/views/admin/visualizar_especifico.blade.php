@@ -1,69 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Base de datos</title>
+@extends('admin.master_bd')
+@section('content')
+@include('inventario.partials.iconos')
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<style type="text/css">
+	<div class="container-fluid tabla-h-scroll mt-3">
+		<div>
+			@if (session()->has('fila_nueva'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{ session()->get('fila_nueva') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div><br>
+			@elseif (session()->has('fila_actualizada'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{ session()->get('fila_actualizada') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div><br>
+			@elseif (session()->has('fila_eliminada'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{ session()->get('fila_eliminada') }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div><br>
+			@endif
+	
+		</div>
 		
-		.floatRight{
-		float:right;
-		margin-left:10px;
-		margin-right:10px;
-		}
-		
-		.dataTables_length {
-		float:left;
-		font-size: 15px;
-		}	
+		<div>
+			<a href="{{route('admin_crear_fila',$tabla)}}" class="btn btn-primary m-1" >CREAR</a> 
+			&nbsp;&nbsp;
+			<a href="{{route('menu_bd')}}" class="btn btn-primary m-1" >VOLVER</a>
+		</div>
 
-		.buttons-excel {
-			font-size: 12.5px;
-		}
-
-		.buttons-print {
-			font-size: 12.5px;
-		}
-    </style> 
-
-
-
-
-
-</head>
-<body>
-
-	<div class="row">
-		@if (session()->has('fila_nueva'))
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
-				{{ session()->get('fila_nueva') }}
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div><br>
-		@elseif (session()->has('fila_actualizada'))
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
-				{{ session()->get('fila_actualizada') }}
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div><br>
-		@elseif (session()->has('fila_eliminada'))
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
-				{{ session()->get('fila_eliminada') }}
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div><br>
-		@endif
-	</div>
-	<div> 
-		<a href="{{route('admin_crear_fila',$tabla)}}" class="btn btn-primary" >CREAR</a> 
-		&nbsp;&nbsp;
-		<a href="{{route('menu_bd')}}" class="btn btn-primary" >VOLVER</a>
-	</div>
-		
 		@if ($tabla == 'usuarios')
 		
 			<table id="usuarios" class="table" style="width:100%">
@@ -96,10 +61,9 @@
 							<td> 
 								<form action="{{route('admin_borrar_datos',['key' => $usuario->rut,'tabla' => $tabla])}}" method="GET" class="btn-group">
 									<a href="{{route('admin_editar_fila',['key' => $usuario->rut,'tabla' => $tabla])}}" class="btn btn-info">Editar</a> 
-									&nbsp;&nbsp;&nbsp;&nbsp;
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
+									<button type="submit" style="margin-left: 10px " class="btn btn-danger" onclick="return confirm('¿Está usted seguro de querer eliminar el registro?')">Eliminar</button>
 								</form>
 							</td>	
 						</tr>
@@ -108,6 +72,7 @@
 						
 				@endforeach
 			</tbody>
+			
 	
 		@elseif($tabla == 'clientes')
 			<table id="clientes" class="table" style="width:100%">
@@ -254,6 +219,7 @@
 			<table id="tornillos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> CABEZA (mm) </th>
 				<th> TIPO ROSCA </th>
 				<th> SEPARACION ROSCA (mm) </th>
@@ -270,6 +236,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$tornillo->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$tornillo->cabeza}} </td>
 							<td> {{$tornillo->tipo_rosca}} </td>
 							<td> {{$tornillo->separacion_rosca}} </td>
@@ -325,6 +292,7 @@
 			<table id="techumbres" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> ALTO </th>
 				<th> ANCHO </th>
@@ -339,6 +307,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$techumbre->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$techumbre->material}} </td>
 							<td> {{$techumbre->alto}} </td>
 							<td> {{$techumbre->ancho}} </td>
@@ -433,6 +402,7 @@
 			<table id="planchas_construccion" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> ALTO (m) </th>
 				<th> ANCHO (mm) </th>
@@ -447,6 +417,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$plancha->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$plancha->material}} </td>
 							<td> {{$plancha->alto}} </td>
 							<td> {{$plancha->ancho}} </td>
@@ -471,6 +442,7 @@
 			<table id="muebles" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> ACABADO </th>
 				<th> ALTO (m) </th>
@@ -486,6 +458,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$mueble->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$mueble->material}} </td>
 							<td> {{$mueble->acabado}} </td>
 							<td> {{$mueble->alto}} </td>
@@ -511,6 +484,7 @@
 			<table id="maderas" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> ALTO (in) </th>
 				<th> ANCHO (in) </th>
 				<th> LARGO (m) </th>
@@ -526,6 +500,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$madera->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$madera->alto}} </td>
 							<td> {{$madera->ancho}} </td>
 							<td> {{$madera->largo}} </td>
@@ -718,6 +693,7 @@
 			<table id="clavos" class="table" style="width:100%">
 			<thead>
 				<th> ID PRODUCTO </th>
+				<th> NOMBRE </th>
 				<th> MATERIAL </th>
 				<th> PUNTA </th>
 				<th> CABEZA (mm) </th>
@@ -732,6 +708,7 @@
 					@if ($producto->estado==1)
 						<tr>
 							<td> {{$clavo->producto_id}} </td>
+							<td> {{$producto->nombre}} </td>
 							<td> {{$clavo->material}} </td>
 							<td> {{$clavo->punta}} </td>
 							<td> {{$clavo->cabeza}} </td>
@@ -834,26 +811,10 @@
 				</tbody>
 
 		@endif
-	</table>
+		</table>
+		
+	</div>
 	
-
-	
-	
-	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> 
-	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>
-
-	<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script> {{-- Necesario para ver los botones --}} 
-	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script> {{-- Necesario para ver los botones --}} 
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> {{-- Excel --}} 
-	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> {{-- Imprimir(PDF) --}}
-
-
-
-	
-
 	@if ($tabla == 'usuarios')
 		<script>
 			$(document).ready(function() {
@@ -1699,7 +1660,6 @@
 		</script> 	
 	@endif
 
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-</body>
-</html>
+
+@endsection
 

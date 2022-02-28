@@ -9,8 +9,7 @@ class Comentario extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nombre',
-        'apellido',
+        'rut',
         'comentario',
     ];
 }
