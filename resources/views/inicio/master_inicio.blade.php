@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/logoarbol.png') }}">
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -149,22 +150,31 @@
 <body>
   <main>
     <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 230px ;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a href="{{route('inicio')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#accesos" />
+          <use xlink:href="#arbol" />
         </svg>
-        <span class="fs-4">Accesos Directos</span>
+        
+        <strong style="font-size: 24px">RAFA Woods</strong>
+        
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
+        @php
+            $ejecutivo = 0;
+            if (DB::table('trabajadors')->where('usuario_rut', Auth::user()->rut)->value('tipo_trabajador')==1) {
+              $ejecutivo = 1;
+            }
+        @endphp
         <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page">
+          <a href="{{route('inicio')}}" class="nav-link active" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
             Inicio
           </a>
         </li>
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
         <li>
           <a href="{{route('graficos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -173,6 +183,7 @@
             Gráficos
           </a>
         </li>
+        @endif
         <li>
           <a href="{{route('ventas.create')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -181,6 +192,7 @@
             Realizar Venta
           </a>
         </li>
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
         <li>
           <a href="{{route('ver_historico')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -189,6 +201,7 @@
             Histórico de Ventas
           </a>
         </li>
+        @endif
         <li>
           <a href="{{route('ver_productos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -196,7 +209,8 @@
             </svg>
             Productos
           </a>
-        </li>
+        </li>    
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)  
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -205,6 +219,9 @@
             Inventario
           </a>
         </li>
+        @endif
+
+        @if (Auth::user()->tipo_usuario==1)     
         <li>
           <a href="{{route('menu_bd')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -213,13 +230,16 @@
             Base de Datos
           </a>
         </li>
+        @endif
       </ul>
       <hr>
 
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <svg class="bi me-2" width="20" height="20">
+            <use xlink:href="#persona" />
+          </svg>
           <strong>{{Auth::user()->nombre}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   
   <head>
     <meta charset="UTF-8">
@@ -10,7 +11,7 @@
     <title>Base de Datos</title>
 
    
- 
+
   <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>
@@ -26,6 +27,8 @@
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{{ asset('css/sidebars.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.min.css') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/logoarbol.png') }}">
+
   <!-- estilos dashboard  -->
   <style>
       .bd-placeholder-img {
@@ -206,18 +209,172 @@
         color: white;
       }
 
-    </style>
+    }
+
+    .tabla-scroll {
+      height: 250px !important;
+      overflow: scroll;
+    }
+
+    .col-form-izq {
+      height: 400px;
+      align-self: center;
+
+    }
+
+    .form-izq {
+      display: flex;
+      justify-content: center;
+    }
+
+    .botones {
+
+      align-self: center;
+      justify-content: center;
+    }
+
+    .col-form-der {
+      height: 400px;
+      align-self: center;
+
+    }
+
+    .form-der {
+      display: flex;
+      justify-content: left;
+    }
+
+
+    #myInput {
+      padding: 20px;
+      margin-top: -6px;
+      border: 0;
+      border-radius: 0;
+      background: #f1f1f1;
+    }
+
+    .item {
+      border: 2px solid #000;
+      padding: 10px;
+      border-radius: 20px;
+    }
+
+    .item-title {
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .item-image {
+      height: 300px;
+      width: 100%;
+    }
+
+    .item-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0px 15px;
+    }
+
+    .item-details>.item-price {
+      margin: 0;
+    }
+
+    /* ? SHOPPING CART */
+    .shopping-cart-items {
+      padding: 20px 0px;
+    }
+
+    .shopping-cart-header {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .shopping-cart-image {
+      max-width: 80px;
+      border-radius: 20px;
+    }
+
+    .shopping-cart-quantity-input {
+      max-width: 45px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #eee;
+      padding: 5px;
+    }
+
+    .shopping-cart-total {
+      min-height: 96px;
+    }
+
+    .row-carrito {
+      display: flex;
+      justify-content: right;
+    }
+
+    .madera {
+      background-color: #007373;
+      color: white;
+    }
+
+    .madera:hover {
+      background-color: #006767;
+      color: white;
+    }
+
+    .informacion {
+      background-color: #009999;
+      color: white;
+    }
+
+    .informacion:hover {
+      background-color: #008989;
+      color: white;
+    }
+
+    .provedor {
+      background-color: #004040;
+      color: white;
+    }
+
+    .provedor:hover {
+      background-color: #195353;
+      color: white;
+    }
+
+    .usuarios {
+      background-color: #002626;
+      color: white;
+    }
+
+    .usuarios:hover {
+      background-color: #193b3b;
+      color: white;
+    }
+
+    .productos {
+      background-color: #009999;
+      color: white;
+    }
+
+    .productos:hover {
+      background-color: #008989;
+      color: white;
+    }
+  </style>
+
 
 </head>
 
 <body>
   <main>
     <div class="d-flex flex-column flex-shrink-0 p-3 no-shrink text-white bg-dark" style="width: 230px ;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a href="{{route('inicio')}}"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#accesos" />
+          <use xlink:href="#arbol" />
         </svg>
-        <span class="fs-4">Accesos Directos</span>
+        <strong style="font-size: 24px">RAFA Woods</strong>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -260,7 +417,7 @@
             </svg>
             Productos
           </a>
-        </li>   
+        </li>
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -283,7 +440,9 @@
       <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1"
           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <svg class="bi me-2" width="20" height="20">
+            <use xlink:href="#persona" />
+          </svg>
           <strong>{{Auth::user()->nombre}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -295,8 +454,7 @@
           </li>
           <form action="{{route('logout')}}" method="POST">
             @csrf
-            <li><a class="dropdown-item" href="{{route('logout')}}"
-              onclick="event.preventDefault();
+            <li><a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault();
                           this.closest('form').submit();">Cerrar Sesión</a></li>
           </form>
         </ul>
@@ -306,6 +464,7 @@
     @yield('content')
 
   </main>
+
 
   <script>
     $(document).ready(function(){
