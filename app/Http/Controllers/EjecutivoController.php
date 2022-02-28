@@ -57,7 +57,10 @@ class EjecutivoController extends Controller
         $id_producto_redirect=$id_redirect;
         $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
         $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
-        return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto'));
+        $imagenes = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->get();
+        $contador_aux = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->count();
+        
+        return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','imagenes','contador_aux'));
 
     }
     
@@ -485,6 +488,19 @@ class EjecutivoController extends Controller
         $nuevo_dato->save();
         return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('imagen_subida','Imagen subida con éxito.');
 
+    }
+
+    public function eliminar_imagen(Request $request)
+    {
+        $id = $request->imagen_id;
+        $dato=Imagen::find($id);
+
+        //Borrar la imagen del servidor
+        unlink(public_path($dato->url));
+        $id_producto = $dato->imagenable_id;
+        //Borrar la tupla de la tabla
+        $dato->delete();
+        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto])->with('imagen_eliminada','Imagen eliminada con éxito.');
     }
 
 
