@@ -104,6 +104,7 @@ Route::middleware(['auth','activo','ejecutivo'])->group(function(){
     //inventario
     Route::get('/cargar',[EjecutivoController::class, 'cargar_administrar'])->name('cargar_administrar');
     Route::post('/detalle/{id}/producto/imagen/created',[EjecutivoController::class, 'subir_imagen'])->name('subir_imagen_producto');
+    Route::post('/detalle/producto/imagen/deleted',[EjecutivoController::class, 'eliminar_imagen'])->name('eliminar_imagen_producto');
     Route::get('/inventario', [EjecutivoController::class,'index'])->name('ver_inventario');
     Route::post('/inventario/created',[EjecutivoController::class, 'agregar_producto'])->name('agregar_producto');
     Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2');

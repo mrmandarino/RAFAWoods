@@ -120,6 +120,18 @@
 
   {{-- Datalist de familia de productos --}}
   <section class="py-5 text-center container">
+    @if (session()->has('familia_erronea'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <h5 class="text-center" >{{ session()->get('familia_erronea') }} </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+    @if (session()->has('producto_erroneo'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <h5 class="text-center" >{{ session()->get('producto_erroneo') }} </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
     <b><label style="text:black">Filtro por Familia</label></b>
     <form id="form_input_hidden" action="{{route('ver_catalogo_intermedio')}}">
       <input  type="text" class="visually-hidden" name ="input_hidden" id="input_hidden">

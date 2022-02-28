@@ -21,7 +21,7 @@ class CreateLocalizacionsTable extends Migration
             $table->primary(['sucursal_id','producto_id']);
             $table->integer('stock');
             $table->integer('precio_compra');
-            $table->integer('precio_venta')->default(1);
+            $table->integer('precio_venta')->default(10);
 
 
             
