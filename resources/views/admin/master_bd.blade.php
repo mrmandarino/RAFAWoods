@@ -7,8 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     
-    
     <title>Base de Datos</title>
+
+   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>
@@ -21,120 +27,143 @@
   <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.min.css') }}">
   <!-- estilos dashboard  -->
   <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
+      .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
 
-    .tabla-scroll {
-      height: 250px !important;
-      overflow: scroll;
-    }
+        .tabla-h-scroll {
+            height: 750px !important;
+            overflow: scroll;
+        }
 
-    .col-form-izq {
-      height: 400px;
-      align-self: center;
+        .col-form-izq {
+            height: 400px;
+            align-self: center;
+            margin-bottom: 13px;
+            
+        }
+        
+        .form-izq {
+            display: flex;
+            justify-content: center;
+        }
 
-    }
+        .botones {
+          
+            align-self: center;
+            justify-content: center;
+        }
 
-    .form-izq {
-      display: flex;
-      justify-content: center;
-    }
+        .col-form-der {
+            height: 400px;
+            align-self: center;
+            
+        }
 
-    .botones {
+        .form-der {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .formularios {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        
 
-      align-self: center;
-      justify-content: center;
-    }
+        #myInput {
+          padding: 20px;
+          margin-top: -6px;
+          border: 0;
+          border-radius: 0;
+          background: #f1f1f1;
+        }
+        .item {
+          border: 2px solid #000;
+          padding: 10px;
+          border-radius: 20px;
+        }
 
-    .col-form-der {
-      height: 400px;
-      align-self: center;
+        .item-title {
+          text-transform: uppercase;
+          text-align: center;
+          font-weight: 600;
+        }
 
-    }
+        .item-image {
+          height: 300px;
+          width: 100%;
+        }
 
-    .form-der {
-      display: flex;
-      justify-content: left;
-    }
+        .item-details {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 20px 0px 15px;
+        }
 
+        .item-details > .item-price {
+          margin: 0;
+        }
 
-    #myInput {
-      padding: 20px;
-      margin-top: -6px;
-      border: 0;
-      border-radius: 0;
-      background: #f1f1f1;
-    }
+        /* ? SHOPPING CART */
+        .shopping-cart-items {
+          padding: 20px 0px;
+        }
 
-    .item {
-      border: 2px solid #000;
-      padding: 10px;
-      border-radius: 20px;
-    }
+        .shopping-cart-header {
+          border-bottom: 1px solid #ccc;
+        }
 
-    .item-title {
-      text-transform: uppercase;
-      text-align: center;
-      font-weight: 600;
-    }
+        .shopping-cart-image {
+          max-width: 80px;
+          border-radius: 20px;
+        }
 
-    .item-image {
-      height: 300px;
-      width: 100%;
-    }
+        .shopping-cart-quantity-input {
+          max-width: 45px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background: #eee;
+          padding: 5px;
+        }
 
-    .item-details {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 20px 0px 15px;
-    }
+        .shopping-cart-total {
+          min-height: 96px;
+        }
+        .row-carrito {
+            display: flex;
+            justify-content: right;
+        }
+            .floatRight{
+        float:right;
+        margin-left:10px;
+        margin-right:10px;
+        }
 
-    .item-details>.item-price {
-      margin: 0;
-    }
+        .dataTables_length {
+        float:left;
+        font-size: 15px;
+        }	
 
-    /* ? SHOPPING CART */
-    .shopping-cart-items {
-      padding: 20px 0px;
-    }
+        .buttons-excel {
+          font-size: 12.5px;
+        }
 
-    .shopping-cart-header {
-      border-bottom: 1px solid #ccc;
-    }
-
-    .shopping-cart-image {
-      max-width: 80px;
-      border-radius: 20px;
-    }
-
-    .shopping-cart-quantity-input {
-      max-width: 45px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background: #eee;
-      padding: 5px;
-    }
-
-    .shopping-cart-total {
-      min-height: 96px;
-    }
-    
-    .row-carrito {
-      display: flex;
-      justify-content: right;
-    }
+        .buttons-print {
+          font-size: 12.5px;
+        }
     .madera {
       background-color: #007373;
       color: white;
@@ -280,7 +309,17 @@
 
   </main>
 
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> 
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>
 
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script> {{-- Necesario para ver los botones --}} 
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script> {{-- Necesario para ver los botones --}} 
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> {{-- Excel --}} 
+	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> {{-- Imprimir(PDF) --}}
  
 
 </body>
