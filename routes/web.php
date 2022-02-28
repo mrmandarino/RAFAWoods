@@ -38,9 +38,7 @@ Route::get('/ayudameme', function () {
     return view('inicio.inicio_usuario');
 });
 
-Route::get('inicio', [ComentarioController::class,'create'])->name('inicio');
-Route::put('update/comentario/{id}', [ComentarioController::class,'update'])->name('update_comentario');
-Route::put('destroy/{id}', [ComentarioController::class,'destroy'])->name('destroy_comentario');
+
 
 //Graficos
 
@@ -84,6 +82,10 @@ Route::get('/catalogo/filtrar/{tipo_filtro}/{familia}',[CatalogoController::clas
 //middleware vendedor
 Route::middleware(['auth','activo','vendedor'])->group(function(){
   
+    //inicio (comentarios)
+    Route::get('inicio', [ComentarioController::class,'create'])->name('inicio');
+    Route::put('update/comentario/{id}', [ComentarioController::class,'update'])->name('update_comentario');
+    Route::put('destroy/{id}', [ComentarioController::class,'destroy'])->name('destroy_comentario');
     //ventas
     Route::resource('ventas',VentaController::class);
     //productos (sidebar)

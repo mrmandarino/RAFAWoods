@@ -8,7 +8,7 @@
 
 
 
-  <title>Dashboard Ventas</title>
+  <title>Inicio</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -153,18 +153,25 @@
         <svg class="bi me-2" width="40" height="32">
           <use xlink:href="#accesos" />
         </svg>
-        <span class="fs-4">Accesos Directos</span>
+        <span class="fs-4">RAFA Woods</span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
+        @php
+            $ejecutivo = 0;
+            if (DB::table('trabajadors')->where('usuario_rut', Auth::user()->rut)->value('tipo_trabajador')==1) {
+              $ejecutivo = 1;
+            }
+        @endphp
         <li class="nav-item">
-          <a href="#" class="nav-link active" aria-current="page">
+          <a href="{{route('inicio')}}" class="nav-link active" aria-current="page">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
             Inicio
           </a>
         </li>
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
         <li>
           <a href="{{route('graficos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -173,6 +180,7 @@
             Gráficos
           </a>
         </li>
+        @endif
         <li>
           <a href="{{route('ventas.create')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -181,6 +189,7 @@
             Realizar Venta
           </a>
         </li>
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
         <li>
           <a href="{{route('ver_historico')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -189,6 +198,7 @@
             Histórico de Ventas
           </a>
         </li>
+        @endif
         <li>
           <a href="{{route('ver_productos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -196,7 +206,8 @@
             </svg>
             Productos
           </a>
-        </li>
+        </li>    
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)  
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -205,6 +216,9 @@
             Inventario
           </a>
         </li>
+        @endif
+
+        @if (Auth::user()->tipo_usuario==1)     
         <li>
           <a href="{{route('menu_bd')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -213,6 +227,7 @@
             Base de Datos
           </a>
         </li>
+        @endif
       </ul>
       <hr>
 
