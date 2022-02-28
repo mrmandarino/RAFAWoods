@@ -10,16 +10,17 @@
     <title>Base de Datos</title>
 
    
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ 
   <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('js/sidebars.js') }}"></script>
   <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> 
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Custom styles for this template -->
@@ -74,14 +75,7 @@
             display: flex;
             justify-content: center;
         }
-        
-        .formularios {
-            display: flex;
-            justify-content: center;
-            align-content: center;
-        }
-        
-
+      
         #myInput {
           padding: 20px;
           margin-top: -6px;
@@ -117,36 +111,8 @@
           margin: 0;
         }
 
-        /* ? SHOPPING CART */
-        .shopping-cart-items {
-          padding: 20px 0px;
-        }
-
-        .shopping-cart-header {
-          border-bottom: 1px solid #ccc;
-        }
-
-        .shopping-cart-image {
-          max-width: 80px;
-          border-radius: 20px;
-        }
-
-        .shopping-cart-quantity-input {
-          max-width: 45px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          background: #eee;
-          padding: 5px;
-        }
-
-        .shopping-cart-total {
-          min-height: 96px;
-        }
-        .row-carrito {
-            display: flex;
-            justify-content: right;
-        }
-            .floatRight{
+      
+        .floatRight{
         float:right;
         margin-left:10px;
         margin-right:10px;
@@ -164,49 +130,81 @@
         .buttons-print {
           font-size: 12.5px;
         }
-    .madera {
-      background-color: #007373;
-      color: white;
-    }
-    .madera:hover {
-      background-color: #006767;
-      color: white;
-    }
 
-    .informacion {
-      background-color: #009999;
-      color: white;
-    }
-    .informacion:hover {
-      background-color: #008989;
-      color: white;
-    }
-    
-    .provedor {
-      background-color: #004040;
-      color: white;
-    }
-    .provedor:hover {
-      background-color: #195353;
-      color: white;
-    }
-    
-    .usuarios {
-      background-color: #002626;
-      color: white;
-    }
-    .usuarios:hover {
-      background-color: #193b3b;
-      color: white;
-    }
-    .productos {
-      background-color: #009999;
-      color: white;
-    }
-    .productos:hover {
-      background-color: #008989;
-      color: white;
-    }
+         /* ? SHOPPING CART */
+      .shopping-cart-items {
+        padding: 20px 0px;
+      }
+
+      .shopping-cart-header {
+        border-bottom: 1px solid #ccc;
+      }
+
+      .shopping-cart-image {
+        max-width: 80px;
+        border-radius: 20px;
+      }
+
+      .shopping-cart-quantity-input {
+        max-width: 45px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #eee;
+        padding: 5px;
+      }
+
+      .shopping-cart-total {
+        min-height: 96px;
+      }
+      
+      .row-carrito {
+        display: flex;
+        justify-content: right;
+      }
+
+      .madera {
+        background-color: #007373;
+        color: white;
+      }
+      .madera:hover {
+        background-color: #006767;
+        color: white;
+      }
+
+      .informacion {
+        background-color: #009999;
+        color: white;
+      }
+      .informacion:hover {
+        background-color: #008989;
+        color: white;
+      }
+      
+      .provedor {
+        background-color: #004040;
+        color: white;
+      }
+      .provedor:hover {
+        background-color: #195353;
+        color: white;
+      }
+      
+      .usuarios {
+        background-color: #002626;
+        color: white;
+      }
+      .usuarios:hover {
+        background-color: #193b3b;
+        color: white;
+      }
+      .productos {
+        background-color: #009999;
+        color: white;
+      }
+      .productos:hover {
+        background-color: #008989;
+        color: white;
+      }
 
     </style>
 
@@ -309,8 +307,18 @@
 
   </main>
 
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $(".dropdown-menu li").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script> 
 	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>

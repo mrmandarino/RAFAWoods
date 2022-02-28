@@ -20,11 +20,11 @@ use App\Http\Controllers\ComentarioController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('cover.cover_home');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('inicio');
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/cover', function () {

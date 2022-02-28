@@ -183,6 +183,7 @@
                         
                     @elseif($tabla == 'trabajadores') 
                         @php($sucursales=DB::table('inventarios')->get())
+                        @php($password=DB::table('users')->where('rut',$dato->usuario_rut)->first()->password)
                 
                         <div class="mb-3">
                             <label for="" class="form-label">Tipo trabajador</label>
@@ -199,6 +200,19 @@
                                     <option value={{$sucursal->id}} {{ $dato->sucursal_id==$sucursal->id ? 'selected' : ''  }}>{{$sucursal->direccion_sucursal}}</option>
                                 @endforeach  
                             </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input id="password" name="password" type="password" class="form-control" tabindex="3" value="{{$password}}">
+                                <div class="input-group-append">
+                                    <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                                </div>
+                            </div>
+                            @error('password')
+                                <small style="color:red;">*{{$message}}</small>
+                            @enderror
                         </div>
                         
                     @elseif($tabla == 'orden_compras') 
@@ -1119,6 +1133,25 @@
 </div>
 
 
+<script type="text/javascript">
+    function mostrarPassword(){
+            var cambio = document.getElementById("password");
+            if(cambio.type == "password"){
+                cambio.type = "text";
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            }else{
+                cambio.type = "password";
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+        } 
+        
+        $(document).ready(function () {
+        //CheckBox mostrar contraseña
+        $('#ShowPassword').click(function () {
+            $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+        });
+    });
+</script>  
 
 <script type="text/javascript">
     $(document).ready(function(){

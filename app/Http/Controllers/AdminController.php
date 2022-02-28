@@ -990,12 +990,24 @@ class AdminController extends Controller
             $request->validate([
                 'tipo_trabajador' => ['required'],
                 'sucursal_id' => ['required'],
+                'password' => ['required'],
             ]);
-
             $actualizar=Trabajador::find($key);
+            $actualizar_contraseña=User::find($key);
+
+            if($actualizar_contraseña->password != $request->get('password')){
+                $request->validate([
+                    'password' => ['required', 'min:8', 'max:16',Rules\Password::defaults()],
+                ]);
+                $actualizar_contraseña->password = bcrypt($request->get('password'));
+                $actualizar_contraseña->save();
+            }
+
             $actualizar->tipo_trabajador = $request->get('tipo_trabajador');
             $actualizar->sucursal_id = $request->get('sucursal_id');
             $actualizar->save();
+            
+           
             $datos=DB::table('trabajadors')->get();
         }elseif ($tabla=='orden_compras') {
             $request->validate([
