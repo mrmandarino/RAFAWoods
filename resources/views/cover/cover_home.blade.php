@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cover Template · Bootstrap v5.1</title>
+    <title>Maderas RAFA</title>
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logoarbol.png') }}">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -54,7 +55,7 @@
   </main>
 
   <footer class="mt-auto text-white-50">
-    <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+    <p>Powered by <b>The 3 Musketeers</b></p>
   </footer>
 </div>
 

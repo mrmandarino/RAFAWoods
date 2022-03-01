@@ -33,7 +33,7 @@
 
     .tabla-scroll {
       height: 250px !important;
-      overflow: scroll;
+      overflow: auto;
     }
 
     .col-form-izq {
@@ -169,7 +169,7 @@
             Inicio
           </a>
         </li>
-        @if ($ejecutivo == 1)    
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
         <li>
           <a href="{{route('graficos')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -187,7 +187,7 @@
             Realizar Venta
           </a>
         </li>
-        @if ($ejecutivo == 1)    
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
         <li>
           <a href="{{route('ver_historico')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -205,7 +205,7 @@
             Productos
           </a>
         </li>    
-        @if ($ejecutivo == 1)  
+        @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)  
         <li>
           <a href="{{route('ver_inventario')}}" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -238,12 +238,6 @@
           <strong>{{Auth::user()->nombre}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
           <form action="{{route('logout')}}" method="POST">
             @csrf
             <li><a class="dropdown-item" href="{{route('logout')}}"

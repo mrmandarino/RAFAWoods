@@ -240,12 +240,6 @@
           <strong>{{Auth::user()->nombre}}</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
           <form action="{{route('logout')}}" method="POST">
             @csrf
             <li><a class="dropdown-item" href="{{route('logout')}}"
@@ -285,8 +279,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> {{-- Excel --}}
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> {{-- Imprimir(PDF) --}}
 
-  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('js/sidebars.js') }}"></script>
+  <script src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('/js/sidebars.js') }}"></script>
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 @section('content')
 @include('inventario.partials.iconos')
 
-	<div class="container-fluid tabla-h-scroll mt-3">
+	<div class="container-fluid mt-3" style="overflow:auto">
 		<div>
 			@if (session()->has('fila_nueva'))
 				<div class="alert alert-success alert-dismissible fade show" role="alert">

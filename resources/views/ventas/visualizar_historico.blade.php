@@ -3,7 +3,7 @@
 @include('ventas.partials.iconos')
 
 
-<div class="container-fluid tabla-h-scroll mt-3">
+<div class="container-fluid mt-3" style="overflow:auto">
 	<table id="ventas" class="table" style="width:100%">
 		<thead>
 			<th> ID </th>

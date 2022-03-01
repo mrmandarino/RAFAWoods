@@ -191,7 +191,7 @@
                   Inicio
                 </a>
               </li>
-              @if ($ejecutivo == 1)    
+              @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
               <li>
                 <a href="{{route('graficos')}}" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
@@ -209,7 +209,7 @@
                   Realizar Venta
                 </a>
               </li>
-              @if ($ejecutivo == 1)    
+              @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)    
               <li>
                 <a href="{{route('ver_historico')}}" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
@@ -227,7 +227,7 @@
                   Productos
                 </a>
               </li>    
-              @if ($ejecutivo == 1)  
+              @if ($ejecutivo == 1 or Auth::user()->tipo_usuario==1)  
               <li>
                 <a href="{{route('ver_inventario')}}" class="nav-link text-white">
                   <svg class="bi me-2" width="16" height="16">
@@ -260,12 +260,6 @@
                 <strong>{{Auth::user()->nombre}}</strong>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
                 <form action="{{route('logout')}}" method="POST">
                   @csrf
                   <li><a class="dropdown-item" href="{{route('logout')}}"
@@ -294,6 +288,8 @@
     <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>
+
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script> {{-- Necesario para
     ver los botones --}}

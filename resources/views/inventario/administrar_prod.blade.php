@@ -1,7 +1,7 @@
 @extends('inventario.master_inv')
 @section('content')
 @include('inventario.partials.iconos')
-<link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
+
 <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -777,7 +777,6 @@
     
 </div>
 
-<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 
 <script type="text/javascript">
     $(document).ready(function()
