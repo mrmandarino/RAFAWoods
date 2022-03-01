@@ -36,8 +36,8 @@
                                 <input type="number" class="visually-hidden" name="id_producto_hidden" id="id_producto_hidden">
                                 <datalist id="datalist_productos">
                                     @foreach ($productos as $producto)
-                                    <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
-                                        @endforeach
+                                    <option data-value="{{$producto->id}}" value="[{{$producto->sucursal_id}}] {{$producto->nombre}}">
+                                    @endforeach
                                 </datalist>
                             </div>
                         </div>
@@ -47,22 +47,10 @@
                         <div class="col-3" style="justify-self: center;">
 
                             <button type="submit" id="administrar_producto" class="btn btn-primary" name="action" value="detalle" style="width: 200px ; justify-self: center;" >Administrar Producto</button>
-                        </div>
-                        
+                        </div>              
                     </div>
-
-
-
-
                 </form>
-
-
-
-
             </div>
-
-
-
         </div>
 
         {{-- funciones --}}
