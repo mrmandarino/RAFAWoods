@@ -1828,15 +1828,22 @@ class AdminController extends Controller
         }elseif ($tabla=='ventas') {
             $request->validate([
                 'sucursal_id' => ['required'],
-                'cliente_rut' => ['required'],
                 'vendedor_rut' => ['required'],
                 'medio_de_pago' => ['required'], 
                 'con_factura' => ['required'],
             ]);
             $actualizar=Venta::find($key);
+            
+            if ($request->cliente_rut != null){
+                $request->validate([
+                    'cliente_rut' => ['required','cl_rut'],
+                ]);
+                $rut_cliente_normalizado = Rut::parse($request->cliente_rut)->normalize();
+                $actualizar->cliente_rut = $rut_cliente_normalizado;
+            }
+            
             $actualizar->sucursal_id = $request->get('sucursal_id');
             $actualizar->vendedor_rut = $request->get('vendedor_rut');
-            $actualizar->cliente_rut = $request->get('cliente_rut');
             $actualizar->medio_de_pago = $request->get('medio_de_pago');
             $actualizar->con_factura = $request->get('con_factura');
             $actualizar->save();
