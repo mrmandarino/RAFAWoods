@@ -35,7 +35,7 @@ Route::get('/ayudameme', function () {
     
 
     //return view('graficos.graficos');
-    return view('inicio.inicio_usuario');
+    return view('inicio.portada');
 });
 
 

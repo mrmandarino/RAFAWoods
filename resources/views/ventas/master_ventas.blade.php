@@ -24,6 +24,9 @@
       -moz-user-select: none;
       user-select: none;
     }
+    .nav-text {
+      vertical-align: middle;
+    }
 
     @media (min-width: 768px) {
       .bd-placeholder-img-lg {
