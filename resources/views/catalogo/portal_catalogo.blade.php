@@ -80,220 +80,204 @@
         opacity: 0.2;
       }
 
+      .btn-sidebar {
+          position: absolute;
+          top: 10px;
+          left: 45px;
+          height: 37px;
+          width: 37px;
+          text-align: center;
+          background: #1b1b1b;
+          border-radius: 3px;
+          cursor: pointer;
+          transition: left 0.4s ease
+      }
 
-      
-      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+      .btn-sidebar.click {
+          left: 260px
+      }
 
-* {
-    margin: 0;
-    padding: 0;
-    user-select: none;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif
-}
+      .btn-sidebar span {
+          color: white;
+          font-size: 15px;
+          line-height: 36px
+      }
 
-body {
-    background-color: #eee
-}
+      .btn-sidebar.click span:before {
+          content: '\f00d'
+      }
 
-.btn {
-    position: absolute;
-    top: 10px;
-    left: 45px;
-    height: 37px;
-    width: 37px;
-    text-align: center;
-    background: #1b1b1b;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: left 0.4s ease
-}
+      .sidebar {
+          position: fixed;
+          width: 250px;
+          height: 100%;
+          left: -250px;
+          background: #1b1b1b;
+          transition: left 0.4s ease
+      }
 
-.btn.click {
-    left: 260px
-}
+      .sidebar.show {
+          left: 0px
+      }
 
-.btn span {
-    color: white;
-    font-size: 15px;
-    line-height: 36px
-}
+      .sidebar .text {
+          color: white;
+          font-size: 19px;
+          font-weight: 600;
+          line-height: 65px;
+          text-align: center;
+          background: #1e1e1e;
+          letter-spacing: 1px
+      }
 
-.btn.click span:before {
-    content: '\f00d'
-}
+      nav ul {
+          background: #1b1b1b;
+          height: 100%;
+          width: 100%;
+          list-style: none;
+          padding-left: 10px
+      }
 
-.sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    left: -250px;
-    background: #1b1b1b;
-    transition: left 0.4s ease
-}
+      nav ul li {
+          line-height: 50px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1)
+      }
 
-.sidebar.show {
-    left: 0px
-}
+      nav ul li:last-child {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05)
+      }
 
-.sidebar .text {
-    color: white;
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 65px;
-    text-align: center;
-    background: #1e1e1e;
-    letter-spacing: 1px
-}
+      nav ul li a {
+          position: relative;
+          color: white;
+          text-decoration: none;
+          font-size: 13px;
+          padding-left: 14px;
+          font-weight: 500;
+          display: block;
+          width: 100%;
+          border-left: 3px solid transparent
+      }
 
-nav ul {
-    background: #1b1b1b;
-    height: 100%;
-    width: 100%;
-    list-style: none;
-    padding-left: 10px
-}
+      nav ul li.active a {
+          color: #15B2B2;
+          background: #1e1e1e;
+          border-left-color: #15B2B2
+      }
 
-nav ul li {
-    line-height: 50px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1)
-}
+      nav ul li a:hover {
+          background: #1e1e1e
+      }
 
-nav ul li:last-child {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05)
-}
+      .feat-show {
+          transition: all 0.5s
+      }
 
-nav ul li a {
-    position: relative;
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    padding-left: 14px;
-    font-weight: 500;
-    display: block;
-    width: 100%;
-    border-left: 3px solid transparent
-}
+      nav ul li.active ul {
+          transition: all 0.5s
+      }
 
-nav ul li.active a {
-    color: #FC5404;
-    background: #1e1e1e;
-    border-left-color: #FC5404
-}
+      nav ul ul {
+          position: static;
+          display: none
+      }
 
-nav ul li a:hover {
-    background: #1e1e1e
-}
+      nav ul.show {
+          display: block;
+          transition: all 0.5s
+      }
 
-.feat-show {
-    transition: all 0.5s
-}
+      nav ul ul li {
+          line-height: 42px;
+          border-top: none
+      }
 
-nav ul li.active ul {
-    transition: all 0.5s
-}
+      nav ul ul li a {
+          font-size: 12px;
+          color: #e6e6e6
+      }
 
-nav ul ul {
-    position: static;
-    display: none
-}
+      nav ul li.active ul li a {
+          color: #e6e6e6;
+          background: #1b1b1b;
+          border-left-color: transparent
+      }
 
-nav ul.show {
-    display: block;
-    transition: all 0.5s
-}
+      .bg-black-insano{
+          background: #1e1e1e;
+      }
 
-nav ul ul li {
-    line-height: 42px;
-    border-top: none
-}
+      .bg-test{
+          background: #999999;
+      }
 
-nav ul ul li a {
-    font-size: 12px;
-    color: #e6e6e6
-}
+      a:hover {
+          color: white!important
+      }
 
-nav ul li.active ul li a {
-    color: #e6e6e6;
-    background: #1b1b1b;
-    border-left-color: transparent
-}
+      nav ul ul li a:hover {
+          color: white !important;
+          background: #004040 !important
+      }
 
-.bg-black-insano{
-    background: #1e1e1e;
-}
+      nav ul li a span {
+          position: absolute;
+          top: 50%;
+          right: 20px;
+          transform: translateY(-50%);
+          font-size: 15px;
+          transition: transform 0.4s
+      }
 
-a:hover {
-    color: white!important
-}
+      nav ul li a span.rotate {
+          transform: translateY(-50%) rotate(-180deg)
+      }
 
-nav ul ul li a:hover {
-    color: white !important;
-    background: #004040 !important
-}
+      .margen {
+        margin: 20px 20px 20px 20px;
+      }
 
-nav ul li a span {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    font-size: 15px;
-    transition: transform 0.4s
-}
-
-nav ul li a span.rotate {
-    transform: translateY(-50%) rotate(-180deg)
-}
-
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #202020;
-    z-index: -1;
-    text-align: center
-}
+      /* .content {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #202020;
+          z-index: -1;
+          text-align: center
+      } */
 
     </style>
 
     
   </head>
-  <body>
+  <body class="bg-test">
     
 <header>
-  <div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About</h4>
-          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
-        </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" class="text-white">Follow on Twitter</a></li>
-            <li><a href="#" class="text-white">Like on Facebook</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  
   <div class="navbar navbar-dark bg-black-insano shadow-sm">
     <div class="container">
       <a href="#" class="navbar-brand d-flex align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <strong>Catálogo</strong>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      
+    
+      <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
+        <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
+        <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
+          <input class="form-control" list="datalist_productos" id="input_datalist_productos" placeholder="Buscar..." onchange="submit_formulario_producto()">
+          <datalist id="datalist_productos">
+            @foreach ($productos_totales as $producto_total )
+              <option data-value="{{$producto_total->id}}">{{$producto_total->nombre}}</option>
+            @endforeach
+          </datalist>
+      </form>
     </div>
   </div>
 </header>
 
-<div class="btn"> <span class="fas fa-bars"></span> </div>
+<div class="btn btn-sidebar"> <span class="fas fa-bars"></span> </div>
 <nav class="sidebar">
     <div class="text"> Maderas RAFA </div>
     <ul class="main_side">
@@ -327,46 +311,12 @@ nav ul li a span.rotate {
     </ul>
 </nav>
 <div class="content">
-    <div class="header"> 
+    <div class="header "> 
       <main>
   
-
-      {{-- Datalist de familia de productos --}}
-      <section class="py-5 text-center container">
-        @if (session()->has('familia_erronea'))
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              <h5 class="text-center" >{{ session()->get('familia_erronea') }} </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        @endif
-        @if (session()->has('producto_erroneo'))
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              <h5 class="text-center" >{{ session()->get('producto_erroneo') }} </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        @endif
-        
-        <b><label style="text:black">Buscador de producto</label></b>
-        <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
-          <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
-          <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
-          <div class="row py-lg-5">
-            <input class="form-control" list="datalist_productos" id="input_datalist_productos" placeholder="Buscar..." onchange="submit_formulario_producto()">
-            <datalist id="datalist_productos">
-              @foreach ($productos_totales as $producto_total )
-                <option data-value="{{$producto_total->id}}">{{$producto_total->nombre}}</option>
-              @endforeach
-            </datalist>
-          </div>
-        </form>
-  
-        
-      </section>
-    
-    
       {{-- Catalogo de productos --}}
-      <div class="album py-5 bg-light" onload="carga_datos()">
-        <div class="container">
+      <div class="album py-5 bg-test" onload="carga_datos()">
+        <div class="container bg-test">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach($productos as $producto)
                 @php
@@ -378,7 +328,7 @@ nav ul li a span.rotate {
                 }
                 @endphp
                 <div class="col">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm ">
                       @if ($contador_aux <= 0)
                       <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" height="315" width="420" ></svg></a>
                       @else
@@ -502,67 +452,71 @@ nav ul li a span.rotate {
                         </div>
                       </div>
                         {{-- Información sobre el detalle del producto --}}
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label></b>
-                        <input type="text" value="{{$producto->nombre}}" style="background-color:white" class="form-control" name="nombre" id="nombre" readonly></b>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Descripción</label></b>
-                        <input type="text" value="{{$producto->descripcion}}" style="background-color:white" class="form-control" name="descripcion" id="descripcion" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Familia</label></b>
-                        <input type="text" value="{{$producto->familia}}" style="background-color:white" class="form-control" name="familia" id="familia" readonly>
-                      
-                        @php
-                          if($producto->familia != "Herramienta" && $producto->familia != "Otro")
-                          {
-                            $familia = App\Http\Controllers\EjecutivoController::detectar_nombre($producto->familia);
-                            $producto_en_tabla = DB::table($familia)->where('producto_id', $producto->id)->first();
-                          }
-                        @endphp
-    
-                        @if ($producto->familia=="Madera" || $producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion" || $producto->familia=="Mueble")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Alto</label></b>
-                        <input type="text" value="{{$producto_en_tabla->alto}}" style="background-color:white" class="form-control" name="alto" id="alto" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Ancho</label></b>
-                        <input type="text" value="{{$producto_en_tabla->ancho}}" style="background-color:white" class="form-control" name="ancho" id="ancho" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Largo</label></b>
-                        <input type="text" value="{{$producto_en_tabla->largo}}" style="background-color:white" class="form-control" name="largo" id="largo" readonly>
-                        @endif
-    
-                        @if ($producto->familia=="Madera")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label></b>
-                        <input type="text" value="{{$producto_en_tabla->tipo_madera}}" style="background-color:white" class="form-control" name="tipo_madera" id="tipo_madera" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label></b>
-                        <input type="text" value="{{$producto_en_tabla->tratamiento}}" style="background-color:white" class="form-control" name="tratamiento" id="tratamiento" readonly>
-                        @endif
-    
-                        @if ($producto->familia=="Clavo")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
-                        <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
-                        <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
-                        <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Longitud</label></b>
-                        <input type="text" value="{{$producto_en_tabla->longitud}}" style="background-color:white" class="form-control" name="longitud" id="longitud" readonly>
-                        @endif
-    
-                        @if ($producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
-                        <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
-                        @endif
-    
-                        @if ($producto->familia=="Tornillo")
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
-                        <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label></b>
-                        <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" style="background-color:white" class="form-control" name="tipo_rosca" id="tipo_rosca" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label></b>
-                        <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" style="background-color:white" class="form-control" name="separacion_rosca" id="separacion_rosca" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
-                        <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label></b>
-                        <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" style="background-color:white" class="form-control" name="rosca_parcial" id="rosca_parcial" readonly>
-                        <b><label for="recipient-name" class="col-form-label" style="color:black">Vastago</label></b>
-                        <input type="text" value="{{$producto_en_tabla->vastago}}" style="background-color:white" class="form-control" name="vastago" id="vastago" readonly>
-                        @endif
+                        <div class="margen">
+
+                        
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Nombre</label></b>
+                          <input type="text" value="{{$producto->nombre}}" style="background-color:white" class="form-control" name="nombre" id="nombre" readonly></b>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Descripción</label></b>
+                          <input type="text" value="{{$producto->descripcion}}" style="background-color:white" class="form-control" name="descripcion" id="descripcion" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Familia</label></b>
+                          <input type="text" value="{{$producto->familia}}" style="background-color:white" class="form-control" name="familia" id="familia" readonly>
+                        
+                          @php
+                            if($producto->familia != "Herramienta" && $producto->familia != "Otro")
+                            {
+                              $familia = App\Http\Controllers\EjecutivoController::detectar_nombre($producto->familia);
+                              $producto_en_tabla = DB::table($familia)->where('producto_id', $producto->id)->first();
+                            }
+                          @endphp
+      
+                          @if ($producto->familia=="Madera" || $producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion" || $producto->familia=="Mueble")
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Alto</label></b>
+                          <input type="text" value="{{$producto_en_tabla->alto}}" style="background-color:white" class="form-control" name="alto" id="alto" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Ancho</label></b>
+                          <input type="text" value="{{$producto_en_tabla->ancho}}" style="background-color:white" class="form-control" name="ancho" id="ancho" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Largo</label></b>
+                          <input type="text" value="{{$producto_en_tabla->largo}}" style="background-color:white" class="form-control" name="largo" id="largo" readonly>
+                          @endif
+      
+                          @if ($producto->familia=="Madera")
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Madera</label></b>
+                          <input type="text" value="{{$producto_en_tabla->tipo_madera}}" style="background-color:white" class="form-control" name="tipo_madera" id="tipo_madera" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Tratamiento</label></b>
+                          <input type="text" value="{{$producto_en_tabla->tratamiento}}" style="background-color:white" class="form-control" name="tratamiento" id="tratamiento" readonly>
+                          @endif
+      
+                          @if ($producto->familia=="Clavo")
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
+                          <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
+                          <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
+                          <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Longitud</label></b>
+                          <input type="text" value="{{$producto_en_tabla->longitud}}" style="background-color:white" class="form-control" name="longitud" id="longitud" readonly>
+                          @endif
+      
+                          @if ($producto->familia=="Techumbre" || $producto->familia=="Plancha_construccion")
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Material</label></b>
+                          <input type="text" value="{{$producto_en_tabla->material}}" style="background-color:white" class="form-control" name="material" id="material" readonly>
+                          @endif
+      
+                          @if ($producto->familia=="Tornillo")
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label></b>
+                          <input type="text" value="{{$producto_en_tabla->cabeza}}" style="background-color:white" class="form-control" name="cabeza" id="cabeza" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Tipo Rosca</label></b>
+                          <input type="text" value="{{$producto_en_tabla->tipo_rosca}}" style="background-color:white" class="form-control" name="tipo_rosca" id="tipo_rosca" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Separacion Rosca</label></b>
+                          <input type="text" value="{{$producto_en_tabla->separacion_rosca}}" style="background-color:white" class="form-control" name="separacion_rosca" id="separacion_rosca" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Punta</label></b>
+                          <input type="text" value="{{$producto_en_tabla->punta}}" style="background-color:white" class="form-control" name="punta" id="punta" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Rosca Parcial</label></b>
+                          <input type="text" value="{{$producto_en_tabla->rosca_parcial}}" style="background-color:white" class="form-control" name="rosca_parcial" id="rosca_parcial" readonly>
+                          <b><label for="recipient-name" class="col-form-label" style="color:black">Vastago</label></b>
+                          <input type="text" value="{{$producto_en_tabla->vastago}}" style="background-color:white" class="form-control" name="vastago" id="vastago" readonly>
+                          @endif
+                        </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
@@ -621,7 +575,7 @@ nav ul li a span.rotate {
 </script>
 
 <script>
-$('.btn').click(function(){
+$('.btn-sidebar').click(function(){
   $(this).toggleClass("click");
   $('.sidebar').toggleClass("show");
   });
