@@ -81,7 +81,7 @@
       }
 
       .btn-sidebar {
-          position: absolute;
+          position: fixed;
           top: 10px;
           left: 45px;
           height: 37px;
@@ -113,7 +113,8 @@
           height: 100%;
           left: -250px;
           background: #1b1b1b;
-          transition: left 0.4s ease
+          transition: left 0.4s ease;
+          z-index: 999
       }
 
       .sidebar.show {
@@ -130,7 +131,7 @@
           letter-spacing: 1px
       }
 
-      nav ul {
+      .nav_ul {
           background: #1b1b1b;
           height: 100%;
           width: 100%;
@@ -138,7 +139,7 @@
           padding-left: 10px
       }
 
-      nav ul li {
+      .nav_ul_li {
           line-height: 50px;
           border-top: 1px solid rgba(255, 255, 255, 0.1)
       }
@@ -147,7 +148,7 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.05)
       }
 
-      nav ul li a {
+      .nav_ul_li_a {
           position: relative;
           color: white;
           text-decoration: none;
@@ -208,7 +209,7 @@
       }
 
       .bg-test{
-          background: #999999;
+          background: #eaeaea;
       }
 
       a:hover {
@@ -247,6 +248,28 @@
           text-align: center
       } */
 
+      .navbar-catalogo{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
+
+      .navbar-catalogo > .container,
+      .navbar-catalogo > .container-fluid,
+      .navbar-catalogo > .container-sm,
+      .navbar-catalogo > .container-md,
+      .navbar-catalogo > .container-lg,
+      .navbar-catalogo > .container-xl,
+      .navbar-catalogo > .container-xxl {
+        display: flex;
+        flex-wrap: inherit;
+        align-items: center;
+        justify-content: space-between;
+      }
     </style>
 
     
@@ -255,7 +278,7 @@
     
 <header>
   
-  <div class="navbar navbar-dark bg-black-insano shadow-sm">
+  <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm" >
     <div class="container">
       <a href="#" class="navbar-brand d-flex align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
@@ -277,43 +300,47 @@
   </div>
 </header>
 
+{{-- SIDEBAR --}}
 <div class="btn btn-sidebar"> <span class="fas fa-bars"></span> </div>
 <nav class="sidebar">
     <div class="text"> Maderas RAFA </div>
-    <ul class="main_side">
-        <li> <a href="#" id="1">Filtrar por precio<span class="fas fa-caret-down"></span> </a>
-            <ul class="item-show-1">
+    <ul class="main_side nav_ul">
+        <li class="nav_ul_li"> <a class="nav_ul_li_a" href="#" id="1">Filtrar por precio<span class="fas fa-caret-down"></span> </a>
+            <ul class="item-show-1 nav_ul">
               {{-- Filtro por precio --}}
-                  <li><a name="tipo_filtro" id="tipo_filtro" value="ascendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_precio"])}}">Menor a mayor precio</a></li>
-                  <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_precio"])}}">Mayor a menor precio</a></li>
+                  <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" value="ascendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_precio"])}}">Menor a mayor precio</a></li>
+                  <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" value="descendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_precio"])}}">Mayor a menor precio</a></li>
             </ul>
         </li>
-        <li> <a href="#" id="2">Filtrar por nombre <span class="fas fa-caret-down"></span> </a>
-            <ul class="item-show-2">
+        <li class="nav_ul_li"> <a class="nav_ul_li_a" href="#" id="2">Filtrar por nombre <span class="fas fa-caret-down"></span> </a>
+            <ul class="item-show-2 nav_ul">
                 {{-- Filtro por alfabeto --}}
-                <li><a name="tipo_filtro" id="tipo_filtro" value="ascendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_alfb"])}}">(A-Z)</a></li>
-                <li><a name="tipo_filtro" id="tipo_filtro" value="descendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_alfb"])}}">(Z-A)</a></li>
+                <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" value="ascendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"asc_alfb"])}}">(A-Z)</a></li>
+                <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" value="descendente" href="{{route('ver_filtro_intermedio',['familia'=>$familia,'tipo_filtro'=>"des_alfb"])}}">(Z-A)</a></li>
             </ul>
         </li>
-        <li> <a href="#" id="3">Filtrar por familia <span class="fas fa-caret-down"></span> </a>
-          <ul class="item-show-3">
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Tornillo'])}}">Tornillo</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Plancha_construccion'])}}">Plancha de construcción</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Techumbre'])}}">Techumbre</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Mueble'])}}">Mueble</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Madera'])}}">Madera</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Clavo'])}}">Clavo</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Herramienta'])}}">Herramienta</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Otro'])}}">Otro</a></li>
-            <li><a name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}">Todos los productos</a></li>
+        <li class="nav_ul_li"> <a class="nav_ul_li_a" href="#" id="3">Filtrar por familia <span class="fas fa-caret-down"></span> </a>
+          <ul class="item-show-3 nav_ul">
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Tornillo'])}}">Tornillo</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Plancha_construccion'])}}">Plancha de construcción</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Techumbre'])}}">Techumbre</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Mueble'])}}">Mueble</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Madera'])}}">Madera</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Clavo'])}}">Clavo</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Herramienta'])}}">Herramienta</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Otro'])}}">Otro</a></li>
+            <li class="nav_ul_li"><a class="nav_ul_li_a" name="tipo_filtro" id="tipo_filtro" href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}">Todos los productos</a></li>
           </ul>
       </li>
     </ul>
 </nav>
-<div class="content">
-    <div class="header "> 
+
+{{-- END SIDEBAR --}}
+
+
+<div class="container">
+  <div class="header "> 
       <main>
-  
       {{-- Catalogo de productos --}}
       <div class="album py-5 bg-test" onload="carga_datos()">
         <div class="container bg-test">
@@ -328,7 +355,7 @@
                 }
                 @endphp
                 <div class="col">
-                    <div class="card shadow-sm ">
+                    <div class="card shadow-sm">
                       @if ($contador_aux <= 0)
                       <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" height="315" width="420" ></svg></a>
                       @else
