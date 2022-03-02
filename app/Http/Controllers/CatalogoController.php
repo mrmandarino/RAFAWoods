@@ -47,6 +47,10 @@ class CatalogoController extends Controller
     //Redireccionamiento a catalogo filtrado por familia
     public function index_por_familia($familia)
     {
+        if($familia == "Todos los productos")
+        {
+            return redirect()->route('ver_catalogo');
+        }
         $cantidad_productos_pag = 6;
         $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->paginate($cantidad_productos_pag);
         $imagenes = DB::table('imagens')->get();
