@@ -90,18 +90,20 @@
           background: #1b1b1b;
           border-radius: 3px;
           cursor: pointer;
-          transition: left 0.4s ease
+          transition: left 0.4s ease;
+          z-index: 1030
       }
 
       .btn-sidebar.click {
-          left: 260px
+          left: 245px;
+          z-index: 1030
       }
 
       .btn-sidebar span {
           color: white;
           font-size: 15px;
           line-height: 36px
-          z-index: 999
+          z-index: 1030
       }
 
       .btn-sidebar.click span:before {
@@ -115,7 +117,7 @@
           left: -250px;
           background: #1b1b1b;
           transition: left 0.4s ease;
-          z-index: 998
+          z-index: 1030
       }
 
       .sidebar.show {
@@ -262,8 +264,7 @@
         align-items: center;
         justify-content: space-between;
         padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        z-index: 997
+        padding-bottom: 0.5rem
       }
 
       .navbar-catalogo > .container,
@@ -278,6 +279,16 @@
         align-items: center;
         justify-content: space-between;
       }
+
+      .imagen-card{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+      .probando {
+        font-family: 'Poppins', sans-serif;
+      }
     </style>
 
     
@@ -286,19 +297,18 @@
     
 <header>
   
-  <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm" >
+  <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm " >
     <div class="container">
-      <a href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <strong>Catálogo</strong>
+      <a href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}" class="navbar-brand d-flex align-items-center" style="margin-left: 45% ">
+        <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch"> </i> </i>
       </a>
       
     
       <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
         <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
         <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
-          <input class="form-control" list="datalist_productos" id="input_datalist_productos" placeholder="Buscar..." onchange="submit_formulario_producto()">
-          <datalist id="datalist_productos">
+        <input class="form-control" list="datalist_productos" id="input_datalist_productos" style="margin-left: -10% " placeholder="Buscar..." onchange="submit_formulario_producto()">
+        <datalist id="datalist_productos">
             @foreach ($productos_totales as $producto_total )
               <option data-value="{{$producto_total->id}}">{{$producto_total->nombre}}</option>
             @endforeach
@@ -310,11 +320,10 @@
 
 
 {{-- SIDEBAR --}}
-<div class="btn btn-sidebar"> <br> <br>
-  <span class="fas fa-bars"></span> </div>
+<div class="btn btn-sidebar"> 
+  <span class="fas fa-filter"></span> </div>
 <nav class="sidebar">
-    <div class="text"> Maderas RAFA </div>
-    <ul class="main_side nav_ul">
+  <div class="text"  style="margin-bottom: -4% "> Maderas RAFA </div>    <ul class="main_side nav_ul">
         <li class="nav_ul_li"> <a class="nav_ul_li_a" href="#" id="1">Filtrar por precio<span class="fas fa-caret-down"></span> </a>
             <ul class="item-show-1 nav_ul">
               {{-- Filtro por precio --}}
@@ -371,15 +380,11 @@
                 <div class="col">
                   <div class="card border-test shadow-sm ">
                       @if ($contador_aux <= 0)
-                      <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" height="315" width="420" ></svg></a>
+                      <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="imagen-card" href="{{ asset('images\Imagen_no_disponible.svg.png') }}"  ></svg></a>
                       @else
                         @foreach($imagenes as $imagen)
                         @if($imagen->imagenable_id == $producto->id)
-                        @php
-                            $url_img = $imagen->url;
-                            $url_img_fixed = str_replace("productos","images",$url_img);
-                        @endphp 
-                        <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset($url_img_fixed) }}" height="315" width="420" ></svg></a>
+                        <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="imagen-card" href="{{ asset($imagen->url) }}" style="height:100%; width:100%; object-fit: fill;"></svg></a>
                         
                         @break
                         @endif
