@@ -101,6 +101,7 @@
           color: white;
           font-size: 15px;
           line-height: 36px
+          z-index: 999
       }
 
       .btn-sidebar.click span:before {
@@ -114,7 +115,7 @@
           left: -250px;
           background: #1b1b1b;
           transition: left 0.4s ease;
-          z-index: 999
+          z-index: 998
       }
 
       .sidebar.show {
@@ -209,7 +210,7 @@
       }
 
       .bg-test{
-          background: #eaeaea;
+          background: #B9B9B9;
       }
 
       a:hover {
@@ -238,6 +239,12 @@
         margin: 20px 20px 20px 20px;
       }
 
+      .border-test {
+        border-color: #e5e5e5;
+        border-width: 0.2em;
+      }
+
+
       /* .content {
           position: absolute;
           top: 50%;
@@ -256,6 +263,7 @@
         justify-content: space-between;
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
+        z-index: 997
       }
 
       .navbar-catalogo > .container,
@@ -280,7 +288,7 @@
   
   <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm" >
     <div class="container">
-      <a href="#" class="navbar-brand d-flex align-items-center">
+      <a href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}" class="navbar-brand d-flex align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <strong>Catálogo</strong>
       </a>
@@ -300,8 +308,10 @@
   </div>
 </header>
 
+
 {{-- SIDEBAR --}}
-<div class="btn btn-sidebar"> <span class="fas fa-bars"></span> </div>
+<div class="btn btn-sidebar"> <br> <br>
+  <span class="fas fa-bars"></span> </div>
 <nav class="sidebar">
     <div class="text"> Maderas RAFA </div>
     <ul class="main_side nav_ul">
@@ -344,7 +354,11 @@
       {{-- Catalogo de productos --}}
       <div class="album py-5 bg-test" onload="carga_datos()">
         <div class="container bg-test">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+          <div style="margin-bottom: 5% ">
+          </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" >
                 @foreach($productos as $producto)
                 @php
                 $contador_aux = 0;
@@ -355,7 +369,7 @@
                 }
                 @endphp
                 <div class="col">
-                    <div class="card shadow-sm">
+                  <div class="card border-test shadow-sm ">
                       @if ($contador_aux <= 0)
                       <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" height="315" width="420" ></svg></a>
                       @else
