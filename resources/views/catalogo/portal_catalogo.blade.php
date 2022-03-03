@@ -40,10 +40,7 @@
         background-size: cover;
         overflow: hidden;
       }
-      .modal-content {
-        width: 700px;
-        border:none;
-      }
+
       .modal-body {
         padding: 0;
       }
@@ -380,11 +377,11 @@
                 <div class="col">
                   <div class="card border-test shadow-sm ">
                       @if ($contador_aux <= 0)
-                      <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="imagen-card" href="{{ asset('images\Imagen_no_disponible.svg.png') }}"  ></svg></a>
+                      <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" style="height:100%;width:100%"></svg></a>
                       @else
                         @foreach($imagenes as $imagen)
                         @if($imagen->imagenable_id == $producto->id)
-                        <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="imagen-card" href="{{ asset($imagen->url) }}" style="height:100%; width:100%; object-fit: fill;"></svg></a>
+                        <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="" href="{{ asset($imagen->url) }}" style="height:100%;width:100%"></svg></a>
                         
                         @break
                         @endif
@@ -442,7 +439,7 @@
                           <div class='carousel-inner'>
                             @if ($contador_aux <= 0)
                             <div class='carousel-item active'>
-                              <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" alt='First slide' />
+                              <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" style="height:100%;width:100%" alt='First slide' />
                             </div>
                             @else
                             @php
@@ -454,12 +451,12 @@
                               $contador_imgs++;
                             @endphp
                             <div class='carousel-item active'>
-                              <img class='img-size' src="{{ asset($imagen->url) }}" alt='First slide' />
+                              <img class='img-size' src="{{ asset($imagen->url) }}" alt='First slide' style="height:100%;width:100%" />
                             </div>
                             @else
                             @if ($imagen->imagenable_id == $producto->id) 
                             <div class='carousel-item'>
-                              <img class='img-size' src="{{ asset($imagen->url) }}" alt='Second slide' />
+                              <img class='img-size' src="{{ asset($imagen->url) }}" alt='Second slide' style="height:100%;width:100%" />
                             </div>
                             @endif
                             @endif

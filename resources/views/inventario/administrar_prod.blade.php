@@ -122,7 +122,7 @@
                                             
                                         @if ($contador_aux <= 0)
                                         <div class='carousel-item active'>
-                                            <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" alt='First slide' height="250" width="250"/>
+                                            <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" alt='First slide' style="height:100%;width:100%"/>
                                         </div>
                                         @else
                                         @php
@@ -134,11 +134,11 @@
                                             $contador_imgs++;
                                         @endphp
                                         <div class='carousel-item active'>
-                                            <img class='img-size' src="{{ asset($imagen->url) }}" alt='First slide' height="115" width="420" />
+                                            <img class='img-size' src="{{ asset($imagen->url) }}" alt='First slide' style="height:100%;width:100%" />
                                         </div>
                                         @else
                                         <div class='carousel-item'>
-                                            <img class='img-size' src="{{ asset($imagen->url) }}" alt='Second slide' height="115" width="420"/>
+                                            <img class='img-size' src="{{ asset($imagen->url) }}" alt='Second slide' style="height:100%;width:100%"/>
                                         </div>
                                         @endif
                                         @endforeach
