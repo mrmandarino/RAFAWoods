@@ -374,14 +374,14 @@
                   }
                 }
                 @endphp
-                <div class="col">
+                <div class="col-12 col-md-6 col-lg-4">
                   <div class="card border-test shadow-sm ">
                       @if ($contador_aux <= 0)
-                      <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" style="height:100%;width:100%"></svg></a>
+                      <a href="#"><img src="images\Imagen_no_disponible.svg.png" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
                       @else
                         @foreach($imagenes as $imagen)
                         @if($imagen->imagenable_id == $producto->id)
-                        <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="" href="{{ asset($imagen->url) }}" style="height:100%;width:100%"></svg></a>
+                        <a href="#"><img src="{{$imagen->url}}" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
                         
                         @break
                         @endif
