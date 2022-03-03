@@ -51,6 +51,7 @@ class CatalogoController extends Controller
         {
             return redirect()->route('ver_catalogo');
         }
+
         $cantidad_productos_pag = 6;
         $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('familia',$familia)->paginate($cantidad_productos_pag);
         $imagenes = DB::table('imagens')->get();
@@ -62,15 +63,8 @@ class CatalogoController extends Controller
     //Redireccionamiento intermedio para detalle de producto
     public function intermedio_producto(Request $request)
     {
-        $producto = DB::table('productos')->where('nombre',$request->input_hidden_producto)->first();
-        if($producto == null)
-        {
-            return back()->with('producto_erroneo','Has ingresado un producto inexistente');
-
-        }else{
-            $nombre_producto = $producto->nombre;
-            return redirect()->route('ver_detalle_producto',['nombre_producto'=>$nombre_producto]);
-        }
+        $nombre_producto = $request->input_producto;
+        return redirect()->route('ver_detalle_producto',['nombre_producto'=>$nombre_producto]);
     }
 
     //Redireccionamiento para vista de detalle de producto
@@ -78,12 +72,11 @@ class CatalogoController extends Controller
     {
         //productos para datalists de búsqueda
         $imagenes = DB::table('imagens')->get();
-        $productos_familia = Producto::distinct()->get('familia');
-        $productos_totales = DB::table('productos')->where('estado',1)->get();
 
         //Producto en particular
-        $producto = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('nombre',$nombre_producto)->first();
-        return view('catalogo.detalle_producto',['producto'=>$producto,'imagenes'=>$imagenes,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales]);
+        $cantidad_productos_pag = 6;
+        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('nombre','like','%' .$nombre_producto. '%')->orwhere('familia','like','%' .$nombre_producto. '%')->where('estado',1)->where('sucursal_id',1)->paginate($cantidad_productos_pag);
+        return view('catalogo.detalle_producto',['productos'=>$productos,'imagenes'=>$imagenes]);
     }
 
     //Redireccionamiento intermedio para catalogo filtrado
@@ -103,6 +96,7 @@ class CatalogoController extends Controller
         
         //Filtras para todo tipo de producto
         if($familia == "todas"){
+
 
             //Filtrar alfabeticamente
             if($tipo_filtro == "asc_alfb")

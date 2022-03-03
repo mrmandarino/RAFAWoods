@@ -296,7 +296,7 @@
   
   <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm " >
     <div class="container">
-      <a href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}" class="navbar-brand d-flex align-items-center" style="margin-left: 45% ">
+      <a href="{{route('ver_catalogo')}}" class="navbar-brand d-flex mx-auto text-center" >
         <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch"> </i> </i>
       </a>
       
@@ -304,12 +304,7 @@
       <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
         <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
         <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
-        <input class="form-control" list="datalist_productos" id="input_datalist_productos" style="margin-left: -10% " placeholder="Buscar..." onchange="submit_formulario_producto()">
-        <datalist id="datalist_productos">
-            @foreach ($productos_totales as $producto_total )
-              <option data-value="{{$producto_total->id}}">{{$producto_total->nombre}}</option>
-            @endforeach
-          </datalist>
+        <input type="text" class="form-control" name="input_producto" id="input_datalist_productos" style="margin-left: -10% " placeholder="Buscar..." onchange="submit_formulario_producto()">
       </form>
     </div>
   </div>
@@ -356,7 +351,7 @@
 
 <div class="container">
   <div class="header "> 
-      <main>
+    <main>
       {{-- Catalogo de productos --}}
       <div class="album py-5 bg-test" onload="carga_datos()">
         <div class="container bg-test">
@@ -365,6 +360,25 @@
           </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" >
+
+              {{-- Card No existe producto --}}
+              @if ($productos->total() == 0)
+              <section class="py-5 text-center container">
+                
+                <div class="container" style="border: #B9B9B9">
+                  <img class="bg-test" src="\images\thinking.png" style="height:100%;width:100%">
+                  <div class="card-body">
+                    <b><p class="card-text probando">No se han encontrado resultados.</p></b>
+                      <div class="d-flex justify-content-center">
+                          <div class="btn-group">
+                              <a href="{{route('ver_catalogo_por_familia',[$familia='Todos los productos'])}}"><button id="volver_al_catalogo" type="button" class="btn btn-sm btn-secondary mt-2">Volver al catálogo</button></a>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </section>
+              {{-- End card no existe producto --}}
+              @else
                 @foreach($productos as $producto)
                 @php
                 $contador_aux = 0;
@@ -377,11 +391,11 @@
                 <div class="col-12 col-md-6 col-lg-4">
                   <div class="card border-test shadow-sm ">
                       @if ($contador_aux <= 0)
-                      <a href="#"><img src="images\imagen_no_disponible.png" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
+                      <a href="#"><img src="\images\imagen_no_disponible.png" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
                       @else
                         @foreach($imagenes as $imagen)
                         @if($imagen->imagenable_id == $producto->id)
-                        <a href="#"><img src="{{$imagen->url}}" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
+                        <a href="#"><img src="\{{$imagen->url}}" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
                         
                         @break
                         @endif
@@ -567,6 +581,7 @@
                   </div>
                 </div>
                 @endforeach
+                @endif
             </div>
             <br>
             <div class="d-flex justify-content-end">
