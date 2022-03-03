@@ -377,7 +377,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                   <div class="card border-test shadow-sm ">
                       @if ($contador_aux <= 0)
-                      <a href="#"><img src="images\Imagen_no_disponible.svg.png" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
+                      <a href="#"><img src="images\imagen_no_disponible.png" style="height:100%;width:100%" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}"></a>
                       @else
                         @foreach($imagenes as $imagen)
                         @if($imagen->imagenable_id == $producto->id)
@@ -439,7 +439,7 @@
                           <div class='carousel-inner'>
                             @if ($contador_aux <= 0)
                             <div class='carousel-item active'>
-                              <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" style="height:100%;width:100%" alt='First slide' />
+                              <img class='img-size' src="{{ asset('images\imagen_no_disponible_4_3_2.png') }}" style="height:100%;width:100%" alt='First slide' />
                             </div>
                             @else
                             @php
