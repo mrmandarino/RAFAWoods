@@ -1,7 +1,7 @@
 @extends('inventario.master_inv')
 @section('content')
 @include('inventario.partials.iconos')
-<link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
+
 <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -198,19 +198,19 @@
                             <div class="row">
     
                                 @if (session()->has('estado_cambiado'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                                         {{ session()->get('estado_cambiado') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div><br>
                                 @endif
                                 @if (session()->has('stock_actualizado'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                                         {{ session()->get('stock_actualizado') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div><br>
                                 @endif
                                 @if (session()->has('precio_actualizado'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
                                         {{ session()->get('precio_actualizado') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div><br>
@@ -353,7 +353,8 @@
                                     deseado</label>
                                     <input type="number" value={{ $producto_en_stock->stock }} class="form-control"
                                     name="stock" id="stock" required>    
-                                    
+                                    <input type="number" value={{ $producto_en_stock->sucursal_id }} class="visually-hidden"
+                                    name="sucursal_id_hidden" id="sucursal_id_hidden" required> 
                             </div>
                             @error('stock')
                                 <small style="color:red;">*{{$message}}</small>
@@ -411,6 +412,8 @@
                                 <input type="number" value={{$producto_en_stock->precio_venta}} class="form-control" name="precio_venta_actual" id="precio_venta_actual" step="100" min="1" readonly>
                                 <label for="recipient-name" class="col-form-label" style="color:black">Precio Venta</label>
                                 <input type="number" class="form-control" name="precio_venta" id="precio_venta" step="100" min="1" readonly>
+                                <input type="number" value={{ $producto_en_stock->sucursal_id }} class="visually-hidden"
+                                    name="sucursal_id_hidden" id="sucursal_id_hidden" required>
                             </div>
                             @error('utilidad')
                                     <small style="color:red;">*{{$message}}</small>
@@ -440,6 +443,8 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
+                                <input type="number" value={{ $producto_en_stock->sucursal_id }} class="visually-hidden"
+                                    name="sucursal_id_hidden" id="sucursal_id_hidden" required>
                                 <label for="recipient-name" class="col-form-label" style="color:black">Nombre</label>
                                 <input type="text" value="{{$producto_en_bruto->nombre}}" class="form-control" name="nombre" id="nombre">
                                 @error('alto')
@@ -649,6 +654,8 @@
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
+                                <input type="number" value={{ $producto_en_stock->sucursal_id }} class="visually-hidden"
+                                name="sucursal_id_hidden" id="sucursal_id_hidden" required>
                                 <input class="visually-hidden" type="number" value="{{ $producto_en_bruto->estado }}"name="estado" id="estado" required>
                                 <label for="recipient-name" class="col-form-label" style="color:black">Estado:</label>
                                 
@@ -691,6 +698,8 @@
                         <form action="{{ route('subir_imagen_producto', $producto_en_bruto->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
+                                <input type="number" value={{ $producto_en_stock->sucursal_id }} class="visually-hidden"
+                                name="sucursal_id_hidden" id="sucursal_id_hidden" required>
                                 <label for="" class="form-label">Url</label>
                     
                                 <input id="url" name="url" type="file" class="form-control" tabindex="1" accept="image/*">
@@ -734,6 +743,8 @@
                         <form action="{{route('eliminar_imagen_producto')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
+                                <input type="number" value={{ $producto_en_stock->sucursal_id }} class="visually-hidden"
+                                name="sucursal_id_hidden" id="sucursal_id_hidden" required>
                                 <label for="" class="form-label">Seleccione una imagen</label>
                     
                                 <select class="form-control select" name="imagen_id" id="imagen_id" tabindex="8">
@@ -766,7 +777,6 @@
     
 </div>
 
-<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 
 <script type="text/javascript">
     $(document).ready(function()

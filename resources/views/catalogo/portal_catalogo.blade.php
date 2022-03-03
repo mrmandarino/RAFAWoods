@@ -9,6 +9,7 @@
     <title>Catalogo</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+    <link rel="icon" type="image/png" href="{{ asset('images/logoarbol.png') }}">
 
     
 
@@ -163,7 +164,7 @@
 
       {{-- Filtro por precio --}}
       <div class="input-group mb-3">
-        <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar por precio</label>
+        <label name="action" value="filtrar_precio" class="input-group-text" style="background:white">Filtrar por precio</label>
         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
           <span class="visually-hidden">Toggle Dropdown</span>
         </button>
@@ -176,7 +177,7 @@
 
       {{-- Filtro por alfabeto --}}
       <div class="input-group mb-3">
-        <label name="action" value="filtrar_precio" type="submit" class="input-group-text" style="background:white">Filtrar alfabéticamente</label>
+        <label name="action" value="filtrar_precio" class="input-group-text" style="background:white">Filtrar alfabéticamente</label>
         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
           <span class="visually-hidden">Toggle Dropdown</span>
         </button>
@@ -194,8 +195,19 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             @foreach($productos as $producto)
+            @php
+            $contador_aux = 0;
+            for($i = 0;$i<$imagenes->count();$i++){
+              if($imagenes[$i]->imagenable_id == $producto->id){
+                $contador_aux++;
+              }
+            }
+            @endphp
             <div class="col">
                 <div class="card shadow-sm">
+                  @if ($contador_aux <= 0)
+                  <a href="#"><svg data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}" class="bd-placeholder-img card-img-top" width="100%" height="305" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><image class="news__img" href="{{ asset('images\Imagen_no_disponible.svg.png') }}" height="315" width="420" ></svg></a>
+                  @else
                     @foreach($imagenes as $imagen)
                     @if($imagen->imagenable_id == $producto->id)
                     @php
@@ -208,7 +220,7 @@
                     @endif
                     @endforeach
 
-                  
+                  @endif
                   <div class="card-body">
                     <small><b><p class="card-text">{{$producto->familia}}</p></b></small>
                     <p class="card-text">{{$producto->nombre}}</p>
@@ -237,26 +249,18 @@
                 <div class="modal-content">
                   <div class="modal-body">
                     <!-- Carousel -->
-                    <div id='carouselExampleIndicators' class='carousel slide' data-bs-ride='carousel'>
+                    <div id='carouselExampleIndicators{{$producto->id}}' class='carousel slide' data-bs-ride='carousel'>
                       <ol class='carousel-indicators '>
-                        @php
-                          $contador_aux = 0;
-                          for($i = 0;$i<$imagenes->count();$i++){
-                            if($imagenes[$i]->imagenable_id == $producto->id){
-                              $contador_aux++;
-                            }
-                          }
-                        @endphp
                         @for ($j = 0;$j<$contador_aux;$j++)
                         @if($j<=0)
                           <li
-                          data-bs-target='#carouselExampleIndicators '
+                          data-bs-target='#carouselExampleIndicators{{$producto->id}} '
                           data-bs-slide-to= {{$j}}
                           class='active'
                           ></li>
                         @else
                         <li
-                          data-bs-target='#carouselExampleIndicators'
+                          data-bs-target='#carouselExampleIndicators{{$producto->id}}'
                           data-bs-slide-to= {{$j}}
                           ></li>
                         @endif
@@ -266,6 +270,11 @@
         
                       {{-- Imagenes --}}
                       <div class='carousel-inner'>
+                        @if ($contador_aux <= 0)
+                        <div class='carousel-item active'>
+                          <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" alt='First slide' />
+                        </div>
+                        @else
                         @php
                           $contador_imgs = 0;
                         @endphp
@@ -273,29 +282,28 @@
                         @if($imagen->imagenable_id == $producto->id && $contador_imgs <= 0)
                         @php
                           $contador_imgs++;
-                          $url_img = $imagen->url;
-                          $url_img_fixed = str_replace("productos","images",$url_img);
                         @endphp
                         <div class='carousel-item active'>
-                          <img class='img-size' src="{{ asset($url_img_fixed) }}" alt='First slide' />
+                          <img class='img-size' src="{{ asset($imagen->url) }}" alt='First slide' />
                         </div>
                         @else
                         @if ($imagen->imagenable_id == $producto->id) 
-                        @php
-                          $url_img = $imagen->url;
-                          $url_img_fixed = str_replace("productos","images",$url_img);
-                        @endphp
                         <div class='carousel-item'>
-                          <img class='img-size' src="{{ asset($url_img_fixed) }}" alt='First slide' />
+                          <img class='img-size' src="{{ asset($imagen->url) }}" alt='Second slide' />
                         </div>
                         @endif
                         @endif
                         @endforeach
+
+                        @endif
                       </div>
+
+                      @if ($contador_aux >= 2)
+                        
                       <a
-                        class='carousel-control-prev'
-                        href='#carouselExampleIndicators'
-                        role='button'
+                      class='carousel-control-prev'
+                      href='#carouselExampleIndicators{{$producto->id}}'
+                      role='button'
                         data-bs-slide='prev'
                         >
                         <span class='carousel-control-prev-icon'
@@ -305,7 +313,7 @@
                       </a>
                       <a
                         class='carousel-control-next'
-                        href='#carouselExampleIndicators'
+                        href='#carouselExampleIndicators{{$producto->id}}'
                         role='button'
                         data-bs-slide='next'
                         >
@@ -315,6 +323,7 @@
                               ></span>
                         <span class='sr-only'></span>
                       </a>
+                      @endif
                       
                     </div>
                   </div>
@@ -399,7 +408,8 @@
     
   
 </main>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
 <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 

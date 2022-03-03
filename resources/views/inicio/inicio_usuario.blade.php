@@ -36,7 +36,7 @@
                       @method('PUT')
                       @php($usuario=App\Models\User::find($comentarios[$i]->rut))
                       <li><h5>{{$usuario->nombre}} {{$usuario->apellido}}:</h5></li>
-                      <li><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Anotación disponible...">{{$comentarios[$i]->comentario}}</textarea></li>
+                      <li><textarea class="form-control text-secondary bg-white" id="exampleFormControlTextarea1" rows="3" placeholder="Anotación disponible..." disabled>{{$comentarios[$i]->comentario}}</textarea></li>
                       <li>
                         <hr class="dropdown-divider">
                       </li>

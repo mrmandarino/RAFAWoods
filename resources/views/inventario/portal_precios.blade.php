@@ -3,7 +3,7 @@
 @include('ventas.partials.iconos')
 
 
-<div class="container-fluid tabla-h-scroll mt-3">
+<div class="container-fluid mt-3" style="overflow:auto">
 	<div class="panel panel-default">
 
 		<table id="precios_productos" class="table" style="width:100%">
@@ -176,7 +176,6 @@
 
 
 
-<script src="/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>

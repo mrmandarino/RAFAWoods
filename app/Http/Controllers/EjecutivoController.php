@@ -26,8 +26,17 @@ class EjecutivoController extends Controller
     //Redirecionamiento al portal del inventario, en donde se acarrean todos los productos para utilizar.
     public function index()
     {
-        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
-        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',$usuario_logeado->sucursal_id)->get();
+        $tipo_usuario = Auth::user()->tipo_usuario;
+        if($tipo_usuario == 1)
+        {
+            $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->get();
+        }
+
+        elseif($tipo_usuario == 2)
+        {
+            $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
+            $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('sucursal_id',$usuario_logeado->sucursal_id)->get();
+        }
         return view('inventario.control_inv',compact('productos'));
     }
     //Redireccionamiento al portal de los precios de los productos del sistema.
@@ -41,24 +50,43 @@ class EjecutivoController extends Controller
     {   
         $id_producto_str = $request->id_producto_hidden;
         $id_producto_int = intval($id_producto_str);
+        $nombre_producto_input = $request->nombre_producto;
+        $producto = DB::table('productos')->where('id',$id_producto_int)->first();
+        $sucursal_con_corchete = str_replace(" ".$producto->nombre,"",$nombre_producto_input);
+        $sucursal_con_corchete_der = str_replace("]","",$sucursal_con_corchete);
+        $sucursal_id = str_replace("[","",$sucursal_con_corchete_der);
 
-        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto_int]);
+        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto_int,'sucursal_id'=>$sucursal_id]);
         
     }
 
     //con el id de producto se puede detectar todo lo que se necesita:familia,productos, localizacions
-    public function detalle_producto($id_redirect)
+    public function detalle_producto($id_redirect,$sucursal_id)
     {   
         if($id_redirect == 0 || $id_redirect == null)
         {
             return redirect()->route('ver_inventario')->with('no_product_selected','Ha ocurrido un error. Ha ingresado un producto inválido.');
         }
 
-        $id_producto_redirect=$id_redirect;
-        $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->first(); 
-        $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
-        $imagenes = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->get();
-        $contador_aux = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->count();
+        $tipo_usuario = Auth::user()->tipo_usuario;
+        if($tipo_usuario == 1)
+        {
+            $id_producto_redirect=$id_redirect;
+            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->where('sucursal_id',$sucursal_id)->first(); 
+            $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
+            $imagenes = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->get();
+            $contador_aux = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->count();
+        }
+        elseif($tipo_usuario == 2)
+        {
+            $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
+            $id_producto_redirect=$id_redirect;
+            $producto_en_stock = DB::table('localizacions')->where('producto_id',$id_producto_redirect)->where('sucursal_id',$usuario_logeado->sucursal_id)->first(); 
+            $producto_en_bruto = DB::table('productos')->where('id',$id_producto_redirect)->first();
+            $imagenes = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->get();
+            $contador_aux = DB::table('imagens')->where('imagenable_id',$producto_en_bruto->id)->count();
+        }
+        
         
         return view('inventario.administrar_prod',compact('producto_en_stock','producto_en_bruto','imagenes','contador_aux'));
 
@@ -67,12 +95,26 @@ class EjecutivoController extends Controller
 
     public function detalle_producto_stock_actualizado(Request $request,$id)
     {   
-        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
-        $request->validate([
-            'stock' => ['required','integer', 'gt:0'],
-        ]);
-        DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('producto_id',$id)->where('sucursal_id',$usuario_logeado->sucursal_id)->update(['stock'=>$request->stock]);
-        return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('stock_actualizado','Stock actualizado correctamente.');
+        $tipo_usuario = Auth::user()->tipo_usuario;
+        if($tipo_usuario == 1)
+        {
+            $request->validate([
+                'stock' => ['required','integer', 'gt:0'],
+            ]);
+            $sucursal_id = $request->sucursal_id_hidden;
+            DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('producto_id',$id)->where('sucursal_id',$sucursal_id)->update(['stock'=>$request->stock]);
+            return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$sucursal_id])->with('stock_actualizado','Stock actualizado correctamente.');
+        }
+        elseif($tipo_usuario == 2)
+        {
+            $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
+            $request->validate([
+                'stock' => ['required','integer', 'gt:0'],
+            ]);
+            DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('producto_id',$id)->where('sucursal_id',$usuario_logeado->sucursal_id)->update(['stock'=>$request->stock]);
+            return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$usuario_logeado->sucursal_id])->with('stock_actualizado','Stock actualizado correctamente.');
+        }
+        
     }
 
     public function actualizar_producto(Request $request,$id)
@@ -198,10 +240,9 @@ class EjecutivoController extends Controller
 
         DB::table('productos')->where('id',$id)
         ->update(['nombre'=>$request->nombre,
-        'descripcion'=>$request->descripcion,
-        'familia' => $request->familia]);
-        
-        return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('producto_actualizado','Producto actualizado correctamente.');
+        'descripcion'=>$request->descripcion]);
+        $sucursal_id = $request->sucursal_id_hidden;
+        return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$sucursal_id])->with('producto_actualizado','Producto actualizado correctamente.');
     }
 
     public function borrar_producto($id)
@@ -213,12 +254,27 @@ class EjecutivoController extends Controller
 
     public function actualizar_precio_producto(Request $request,$id)
     {
-        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
-        $request->validate([
-            'utilidad' => ['required','integer', 'gt:0'],
-        ]);
-        DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('sucursal_id',$usuario_logeado->sucursal_id)->where('producto_id',$id)->update(['precio_venta'=>$request->precio_venta]);        
-        return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('precio_actualizado','Precio de venta del producto actualizado correctamente');
+        $tipo_usuario = Auth::user()->tipo_usuario;
+
+        if($tipo_usuario == 1)
+        {
+            $request->validate([
+                'utilidad' => ['required','integer', 'gt:0'],
+            ]);
+            $sucursal_id = $request->sucursal_id_hidden;
+            DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('sucursal_id',$sucursal_id)->where('producto_id',$id)->update(['precio_venta'=>$request->precio_venta]);        
+            return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$sucursal_id])->with('precio_actualizado','Precio de venta del producto actualizado correctamente');
+        }
+
+        elseif($tipo_usuario == 2)
+        {
+            $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
+            $request->validate([
+                'utilidad' => ['required','integer', 'gt:0'],
+            ]);
+            DB::table('localizacions')->join('productos','localizacions.producto_id','=','productos.id')->where('sucursal_id',$usuario_logeado->sucursal_id)->where('producto_id',$id)->update(['precio_venta'=>$request->precio_venta]);        
+            return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$usuario_logeado->sucursal_id])->with('precio_actualizado','Precio de venta del producto actualizado correctamente');
+        }
     }
 
     public function agregar_producto(Request $request)
@@ -442,8 +498,8 @@ class EjecutivoController extends Controller
     public function cambiar_estado_producto(Request $request,$id){
 
         DB::table('productos')->where('id',$id)->update(['estado'=>$request->estado]);
-
-        return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('estado_cambiado','Estado del producto cambiado con éxito.');
+        $sucursal_id = $request->sucursal_id_hidden;
+        return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$sucursal_id])->with('estado_cambiado','Estado del producto cambiado con éxito.');
 
     }
 
@@ -486,7 +542,9 @@ class EjecutivoController extends Controller
         $nuevo_dato->imagenable_id = $id;
         $nuevo_dato->imagenable_tipo = 'App\Models\Producto';
         $nuevo_dato->save();
-        return redirect()->route('ver_detalle',['id_redirect'=>$id])->with('imagen_subida','Imagen subida con éxito.');
+
+        $sucursal_id = $request->sucursal_id_hidden;
+        return redirect()->route('ver_detalle',['id_redirect'=>$id,'sucursal_id'=>$sucursal_id])->with('imagen_subida','Imagen subida con éxito.');
 
     }
 
@@ -500,7 +558,9 @@ class EjecutivoController extends Controller
         $id_producto = $dato->imagenable_id;
         //Borrar la tupla de la tabla
         $dato->delete();
-        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto])->with('imagen_eliminada','Imagen eliminada con éxito.');
+
+        $sucursal_id = $request->sucursal_id_hidden;
+        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto,'sucursal_id'=>$sucursal_id])->with('imagen_eliminada','Imagen eliminada con éxito.');
     }
 
 
