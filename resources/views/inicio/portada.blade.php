@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="{{ asset('images/logoarbol.png') }}">
+
 
     <title>Maderas RAFA</title>
 
@@ -16,24 +18,61 @@
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/brands.min.js" integrity="sha512-oPuIMrT4JN6Cw359VQkuI0OPn1reFOKJm1YUOjXxgIzMmNMY7g4jenNcJdYcF3dt90WyNajzivr3vZFSzgqLow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/brands.min.js"
+        integrity="sha512-oPuIMrT4JN6Cw359VQkuI0OPn1reFOKJm1YUOjXxgIzMmNMY7g4jenNcJdYcF3dt90WyNajzivr3vZFSzgqLow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/fontawesome.min.js"
+        integrity="sha512-PoFg70xtc+rAkD9xsjaZwIMkhkgbl1TkoaRrgucfsct7SVy9KvTj5LtECit+ZjQ3ts+7xWzgfHOGzdolfWEgrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/solid.min.js"
+        integrity="sha512-wabaor0DW08KSK5TQlRIyYOpDrAfJxl5J0FRzH0dNNhGJbeUpHaNj7up3Kr2Bwz/abLvVcJvDrJL+RLFcyGIkg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <!--  jquery  -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/fontawesome.min.js" integrity="sha512-PoFg70xtc+rAkD9xsjaZwIMkhkgbl1TkoaRrgucfsct7SVy9KvTj5LtECit+ZjQ3ts+7xWzgfHOGzdolfWEgrw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/solid.min.js" integrity="sha512-wabaor0DW08KSK5TQlRIyYOpDrAfJxl5J0FRzH0dNNhGJbeUpHaNj7up3Kr2Bwz/abLvVcJvDrJL+RLFcyGIkg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
-
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
-    </script>
     <style>
-    
+        .map-responsive {
+
+            overflow: hidden;
+
+            padding-bottom: 56.25%;
+
+            position: relative;
+
+            height: 0;
+
+            margin-bottom: -9%;
+
+        }
+
+        .map-responsive iframe {
+
+            left: 0;
+
+            top: 0;
+
+            height: 80%;
+
+            width: 100%;
+
+            position: absolute;
+
+            justify-self: center;
+
+        }
+        .catalogo {
+            background-color: #004040;
+            color: white;
+        }
+        .catalogo:hover {
+            background-color: #007373;
+            color: white;
+        }
+        
     </style>
 </head>
 
@@ -52,44 +91,34 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Accesos Directos</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
+                <li>
+                    <a class="nav-link" href="#inicio">Inicio</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
+                    <a class="nav-link" href="#productos">Productos</a>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
+                    <a href="#acerca-de-nosotros">Acerca de Nosotros</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#como-llegar">Cómo Llegar</a>
+                </li>
+                <li>
+                    <a href="#elab">Elaboraciones</a>
+                </li>
+                <li>
+                    <a href="#info">Informaciones</a>
+                </li>
+                <li>
+                    <a href="{{route('ver_catalogo')}}">Catálogo</a>
                 </li>
             </ul>
-
+            <ul class="list-unstyled CTAs">
+                <p>Acceso Empleados</p><br>
+                <li>
+                    <a class="download" href="{{route('login')}}">Iniciar Sesión</a>
+                </li>
+            </ul>
         </nav>
 
         <!-- Page Content  -->
@@ -101,7 +130,7 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-light">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <button class="btn d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                    <button class="btn btn-light d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-phone"></i>
@@ -136,7 +165,7 @@
                 </div>
             </nav>
 
-            <h1 class="text-center" style="color: #004040 ;font-size: 70px">Maderas RAFA</h1>
+            <h1 class="text-center" id="inicio" style="color: #004040 ;font-size: 70px">Maderas RAFA</h1>
             <h4 class="text-center" style="color: #004040">Maderas en Coquimbo</h4>
 
 
@@ -169,7 +198,7 @@
 
             <div class="line"></div>
 
-            <h2 class="text-center" style="color: #004040">Productos</h2><br>
+            <h2 class="text-center" id="productos" style="color: #004040">Productos</h2><br>
             <div class="d-flex flex-wrap">
                 <div class="col-sm-4 col-sm-push-8">
 
@@ -205,7 +234,7 @@
 
             <div class="line"></div>
 
-            <h2 class="text-center" style="color: #004040">Acerca de Nostros</h2><br>
+            <h2 class="text-center" id="acerca-de-nosotros" style="color: #004040">Acerca de Nostros</h2><br>
             <div class="row">
                 <div class="col-12">
                     <h4 class="text-center" style="color: #004040"> Servicios </h4>
@@ -228,49 +257,82 @@
 
             <div class="line"></div>
 
-            <h2 class="text-center" style="color: #004040">Cómo llegar</h2><br>
-            <div class="row justify-content-center">
+            <h2 class="text-center" id="como-llegar" style="color: #004040" id="como-llegar">Cómo llegar</h2><br>
 
-                <div class="mapouter">
-                    <div class="gmap_canvas"><iframe width="1000" height="500" id="gmap_canvas"
-                            src="https://maps.google.com/maps?q=maderas%20rafa%20coquimbo&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
-                            href="https://123movies-to.org"></a><br>
-                        <style>
-                            .mapouter {
-                                position: relative;
-                                text-align: right;
-                                height: 500px;
-                                width: 1000px;
-                            }
-                        </style><a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
-                        <style>
-                            .gmap_canvas {
-                                overflow: hidden;
-                                background: none !important;
-                                height: 500px;
-                                width: 1000px;
-                            }
-                        </style>
-                    </div>
-                </div>
-
+            <div class="map-responsive">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.951517427044!2d-71.2595946849447!3d-30.00954848189506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9691cd0956366347%3A0x1192635a2c0ecfb3!2sMaderas%20RAFA!5e0!3m2!1ses-419!2scl!4v1646326921862!5m2!1ses-419!2scl"
+                    width="1000" height="700" style="border:0;" frameborder="0"></iframe>
             </div>
 
             <div class="line"></div>
 
-            <h2 class="text-center" style="color: #004040">Contacto</h2>
+            <h2 class="text-center" id="elab" style="color: #004040">Elaboraciones</h2>
+            
+                <!-- ========== Start carrusel ========== -->
+                <div class="container" style="width: 40%">
+
+                    <div id="galeria" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block " src="{{ asset('images/elab1.jpeg') }}" style="width: 100%">
+                            </div>
+                            <div class="carousel-item ">
+                                <img class="d-block" src="{{ asset('images/elab2.jpeg') }}" style="width: 100%">
+                            </div>
+                            <div class="carousel-item ">
+                                <img class="d-block" src="{{ asset('images/elab3.jpeg') }}" style="width: 100%">
+                            </div>
+                            <div class="carousel-item ">
+                                <img class="d-block" src="{{ asset('images/elab4.jpeg') }}" style="width: 100%">
+                            </div>
+                            <div class="carousel-item ">
+                                <img class="d-block" src="{{ asset('images/elab5.jpg') }}" style="width: 100%">
+                            </div>
+        
+                        </div>
+                        <a class="carousel-control-prev" href="#galeria" role="button"
+                            data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+                        </a>
+                        <a class="carousel-control-next" href="#galeria" role="button"
+                            data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+                        </a>
+                        
+                    </div>
+                    <div class="row justify-content-center mt-4 ">
+
+                        <a type="button" class="btn catalogo" href="{{route('ver_catalogo')}}"> Ir a Cátalogo</a>
+                    </div>
+                </div>
+
+                <!-- ========== End carrusel ========== -->
+
+            
+
+
+
+            <div class="line"></div>
+
+            <h2 class="text-center" id="info" style="color: #004040">Contacto</h2>
             <div class="row justify-content-center">
                 <div class="col" style="align-items: center">
 
                     <p>
-                        <h3 class="text-center" style="color: #004040"><i class="fas fa-phone"></i> Teléfono: <a href="tel:930939746">930939746</a></h3>
+                    <h5 class="text-center" style="color: #004040"><i class="fas fa-phone"></i> Teléfono: <a
+                            href="tel:930939746">930939746</a></h5>
                     </p>
                     <p>
-                        <h3  class="text-center align-items-center" style="color: #004040"><i class="fa-brands fa-whatsapp"></i> Whatsapp: <a class="nav-text" href="https://wa.me/56930939746">+56930939746</a></h3>
+                    <h5 class="text-center align-items-center" style="color: #004040"><i
+                            class="fa-brands fa-whatsapp"></i> Whatsapp: <a class="nav-text"
+                            href="https://wa.me/56930939746">+56930939746</a></h5>
                     </p>
                     <p>
-                        <h3 class="text-center" style="color: #004040"><i class="fas fa-envelope"></i> Gmail: maderas.rafa.coquimbo@gmail.cl</h3>
+                    <h5 class="text-center" style="color: #004040"><i class="fas fa-envelope"></i> Gmail:
+                        maderas.rafa.coquimbo@gmail.cl</h5>
                     </p>
                 </div>
 
@@ -283,21 +345,22 @@
                 <div class="col" style="align-items: center">
 
                     <p>
-                        <h3 class="text-center" style="color: #004040"><i class="fa-solid fa-location-dot"></i> Dirección: Ruta 43, sitio 8 , Pan de Azúcar, Coquimbo</h3>
+                    <h5 class="text-center" style="color: #004040"><i class="fa-solid fa-location-dot"></i> Dirección:
+                        Ruta 43, sitio 8 , Pan de Azúcar, Coquimbo.</h5>
                     </p>
                     <p>
-                        <h3  class="text-center align-items-center" style="color: #004040"><i class="fa-solid fa-clock"></i> Horario:</h3>
+                    <h5 class="text-center align-items-center" style="color: #004040"><i class="fa-solid fa-clock"></i>
+                        Horario:</h5>
                     </p>
                     <div class="row">
                         <div class="col">
-
-                            <h4 class="text-center" style="color: #004040">Lunes: 9:00-19:00</h4>
-                            <h4 class="text-center" style="color: #004040">Martes:	9:00-19:00</h4>
-                            <h4 class="text-center" style="color: #004040">Miércoles: 9:00-19:00</h4>
-                            <h4 class="text-center" style="color: #004040">Jueves: 9:00-19:00</h4>
-                            <h4 class="text-center" style="color: #004040">Viernes: 9:00-19:00</h4>
-                            <h4 class="text-center" style="color: #004040">Sábado: 9:00-19:00</h4>
-                            <h4 class="text-center" style="color: #004040">Domingo: 10:00-14:00</h4>
+                            <h5 class="text-center" style="color: #004040">Lunes: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Martes: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Miércoles: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Jueves: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Viernes: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Sábado: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Domingo: 10:00-14:00</h5><br>
                         </div>
                     </div>
                 </div>
