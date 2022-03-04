@@ -64,6 +64,8 @@
             justify-self: center;
 
         }
+        
+        
         .catalogo {
             background-color: #004040;
             color: white;
@@ -270,39 +272,46 @@
             <h2 class="text-center" id="elab" style="color: #004040">Elaboraciones</h2>
             
                 <!-- ========== Start carrusel ========== -->
-                <div class="container" style="width: 40%">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-7 col-m-12">
 
-                    <div id="galeria" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img class="d-block " src="{{ asset('images/elab1.jpeg') }}" style="width: 100%">
-                            </div>
-                            <div class="carousel-item ">
-                                <img class="d-block" src="{{ asset('images/elab2.jpeg') }}" style="width: 100%">
-                            </div>
-                            <div class="carousel-item ">
-                                <img class="d-block" src="{{ asset('images/elab3.jpeg') }}" style="width: 100%">
-                            </div>
-                            <div class="carousel-item ">
-                                <img class="d-block" src="{{ asset('images/elab4.jpeg') }}" style="width: 100%">
-                            </div>
-                            <div class="carousel-item ">
-                                <img class="d-block" src="{{ asset('images/elab5.jpg') }}" style="width: 100%">
-                            </div>
+                            <div id="galeria" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block " src="{{ asset('images/elab1.jpeg') }}" style="width: 100%">
+                                    </div>
+                                    <div class="carousel-item ">
+                                        <img class="d-block" src="{{ asset('images/elab2.jpeg') }}" style="width: 100%">
+                                    </div>
+                                    <div class="carousel-item ">
+                                        <img class="d-block" src="{{ asset('images/elab3.jpeg') }}" style="width: 100%">
+                                    </div>
+                                    <div class="carousel-item ">
+                                        <img class="d-block" src="{{ asset('images/elab4.jpeg') }}" style="width: 100%">
+                                    </div>
+                                    <div class="carousel-item ">
+                                        <img class="d-block" src="{{ asset('images/elab5.jpg') }}" style="width: 100%">
+                                    </div>
+                
+                                </div>
+                                <a class="carousel-control-prev" href="#galeria" role="button"
+                                    data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         
-                        </div>
-                        <a class="carousel-control-prev" href="#galeria" role="button"
-                            data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-
-                        </a>
-                        <a class="carousel-control-next" href="#galeria" role="button"
-                            data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-
-                        </a>
+                                </a>
+                                <a class="carousel-control-next" href="#galeria" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        
+                                </a>
+                                
+                            </div>
                         
+                        </div>
                     </div>
+
+
                     <div class="row justify-content-center mt-4 ">
 
                         <a type="button" class="btn catalogo" href="{{route('ver_catalogo')}}"> Ir a Cátalogo</a>
@@ -366,6 +375,15 @@
                 </div>
 
             </div>
+            <footer class="text-center text-white" style="background-color: #004040;">
+                
+                <!-- Copyright -->
+                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                 Copyright © 2022
+                  <a class="text-white" href="https://mdbootstrap.com/">MADERAS RAFA SpA.</a>
+                </div>
+                <!-- Copyright -->
+            </footer>
 
         </div>
     </div>
