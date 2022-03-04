@@ -75,8 +75,24 @@ class CatalogoController extends Controller
 
         //Producto en particular
         $cantidad_productos_pag = 6;
-        $productos = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('nombre','like','%' .$nombre_producto. '%')->orwhere('familia','like','%' .$nombre_producto. '%')->where('estado',1)->where('sucursal_id',1)->paginate($cantidad_productos_pag);
-        return view('catalogo.detalle_producto',['productos'=>$productos,'imagenes'=>$imagenes]);
+        $productos_aux = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('nombre','like','%' .$nombre_producto. '%')->orwhere('familia','like','%' .$nombre_producto. '%')->where('estado',1)->where('sucursal_id',1);
+        $productos= $productos_aux->paginate($cantidad_productos_pag);
+        if($productos_aux->first() == null) {  
+            $familia=$nombre_producto;
+            return view('catalogo.detalle_producto',['productos'=>$productos,'imagenes'=>$imagenes, 'familia'=>$familia]);
+        }else{ 
+            $familia_peruana=DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id')->where('estado',1)->where('sucursal_id',1)->where('nombre','like','%' .$nombre_producto. '%')->orwhere('familia','like','%' .$nombre_producto. '%')->where('estado',1)->where('sucursal_id',1);
+            $cantidad_familia=(count($familia_peruana->groupby('familia')->distinct('familia')->pluck('familia')));
+            if($cantidad_familia>1){
+                $familia=$familia_peruana->groupby('id')->distinct('id')->pluck('id');
+                return view('catalogo.detalle_producto',['productos'=>$productos,'imagenes'=>$imagenes, 'familia'=>$familia]);
+            }else{
+                $familia=$familia_peruana->groupby('familia')->distinct('familia')->value('familia');
+                return view('catalogo.detalle_producto',['productos'=>$productos,'imagenes'=>$imagenes, 'familia'=>($familia)]);
+            }
+            
+        }
+        
     }
 
     //Redireccionamiento intermedio para catalogo filtrado
@@ -88,13 +104,46 @@ class CatalogoController extends Controller
     //Redireccionamiento a vista con productos filtrados según lo que se indique
     public function index_filtro($tipo_filtro,$familia)
     {
+       
+        $array = explode(',', str_replace(array('"','[',']'),'',$familia));
         $cantidad_productos_pag = 6;
         $imagenes = DB::table('imagens')->get();
         $productos_familia = Producto::distinct()->get('familia');
         $productos_totales = DB::table('productos')->where('estado',1)->get();
         $productos_filtrados = null;
         
-        //Filtras para todo tipo de producto
+        if(count($array) > 1 ){
+            $productos_filtrados = DB::table('productos')->join('localizacions','productos.id','=','localizacions.producto_id');
+            for ($i = 0; $i < count($array); $i++) {
+                $productos_filtrados= $productos_filtrados->orwhere('producto_id',$array[$i])->where('estado',1)->where('sucursal_id',1);
+            }
+        
+             if($tipo_filtro == "asc_alfb")
+            {
+                $productos_filtrados= $productos_filtrados->where('estado',1)->where('sucursal_id',1)->orderBy('nombre')->paginate($cantidad_productos_pag);
+                return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
+            }else{
+                if($tipo_filtro == "des_alfb")
+                {
+                    $productos_filtrados= $productos_filtrados->where('estado',1)->where('sucursal_id',1)->orderBy('nombre','desc')->paginate($cantidad_productos_pag);
+                    return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
+                }else{
+
+                    //Filtrar por precio
+                    if($tipo_filtro == "asc_precio"){
+                        $productos_filtrados= $productos_filtrados->where('estado',1)->where('sucursal_id',1)->orderBy('precio_venta')->paginate($cantidad_productos_pag);
+                        return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
+                    }else{
+                        if($tipo_filtro == "des_precio")
+                        {
+                            $productos_filtrados= $productos_filtrados->where('estado',1)->where('sucursal_id',1)->orderBy('precio_venta','desc')->paginate($cantidad_productos_pag);
+                            return view('catalogo.catalogo_filtrado',['imagenes'=>$imagenes,'cantidad_productos_pag'=>$cantidad_productos_pag,'productos_familia'=>$productos_familia,'productos_totales'=>$productos_totales,'productos_filtrados'=>$productos_filtrados,'familia'=>$familia,'tipo_filtro'=>$tipo_filtro]);
+                        }
+                    }
+                }
+            }
+        }
+
         if($familia == "todas"){
 
 

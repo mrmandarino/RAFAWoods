@@ -79,12 +79,12 @@
 
       .btn-sidebar {
           position: fixed;
-          top: 10px;
+          top: 5px;
           left: 45px;
           height: 37px;
           width: 37px;
           text-align: center;
-          background: #1b1b1b;
+          background: #1e1e1e;
           border-radius: 3px;
           cursor: pointer;
           transition: left 0.4s ease;
@@ -112,7 +112,7 @@
           width: 250px;
           height: 100%;
           left: -250px;
-          background: #1b1b1b;
+          background: #1e1e1e;
           transition: left 0.4s ease;
           z-index: 1030
       }
@@ -132,7 +132,7 @@
       }
 
       .nav_ul {
-          background: #1b1b1b;
+          background: #1e1e1e;
           height: 100%;
           width: 100%;
           list-style: none;
@@ -200,12 +200,16 @@
 
       nav ul li.active ul li a {
           color: #e6e6e6;
-          background: #1b1b1b;
+          background: #1e1e1e;
           border-left-color: transparent
       }
 
       .bg-black-insano{
           background: #1e1e1e;
+      }
+
+      .border-black-insano{
+        border-color: #1e1e1e;
       }
 
       .bg-test{
@@ -286,6 +290,33 @@
       .probando {
         font-family: 'Poppins', sans-serif;
       }
+
+      .form-control-peruano {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        background-color: #1e1e1e;
+        background-clip: padding-box;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+      }
+
+      .form-select-peruano:focus {
+        border-color: rgba(255, 255, 255, 0.05);
+        outline: 0;
+      }
+
+      .form-text-peruano {
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: white;
+      }
     </style>
 
     
@@ -299,13 +330,6 @@
       <a href="{{route('ver_catalogo')}}" class="navbar-brand d-flex mx-auto text-center">
         <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch"> </i> </i>
       </a>
-      
-    
-      <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
-        <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
-        <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
-        <input type="text" class="form-control" name="input_producto" id="input_datalist_productos" style="margin-left: -10% " placeholder="Buscar..." onchange="submit_formulario_producto()">
-      </form>
     </div>
   </div>
 </header>
@@ -316,6 +340,11 @@
   <span class="fas fa-filter"></span> </div>
 <nav class="sidebar">
   <div class="text"  style="margin-bottom: -4% "> Maderas RAFA </div>    <ul class="main_side nav_ul">
+    <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
+      <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
+      <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
+      <input type="text" class="form-control-peruano bg-black-insano border-black-insano form-text-peruano form-select-peruano" name="input_producto"  id="input_datalist_productos" placeholder="Buscar..." onchange="submit_formulario_producto()">
+    </form>
         <li class="nav_ul_li"> <a class="nav_ul_li_a" href="#" id="1">Filtrar por precio<span class="fas fa-caret-down"></span> </a>
             <ul class="item-show-1 nav_ul">
               {{-- Filtro por precio --}}
