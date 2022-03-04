@@ -13,7 +13,6 @@
     <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     
-    
 
     <!-- Bootstrap core CSS -->
 <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -294,10 +293,11 @@
       .form-control-peruano {
         display: block;
         width: 100%;
+        height: 120%;
         padding: 0.375rem 0.75rem;
         font-size: 1rem;
         font-weight: 400;
-        background-color: #1e1e1e;
+        background-color: #004040;
         background-clip: padding-box;
         border: 1px solid rgba(255, 255, 255, 0.05);
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -318,6 +318,25 @@
         color: white;
       }
 
+      input::placeholder {
+        color: white;
+        font-size: 1.2em;
+      }
+
+      .btn-secondary-peruano {
+        margin-top:4px;
+        height: 33px;
+        width: 50px;
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d;
+      }
+      .btn-secondary-peruano:hover {
+        color: #fff;
+        background-color: #5c636a;
+        border-color: #565e64;
+      }
+
     </style>
 
     
@@ -329,7 +348,7 @@
   <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm " >
     <div class="container">
       <a href="{{route('ver_catalogo')}}" class="navbar-brand d-flex mx-auto text-center" >
-        <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch"> </i> </i>
+        <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch "> </i> </i>
       </a>
       
     </div>
@@ -344,10 +363,16 @@
   <div class="text"  style="margin-bottom: -4% "> Maderas RAFA </div>    <ul class="main_side nav_ul">
     
     <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
+      @csrf
       <input  type="text" class="visually-hidden" name ="input_hidden_producto" id="input_hidden_producto">
       <button type="submit" class="visually-hidden" id="boton_automatico_producto"></button>
-      <input type="text" class="form-control-peruano bg-black-insano border-black-insano form-text-peruano form-select-peruano" name="input_producto"  id="input_datalist_productos" placeholder="Buscar..." onchange="submit_formulario_producto()">
-    </form>
+      <div class="btn-group">
+        <input  type="text" class="form-control-peruano bg-black-insano border-black-insano form-text-peruano form-select-peruano" name="input_producto"  id="input_datalist_productos" placeholder="Buscar..." onchange="submit_formulario_producto()" >
+        <button type="submit" class="btn btn-secondary-peruano" ><i class="fa fa-search"></i></button> 
+
+      </div>
+      
+      </form>
     
         <li class="nav_ul_li"> <a class="nav_ul_li_a" href="#" id="1">Filtrar por precio<span class="fas fa-caret-down"></span> </a>
             <ul class="item-show-1 nav_ul">

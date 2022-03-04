@@ -63,6 +63,9 @@ class CatalogoController extends Controller
     //Redireccionamiento intermedio para detalle de producto
     public function intermedio_producto(Request $request)
     {
+        if($request->input_producto==null){
+            return redirect()->back();
+        }
         $nombre_producto = $request->input_producto;
         return redirect()->route('ver_detalle_producto',['nombre_producto'=>$nombre_producto]);
     }
