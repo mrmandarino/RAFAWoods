@@ -48,15 +48,26 @@ class EjecutivoController extends Controller
 
     public function cargar_administrar(Request $request)//entrega el id para cargar la pagina para administrar un producto
     {   
-        $id_producto_str = $request->id_producto_hidden;
-        $id_producto_int = intval($id_producto_str);
+        $usuario_logeado = DB::table('users')->join('trabajadors','users.rut','=','trabajadors.usuario_rut')->where('rut',Auth::user()->rut)->first();
         $nombre_producto_input = $request->nombre_producto;
-        $producto = DB::table('productos')->where('id',$id_producto_int)->first();
+        $id_producto_str = $request->id_producto_hidden;
+        if($id_producto_str == null)
+        {
+            $nombre_producto_input_clean = str_replace("[".$usuario_logeado->sucursal_id."] ","",$nombre_producto_input);
+            $producto = DB::table('productos')->where('nombre',$nombre_producto_input_clean)->first();
+            $id_producto_str = $producto->id;
+        }
+
+        else
+        {
+            $producto = DB::table('productos')->where('id',$id_producto_str)->first();
+        }
+        
         $sucursal_con_corchete = str_replace(" ".$producto->nombre,"",$nombre_producto_input);
         $sucursal_con_corchete_der = str_replace("]","",$sucursal_con_corchete);
         $sucursal_id = str_replace("[","",$sucursal_con_corchete_der);
 
-        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto_int,'sucursal_id'=>$sucursal_id]);
+        return redirect()->route('ver_detalle',['id_redirect'=>$id_producto_str,'sucursal_id'=>$sucursal_id]);
         
     }
 

@@ -122,7 +122,7 @@
                                             
                                         @if ($contador_aux <= 0)
                                         <div class='carousel-item active'>
-                                            <img class='img-size' src="{{ asset('images\Imagen_no_disponible.svg.png') }}" alt='First slide' style="height:100%;width:100%"/>
+                                            <img class='img-size' src="{{ asset('images\imagen_no_disponible.png') }}" alt='First slide' style="height:100%;width:100%"/>
                                         </div>
                                         @else
                                         @php

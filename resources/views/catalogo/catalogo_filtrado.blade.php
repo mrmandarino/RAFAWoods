@@ -512,7 +512,7 @@
                     <div class='carousel-inner'>
                       @if ($contador_aux <= 0)
                       <div class='carousel-item active'>
-                        <img class='img-size' src="{{ asset('images\imagen_no_disponible_4_3_2.png') }}" style="height:100%;width:100%" alt='First slide' />
+                        <img class='img-size' src="{{ asset('images\imagen_no_disponible.png') }}" style="height:100%;width:100%" alt='First slide' />
                       </div>
                       @else
                       @php
@@ -753,7 +753,7 @@
                     <div class='carousel-inner'>
                       @if ($contador_aux <= 0)
                       <div class='carousel-item active'>
-                        <img class='img-size' src="{{ asset('images\imagen_no_disponible_4_3_2.png') }}" style="height:100%;width:100%" alt='First slide' />
+                        <img class='img-size' src="{{ asset('images\imagen_no_disponible.png') }}" style="height:100%;width:100%" alt='First slide' />
                       </div>
                       @else
                       @php

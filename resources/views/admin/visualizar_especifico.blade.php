@@ -220,10 +220,10 @@
 			<thead>
 				<th> ID PRODUCTO </th>
 				<th> NOMBRE </th>
+				<th> PUNTA </th>
 				<th> CABEZA (mm) </th>
 				<th> TIPO ROSCA </th>
 				<th> SEPARACION ROSCA (mm) </th>
-				<th> PUNTA </th>
 				<th> ROSCA PARCIAL (mm) </th>
 				<th> VASTAGO (mm) </th>
 				<th> FECHA REGISTRO </th>
@@ -237,10 +237,10 @@
 						<tr>
 							<td> {{$tornillo->producto_id}} </td>
 							<td> {{$producto->nombre}} </td>
+							<td> {{$tornillo->punta}} </td>
 							<td> {{$tornillo->cabeza}} </td>
 							<td> {{$tornillo->tipo_rosca}} </td>
 							<td> {{$tornillo->separacion_rosca}} </td>
-							<td> {{$tornillo->punta}} </td>
 							<td> {{$tornillo->rosca_parcial}} </td>
 							<td> {{$tornillo->vastago}} </td>
 							<td> {{$tornillo->created_at}} </td>
@@ -294,9 +294,9 @@
 				<th> ID PRODUCTO </th>
 				<th> NOMBRE </th>
 				<th> MATERIAL </th>
-				<th> ALTO </th>
-				<th> ANCHO </th>
-				<th> LARGO </th>
+				<th> ALTO (m) </th>
+				<th> ANCHO (mm) </th>
+				<th> LARGO (m) </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
@@ -485,11 +485,11 @@
 			<thead>
 				<th> ID PRODUCTO </th>
 				<th> NOMBRE </th>
+				<th> TIPO MADERA </th>
+				<th> TRATAMIENTO </th>
 				<th> ALTO (in) </th>
 				<th> ANCHO (in) </th>
 				<th> LARGO (m) </th>
-				<th> TIPO MADERA </th>
-				<th> TRATAMIENTO </th>
 				<th> FECHA REGISTRO </th>
 				<th> FECHA ACTUALIZACION </th>
 				<th> ACCION </th>
@@ -501,11 +501,11 @@
 						<tr>
 							<td> {{$madera->producto_id}} </td>
 							<td> {{$producto->nombre}} </td>
+							<td> {{$madera->tipo_madera}} </td>
+							<td> {{$madera->tratamiento}} </td>
 							<td> {{$madera->alto}} </td>
 							<td> {{$madera->ancho}} </td>
 							<td> {{$madera->largo}} </td>
-							<td> {{$madera->tipo_madera}} </td>
-							<td> {{$madera->tratamiento}} </td>
 							<td> {{$madera->created_at}} </td>
 							<td> {{$madera->updated_at}} </td>
 							<td>
