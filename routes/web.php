@@ -115,7 +115,7 @@ Route::middleware(['auth','activo','ejecutivo'])->group(function(){
     Route::put('/detalle/{id}/producto/updated',[EjecutivoController::class, 'actualizar_producto'])->name('ver_detalle_producto_actualizado');
     Route::put('/detalle/{id}/producto/precio/updated',[EjecutivoController::class, 'actualizar_precio_producto'])->name('ver_detalle_precio_producto_actualizado');
     Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');
-    Route::get('/inventario/precios',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');
+    Route::get('/inventario/productos',[EjecutivoController::class,'index_precios'])->name('ver_detalle_precios');
     Route::post('/familias',[EjecutivoController::class, 'familias'])->name('test2'); //obsoleto
     Route::post('/detalle/{id}/producto/deleted',[EjecutivoController::class, 'borrar_producto'])->name('eliminar_producto');//obsoleto
     Route::put('/inventario/{id}/estado',[EjecutivoController::class,'cambiar_estado_producto'])->name('cambiar_estado');//metodo de vista administrar_prod, activa o desactiva un producto - listo - mandarino

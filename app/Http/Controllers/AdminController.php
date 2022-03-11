@@ -1840,6 +1840,8 @@ class AdminController extends Controller
                 ]);
                 $rut_cliente_normalizado = Rut::parse($request->cliente_rut)->normalize();
                 $actualizar->cliente_rut = $rut_cliente_normalizado;
+            }else{
+                $actualizar->cliente_rut = "";
             }
             
             $actualizar->sucursal_id = $request->get('sucursal_id');

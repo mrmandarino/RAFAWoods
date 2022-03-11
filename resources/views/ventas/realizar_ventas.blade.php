@@ -142,7 +142,9 @@
   function check_stock() {
     var stock_js = document.getElementById('stock');
     var cantidad_js = document.getElementById('cantidad');
-    if(stock_js.value >= cantidad_js.value && stock_js.value>0)
+    var stock_js_int = parseInt(stock_js.value);
+    var cantidad_js_int = parseInt(cantidad_js.value);
+    if(stock_js_int >= cantidad_js_int && stock_js_int>0)
     {
       return true;
     }
@@ -152,7 +154,8 @@
   function check_cantidad_mayor_0() 
   {
     var cantidad_js = document.getElementById('cantidad');
-    if(cantidad_js.value >0)
+    var cantidad_js_int = parseInt(cantidad_js.value);
+    if(cantidad_js_int>0)
     {
       return true;
     }
@@ -205,8 +208,12 @@
                   placeholder="Escriba para buscar...">
                 <datalist id="datalist_productos">
                   @foreach ($productos as $producto)
-                  <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
+                    @foreach ($productos_en_stock as $producto_en_stock)
+                      @if ($producto->id == $producto_en_stock->producto_id)
+                      <option data-value="{{$producto->id}}" value="{{$producto->nombre}}">
+                      @endif
                     @endforeach
+                  @endforeach
                 </datalist>
               </div>
             </div>

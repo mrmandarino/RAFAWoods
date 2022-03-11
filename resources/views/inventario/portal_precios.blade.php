@@ -49,7 +49,7 @@
 
 								@if ($producto_en_bruto->familia == "Tornillo")
 								@php($tornillo=App\Models\Tornillo::find($producto_en_bruto->id))
-								<label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Cabeza (mm)</label>
 								<input type="text" value="{{$tornillo->cabeza}}" class="form-control" name="cabeza"
 									id="cabeza" required disabled>
 								<label for="recipient-name" class="col-form-label" style="color:black">Tipo
@@ -57,17 +57,17 @@
 								<input type="text" value="{{$tornillo->tipo_rosca}}" class="form-control"
 									name="tipo_rosca" id="tipo_rosca" required disabled>
 								<label for="recipient-name" class="col-form-label" style="color:black">Separación
-									rosca</label>
+									rosca (mm)</label>
 								<input type="text" value="{{$tornillo->separacion_rosca}}" class="form-control"
 									name="separacion_rosca" id="separacion_rosca" required disabled>
 								<label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
 								<input type="text" value="{{$tornillo->punta}}" class="form-control" name="punta"
 									id="punta" required disabled>
 								<label for="recipient-name" class="col-form-label" style="color:black">Rosca
-									parcial</label>
+									parcial (mm)</label>
 								<input type="text" value="{{$tornillo->rosca_parcial}}" class="form-control"
 									name="rosca_parcial" id="rosca_parcial" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Vástago</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Vástago (mm)</label>
 								<input type="text" value="{{$tornillo->vastago}}" class="form-control" name="vastago"
 									id="vastago" required disabled>
 
@@ -79,13 +79,13 @@
 								<label for="recipient-name" class="col-form-label" style="color:black">Acabado</label>
 								<input type="text" value="{{$mueble->acabado}}" class="form-control" name="acabado"
 									id="acabado" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Alto (m)</label>
 								<input type="text" value="{{$mueble->alto}}" class="form-control" name="alto" id="alto"
 									required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Ancho (m)</label>
 								<input type="text" value="{{$mueble->ancho}}" class="form-control" name="ancho"
 									id="ancho" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Largo (m)</label>
 								<input type="text" value="{{$mueble->largo}}" class="form-control" name="largo"
 									id="largo" required disabled>
 
@@ -94,13 +94,13 @@
 								<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
 								<input type="text" value="{{$plancha_construccion->material}}" class="form-control"
 									name="material" id="material" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Alto (m)</label>
 								<input type="text" value="{{$plancha_construccion->alto}}" class="form-control"
 									name="alto" id="alto" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Ancho (mm)</label>
 								<input type="text" value="{{$plancha_construccion->ancho}}" class="form-control"
 									name="ancho" id="ancho" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Largo (m)</label>
 								<input type="text" value="{{$plancha_construccion->largo}}" class="form-control"
 									name="largo" id="largo" required disabled>
 
@@ -109,25 +109,25 @@
 								<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
 								<input type="text" value="{{$techumbre->material}}" class="form-control" name="material"
 									id="material" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Alto (m)</label>
 								<input type="text" value="{{$techumbre->alto}}" class="form-control" name="alto"
 									id="alto" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Ancho (mm)</label>
 								<input type="text" value="{{$techumbre->ancho}}" class="form-control" name="ancho"
 									id="ancho" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Largo (m)</label>
 								<input type="text" value="{{$techumbre->largo}}" class="form-control" name="largo"
 									id="largo" required disabled>
 
 								@elseif($producto_en_bruto->familia == "Madera")
 								@php($madera=App\Models\Madera::find($producto_en_bruto->id))
-								<label for="recipient-name" class="col-form-label" style="color:black">Alto</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Alto (in)</label>
 								<input type="text" value="{{$madera->alto}}" class="form-control" name="alto" id="alto"
 									required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Ancho</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Ancho (in)</label>
 								<input type="text" value="{{$madera->ancho}}" class="form-control" name="ancho"
 									id="ancho" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Largo</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Largo (m)</label>
 								<input type="text" value="{{$madera->largo}}" class="form-control" name="largo"
 									id="largo" required disabled>
 								<label for="recipient-name" class="col-form-label" style="color:black">Tipo de
@@ -144,13 +144,13 @@
 								<label for="recipient-name" class="col-form-label" style="color:black">Material</label>
 								<input type="text" value="{{$clavo->material}}" class="form-control" name="material"
 									id="material" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Cabeza</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Cabeza (mm)</label>
 								<input type="text" value="{{$clavo->cabeza}}" class="form-control" name="cabeza"
 									id="cabeza" required disabled>
 								<label for="recipient-name" class="col-form-label" style="color:black">Punta</label>
 								<input type="text" value="{{$clavo->punta}}" class="form-control" name="punta"
 									id="punta" required disabled>
-								<label for="recipient-name" class="col-form-label" style="color:black">Longitud</label>
+								<label for="recipient-name" class="col-form-label" style="color:black">Longitud (mm)</label>
 								<input type="text" value="{{$clavo->longitud}}" class="form-control" name="longitud"
 									id="longitud" required disabled>
 

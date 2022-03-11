@@ -68,6 +68,10 @@
             height: 750px !important;
             overflow: auto;
         }
+
+    .margen {
+    margin: 20px 20px 20px 20px;
+    }
   </style>
 
 
@@ -344,7 +348,7 @@
                             {{ $producto_en_bruto->nombre }}: {{ $producto_en_stock->stock }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body margen">
                         <form action="{{ route('ver_detalle_stock_actualizado', $producto_en_bruto->id) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -379,7 +383,7 @@
                         <h5 class="modal-title" id="exampleModalLabel" style="color:black">Editar precio de venta de {{$producto_en_bruto->nombre}}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body margen">
                         <form action="{{ route('ver_detalle_precio_producto_actualizado', $producto_en_bruto->id) }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -438,7 +442,7 @@
                             {{ $producto_en_bruto->nombre }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body margen">
                         <form action="{{route('ver_detalle_producto_actualizado',$producto_en_bruto->id)}}" method="POST">
                             @csrf
                             @method('PUT')
@@ -648,7 +652,7 @@
                             {{ $producto_en_bruto->nombre }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body margen">
     
                         <form action="{{ route('cambiar_estado', $producto_en_bruto->id) }}" method="POST">
                             @csrf
@@ -694,7 +698,7 @@
                         <h5 class="modal-title" id="exampleModalLabel" style="color:black">Subir Imagen</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body margen" >
                         <form action="{{ route('subir_imagen_producto', $producto_en_bruto->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -731,7 +735,7 @@
                         <h5 class="modal-title" id="exampleModalLabel" style="color:black">Eliminar Imagen</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body margen">
                         @if ($contador_aux == 0)
                         <div class="mb-3 text-center">
                             <label for="" class="form-label">No hay ninguna imagen asociada a este producto</label>

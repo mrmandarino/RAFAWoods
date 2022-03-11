@@ -289,7 +289,7 @@
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/r-2.2.9/datatables.min.js"></script>
 
-    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script> --}}
     
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script> {{-- Necesario para
     ver los botones --}}

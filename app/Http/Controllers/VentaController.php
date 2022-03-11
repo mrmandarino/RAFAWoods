@@ -28,7 +28,7 @@ class VentaController extends Controller
     public function create()
     {
         $productos = DB::table('productos')->where('estado',1)->get();
-        $productos_en_stock = DB::table('localizacions')->get();
+        $productos_en_stock = DB::table('localizacions')->where('sucursal_id',1)->get();
         $clientes = DB::table('clientes')->get();
         $count_ventas = DB::table('ventas')->count('*');//ver cuantos registros hay
         $id_venta = 1;//valor por defecto, será modificado si count_ventas es distinto de 0
@@ -77,7 +77,7 @@ class VentaController extends Controller
         //calcular utilidad bruta de la venta
         foreach($detalle_ventas as $detalle_venta)
         {
-            $precio_compra = DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->value('precio_compra');
+            $precio_compra = DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->where('sucursal_id',1)->value('precio_compra');
             $total_producto = $detalle_venta->total_producto;//valor total de lo vendido en este producto (valor de venta x cantidad vendida)
             $cantidad = $detalle_venta->cantidad;
             $utilidad_individual = $total_producto - ($cantidad*$precio_compra);
@@ -108,11 +108,10 @@ class VentaController extends Controller
                 'total_producto' => $detalle_venta->total_producto,
             ]);
 
-            $stock = DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->get('stock')->first();
+            $stock = DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->where('sucursal_id',1)->get('stock')->first();
             $nuevo_total = $stock->stock - $detalle_venta->cantidad;
-            DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->update(['stock'=>$nuevo_total]);
+            DB::table('localizacions')->where('producto_id',$detalle_venta->producto_id)->where('sucursal_id',1)->update(['stock'=>$nuevo_total]);
         }
-
 
         return redirect()->route('ventas.create')->with('correcto','Venta realizada con éxito.');
     }
