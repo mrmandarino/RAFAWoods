@@ -20,7 +20,7 @@ use App\Http\Controllers\ComentarioController;
 */
 
 Route::get('/', function () {
-    return view('cover.cover_home');
+    return view('inicio.portada');
 });
 
 Route::get('/dashboard', function () {
