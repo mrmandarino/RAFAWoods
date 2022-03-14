@@ -16,10 +16,16 @@
     const button = event.target;
     const productos = document.getElementById('datalist_productos');
     const producto_seleccionado = document.querySelector('#nombre_producto');
-    const opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
-    
-    
     const nombre_producto = producto_seleccionado.value;//Nombre del Producto
+    let opSelected = null;
+    if(nombre_producto.includes('"'))
+    {
+      opSelected = productos.querySelector(`[value='${producto_seleccionado.value}']`);
+    }else{
+      opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
+    }
+    
+    
     const id_producto = opSelected.getAttribute('data-value');//Id producto seleccionado
     const cantidad_producto = document.getElementById('cantidad').value;//Cantidad de producto a comprar
     const valor_producto = document.getElementById('valor_unidad').value;//Valor del producto a comprar
@@ -422,7 +428,13 @@
         
         var id = parseInt(id_producto);
         var cantidad = parseInt(cantidad_producto);
-        content = content + '{"producto_id": '+id+', "nombre": '+'"'+nombre_producto+'"'+', "cantidad": '+cantidad+', "total_producto": '+ valor_final +'},';
+        if(nombre_producto.includes('"'))
+        {
+          nombre_producto = nombre_producto.replace('"','\\"');
+          content = content + '{"producto_id": '+id+', "nombre": '+'"'+nombre_producto+'"'+', "cantidad": '+cantidad+', "total_producto": '+ valor_final +'},';
+        }else{
+          content = content + '{"producto_id": '+id+', "nombre": '+'"'+nombre_producto+'"'+', "cantidad": '+cantidad+', "total_producto": '+ valor_final +'},';
+        }
         json_final = '['+ content +']';
         json_final = json_final.replace("},]","}]");
         var input_hidden = document.getElementById('hidden'); 
@@ -433,7 +445,13 @@
 
     var extraer ="";
     function JSON_remove(id,nombre,cantidad,final){
-      extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'},';
+      if(nombre.includes('"'))
+      {
+        nombre = nombre.replace('"','\\"')
+        extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'},';        
+      }else{
+        extraer = '{"producto_id": '+id+', "nombre": '+'"'+nombre+'"'+', "cantidad": '+cantidad+', "total_producto": '+ final +'},';
+      }
       content = content.replace(extraer,"");
       json_final = '['+ content +']';
       json_final = json_final.replace("},]","}]");
@@ -524,9 +542,20 @@
     //obtener id segun seleccion en datalist (producto)
     const productos = document.getElementById('datalist_productos');
     const producto_seleccionado = document.querySelector('#nombre_producto');
-    const opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
-    const id_producto = opSelected.getAttribute('data-value');//ID del producto seleccionado
+    var nombre_producto = producto_seleccionado.value;
+    let opSelected = null;
+    if(nombre_producto.includes('"'))
+    {
+      opSelected = productos.querySelector(`[value='${producto_seleccionado.value}']`);
+      console.log("con comilla doble");
+    }
+    else
+    {
+      opSelected = productos.querySelector(`[value="${producto_seleccionado.value}"]`);
+      console.log("sin comilla doble");
+    }
     
+    const id_producto = opSelected.getAttribute('data-value');//ID del producto seleccionado
     //obtener referencia de componentes para llenar (inputs de formulario)
     var codigo_js = document.getElementById('codigo');
     var stock_js = document.getElementById('stock');
