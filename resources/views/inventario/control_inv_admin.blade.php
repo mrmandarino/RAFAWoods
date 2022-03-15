@@ -72,6 +72,13 @@
                         </div><br>
                     @endif
                     
+                    @if (session()->has('producto_inexistente'))
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            {{ session()->get('producto_inexistente') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><br>
+                    @endif
+                    
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                             Ha ocurrido un error al ingresar el producto

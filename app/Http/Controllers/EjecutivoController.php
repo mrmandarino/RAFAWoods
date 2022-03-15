@@ -52,6 +52,7 @@ class EjecutivoController extends Controller
 
         $nombre_producto_input = $request->nombre_producto;
         $id_producto_str = $request->id_producto_hidden;
+        
         if($id_producto_str == null)
         {
             if($usuario_logeado==null){
@@ -60,6 +61,10 @@ class EjecutivoController extends Controller
                 $nombre_producto_input_clean = str_replace("[".$usuario_logeado->sucursal_id."] ","",$nombre_producto_input);
             }
             $producto = DB::table('productos')->where('nombre',$nombre_producto_input_clean)->first();
+            if($producto == null)
+            {
+                return redirect()->route('ver_inventario')->with('producto_inexistente','Se ha seleccionado un producto inexistente.');
+            }
             $id_producto_str = $producto->id;
         }
 
