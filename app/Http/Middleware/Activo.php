@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Activo
 {
@@ -20,6 +21,13 @@ class Activo
         {
             return $next($request);
         }
-        return redirect()->route('cover');
+
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('inactivo','Tu cuenta se encuentra desactivada, contacta con un administrador para más información');
     }
 }

@@ -48,7 +48,7 @@
 
     </style>
     
-    <div class="container">
+    <div class="container" style="overflow:auto">
 
         <div class="row justify-content-center mt-3">
     
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="div">
+                <div >
     
                     <form action={{route('admin_guardar_datos',$tabla)}} method="POST" enctype="multipart/form-data">
                         @csrf
@@ -1174,8 +1174,10 @@
                     
                         @endif
                     
-                        <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary row justify-content-center text-center mt-3 col-5" style="margin-left: 2px " tabindex="20">Cancelar</a>
-                        <button type="submit" class="btn btn-primary row justify-content-center text-center mt-3 col-5" style="margin-left: 110px " tabindex="21">Guardar</button>
+                        <div class="row justify-content-evenly">
+                            <a href={{route('admin_visualizar_especifico',$tabla)}} class="btn btn-secondary justify-content-center text-center mt-3 col-5" style="margin-left: 2px " tabindex="20">Cancelar</a>
+                            <button type="submit" class="btn btn-primary mt-3 col-5" tabindex="21">Guardar</button>
+                        </div>
 
                     </form>
     

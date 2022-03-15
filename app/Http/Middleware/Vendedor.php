@@ -23,6 +23,6 @@ class Vendedor
             return $next($request);
         }
 
-        return redirect()->route('cover');
+        return route('/');
     }
 }

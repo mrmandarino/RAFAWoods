@@ -391,7 +391,7 @@
                                 <label for="recipient-name" class="col-form-label" style="color:black">Precio de Compra</label>
                                 <input type="number" value={{ $producto_en_stock->precio_compra }} class="form-control"
                                     name="precio_compra" id="precio_compra" readonly>
-                                <label for="recipient-name" class="col-form-label" style="color:black">Utilidad</label>
+                                <label for="recipient-name" class="col-form-label" style="color:black">Utilidad (%)</label>
                                 <input type="number" value=1 class="form-control"
                                     name="utilidad" id="utilidad" onchange="calculo_ganancia()" required>
     

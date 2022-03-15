@@ -21,23 +21,11 @@ use App\Http\Controllers\ComentarioController;
 
 Route::get('/', function () {
     return view('inicio.portada');
-});
+})->name('/');
 
 Route::get('/dashboard', function () {
     return redirect()->route('inicio');
 })->middleware(['auth'])->name('dashboard');
-
-Route::get('/cover', function () {
-    return view('cover.cover_home');
-})->name('cover');
-
-Route::get('/ayudameme', function () {
-    
-
-    //return view('graficos.graficos');
-    return view('inicio.portada');
-});
-
 
 
 //Graficos

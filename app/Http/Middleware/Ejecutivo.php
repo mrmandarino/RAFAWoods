@@ -31,10 +31,10 @@ class Ejecutivo
             }
             else 
             {
-                return redirect()->route('ventas.create');//vendedor
+                return redirect()->route('inicio');//vendedor
             }       
         }
 
-        return redirect()->route('cover');
+        return route('/');
     }
 }

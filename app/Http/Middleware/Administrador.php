@@ -27,14 +27,14 @@ class Administrador
             $tipo_trabajador = DB::table('trabajadors')->where('usuario_rut',auth()->user()->rut)->value('tipo_trabajador');
             if ($tipo_trabajador == 1) //ejecutivo
             {
-                return redirect()->route('ver_inventario');               
+                return redirect()->route('inicio');               
             }
             else 
             {
-                return redirect()->route('ventas.create');//vendedor
+                return redirect()->route('inicio');//vendedor
             }       
         }
 
-        return redirect()->route('cover');
+        return route('/');
     }
 }

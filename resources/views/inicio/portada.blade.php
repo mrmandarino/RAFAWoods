@@ -33,6 +33,7 @@
     </script>
     <!--  jquery  -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
 
     <style>
         .map-responsive {
@@ -157,7 +158,7 @@
                             <li class="nav-item">
                                 <a tabindex="0" data-trigger="focus" role="button" class="nav-link"
                                     data-container="body" data-toggle="popover" data-placement="bottom"
-                                    data-content="{{ 'lun:  9:00-19:00 <br /> mar:  9:00-19:00 <br /> mié:  9:00-19:00 <br /> jue:  9:00-19:00<br /> vie:  9:00-19:00 <br /> sáb:  9:00-19:00 <br /> dom:  10:00-14:00' }}"
+                                    data-content="{{ 'lun:  9:00-19:30 <br /> mar:  9:00-19:30 <br /> mié:  9:00-19:30 <br /> jue:  9:00-19:30<br /> vie:  9:00-19:30 <br /> sáb:  9:00-19:30 <br /> dom:  10:00-14:00' }}"
                                     data-html="true" style="cursor: pointer">
                                     <i class="fas fa-clock"></i> Horarios</a>
                             </li>
@@ -167,6 +168,14 @@
                 </div>
             </nav>
 
+            @if (session()->has('inactivo'))
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    {{ session()->get('inactivo') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <h1 class="text-center" id="inicio" style="color: #004040 ;font-size: 70px">Maderas RAFA</h1>
             <h4 class="text-center" style="color: #004040">Maderas en Coquimbo</h4>
 
@@ -206,31 +215,31 @@
 
                     <h4 class="text-center" style="color: #004040"><i class="fas fa-tree"></i> Madera <i
                             class="fas fa-tree"></i></h4>
-                    <p class="text-center">madera pino: 1x2", 1x3", 1x4", 1x5", 1x6"..., 1x10" en 3,2m/4m</p>
-                    <p class="text-center">madera pino: 2x1", 2x2" ,2x3", 2x4"... , 2x10" en 3,2m/4m</p>
-                    <p class="text-center">cuartones: 3x3", 4x4" en 3,2m</p>
-                    <p class="text-center">entre otros.</p>
+                            <p class="text-center">Madera pino: 1x2", 1x3", 1x4", 1x5", 1x6, 1x7", 1x8", 1x9", 1x10" en 3,2m</p>
+                            <p class="text-center">Madera pino: 2x2", 2x3", 2x4", 2x5", 2x6", 2x7", 2x8", 2x9", 2x10" en 3,2m</p>
+                            <p class="text-center">Cuartones: 3x3", 4x4" en 3,2m</p>
+                    <p class="text-center">Entre otros.</p>
                 </div>
                 <div class="col-sm-4 col-sm-push-8">
 
                     <h4 class="text-center" style="color: #004040"><i class="fas fa-couch"></i> Muebles <i
                             class="fas fa-couch"></i></h4>
-                    <p class="text-center">muebles de interior: sillas, sillones, mesas, estantes, despensas, alacenas,
-                        verduderos, catre 1 plaza, catre 2 plaza, literas, camarotes, tocadores, clóset, cómodas,
+                    <p class="text-center">Muebles de interior: sillas, sillones, mesas, estantes, despensas, alacenas,
+                        verduleros, catre 1 plaza, catre 2 plaza, literas, camarotes, tocadores, clóset, cómodas,
                         ventanas, puertas. </p>
-                    <p class="text-center">muebles de terraza y jardín: silla de terraza, silla estilo playa, mesa de
-                        terraza, pergolas, casas de perro, jaula para pájaros, cercas. </p>
-                    <p class="text-center">muebles a pedido.</p>
+                    <p class="text-center">Muebles de terraza y jardín: silla de terraza, silla estilo playa, mesa de
+                        terraza, pérgolas, casas de perro, jaula para pájaros, cercas. </p>
+                    <p class="text-center">Muebles a pedido.</p>
                 </div>
                 <div class="col-sm-4 col-sm-push-8">
 
                     <h4 class="text-center" style="color: #004040"><i class="fas fa-toolbox"></i> Construcción <i
                             class="fas fa-toolbox"></i></h4>
-                    <p class="text-center">techumbre.</p>
-                    <p class="text-center">clavos, tornillos.</p>
-                    <p class="text-center">aislación.</p>
-                    <p class="text-center">mallas y alambres.</p>
-                    <p class="text-center">tableros construcción.</p>
+                    <p class="text-center">Techumbre.</p>
+                    <p class="text-center">Clavos, tornillos.</p>
+                    <p class="text-center">Aislación.</p>
+                    <p class="text-center">Mallas y alambres.</p>
+                    <p class="text-center">Tableros construcción.</p>
                 </div>
             </div>
 
@@ -241,7 +250,7 @@
                 <div class="col-12">
                     <h4 class="text-center" style="color: #004040"> Servicios </h4>
 
-                    <p class="text-center">Ofrecemos varidas medidas de madera <b style='color:#004040 !important;'>al
+                    <p class="text-center">Ofrecemos varias medidas de madera <b style='color:#004040 !important;'>al
                             por mayor y al detalle</b>, material de construcción, herramientas, trabajos en madera desde
                         muebles hasta <b style='color:#004040 !important;'>elaboraciones por pedido, </b>puede realizar
                         cotizaciones y enviarnos sus consultas a nuestros canales de comunicación en el apartado <b
@@ -249,7 +258,7 @@
 
                     <h4 class="text-center" style="color: #004040"> Despacho </h4>
 
-                    <p class="text-center">Ofrecemos despacho a las siguientes comunas <b
+                    <p class="text-center">Ofrecemos despacho a las siguientes comunas: <b
                             style='color:#004040 !important;'>Coquimbo, La Serena, Tongoy, Pan de Azúcar, Andacollo,
                             Ovalle.</b></p>
 
@@ -341,7 +350,7 @@
                     </p>
                     <p>
                     <h5 class="text-center" style="color: #004040"><i class="fas fa-envelope"></i> Gmail:
-                        maderas.rafa.coquimbo@gmail.cl</h5>
+                        maderas.rafa.coquimbo@gmail.com</h5>
                     </p>
                 </div>
 
@@ -363,12 +372,12 @@
                     </p>
                     <div class="row">
                         <div class="col">
-                            <h5 class="text-center" style="color: #004040">Lunes: 9:00-19:00</h5>
-                            <h5 class="text-center" style="color: #004040">Martes: 9:00-19:00</h5>
-                            <h5 class="text-center" style="color: #004040">Miércoles: 9:00-19:00</h5>
-                            <h5 class="text-center" style="color: #004040">Jueves: 9:00-19:00</h5>
-                            <h5 class="text-center" style="color: #004040">Viernes: 9:00-19:00</h5>
-                            <h5 class="text-center" style="color: #004040">Sábado: 9:00-19:00</h5>
+                            <h5 class="text-center" style="color: #004040">Lunes: 9:00-19:30</h5>
+                            <h5 class="text-center" style="color: #004040">Martes: 9:00-19:30</h5>
+                            <h5 class="text-center" style="color: #004040">Miércoles: 9:00-19:30</h5>
+                            <h5 class="text-center" style="color: #004040">Jueves: 9:00-19:30</h5>
+                            <h5 class="text-center" style="color: #004040">Viernes: 9:00-19:30</h5>
+                            <h5 class="text-center" style="color: #004040">Sábado: 9:00-19:30</h5>
                             <h5 class="text-center" style="color: #004040">Domingo: 10:00-14:00</h5><br>
                         </div>
                     </div>
@@ -407,6 +416,9 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js">
     </script>
 
+    <script src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
+
+    
     <script>
         $(function () {
         $('[data-toggle="popover"]').popover()
