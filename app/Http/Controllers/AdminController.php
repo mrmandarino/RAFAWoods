@@ -621,8 +621,7 @@ class AdminController extends Controller
                 'url' => ['required','image','max:4096'],
                 // 'imanegable_tipo' => ['required','string','max:255'],
             ]);
-            $auxiliar="\hola";
-            $existe_url=Imagen::where('url',"images".$auxiliar[0].$request->file('url')->getClientOriginalName())->first();
+            $existe_url=Imagen::where('url',"images/".$request->file('url')->getClientOriginalName())->first();
             if($existe_url != null){ 
                 $request->validate([
                     'existe_imagen' => ['integer'],
@@ -633,7 +632,7 @@ class AdminController extends Controller
             $guardarImagen->move('images', $guardarImagen->getClientOriginalName());
             
             $nuevo_dato = new Imagen();
-            $nuevo_dato->url = "images".$auxiliar[0].$guardarImagen->getClientOriginalName();
+            $nuevo_dato->url = "images/".$guardarImagen->getClientOriginalName();
             $nuevo_dato->imagenable_id = $request->get('imagenable_id');
             // $nuevo_dato->imagenable_tipo = $request->get('imagenable_tipo');
             $nuevo_dato->imagenable_tipo = 'App\Models\Producto';

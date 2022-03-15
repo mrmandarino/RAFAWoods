@@ -17,9 +17,8 @@ class ImagenFactory extends Factory
 
     public function definition()
     {
-        $auxiliar="\hola";
         return [
-            'url' => 'images'.$auxiliar[0].$this->faker->image('public/images',640,480,null,false), 
+            'url' => 'images/'.$this->faker->image('public/images',640,480,null,false), 
         ];
     }
 }

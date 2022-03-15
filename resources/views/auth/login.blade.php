@@ -33,7 +33,7 @@
                 <div class="input-group">
                     <input id="password" name="password" type="password" class="form-control" tabindex="4" value="{{old('password')}}">
                     <div class="input-group-append">
-                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                        <button id="show_password" class="btn ojito" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                     </div>
                 </div>
             </div>
