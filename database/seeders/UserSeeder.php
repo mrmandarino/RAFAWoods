@@ -73,23 +73,5 @@ class UserSeeder extends Seeder
         Cliente::create([
             'usuario_rut' => '194445989'
         ]);
-
-
-        $usuarios=User::factory(20)->create();
-        foreach ($usuarios as $usuario){
-            if($usuario->tipo_usuario == User::trabajador){ 
-                Trabajador::create([
-                    'usuario_rut' => $usuario->rut,
-                    'tipo_trabajador' => rand(Trabajador::vendedor,Trabajador::ejecutivo),
-                    'sucursal_id' => 1
-                ]);
-            }
-            elseif($usuario->tipo_usuario == User::cliente){ 
-                Cliente::create([
-                    'usuario_rut' => $usuario->rut,
-                ]); 
-            }
-        }
-
     }
 }
