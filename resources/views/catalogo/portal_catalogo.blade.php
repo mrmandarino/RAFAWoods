@@ -351,9 +351,7 @@
       <span  class="navbar-brand d-flex mr-auto" style="color: #1e1e1e">
         
       </span>
-      <span  class="navbar-brand d-flex mr-auto" style="color: #1e1e1e">
-        
-      </span>
+      
       <a href="{{route('ver_catalogo')}}" class="navbar-brand mx-auto">
         <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch "> </i> </i>
       </a>
