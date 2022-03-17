@@ -79,7 +79,7 @@
       .btn-sidebar {
           position: fixed;
           top: 5px;
-          left: 45px;
+          left: 15px;
           height: 37px;
           width: 37px;
           text-align: center;
@@ -367,7 +367,7 @@
 
 {{-- SIDEBAR --}}
 <div class="btn btn-sidebar"> 
-  <span class="fas fa-sort" style="font-size: 20px;margin-top: 6px" ></span> 
+  <span class="fas fa-bars" style="font-size: 20px;margin-top: 6px" ></span> 
 </div>
 <nav class="sidebar">
   <div class="text"  style="margin-bottom: -4% "> Maderas RAFA </div>    <ul class="main_side nav_ul">
@@ -478,10 +478,12 @@
                               <div class="btn-group">
                                   <button id="{{$producto->id}}" type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}">Ver Detalle</button>
                               </div>
+                              @if ($producto->familia == "Mueble")
                               @php
-                                $numero_formateado = number_format($producto->precio_venta,0,',','.');
+                              $numero_formateado = number_format($producto->precio_venta,0,',','.');
                               @endphp
                               <small class="text-muted">Precio: ${{$numero_formateado}}</small>
+                              @endif
                               @if ($producto->stock == 0)
                               <small class="text-muted">Agotado</small>
                               @else

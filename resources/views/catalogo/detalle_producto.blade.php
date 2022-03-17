@@ -80,7 +80,7 @@
       .btn-sidebar {
           position: fixed;
           top: 5px;
-          left: 45px;
+          left: 15px;
           height: 37px;
           width: 37px;
           text-align: center;
@@ -346,10 +346,19 @@
     
 <header>
   
-  <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm " >
-    <div class="container">
-      <a href="{{route('ver_catalogo')}}" class="navbar-brand d-flex mx-auto text-center">
-        <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch"> </i> </i>
+  <div class="navbar-catalogo navbar-dark fixed-top bg-black-insano shadow-sm d-flex justify-content-center" >
+    <div class="container-fluid align-items-center">
+
+      <span  class="navbar-brand d-flex mr-auto" style="color: #1e1e1e">
+        
+      </span>
+      
+      <a href="{{route('ver_catalogo')}}" class="navbar-brand mx-auto">
+        <i class="fa fa-couch"><strong class="probando"> Catálogo</strong> <i class="fa fa-couch "> </i> </i>
+      </a>
+      
+      <a href="{{route('/')}}" class="navbar-brand d-flex ml-auto" >
+        <i class="fas fa-home"></i>
       </a>
     </div>
   </div>
@@ -358,7 +367,8 @@
 
 {{-- SIDEBAR --}}
 <div class="btn btn-sidebar"> 
-  <span class="fas fa-filter"></span> </div>
+  <span class="fas fa-bars" style="font-size: 20px;margin-top: 6px" ></span> 
+</div>
 <nav class="sidebar">
   <div class="text"  style="margin-bottom: -4% "> Maderas RAFA </div>    <ul class="main_side nav_ul">
     <form id="form_input_hidden_producto" action="{{route('ver_producto_intermedio')}}">
@@ -466,10 +476,12 @@
                               <div class="btn-group">
                                   <button id="{{$producto->id}}" type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_detalle{{$producto->id}}">Ver Detalle</button>
                               </div>
+                              @if ($producto->familia == "Mueble")
                               @php
-                                $numero_formateado = number_format($producto->precio_venta,0,',','.');
+                              $numero_formateado = number_format($producto->precio_venta,0,',','.');
                               @endphp
                               <small class="text-muted">Precio: ${{$numero_formateado}}</small>
+                              @endif
                               @if ($producto->stock == 0)
                               <small class="text-muted">Agotado</small>
                               @else
