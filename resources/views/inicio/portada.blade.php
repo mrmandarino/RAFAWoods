@@ -389,7 +389,7 @@
                 <!-- Copyright -->
                 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
                  Copyright © 2022
-                  <a class="text-white" href="https://mdbootstrap.com/">MADERAS RAFA SpA.</a>
+                  <a class="text-white">MADERAS RAFA SpA.</a>
                 </div>
                 <!-- Copyright -->
             </footer>
