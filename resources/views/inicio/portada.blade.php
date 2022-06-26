@@ -159,8 +159,10 @@
                                 <a tabindex="0" data-trigger="focus" role="button" class="nav-link"
                                     data-container="body" data-toggle="popover" data-placement="bottom"
                                     data-content="{{ 'lun:  9:00-19:30 <br /> mar:  9:00-19:30 <br /> mié:  9:00-19:30 <br /> jue:  9:00-19:30<br /> vie:  9:00-19:30 <br /> sáb:  9:00-19:30 <br /> dom:  10:00-14:00' }}"
-                                    data-html="true" style="cursor: pointer">
-                                    <i class="fas fa-clock"></i> Horarios</a>
+                                    data-html="true" style="cursor:pointer">
+                                    <i class="fas fa-clock"></i> 
+                                    Horarios
+                                </a>
                             </li>
 
                         </ul>
@@ -416,7 +418,6 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js">
     </script>
 
-    <script src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
 
     
     <script>
