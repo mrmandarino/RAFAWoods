@@ -1,0 +1,9 @@
+para configurar el servidor HostGator, con Cpanel, en el explorador de archivos.
+
+raiz: /home4/madera26
+ubicación .htaccess: raiz/public_html (archivo oculto)
+ubicación index.php: raiz/public_html
+
+
+htaccess es necesario para forzar https en el cliente
+index.php es necesario para indicarle a laravel el directorio de los archivos importantes
